@@ -2,9 +2,7 @@
 - name: Test 01
   hosts: localhost
   connection: local
-  become: false
 
   roles:
     - 01_host_info
     - 02_package_managers
-

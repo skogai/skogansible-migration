@@ -12,13 +12,11 @@
   community.general.pacman:
     name: base-devel
     state: present
-  become: true
 
 - name: Ensure git is installed
   community.general.pacman:
     name: git
     state: present
-  become: true
 
 - name: Check if yay is installed
   ansible.builtin.command: which yay
@@ -39,7 +37,6 @@
       ansible.builtin.command:
         cmd: makepkg -si --noconfirm
         chdir: /tmp/yay
-      become: false
 
     - name: Clean up yay build directory
       ansible.builtin.file:
