@@ -5,5 +5,8 @@ packages:
   - curl
   - fzf
   - git
-aur_packages: []
+aur_packages:
+  - oh-my-zsh-git
+  - rcm
+  - zplug
   # TODO: Add from: pacman -Qm | cut -d' ' -f1
