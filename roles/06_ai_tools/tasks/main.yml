@@ -1,0 +1,31 @@
+---
+# Role: 06_ai_tools
+# Purpose: Configure AI/LLM tools (claude-code, aider, fabric, gptme, opencode, etc.)
+
+- name: TODO - Setup Claude Code configuration
+  ansible.builtin.debug:
+    msg: "TODO: Symlink claude configs from dotfiles and setup API keys"
+
+- name: TODO - Configure aider-chat
+  ansible.builtin.debug:
+    msg: "TODO: Integrate aider.conf.yml and setup venv"
+
+- name: TODO - Setup fabric-ai
+  ansible.builtin.debug:
+    msg: "TODO: Initialize fabric and configure patterns/models"
+
+- name: TODO - Configure gptme
+  ansible.builtin.debug:
+    msg: "TODO: Symlink gptme config.toml and setup API keys"
+
+- name: TODO - Setup opencode-ai
+  ansible.builtin.debug:
+    msg: "TODO: Symlink opencode configs and configure agents"
+
+- name: TODO - Configure aichat-ng
+  ansible.builtin.debug:
+    msg: "TODO: Symlink aichat config and setup models"
+
+- name: TODO - Setup mods configuration
+  ansible.builtin.debug:
+    msg: "TODO: Symlink mods.yml and configure API endpoints"

@@ -42,14 +42,22 @@ Contains sensitive environment variables. Protected by pre-tool-use hooks - cann
 ├── ansible.cfg          # Global Ansible configuration
 ├── .envrc              # direnv environment setup
 ├── .env                # Protected environment variables
+├── .hosts              # Inventory file (localhost)
+├── run.sh              # Playbook execution script (ALWAYS use this)
+├── requirements.yml    # Ansible collections requirements
+├── playbooks/          # Ansible playbooks
+│   └── all.yml         # Main playbook
+├── roles/              # Ansible roles
+│   ├── 01_host_info/   # System info and sudo checks
+│   └── 02_package_managers/  # Package installation (pacman + AUR)
+├── vars/               # Variable files
+│   ├── packages.yml    # Package lists (packages, aur_packages)
+│   └── user.yml        # User configuration
 ├── logs/               # Ansible execution logs
-└── .claude/            # Claude Code hooks (pre/post tool use, status line, etc.)
+├── .collections/       # Ansible collections storage
+├── .cache/             # Fact caching storage
+└── .claude/            # Claude Code hooks
 ```
-
-**Expected directories** (referenced in ansible.cfg but not yet created):
-- `.collections/` - Ansible collections storage
-- `.cache/` - Fact caching storage
-- `roles/` - Ansible roles (relative to execution location)
 
 ---
 
@@ -57,10 +65,11 @@ Contains sensitive environment variables. Protected by pre-tool-use hooks - cann
 
 This configuration affects all Ansible commands run on the system. When working with Ansible:
 
-1. Playbooks and inventories are typically located elsewhere (not in this directory)
-2. The `inventory = .hosts` setting means Ansible looks for `.hosts` in the current working directory where commands are executed
-3. Collections installed with `ansible-galaxy collection install` will be stored in `~/.ansible/.collections`
-4. Fact caching enables faster playbook runs by storing host facts between executions
+1. Playbooks and roles are stored in this directory (`playbooks/` and `roles/`)
+2. The `inventory = .hosts` setting points to the localhost inventory in this directory
+3. Collections installed with `ansible-galaxy collection install` are stored in `~/.ansible/.collections`
+4. Fact caching enables faster playbook runs by storing host facts in `~/.ansible/.cache`
+5. Variable files in `vars/` define package lists and user configuration
 
 ---
 
@@ -121,12 +130,62 @@ The vault-encrypted file works as-is when `ANSIBLE_VAULT_PASSWORD_FILE` is set, 
 
 ### Running Playbooks
 
-**Simple execution:**
+**ALWAYS use run.sh for playbook execution:**
 ```bash
-ansible-playbook playbooks/01.yml
+bash run.sh
 ```
 
-Do NOT overcomplicate with direnv commands - the environment is already loaded via `.envrc`.
+**NEVER run ansible-playbook directly.** The `run.sh` script properly handles vault and become password files.
+
+**For Claude Code:** Always run playbooks in background mode:
+```bash
+bash run.sh  # with run_in_background: true
+```
+
+Then check output with `BashOutput` tool. This prevents long-running package installations from blocking the CLI.
+
+### AUR Package Installation
+
+AUR packages require a special setup because `makepkg` refuses to run as root:
+
+**The aur_builder user:**
+- Created by the `02_package_managers` role
+- Member of `wheel` group
+- Has passwordless sudo for `/usr/bin/pacman` only (configured in `/etc/sudoers.d/11-install-aur_builder`)
+
+**Workflow:**
+1. `aur_builder` builds the AUR package (without sudo)
+2. `yay` internally calls `sudo pacman` to install (using passwordless sudo)
+3. No password prompts, no "Duplicate become password prompt" errors
+
+**Example from roles/02_package_managers:**
+```yaml
+- name: Create the `aur_builder` user
+  become: true
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: yes
+    group: wheel
+
+- name: Allow the `aur_builder` user to run `sudo pacman` without a password
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+    create: yes
+    mode: 0644
+    validate: "visudo -cf %s"
+
+- name: Install AUR packages
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    name: "{{ aur_packages }}"
+    use: auto
+    state: present
+```
+
+**Important:** `become` and `become_user` are task-level directives, NOT module parameters. Always place them at the task level, before the module name.
 
 ### Assumptions to Avoid
 
