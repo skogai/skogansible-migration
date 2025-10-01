@@ -6,3 +6,4 @@ ansible_facts.yml
 .collections/ansible_collections
 galaxy_cache
 galaxy_token
+.cache
