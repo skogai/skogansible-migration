@@ -1,0 +1,8 @@
+.claude/data/sessions
+logs
+ansible_facts.yml
+.env
+.aider*
+.collections/ansible_collections
+galaxy_cache
+galaxy_token

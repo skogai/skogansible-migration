@@ -1,0 +1,9 @@
+---
+# Package lists
+packages:
+  - 7zip
+  - curl
+  - fzf
+  - git
+aur_packages: []
+  # TODO: Add from: pacman -Qm | cut -d' ' -f1
