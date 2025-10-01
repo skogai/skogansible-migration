@@ -8,5 +8,5 @@ packages:
 aur_packages:
   - oh-my-zsh-git
   - rcm
-  - zplug
+  - llm
   # TODO: Add from: pacman -Qm | cut -d' ' -f1

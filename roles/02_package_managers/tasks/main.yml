@@ -20,3 +20,21 @@
     name: yay
     use: auto
     state: present
+
+- name: Load package lists
+  ansible.builtin.include_vars:
+    file: "{{ playbook_dir }}/../vars/packages.yml"
+
+- name: Install pacman packages
+  become: true
+  community.general.pacman:
+    name: "{{ packages }}"
+    state: present
+
+- name: Install AUR packages
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    name: "{{ aur_packages }}"
+    use: auto
+    state: present
