@@ -2,9 +2,13 @@
 # Role: 03_dotfiles
 # Purpose: Clone/update dotfiles repository and setup RCM symlinks
 
-- name: TODO - Clone dotfiles repository
-  ansible.builtin.debug:
-    msg: "TODO: Clone ~/.dotfiles from git repository"
+- name: Clone dotfiles repository
+  ansible.builtin.git:
+    repo: 'git@github.com:SkogAI/.dotfiles.git'
+    dest: "{{ ansible_env.HOME }}/.dotfiles"
+    version: master
+    accept_hostkey: yes
+    update: yes
 
 - name: TODO - Run rcup to symlink dotfiles
   ansible.builtin.debug:
