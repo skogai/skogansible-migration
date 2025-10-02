@@ -1,0 +1,37 @@
+---
+# ansible-lint configuration for skogansible
+# This is a centralized Ansible configuration directory, not a standard playbook repository
+
+# Exclude paths that shouldn't be linted
+exclude_paths:
+  - .cache/
+  - .collections/
+  - logs/
+  - .github/
+  - .git/
+  - ansible_facts.yml
+
+# Skip rules that don't apply to this repository structure
+skip_list:
+  - role-name  # Our roles use numbered prefixes (01_host_info, 02_package_managers, etc.)
+  - var-naming[no-role-prefix]  # Variables in config directory don't need role prefixes
+  - yaml[line-length]  # Allow longer lines for readability in configuration
+
+# Warn about these rules but don't fail
+warn_list:
+  - experimental  # Warn about experimental features
+  - no-changed-when  # Warn when tasks don't set changed_when
+  - risky-file-permissions  # Warn about file permissions but don't fail
+  - args[module]  # Warn about module args when using mock_modules
+  - yaml[truthy]  # Warn about truthy values (yes/no vs true/false) but don't fail
+
+# Enable offline mode to avoid Galaxy API calls
+offline: true
+
+# Mock modules that aren't available in offline mode
+mock_modules:
+  - kewlfft.aur.aur
+  - community.general.pacman
+
+# Use the default profile (min, basic, moderate, safety, shared, or production)
+profile: null
