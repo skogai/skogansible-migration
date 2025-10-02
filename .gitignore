@@ -7,3 +7,4 @@ ansible_facts.yml
 galaxy_cache
 galaxy_token
 .cache
+.ansible/
