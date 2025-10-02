@@ -1,0 +1,23 @@
+---
+# Role: 05_systemd_services
+# Purpose: Setup and enable systemd user services for various tools
+
+- name: TODO - Enable cockpit service
+  ansible.builtin.debug:
+    msg: "TODO: Enable and start cockpit.socket for web-based server management"
+
+- name: TODO - Link dotfile systemd services
+  ansible.builtin.debug:
+    msg: "TODO: Symlink services from ~/.dotfiles/config/systemd/user/ to ~/.config/systemd/user/"
+
+- name: TODO - Enable AI tool services
+  ansible.builtin.debug:
+    msg: "TODO: Enable skogai-* services (ttyd, gptme, claude-webui, etc.)"
+
+- name: TODO - Reload systemd daemon
+  ansible.builtin.debug:
+    msg: "TODO: Run systemctl --user daemon-reload after service installation"
+
+- name: TODO - Verify service status
+  ansible.builtin.debug:
+    msg: "TODO: Check status of enabled services and report failures"

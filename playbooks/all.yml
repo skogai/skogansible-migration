@@ -2,9 +2,12 @@
 - name: Test 01
   hosts: localhost
   connection: local
-  become: false
 
   roles:
     - 01_host_info
     - 02_package_managers
-
+    - 03_dotfiles
+    - 04_shell_config
+    - 05_systemd_services
+    - 06_ai_tools
+    - 07_development

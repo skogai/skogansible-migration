@@ -1,0 +1,23 @@
+---
+# Role: 04_shell_config
+# Purpose: Configure shell plugins and tools (zsh, nvm, antidote, zplug)
+
+- name: TODO - Setup zsh-antidote plugin manager
+  ansible.builtin.debug:
+    msg: "TODO: Configure zsh-antidote and integrate with zshrc"
+
+- name: TODO - Setup zplug plugin manager
+  ansible.builtin.debug:
+    msg: "TODO: Configure zplug and integrate with zshrc"
+
+- name: TODO - Initialize NVM
+  ansible.builtin.debug:
+    msg: "TODO: Setup NVM directories and source in zshenv/zshrc"
+
+- name: TODO - Configure py3status for i3
+  ansible.builtin.debug:
+    msg: "TODO: Setup py3status configuration and integrate with i3 config"
+
+- name: TODO - Setup completion systems
+  ansible.builtin.debug:
+    msg: "TODO: Install and configure shell completions for installed tools"
