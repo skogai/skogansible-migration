@@ -3,10 +3,21 @@
 packages:
   - 7zip
   - curl
+  - direnv
+  - expac
   - fzf
   - git
+  - lazygit
+  - neovim
+  - npm
+  - pyenv
+  - tailscale
+  - xclip
+  - zsh
 aur_packages:
+  - nvm
   - oh-my-zsh-git
+  - python-uv
   - rcm
   - llm
   # TODO: Add from: pacman -Qm | cut -d' ' -f1
