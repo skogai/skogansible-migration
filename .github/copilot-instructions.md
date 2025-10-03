@@ -6,7 +6,7 @@ This file provides guidance to GitHub Copilot when working with code in this rep
 
 This is the centralized Ansible configuration directory (`~/.ansible`) that provides global settings and paths for all Ansible operations on this system.
 
-**This is NOT a playbook repository.** It contains configuration files that define how Ansible behaves system-wide, along with playbooks, roles, and variable files.
+This is a centralized Ansible configuration directory for this system. In addition to global configuration files, it also houses local playbooks, roles, and variable files used for system management.
 
 ## Key Files and Directories
 
