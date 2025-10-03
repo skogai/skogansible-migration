@@ -1,0 +1,11 @@
+---
+# Molecule converge playbook for 01_host_info role
+- name: Converge
+  hosts: all
+  gather_facts: true
+  vars:
+    ansible_facts_file: /ansible_facts.yml
+  tasks:
+    - name: Include 01_host_info role
+      ansible.builtin.include_role:
+        name: 01_host_info

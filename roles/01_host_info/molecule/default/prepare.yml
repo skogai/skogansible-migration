@@ -1,0 +1,16 @@
+---
+# Molecule prepare playbook for 01_host_info role
+# This playbook runs before converge.yml to set up the test environment
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install python for Ansible
+      ansible.builtin.raw: |
+        if ! command -v python3 >/dev/null 2>&1; then
+          pacman -Syu --noconfirm python
+        fi
+      changed_when: false
+
+    - name: Gather facts after python installation
+      ansible.builtin.setup:
