@@ -179,9 +179,9 @@ AUR packages require a special setup because `makepkg` refuses to run as root.
 
 ## Vault Setup
 
-Become password is stored vault-encrypted at `/home/skogix/.ssh/ansible-become-password`:
-- Vault password file: `/home/skogix/.ssh/ansible-vault-password` (plaintext)
-- Become password file: `/home/skogix/.ssh/ansible-become-password` (vault-encrypted)
+Become password is stored vault-encrypted at `~/.ssh/ansible-become-password`:
+- Vault password file: `~/.ssh/ansible-vault-password` (plaintext)
+- Become password file: `~/.ssh/ansible-become-password` (vault-encrypted)
 - Environment variables set in `.env` and loaded via `.envrc`
 
 Ansible 2.12+ supports `ANSIBLE_BECOME_PASSWORD_FILE` which can point to:
