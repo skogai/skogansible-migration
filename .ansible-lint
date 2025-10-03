@@ -24,6 +24,7 @@ warn_list:
   - risky-file-permissions  # Warn about file permissions but don't fail
   - args[module]  # Warn about module args when using mock_modules
   - yaml[truthy]  # Warn about truthy values (yes/no vs true/false) but don't fail
+  - latest[git]  # Warn about using latest version in git repos but don't fail
 
 # Enable offline mode to avoid Galaxy API calls
 offline: true
