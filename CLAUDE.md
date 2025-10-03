@@ -225,6 +225,37 @@ The `ansible-playbook` command is required (comes with ansible), while `ansible-
 
 The script exits with code 0 on success, non-zero on failure, making it suitable for use in git hooks or CI pipelines.
 
+**Optional molecule tests:**
+```bash
+./test.sh --molecule
+```
+
+This runs molecule tests for roles that have molecule scenarios configured. Requires molecule and molecule-plugins[docker] to be installed. See `MOLECULE.md` for details.
+
+### Molecule Testing
+
+**Molecule** provides isolated role testing in Docker containers. See `MOLECULE.md` for complete documentation.
+
+**Quick start:**
+```bash
+pip install molecule molecule-plugins[docker]
+ansible-galaxy collection install community.docker ansible.posix
+cd roles/01_host_info
+molecule test
+```
+
+**Key files per role:**
+- `roles/<role>/molecule/default/molecule.yml` - Molecule configuration
+- `roles/<role>/molecule/default/converge.yml` - Playbook to apply the role
+- `roles/<role>/molecule/default/verify.yml` - Verification tests
+- `roles/<role>/molecule/default/README.md` - Role-specific testing docs
+
+**Test-friendly role design:**
+- Roles should be flexible for testing (e.g., skip OS-specific checks when `molecule_yml` is defined)
+- Use configurable variables instead of hardcoded paths (e.g., `ansible_facts_file`)
+- Handle missing dependencies gracefully (skip tasks rather than fail)
+- Document test requirements and assumptions
+
 ### AUR Package Installation
 
 AUR packages require a special setup because `makepkg` refuses to run as root:
