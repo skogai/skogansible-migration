@@ -135,8 +135,8 @@ AUR packages require a special setup because `makepkg` refuses to run as root.
   ansible.builtin.user:
     name: aur_builder
     create_home: yes
-    group: wheel
-
+    groups: wheel
+    append: yes
 - name: Allow the `aur_builder` user to run `sudo pacman` without a password
   become: true
   ansible.builtin.lineinfile:
