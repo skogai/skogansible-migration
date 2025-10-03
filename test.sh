@@ -1,0 +1,205 @@
+#!/usr/bin/env bash
+#
+# test.sh - Local testing script for Ansible configuration
+#
+# This script runs static analysis tests locally before pushing to GitHub.
+# It helps catch issues early in the development cycle.
+#
+# Usage:
+#   ./test.sh           Run all static analysis tests
+#   ./test.sh --check   Run tests + optional check mode (requires vault)
+#   ./test.sh --help    Show this help message
+
+set -e  # Exit on error
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to print colored messages
+print_step() {
+    echo -e "${BLUE}==>${NC} $1"
+}
+
+print_success() {
+    echo -e "${GREEN}✓${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}⚠${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}✗${NC} $1"
+}
+
+# Function to show usage
+show_usage() {
+    cat << EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Local testing script for Ansible configuration validation.
+
+OPTIONS:
+    --check     Run Ansible check mode after static tests (requires vault setup)
+    --help      Show this help message
+
+TESTS RUN:
+    1. Ansible syntax check
+    2. YAML linting (yamllint)
+    3. Ansible linting (ansible-lint)
+    4. Check mode (optional, with --check flag)
+
+REQUIREMENTS:
+    - ansible-playbook
+    - yamllint
+    - ansible-lint
+    - Ansible collections (from requirements.yml)
+
+Install missing tools:
+    pip install ansible ansible-lint yamllint
+    ansible-galaxy collection install -r requirements.yml
+
+EXAMPLES:
+    # Run all static tests (recommended before commit)
+    ./test.sh
+
+    # Run tests including check mode
+    ./test.sh --check
+
+EOF
+}
+
+# Parse command line arguments
+RUN_CHECK_MODE=false
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    show_usage
+    exit 0
+elif [[ "$1" == "--check" ]]; then
+    RUN_CHECK_MODE=true
+elif [[ -n "$1" ]]; then
+    print_error "Unknown option: $1"
+    echo "Run '$(basename "$0") --help' for usage information"
+    exit 1
+fi
+
+# Check for required tools
+print_step "Checking for required tools..."
+MISSING_TOOLS=()
+
+if ! command -v ansible-playbook &> /dev/null; then
+    MISSING_TOOLS+=("ansible-playbook")
+fi
+
+if ! command -v yamllint &> /dev/null; then
+    MISSING_TOOLS+=("yamllint")
+fi
+
+if ! command -v ansible-lint &> /dev/null; then
+    MISSING_TOOLS+=("ansible-lint")
+fi
+
+if [ ${#MISSING_TOOLS[@]} -gt 0 ]; then
+    print_error "Missing required tools: ${MISSING_TOOLS[*]}"
+    echo "Install with: pip install ansible ansible-lint yamllint"
+    exit 1
+fi
+
+print_success "All required tools found"
+echo ""
+
+# Check if Ansible collections are installed
+print_step "Checking for Ansible collections..."
+MISSING_COLLECTIONS=()
+for collection in "community.general" "kewlfft.aur" "ansible.posix"; do
+    if ! ansible-galaxy collection list 2>/dev/null | grep -q "$collection"; then
+        MISSING_COLLECTIONS+=("$collection")
+    fi
+done
+
+if [ ${#MISSING_COLLECTIONS[@]} -gt 0 ]; then
+    print_error "Missing required collections: ${MISSING_COLLECTIONS[*]}"
+    echo "Install with: ansible-galaxy collection install -r requirements.yml"
+    exit 1
+fi
+
+print_success "All required collections found"
+echo ""
+
+# Test 1: Ansible syntax check
+print_step "Running Ansible syntax check..."
+if ansible-playbook playbooks/all.yml --syntax-check; then
+    print_success "Ansible syntax check passed"
+else
+    print_error "Ansible syntax check failed"
+    exit 1
+fi
+echo ""
+
+# Test 2: YAML linting
+print_step "Running yamllint..."
+if yamllint .; then
+    print_success "YAML linting passed"
+else
+    print_error "YAML linting failed"
+    exit 1
+fi
+echo ""
+
+# Test 3: Ansible linting
+print_step "Running ansible-lint..."
+if ansible-lint playbooks/ roles/; then
+    print_success "Ansible linting passed"
+else
+    print_error "Ansible linting failed"
+    exit 1
+fi
+echo ""
+
+# Test 4: Optional check mode
+if [ "$RUN_CHECK_MODE" = true ]; then
+    print_step "Running Ansible check mode (dry run)..."
+    print_warning "This requires vault password file at: ~/.ssh/ansible-vault-password"
+    print_warning "And become password file at: ~/.ssh/ansible-become-password"
+    
+    # Check if vault files exist
+    if [[ ! -f ~/.ssh/ansible-vault-password ]]; then
+        print_error "Vault password file not found at ~/.ssh/ansible-vault-password"
+        print_warning "Skipping check mode test"
+        echo ""
+    elif [[ ! -f ~/.ssh/ansible-become-password ]]; then
+        print_error "Become password file not found at ~/.ssh/ansible-become-password"
+        print_warning "Skipping check mode test"
+        echo ""
+    else
+        if ansible-playbook \
+            --become-password-file ~/.ssh/ansible-become-password \
+            --vault-password-file ~/.ssh/ansible-vault-password \
+            playbooks/all.yml \
+            --check \
+            --diff; then
+            print_success "Check mode passed"
+        else
+            print_error "Check mode failed"
+            exit 1
+        fi
+        echo ""
+    fi
+fi
+
+# All tests passed
+echo ""
+print_success "All tests passed!"
+echo ""
+print_step "Summary:"
+echo "  ✓ Ansible syntax check"
+echo "  ✓ YAML linting"
+echo "  ✓ Ansible linting"
+if [ "$RUN_CHECK_MODE" = true ]; then
+    echo "  ✓ Check mode (dry run)"
+fi
+echo ""
+echo "Ready to commit and push!"
