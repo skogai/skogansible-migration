@@ -1,0 +1,37 @@
+---
+# Molecule verification playbook for 01_host_info role
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check that ansible_facts.yml was created
+      ansible.builtin.stat:
+        path: /ansible_facts.yml
+      register: facts_file
+
+    - name: Verify facts file exists
+      ansible.builtin.assert:
+        that:
+          - facts_file.stat.exists
+        fail_msg: "ansible_facts.yml file was not created"
+        success_msg: "ansible_facts.yml file exists"
+
+    - name: Display distribution for debugging
+      ansible.builtin.debug:
+        msg: "Running on: {{ ansible_distribution }}"
+
+    - name: Verify ansible_user_id fact is available
+      ansible.builtin.assert:
+        that:
+          - ansible_user_id is defined
+          - ansible_user_id | length > 0
+        fail_msg: "ansible_user_id fact is not available"
+        success_msg: "ansible_user_id fact is available: {{ ansible_user_id }}"
+
+    - name: Verify sudo_configured fact was set
+      ansible.builtin.assert:
+        that:
+          - sudo_configured is defined
+          - sudo_configured is boolean
+        fail_msg: "sudo_configured fact was not set properly"
+        success_msg: "sudo_configured fact was set: {{ sudo_configured }}"

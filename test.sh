@@ -27,24 +27,31 @@ TESTS_SKIPPED=0
 
 # Parse arguments
 RUN_CHECK_MODE=false
+RUN_MOLECULE=false
 for arg in "$@"; do
   case $arg in
     --check)
       RUN_CHECK_MODE=true
       shift
       ;;
+    --molecule)
+      RUN_MOLECULE=true
+      shift
+      ;;
     -h|--help)
       echo "Usage: $0 [OPTIONS]"
       echo ""
       echo "Options:"
-      echo "  --check    Include Ansible check mode (dry-run)"
-      echo "  -h, --help Show this help message"
+      echo "  --check      Include Ansible check mode (dry-run)"
+      echo "  --molecule   Run molecule tests for roles (requires molecule)"
+      echo "  -h, --help   Show this help message"
       echo ""
       echo "This script runs the same tests as CI:"
       echo "  1. Ansible syntax check"
       echo "  2. ansible-lint (if available)"
       echo "  3. yamllint (if available)"
       echo "  4. Ansible check mode (if --check flag is used)"
+      echo "  5. Molecule role tests (if --molecule flag is used)"
       exit 0
       ;;
     *)
@@ -205,6 +212,44 @@ if [ "$RUN_CHECK_MODE" = true ]; then
   else
     echo -e "${YELLOW}Vault or become password files not found, skipping check mode.${NC}"
     print_test_result "Check Mode" "SKIP"
+  fi
+fi
+
+# Test 5: Molecule Tests (optional)
+if [ "$RUN_MOLECULE" = true ]; then
+  print_test_header "Molecule Role Tests"
+  
+  if ! command_exists molecule; then
+    echo -e "${YELLOW}molecule is not installed. Install with: pip install molecule molecule-plugins[docker]${NC}"
+    print_test_result "Molecule Tests" "SKIP"
+  else
+    echo -e "${BLUE}Testing roles with Molecule...${NC}"
+    MOLECULE_FAILED=0
+    
+    # Find all roles with molecule scenarios
+    for role_dir in roles/*/molecule/default; do
+      if [ -d "$role_dir" ]; then
+        role_name=$(basename $(dirname $(dirname "$role_dir")))
+        echo ""
+        echo -e "${BLUE}Testing role: $role_name${NC}"
+        
+        cd "$(dirname $(dirname "$role_dir"))"
+        if molecule test --destroy=never 2>&1; then
+          echo -e "${GREEN}✓ $role_name molecule tests passed${NC}"
+        else
+          echo -e "${RED}✗ $role_name molecule tests failed${NC}"
+          MOLECULE_FAILED=1
+        fi
+        cd - > /dev/null
+      fi
+    done
+    
+    if [ $MOLECULE_FAILED -eq 0 ]; then
+      print_test_result "Molecule Tests" "PASS"
+    else
+      print_test_result "Molecule Tests" "FAIL"
+      exit 1
+    fi
   fi
 fi
 
