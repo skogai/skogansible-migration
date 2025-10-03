@@ -44,6 +44,7 @@ Contains sensitive environment variables. Protected by pre-tool-use hooks - cann
 ├── .env                # Protected environment variables
 ├── .hosts              # Inventory file (localhost)
 ├── run.sh              # Playbook execution script (ALWAYS use this)
+├── test.sh             # Local testing script (run before pushing)
 ├── requirements.yml    # Ansible collections requirements
 ├── playbooks/          # Ansible playbooks
 │   └── all.yml         # Main playbook
@@ -143,6 +144,50 @@ bash run.sh  # with run_in_background: true
 ```
 
 Then check output with `BashOutput` tool. This prevents long-running package installations from blocking the CLI.
+
+### Testing Locally
+
+**ALWAYS test your changes locally before pushing** using the test.sh script:
+
+```bash
+./test.sh
+```
+
+This runs the same checks as the GitHub Actions CI workflow:
+1. **Ansible syntax check** - Validates playbook syntax
+2. **ansible-lint** - Checks for best practices and potential issues
+3. **yamllint** - Validates YAML formatting
+
+**Optional check mode:**
+```bash
+./test.sh --check
+```
+
+This additionally runs Ansible in check mode (dry-run) to verify your changes would work on the target system without actually making changes. Requires vault and become password files to be configured.
+
+**What each test does:**
+
+- **Syntax Check**: Validates that all playbooks have valid Ansible syntax. Note that without collections installed, it will warn about missing modules but still pass for local development.
+
+- **ansible-lint**: Checks for Ansible best practices, security issues, and potential bugs. See `.ansible-lint` for configuration. Some rules are warnings only (won't fail the build).
+
+- **yamllint**: Ensures YAML files follow consistent formatting rules. See `.yamllint` for configuration.
+
+**Installing testing tools:**
+
+```bash
+pip install ansible-lint yamllint
+```
+
+The `ansible-playbook` command is required (comes with ansible), while `ansible-lint` and `yamllint` are optional but recommended. The script will warn if they're missing.
+
+**Interpreting results:**
+
+- ✓ Green checkmarks indicate passed tests
+- ✗ Red X marks indicate failed tests  
+- ⊘ Yellow marks indicate skipped tests (missing tool or configuration)
+
+The script exits with code 0 on success, non-zero on failure, making it suitable for use in git hooks or CI pipelines.
 
 ### AUR Package Installation
 

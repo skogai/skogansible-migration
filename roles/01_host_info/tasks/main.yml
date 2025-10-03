@@ -18,7 +18,7 @@
   ansible.builtin.stat:
     path: "{{ lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') }}"
   register: become_pass_file
-  when: lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') != ''
+  when: (lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') | default('')) | length > 0
 
 - name: Set sudo configuration status
   ansible.builtin.set_fact:

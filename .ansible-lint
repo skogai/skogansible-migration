@@ -1,37 +1,83 @@
 ---
 # ansible-lint configuration for skogansible
 # This is a centralized Ansible configuration directory, not a standard playbook repository
+#
+# Documentation: https://ansible-lint.readthedocs.io/
 
 # Exclude paths that shouldn't be linted
 exclude_paths:
-  - .cache/
-  - .collections/
-  - logs/
-  - .github/
-  - .git/
-  - ansible_facts.yml
+  - .cache/            # Ansible fact caching directory
+  - .collections/      # Ansible collections installation directory
+  - logs/              # Ansible execution logs
+  - .github/           # GitHub workflows and configuration
+  - .git/              # Git repository metadata
+  - ansible_facts.yml  # Generated facts file
 
 # Skip rules that don't apply to this repository structure
 skip_list:
   - role-name  # Our roles use numbered prefixes (01_host_info, 02_package_managers, etc.)
+               # This is intentional for ordering and organizational purposes
   - var-naming[no-role-prefix]  # Variables in config directory don't need role prefixes
+                                 # since this is a centralized configuration repo
   - yaml[line-length]  # Allow longer lines for readability in configuration
+                        # Some command lines and paths are naturally long
+  - name[casing]  # Allow flexible naming conventions for tasks
+                   # We prefer descriptive names over strict casing rules
 
-# Warn about these rules but don't fail
+# Warn about these rules but don't fail the linting process
 warn_list:
-  - experimental  # Warn about experimental features
+  - experimental  # Warn about experimental features without blocking
   - no-changed-when  # Warn when tasks don't set changed_when
+                      # Some tasks inherently always change (package installs, etc.)
   - risky-file-permissions  # Warn about file permissions but don't fail
+                             # The ansible_facts.yml file intentionally has default permissions
   - args[module]  # Warn about module args when using mock_modules
+                   # These warnings are expected for mocked AUR and pacman modules
   - yaml[truthy]  # Warn about truthy values (yes/no vs true/false) but don't fail
+                   # Both forms are acceptable in Ansible
+  - latest[git]  # Warn about git modules without version pinning
+                  # For development tools, latest versions are acceptable
+
+# Enable specific checks for security and best practices
+enable_list:
+  - args                   # Check for invalid module arguments
+  - empty-string-compare   # Prefer 'length > 0' over '!= ""'
+  - no-log-password        # Ensure passwords are not logged (vault security)
+  - no-same-owner          # Check file ownership settings
+  - latest[git]  # Warn about using latest version in git repos but don't fail
 
 # Enable offline mode to avoid Galaxy API calls
+# This repository is self-contained and doesn't need external dependencies during linting
 offline: true
 
 # Mock modules that aren't available in offline mode
+# These are AUR-specific modules that require the collection to be fully installed
 mock_modules:
-  - kewlfft.aur.aur
-  - community.general.pacman
+  - kewlfft.aur.aur           # AUR package manager module
+  - community.general.pacman  # Arch Linux package manager module
 
 # Use the default profile (min, basic, moderate, safety, shared, or production)
+# null means no specific profile, use individual rule configurations
 profile: null
+
+# Verbosity level (0-2)
+# 1 provides a good balance of information without overwhelming output
+verbosity: 1
+
+# Intentional Rule Skip Justifications:
+# =====================================
+#
+# risky-file-permissions (warning only):
+#   - roles/01_host_info/tasks/main.yml - ansible_facts.yml file
+#     The generated facts file doesn't need strict permissions as it contains
+#     non-sensitive system information
+#
+# args[module] (warning only):
+#   - roles/02_package_managers/tasks/main.yml - AUR and pacman modules
+#     These warnings are expected because the modules are mocked for offline linting
+#     The actual modules support these parameters when running playbooks
+#
+# latest[git] (warning only):
+#   - roles/04_shell_config/tasks/main.yml - zsh plugin repositories
+#     For development environment plugins, using latest versions is acceptable
+#     These are not production services requiring version pinning
