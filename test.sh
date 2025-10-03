@@ -71,9 +71,9 @@ print_test_header() {
 print_test_result() {
   local test_name=$1
   local result=$2
-  
+
   TESTS_RUN=$((TESTS_RUN + 1))
-  
+
   if [ "$result" == "PASS" ]; then
     echo -e "${GREEN}✓ $test_name: PASSED${NC}"
     TESTS_PASSED=$((TESTS_PASSED + 1))
@@ -187,11 +187,11 @@ if [ "$RUN_CHECK_MODE" = true ]; then
   print_test_header "Ansible Check Mode (dry-run)"
   echo -e "${YELLOW}Note: This requires proper vault and become password configuration.${NC}"
   echo -e "${YELLOW}Skipping if vault files are not available.${NC}"
-  
+
   # Check if vault password file exists
   VAULT_FILE="/home/skogix/.ssh/ansible-vault-password"
   BECOME_FILE="/home/skogix/.ssh/ansible-become-password"
-  
+
   if [ -f "$VAULT_FILE" ] && [ -f "$BECOME_FILE" ]; then
     if ansible-playbook --check \
       --become-password-file "$BECOME_FILE" \

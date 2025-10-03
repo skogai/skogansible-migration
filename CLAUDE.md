@@ -145,6 +145,42 @@ bash run.sh  # with run_in_background: true
 
 Then check output with `BashOutput` tool. This prevents long-running package installations from blocking the CLI.
 
+### Pre-commit Hooks
+
+**Automated testing before every commit** using pre-commit hooks:
+
+```bash
+# Install pre-commit (one-time setup)
+pip install pre-commit
+
+# Install hooks in the repository (one-time setup)
+pre-commit install
+
+# Hooks now run automatically on every commit
+# To bypass hooks if needed: git commit --no-verify
+```
+
+The pre-commit hooks run automatically before each commit and include:
+1. **yamllint** - YAML file linting
+2. **ansible-lint** - Ansible best practices checking
+3. **ansible-syntax-check** - Playbook syntax validation
+4. **trailing-whitespace** - Auto-fixes trailing spaces
+5. **end-of-file-fixer** - Auto-fixes missing newlines at EOF
+6. **check-merge-conflict** - Detects merge conflict markers
+7. **mixed-line-ending** - Auto-fixes line endings (LF)
+
+**Manual run of pre-commit hooks:**
+```bash
+# Run on all files
+pre-commit run --all-files
+
+# Run on staged files only
+pre-commit run
+
+# Run specific hook
+pre-commit run ansible-lint
+```
+
 ### Testing Locally
 
 **ALWAYS test your changes locally before pushing** using the test.sh script:
@@ -184,7 +220,7 @@ The `ansible-playbook` command is required (comes with ansible), while `ansible-
 **Interpreting results:**
 
 - ✓ Green checkmarks indicate passed tests
-- ✗ Red X marks indicate failed tests  
+- ✗ Red X marks indicate failed tests
 - ⊘ Yellow marks indicate skipped tests (missing tool or configuration)
 
 The script exits with code 0 on success, non-zero on failure, making it suitable for use in git hooks or CI pipelines.
