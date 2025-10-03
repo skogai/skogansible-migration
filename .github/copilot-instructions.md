@@ -143,7 +143,7 @@ AUR packages require a special setup because `makepkg` refuses to run as root.
     path: /etc/sudoers.d/11-install-aur_builder
     line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
     create: yes
-    mode: 0644
+    mode: 0440
     validate: "visudo -cf %s"
 
 - name: Install AUR packages
