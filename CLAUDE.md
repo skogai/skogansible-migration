@@ -44,6 +44,7 @@ Contains sensitive environment variables. Protected by pre-tool-use hooks - cann
 ├── .env                # Protected environment variables
 ├── .hosts              # Inventory file (localhost)
 ├── run.sh              # Playbook execution script (ALWAYS use this)
+├── test.sh             # Local testing script (static analysis)
 ├── requirements.yml    # Ansible collections requirements
 ├── playbooks/          # Ansible playbooks
 │   └── all.yml         # Main playbook
@@ -186,6 +187,34 @@ AUR packages require a special setup because `makepkg` refuses to run as root:
 ```
 
 **Important:** `become` and `become_user` are task-level directives, NOT module parameters. Always place them at the task level, before the module name.
+
+### Testing Locally
+
+**ALWAYS use test.sh for local validation before pushing:**
+```bash
+./test.sh
+```
+
+**What it checks:**
+1. Required tools (ansible-playbook, yamllint, ansible-lint)
+2. Required collections (community.general, kewlfft.aur, ansible.posix)
+3. Ansible syntax (--syntax-check)
+4. YAML linting (yamllint)
+5. Ansible best practices (ansible-lint)
+6. Optional: Check mode dry-run (with --check flag)
+
+**Setup requirements (first time only):**
+```bash
+pip install ansible ansible-lint yamllint
+ansible-galaxy collection install -r requirements.yml
+```
+
+**For check mode testing:**
+```bash
+./test.sh --check  # Requires vault and become password files
+```
+
+**Note:** The test.sh script performs static analysis only by default. It does NOT execute the playbook unless --check flag is used.
 
 ### Assumptions to Avoid
 
