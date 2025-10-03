@@ -266,6 +266,44 @@ if [ "$RUN_MOLECULE" = true ]; then
   fi
 fi
 
+# Test 5: Molecule Tests (optional)
+if [ "$RUN_MOLECULE" = true ]; then
+  print_test_header "Molecule Role Tests"
+  
+  if ! command_exists molecule; then
+    echo -e "${YELLOW}molecule is not installed. Install with: pip install molecule molecule-plugins[docker]${NC}"
+    print_test_result "Molecule Tests" "SKIP"
+  else
+    echo -e "${BLUE}Testing roles with Molecule...${NC}"
+    MOLECULE_FAILED=0
+    
+    # Find all roles with molecule scenarios
+    for role_dir in roles/*/molecule/default; do
+      if [ -d "$role_dir" ]; then
+        role_name=$(basename $(dirname $(dirname "$role_dir")))
+        echo ""
+        echo -e "${BLUE}Testing role: $role_name${NC}"
+        
+        cd "$(dirname $(dirname "$role_dir"))"
+        if molecule test --destroy=never 2>&1; then
+          echo -e "${GREEN}✓ $role_name molecule tests passed${NC}"
+        else
+          echo -e "${RED}✗ $role_name molecule tests failed${NC}"
+          MOLECULE_FAILED=1
+        fi
+        cd - > /dev/null
+      fi
+    done
+    
+    if [ $MOLECULE_FAILED -eq 0 ]; then
+      print_test_result "Molecule Tests" "PASS"
+    else
+      print_test_result "Molecule Tests" "FAIL"
+      exit 1
+    fi
+  fi
+fi
+
 # Print summary
 echo ""
 print_success "All tests passed!"
