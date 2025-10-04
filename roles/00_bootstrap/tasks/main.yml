@@ -1,0 +1,42 @@
+---
+# Bootstrap role - initial system setup for archinstaller-based systems
+# This role creates the main user and configures basic sudo access
+
+- name: Ensure wheel group exists
+  ansible.builtin.group:
+    name: wheel
+    state: present
+
+- name: Load user configuration
+  ansible.builtin.include_vars:
+    file: "{{ playbook_dir }}/../vars/user.yml"
+
+- name: Create primary user ({{ user.name }})
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    comment: "{{ user.full_name }}"
+    shell: "{{ user.shell }}"
+    groups: "{{ user.additional_groups }}"
+    append: yes
+    create_home: yes
+    state: present
+
+- name: Configure sudo for wheel group
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/10-wheel-group
+    line: "%wheel ALL=(ALL:ALL) ALL"
+    create: yes
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Allow wheel group to use sudo without password for pacman
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/10-wheel-group
+    line: "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/pacman"
+    create: yes
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Display bootstrap completion status
+  ansible.builtin.debug:
+    msg: "Bootstrap complete - user {{ user.name }} created with sudo access"
