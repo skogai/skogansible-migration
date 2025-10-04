@@ -2,13 +2,14 @@
 - name: Save ansible facts to file
   ansible.builtin.copy:
     content: "{{ ansible_facts | to_nice_yaml }}"
-    dest: "{{ playbook_dir }}/../ansible_facts.yml"
+    dest: "{{ ansible_facts_file | default(playbook_dir ~ '/../ansible_facts.yml') }}"
 
 - name: Check distribution is supported
   ansible.builtin.assert:
     that: ansible_distribution == "Archlinux"
     fail_msg: "Distribution '{{ ansible_distribution }}' is not supported."
     success_msg: "I run Arch, btw"
+  when: not (molecule_yml is defined)
 
 - name: Display current user
   ansible.builtin.debug:

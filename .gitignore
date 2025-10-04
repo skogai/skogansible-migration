@@ -8,3 +8,7 @@ galaxy_cache
 galaxy_token
 .cache
 .ansible/
+# Molecule
+.molecule/
+__pycache__/
+*.pyc
