@@ -6,15 +6,14 @@
     group: wheel
 
 - name: Allow the `aur_builder` user to run `sudo pacman` without a password
-  become: true
   ansible.builtin.lineinfile:
+    become_user: skogix
     path: /etc/sudoers.d/11-install-aur_builder
     line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
     validate: /usr/sbin/visudo -cf %s
     create: yes
     mode: "0440"
 - name: Ensure yay is installed
-  become: true
   become_user: aur_builder
   kewlfft.aur.aur:
     name: yay
@@ -31,7 +30,6 @@
     state: present
 
 - name: Install AUR packages
-  become: true
   become_user: aur_builder
   kewlfft.aur.aur:
     name: "{{ aur_packages }}"
