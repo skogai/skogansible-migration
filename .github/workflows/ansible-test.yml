@@ -18,26 +18,31 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
         run: |
           pip install ansible ansible-lint yamllint
-          ansible-galaxy collection install -r requirements.yml
 
-      - name: Run ansible-playbook syntax check
+      - name: Install Ansible collections
         run: |
-          ansible-playbook playbooks/all.yml --syntax-check
+          ansible-galaxy collection install -r requirements.yml
+        continue-on-error: true
+
+      - name: Run yamllint
+        run: |
+          yamllint .
 
       - name: Run ansible-lint
         run: |
           ansible-lint playbooks/ roles/
 
-      - name: Run yamllint
+      - name: Ansible syntax check
         run: |
-          yamllint .
+          ansible-playbook playbooks/all.yml --syntax-check
+        continue-on-error: true

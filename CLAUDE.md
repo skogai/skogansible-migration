@@ -145,6 +145,117 @@ bash run.sh  # with run_in_background: true
 
 Then check output with `BashOutput` tool. This prevents long-running package installations from blocking the CLI.
 
+### Pre-commit Hooks
+
+**Automated testing before every commit** using pre-commit hooks:
+
+```bash
+# Install pre-commit (one-time setup)
+pip install pre-commit
+
+# Install hooks in the repository (one-time setup)
+pre-commit install
+
+# Hooks now run automatically on every commit
+# To bypass hooks if needed: git commit --no-verify
+```
+
+The pre-commit hooks run automatically before each commit and include:
+1. **yamllint** - YAML file linting
+2. **ansible-lint** - Ansible best practices checking
+3. **ansible-syntax-check** - Playbook syntax validation
+4. **trailing-whitespace** - Auto-fixes trailing spaces
+5. **end-of-file-fixer** - Auto-fixes missing newlines at EOF
+6. **check-merge-conflict** - Detects merge conflict markers
+7. **mixed-line-ending** - Auto-fixes line endings (LF)
+
+**Manual run of pre-commit hooks:**
+```bash
+# Run on all files
+pre-commit run --all-files
+
+# Run on staged files only
+pre-commit run
+
+# Run specific hook
+pre-commit run ansible-lint
+```
+
+### Testing Locally
+
+**ALWAYS test your changes locally before pushing** using the test.sh script:
+
+```bash
+./test.sh
+```
+
+This runs the same checks as the GitHub Actions CI workflow:
+1. **Ansible syntax check** - Validates playbook syntax
+2. **ansible-lint** - Checks for best practices and potential issues
+3. **yamllint** - Validates YAML formatting
+
+**Optional check mode:**
+```bash
+./test.sh --check
+```
+
+This additionally runs Ansible in check mode (dry-run) to verify your changes would work on the target system without actually making changes. Requires vault and become password files to be configured.
+
+**What each test does:**
+
+- **Syntax Check**: Validates that all playbooks have valid Ansible syntax. Note that without collections installed, it will warn about missing modules but still pass for local development.
+
+- **ansible-lint**: Checks for Ansible best practices, security issues, and potential bugs. See `.ansible-lint` for configuration. Some rules are warnings only (won't fail the build).
+
+- **yamllint**: Ensures YAML files follow consistent formatting rules. See `.yamllint` for configuration.
+
+**Installing testing tools:**
+
+```bash
+pip install ansible-lint yamllint
+```
+
+The `ansible-playbook` command is required (comes with ansible), while `ansible-lint` and `yamllint` are optional but recommended. The script will warn if they're missing.
+
+**Interpreting results:**
+
+- ✓ Green checkmarks indicate passed tests
+- ✗ Red X marks indicate failed tests
+- ⊘ Yellow marks indicate skipped tests (missing tool or configuration)
+
+The script exits with code 0 on success, non-zero on failure, making it suitable for use in git hooks or CI pipelines.
+
+**Optional molecule tests:**
+```bash
+./test.sh --molecule
+```
+
+This runs molecule tests for roles that have molecule scenarios configured. Requires molecule and molecule-plugins[docker] to be installed. See `MOLECULE.md` for details.
+
+### Molecule Testing
+
+**Molecule** provides isolated role testing in Docker containers. See `MOLECULE.md` for complete documentation.
+
+**Quick start:**
+```bash
+pip install molecule molecule-plugins[docker]
+ansible-galaxy collection install community.docker ansible.posix
+cd roles/01_host_info
+molecule test
+```
+
+**Key files per role:**
+- `roles/<role>/molecule/default/molecule.yml` - Molecule configuration
+- `roles/<role>/molecule/default/converge.yml` - Playbook to apply the role
+- `roles/<role>/molecule/default/verify.yml` - Verification tests
+- `roles/<role>/molecule/default/README.md` - Role-specific testing docs
+
+**Test-friendly role design:**
+- Roles should be flexible for testing (e.g., skip OS-specific checks when `molecule_yml` is defined)
+- Use configurable variables instead of hardcoded paths (e.g., `ansible_facts_file`)
+- Handle missing dependencies gracefully (skip tasks rather than fail)
+- Document test requirements and assumptions
+
 ### AUR Package Installation
 
 AUR packages require a special setup because `makepkg` refuses to run as root:

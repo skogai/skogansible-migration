@@ -3,7 +3,7 @@ extends: default
 
 rules:
   line-length:
-    max: 160
+    max: 120
     level: warning
 
   indentation:
@@ -13,6 +13,18 @@ rules:
   comments:
     min-spaces-from-content: 1
 
+  # ansible-lint requires comments-indentation to be disabled
+  comments-indentation: false
+
+  # ansible-lint requires braces.max-spaces-inside to be 1
+  braces:
+    max-spaces-inside: 1
+
+  # ansible-lint requires octal-values rules
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
+
   truthy:
     allowed-values: ['true', 'false', 'yes', 'no']
 
@@ -21,3 +33,4 @@ ignore: |
   .collections/
   logs/
   .github/
+  .direnv/
