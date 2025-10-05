@@ -30,6 +30,7 @@
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    version: master
     depth: 1
     update: false
 
@@ -37,6 +38,7 @@
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    version: master
     depth: 1
     update: false
 
