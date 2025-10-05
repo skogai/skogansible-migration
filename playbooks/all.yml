@@ -4,6 +4,7 @@
   connection: local
 
   roles:
+    - 00_bootstrap
     - 01_host_info
     - 02_package_managers
     - 03_dotfiles
