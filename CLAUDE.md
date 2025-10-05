@@ -6,9 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-This is the centralized Ansible configuration directory (`~/.ansible`) that provides global settings and paths for all Ansible operations on this system.
+This is a consolidated Ansible repository that combines multiple projects into a unified structure for Arch Linux system configuration and management.
 
-**This is NOT a playbook repository.** It contains configuration files that define how Ansible behaves system-wide.
+**Features:**
+- Numbered roles (01-07) for sequential system setup
+- Named roles for specific configurations (cloud, docker, dotfiles, etc.)
+- Comprehensive SkogAI core setup for Arch Linux
+- Multiple playbook options for different use cases
 
 ---
 
@@ -38,19 +42,42 @@ Contains sensitive environment variables. Protected by pre-tool-use hooks - cann
 ## Directory Structure
 
 ```
-~/.ansible/
-├── ansible.cfg          # Global Ansible configuration
+skogansible/
+├── ansible.cfg          # Ansible configuration
 ├── .envrc              # direnv environment setup
 ├── .env                # Protected environment variables
 ├── .hosts              # Inventory file (localhost)
 ├── run.sh              # Playbook execution script (ALWAYS use this)
 ├── test.sh             # Local testing script (run before pushing)
-├── requirements.yml    # Ansible collections requirements
+├── requirements.yml    # Ansible collections (includes community.crypto)
 ├── playbooks/          # Ansible playbooks
-│   └── all.yml         # Main playbook
+│   ├── all.yml         # Original numbered roles (01-07)
+│   ├── site.yml        # NEW: Unified playbook (numbered + named roles)
+│   ├── skogai.yml      # NEW: Comprehensive Arch setup
+│   └── update.yml      # NEW: Quick system maintenance
+├── tasks/              # Reusable task files
+│   ├── bootstrap.yml   # Initial system setup
+│   ├── maintenance.yml # System update tasks
+│   └── skogai-core.yml # Comprehensive Arch configuration
 ├── roles/              # Ansible roles
 │   ├── 01_host_info/   # System info and sudo checks
-│   └── 02_package_managers/  # Package installation (pacman + AUR)
+│   ├── 02_package_managers/  # Package installation (pacman + AUR)
+│   ├── 03_dotfiles/    # Dotfile management (numbered version)
+│   ├── 04_shell_config/# Shell configuration
+│   ├── 05_systemd_services/# Service management
+│   ├── 06_ai_tools/    # AI tool setup
+│   ├── 07_development/ # Development tools
+│   ├── cloud/          # Cloud CLI tools (named version)
+│   ├── dock/           # Docker configuration
+│   ├── dotfiles/       # Dotfile management (named version)
+│   ├── fonts/          # Font installation
+│   ├── git/            # Git configuration and repos
+│   ├── packages/       # Cross-platform package management
+│   ├── ssh/            # SSH configuration and hardening
+│   ├── system/         # System-level configuration
+│   ├── tmux/           # Tmux configuration
+│   ├── vim/            # Vim configuration
+│   └── zsh/            # Zsh shell setup
 ├── vars/               # Variable files
 │   ├── packages.yml    # Package lists (packages, aur_packages)
 │   └── user.yml        # User configuration
@@ -59,6 +86,22 @@ Contains sensitive environment variables. Protected by pre-tool-use hooks - cann
 ├── .cache/             # Fact caching storage
 └── .claude/            # Claude Code hooks
 ```
+
+---
+
+## Consolidation History (October 2024)
+
+This repository was created by consolidating multiple Ansible projects:
+
+1. **Original skogansible**: Clean numbered roles (01-07) for sequential setup
+2. **Merged ansible project**: Added named roles (cloud, dock, dotfiles, etc.)
+3. **SkogAI core**: Comprehensive Arch Linux setup with 40+ packages and system optimizations
+
+The consolidation preserved backward compatibility while adding flexibility through:
+- Multiple playbook entry points
+- Tag-based selective execution
+- Variable-controlled role groups (numbered vs named)
+- Reusable task files for common operations
 
 ---
 
@@ -131,10 +174,34 @@ The vault-encrypted file works as-is when `ANSIBLE_VAULT_PASSWORD_FILE` is set, 
 
 ### Running Playbooks
 
-**ALWAYS use run.sh for playbook execution:**
-```bash
-bash run.sh
-```
+**Available Playbooks:**
+
+1. **`playbooks/all.yml`** - Original numbered roles (01-07) for sequential setup
+   ```bash
+   bash run.sh playbooks/all.yml
+   ```
+
+2. **`playbooks/site.yml`** - NEW: Unified playbook with all roles
+   ```bash
+   # Run everything
+   bash run.sh playbooks/site.yml
+
+   # Run only numbered roles
+   bash run.sh playbooks/site.yml -e numbered=true -e named=false
+
+   # Run specific tags
+   bash run.sh playbooks/site.yml --tags dotfiles,ssh
+   ```
+
+3. **`playbooks/skogai.yml`** - NEW: Comprehensive Arch Linux setup
+   ```bash
+   bash run.sh playbooks/skogai.yml --become
+   ```
+
+4. **`playbooks/update.yml`** - NEW: Quick system maintenance
+   ```bash
+   bash run.sh playbooks/update.yml
+   ```
 
 **NEVER run ansible-playbook directly.** The `run.sh` script properly handles vault and become password files.
 
