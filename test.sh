@@ -74,6 +74,10 @@ print_error() {
     echo -e "${RED}✗${NC} $1"
 }
 
+print_step() {
+    echo -e "${BLUE}▸${NC} $1"
+}
+
 # Function to show usage
 show_usage() {
     cat << EOF
