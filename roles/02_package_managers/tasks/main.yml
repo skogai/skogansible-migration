@@ -1,9 +1,10 @@
 ---
 - name: Create the `aur_builder` user
+  become: true
   ansible.builtin.user:
     name: aur_builder
     create_home: yes
-    group: wheel
+    groups: wheel
 
 - name: Allow the `aur_builder` user to run `sudo pacman` without a password
   become: true
@@ -26,6 +27,7 @@
     file: "{{ playbook_dir }}/../vars/packages.yml"
 
 - name: Install pacman packages
+  become: true
   community.general.pacman:
     name: "{{ packages }}"
     state: present
