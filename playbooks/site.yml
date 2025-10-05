@@ -1,0 +1,127 @@
+---
+# Main Ansible playbook - Combines numbered and named roles
+# Usage: ansible-playbook playbooks/site.yml [options]
+
+- name: "Arch Linux Complete Setup"
+  hosts: "{{ target_hosts | default('localhost') }}"
+  connection: "{{ connection_type | default('local') }}"
+  become: "{{ become_enabled | default(false) }}"
+
+  vars:
+    run_numbered_roles: "{{ numbered | default(true) }}"
+    run_named_roles: "{{ named | default(true) }}"
+    run_skogai_core: "{{ skogai | default(false) }}"
+
+  tasks:
+    # SkogAI Core - Comprehensive setup (optional)
+    - name: "Run SkogAI core setup"
+      import_tasks: ../tasks/skogai-core.yml
+      when: run_skogai_core
+      tags: skogai
+
+    # Numbered roles (01-07) - Sequential setup
+    - block:
+        - name: "Host information"
+          import_role:
+            name: "01_host_info"
+          tags: host_info
+
+        - name: "Package managers"
+          import_role:
+            name: "02_package_managers"
+          tags: package_managers
+
+        - name: "Dotfiles"
+          import_role:
+            name: "03_dotfiles"
+          tags: dotfiles_numbered
+
+        - name: "Shell configuration"
+          import_role:
+            name: "04_shell_config"
+          tags: shell_config
+
+        - name: "Systemd services"
+          import_role:
+            name: "05_systemd_services"
+          tags: systemd
+
+        - name: "AI tools"
+          import_role:
+            name: "06_ai_tools"
+          tags: ai_tools
+
+        - name: "Development tools"
+          import_role:
+            name: "07_development"
+          tags: development
+      when: run_numbered_roles
+
+    # Named roles - Specific configurations
+    - block:
+        - name: "Packages management"
+          import_role:
+            name: "packages"
+          tags: packages
+          when: "'packages' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "System configuration"
+          import_role:
+            name: "system"
+          tags: system
+          when: "'system' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Dotfiles (named)"
+          import_role:
+            name: "dotfiles"
+          tags: dotfiles_named
+          when: "'dotfiles_named' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "SSH configuration"
+          import_role:
+            name: "ssh"
+          tags: ssh
+          when: "'ssh' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Git configuration"
+          import_role:
+            name: "git"
+          tags: git
+          when: "'git' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Font management"
+          import_role:
+            name: "fonts"
+          tags: fonts
+          when: "'fonts' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Docker setup"
+          import_role:
+            name: "dock"
+          tags: dock
+          when: "'dock' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Vim configuration"
+          import_role:
+            name: "vim"
+          tags: vim
+          when: "'vim' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Cloud tools"
+          import_role:
+            name: "cloud"
+          tags: cloud
+          when: "'cloud' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Zsh configuration"
+          import_role:
+            name: "zsh"
+          tags: zsh
+          when: "'zsh' in ansible_run_tags or ansible_run_tags == ['all']"
+
+        - name: "Tmux configuration"
+          import_role:
+            name: "tmux"
+          tags: tmux
+          when: "'tmux' in ansible_run_tags or ansible_run_tags == ['all']"
+      when: run_named_roles

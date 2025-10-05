@@ -1,0 +1,4 @@
+---
+- name: vim placeholder
+  debug:
+    msg: "To be implemented: vim role"

@@ -1,0 +1,4 @@
+---
+- name: fonts placeholder
+  debug:
+    msg: "To be implemented: fonts role"

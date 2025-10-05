@@ -1,0 +1,11 @@
+---
+# Quick system update playbook
+# Usage: ansible-playbook playbooks/update.yml
+
+- name: "System Update"
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Run maintenance tasks
+      import_tasks: ../tasks/maintenance.yml

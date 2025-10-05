@@ -4,5 +4,7 @@ collections:
     version: ">=1.5.0"
   - name: community.general
     version: ">=11.0.0"
+  - name: community.crypto
+    version: ">=2.0.0"
   - name: kewlfft.aur
     version: ">=0.11.0"

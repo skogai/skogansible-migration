@@ -1,0 +1,31 @@
+---
+# Bootstrap tasks - Initial system setup
+# Extracted from bootstrap.yml playbook
+
+- name: Update package database
+  become: yes
+  pacman:
+    update_cache: yes
+
+- name: Install essential packages
+  become: yes
+  pacman:
+    name:
+      - base-devel
+      - git
+      - python
+      - python-pip
+      - python-packaging
+    state: present
+
+- name: Ensure ansible dependencies are installed
+  become: yes
+  pacman:
+    name:
+      - ansible
+      - ansible-core
+    state: present
+
+- name: Check system information
+  debug:
+    msg: "Running on {{ ansible_distribution }} {{ ansible_distribution_version }}, kernel {{ ansible_kernel }}"
