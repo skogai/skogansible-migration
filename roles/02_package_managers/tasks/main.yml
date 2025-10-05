@@ -5,7 +5,6 @@
     name: aur_builder
     create_home: yes
     groups: wheel
-    append: yes
 
 - name: Allow the `aur_builder` user to run `sudo pacman` without a password
   become: true
