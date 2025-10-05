@@ -1,0 +1,12 @@
+---
+# SkogAI Core - Comprehensive Arch Linux setup
+# Usage: ansible-playbook playbooks/skogai.yml --become
+
+- name: "SkogAI Core Setup"
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Run SkogAI core tasks
+      import_tasks: ../tasks/skogai-core.yml

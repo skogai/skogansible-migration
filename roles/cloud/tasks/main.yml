@@ -1,0 +1,4 @@
+---
+- name: cloud placeholder
+  debug:
+    msg: "To be implemented: cloud role"
