@@ -219,24 +219,17 @@ Then check output with `BashOutput` tool. This prevents long-running package ins
 
 ### Pre-commit Hooks
 
-**Automated testing before every commit** using pre-commit hooks.
+**Automated testing before every commit** using pre-commit hooks:
 
-**Quick Setup (Recommended):**
 ```bash
-# Run the setup script (installs pre-commit and all hooks)
-./setup-precommit.sh
-```
-
-**Manual Setup:**
-```bash
-# 1. Install pre-commit
+# Install pre-commit (one-time setup)
 pip install pre-commit
 
-# 2. Install the git hooks
+# Install hooks in the repository (one-time setup)
 pre-commit install
 
-# 3. Install hook environments (downloads and sets up tools)
-pre-commit install-hooks
+# Hooks now run automatically on every commit
+# To bypass hooks if needed: git commit --no-verify
 ```
 
 The pre-commit hooks run automatically before each commit and include:
@@ -264,9 +257,6 @@ pre-commit run
 
 # Run specific hook
 pre-commit run ansible-lint
-
-# Bypass hooks if needed (use sparingly!)
-git commit --no-verify
 ```
 
 ### Testing Locally
