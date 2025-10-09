@@ -8,7 +8,7 @@
     upgrade: true
 
 - name: Install core packages
-  community.general.pacman:
+  pacman:
     update_cache: yes
     name:
       # - [ ] github-cli kitty firefox-extension-bitwarden-git rcm neovim bitwarden lsd argc-git zoxide gitflow-avh tree lazydocker lazygit xclip ansible python-pipx
