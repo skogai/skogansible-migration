@@ -1,0 +1,39 @@
+---
+# Molecule testing workflow - ADD THIS TO .github/workflows/ansible-test.yml
+#
+# Due to GitHub App permissions, Claude Code cannot modify workflow files directly.
+# Please manually add this job to your .github/workflows/ansible-test.yml file.
+#
+# Add this after the existing "ansible-test" job (around line 49):
+
+  molecule-test:
+    name: Molecule Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install ansible molecule 'molecule-plugins[docker]'
+
+      - name: Install Ansible collections
+        run: |
+          ansible-galaxy collection install -r requirements.yml
+          ansible-galaxy collection install -r roles/01_host_info/molecule/default/requirements.yml
+
+      - name: Start Docker
+        run: |
+          sudo systemctl start docker
+          sudo chmod 666 /var/run/docker.sock
+
+      - name: Run molecule test for 01_host_info
+        run: |
+          cd roles/01_host_info
+          molecule test
