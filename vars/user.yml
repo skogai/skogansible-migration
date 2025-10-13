@@ -6,7 +6,8 @@ user:
   name: skogix
   full_name: "Emil Skogsund"
   primary_group: users
-  additional_groups: docker,wheel,render,autologin,skogix
+  # additional_groups: docker,wheel,render,autologin,skogix
+  additional_groups: docker,wheel,render,skogix
   shell: /bin/zsh
   # See country list by running `reflector --list-countries`
   country: "Sweden"
