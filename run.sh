@@ -5,9 +5,10 @@
 # Example: ./run.sh playbooks/all.yml --check
 
 # Default to playbooks/all.yml if no playbook specified
-PLAYBOOK="${1:-playbooks/all.yml}"
-shift || true  # Remove first argument (playbook) from $@, or continue if no args
+# PLAYBOOK="${1:-playbooks/all.yml}"
+# shift || true  # Remove first argument (playbook) from $@, or continue if no args
 
 # Run ansible-playbook with configuration from ansible.cfg
 # The become and vault password files are now configured in ansible.cfg
-ansible-playbook "$PLAYBOOK" "$@"
+# ansible-playbook "$PLAYBOOK" "$@"
+ansible-playbook playbooks/all.yml

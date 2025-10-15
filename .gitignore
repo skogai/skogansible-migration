@@ -13,3 +13,4 @@ galaxy_token
 __pycache__/
 *.pyc
 tmp/molecule.8Jg-.default
+collections/ansible_collections
