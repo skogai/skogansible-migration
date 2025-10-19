@@ -1,0 +1,25 @@
+# Generated Ansible Playbook for template: setup-user
+- name: User Setup Playbook
+  hosts:
+    - all
+  tasks:
+    - name: Create user group
+      module: group
+      args:
+        name: "{{ group_name }}"
+        state: present
+    - name: Create user
+      module: user
+      args:
+        name: "{{ username }}"
+        group: "{{ group_name }}"
+        shell: "{{ user_shell }}"
+        createhome: true
+  vars:
+    username: testuser
+    group_name: ansible-group
+    user_shell: /bin/bash
+    shell: /bin/bash
+    groups:
+      - wheel
+      - docker

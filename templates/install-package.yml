@@ -1,0 +1,13 @@
+# Generated Ansible Playbook for template: install-package
+- name: Install Package Playbook
+  hosts:
+    - localhost
+  tasks:
+    - name: Install package_name
+      become: true
+      community.general.pacman:
+        name: "{{ package_name }}"
+        state: present
+  vars:
+    package_name: nginx
+    state: present

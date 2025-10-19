@@ -1,0 +1,27 @@
+# Generated Ansible Playbook for template: configure-service
+- name: Configure Service Playbook
+  hosts:
+    - all
+  tasks:
+    - name: Ensure service is installed
+      module: package
+      args:
+        name: "{{ service_name }}"
+        state: present
+    - name: Configure service
+      module: template
+      args:
+        src: "{{ config_template }}"
+        dest: "{{ config_path }}"
+    - name: Start and enable service
+      module: systemd
+      args:
+        name: "{{ service_name }}"
+        state: started
+        enabled: true
+  vars:
+    service_name: sshd
+    config_template: templates/service.conf.j2
+    config_path: /etc/httpd/conf/httpd.conf
+    state: started
+    enabled: true
