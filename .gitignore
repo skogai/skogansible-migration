@@ -14,3 +14,4 @@ __pycache__/
 *.pyc
 tmp/molecule.8Jg-.default
 collections/ansible_collections
+mcp/node_modules
