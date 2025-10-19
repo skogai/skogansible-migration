@@ -14,4 +14,45 @@ aur_packages:
   - tailscale
   - xclip
   - zsh
+  - atuin
+  - bat
+  - bitwarden-cli
+  - btop
+  - cloc
+  - diff-so-fancy
+  - difftastic
+  - eza
+  - fd
+  - fzf
+  - gdu
+  - gh
+  - git-delta
+  - glow
+  - graphviz
+  - jless
+  - jnv
+  - jq
+  - lazydocker
+  - lazygit
+  - mise
+  - most
+  - navi
+  - nb
+  - ncdu
+  - neovim
+  - parallel
+  - pipx
+  - plantuml
+  - ripgrep
+  - starship
+  - tmux
+  - tree
+  - vifm
+  - vim
+  - xdg-ninja
+  - xq
+  - yadm
+  - yank
+  - zoxide
+  - zplug
   # TODO: Add from: pacman -Qm | cut -d' ' -f1
