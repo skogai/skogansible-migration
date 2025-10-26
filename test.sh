@@ -204,32 +204,23 @@ echo ""
 # Test 4: Optional check mode
 if [ "$RUN_CHECK_MODE" = true ]; then
     print_step "Running Ansible check mode (dry run)..."
-    print_warning "This requires vault password file at: ~/.ssh/ansible-vault-password"
-    print_warning "And become password file at: ~/.ssh/ansible-become-password"
+    print_warning "This requires proper environment setup (.env and .envrc sourced)"
 
-    # Check if vault files exist
-    if [[ ! -f ~/.ssh/ansible-vault-password ]]; then
-        print_error "Vault password file not found at ~/.ssh/ansible-vault-password"
-        print_warning "Skipping check mode test"
-        echo ""
-    elif [[ ! -f ~/.ssh/ansible-become-password ]]; then
-        print_error "Become password file not found at ~/.ssh/ansible-become-password"
-        print_warning "Skipping check mode test"
-        echo ""
+    if ansible-playbook \
+        playbooks/all.yml \
+        --check \
+        --diff; then
+        print_success "Check mode passed"
     else
-        if ansible-playbook \
-            --become-password-file ~/.ssh/ansible-become-password \
-            --vault-password-file ~/.ssh/ansible-vault-password \
-            playbooks/all.yml \
-            --check \
-            --diff; then
-            print_success "Check mode passed"
-        else
-            print_error "Check mode failed"
-            exit 1
-        fi
+        print_error "Check mode failed"
         echo ""
+        print_warning "If privilege escalation failed, check:"
+        print_warning "  1. Are you in the correct directory?"
+        print_warning "  2. Is .envrc or .env properly sourced?"
+        print_warning "  3. Do you have sudo access configured?"
+        exit 1
     fi
+    echo ""
 fi
 
 # Test 5: Molecule Tests (optional)
