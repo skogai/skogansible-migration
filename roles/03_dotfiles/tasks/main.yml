@@ -9,11 +9,22 @@
     version: develop
     accept_hostkey: yes
     update: yes
+  ignore_errors: true
 
-- name: TODO - Run rcup to symlink dotfiles
-  ansible.builtin.debug:
-    msg: "TODO: Execute rcup to create dotfile symlinks"
+- name: Copy rcrc configuration to home directory
+  ansible.builtin.copy:
+    src: "{{ ansible_env.HOME }}/.dotfiles/rcrc"
+    dest: "{{ ansible_env.HOME }}/.rcrc"
+    remote_src: yes
+    mode: '0644'
 
-- name: TODO - Verify dotfile symlinks
+- name: Run rcup to symlink dotfiles
+  ansible.builtin.command:
+    cmd: rcup
+  register: rcup_result
+  changed_when: rcup_result.rc == 0
+
+- name: Display rcup results
   ansible.builtin.debug:
-    msg: "TODO: Verify critical dotfiles are properly symlinked (zshrc, gitconfig, etc.)"
+    var: rcup_result.stdout_lines
+  when: rcup_result.stdout_lines is defined and rcup_result.stdout_lines | length > 0

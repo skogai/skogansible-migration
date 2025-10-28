@@ -83,7 +83,6 @@
       # # - python-pip
       # # - python-setuptools
       # # - python-pexpect # child application control
-
 # - name: Disable need for password for yay
 #   lineinfile:
 #     path: /etc/sudoers.d/temp_allow_no_pswd_pacman
@@ -112,10 +111,10 @@
 #     path: /etc/sudoers.d/temp_allow_no_pswd_pacman
 #     state: absent
 #
-- name: Set yay options to cleanafter package installation
-  shell: yay -Y --answerclean All --removemake --cleanafter --save
-  args:
-    executable: /usr/bin/bash
+# - name: Set yay options to clean after package installation
+#   shell: yay -Y --answerclean All --save
+#   args:
+#     executable: /usr/bin/bash
 #
 # - name: Pacman - enable color
 #   lineinfile:

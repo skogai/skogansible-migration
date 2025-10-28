@@ -410,8 +410,122 @@ ansible-galaxy collection install -r requirements.yml
 
 **Note:** The test.sh script performs static analysis only by default. It does NOT execute the playbook unless --check flag is used.
 
+### Ansible Documentation - MANDATORY USAGE
+
+**CRITICAL: Claude Code MUST use `ansible-doc` for ALL module documentation lookups. NEVER guess module parameters or syntax.**
+
+You have **699 Ansible modules** installed locally with complete documentation. **ALWAYS** use `ansible-doc` before writing any Ansible task.
+
+**Required workflow for writing Ansible tasks:**
+
+1. **FIRST**: Look up the module documentation using `ansible-doc`
+2. **THEN**: Write the task using the exact syntax from the documentation
+3. **NEVER**: Guess parameters, assume syntax, or use outdated examples
+
+**Essential `ansible-doc` commands:**
+
+```bash
+# List all available modules (699 modules available)
+ansible-doc -l
+
+# Search for specific modules
+ansible-doc -l | grep systemd
+ansible-doc -l | grep user
+ansible-doc -l | grep copy
+
+# Get detailed documentation for a specific module (REQUIRED before using module)
+ansible-doc ansible.builtin.systemd
+ansible-doc ansible.builtin.user
+ansible-doc ansible.builtin.copy
+ansible-doc ansible.builtin.file
+ansible-doc ansible.builtin.lineinfile
+ansible-doc ansible.builtin.template
+
+# Collection modules (check these for community/AUR modules)
+ansible-doc community.general.pacman
+ansible-doc kewlfft.aur.aur
+ansible-doc community.crypto.openssh_keypair
+
+# List other plugin types
+ansible-doc -t lookup -l      # Lookup plugins
+ansible-doc -t callback -l    # Callback plugins
+ansible-doc -t filter -l      # Filter plugins
+```
+
+**Example workflow:**
+
+```bash
+# WRONG: Writing task without checking docs
+- name: Enable service
+  systemd:
+    name: myservice
+    # Missing required parameters! Will fail!
+
+# CORRECT: Check docs first
+$ ansible-doc ansible.builtin.systemd
+
+# Then write task with correct syntax
+- name: Enable service
+  ansible.builtin.systemd_service:
+    name: myservice
+    enabled: true
+    state: started
+```
+
+**Module documentation includes:**
+
+- **Required vs optional parameters** - Know what you MUST provide
+- **Parameter types** - string, bool, list, dict, etc.
+- **Default values** - What happens if you omit parameters
+- **Examples** - Real working code snippets
+- **Return values** - What data the module provides
+- **Platform support** - Linux/Darwin/Windows compatibility
+- **Version information** - When features were added/changed
+
+**Common modules you'll use (CHECK DOCS for each):**
+
+- `ansible.builtin.systemd_service` - Service management
+- `ansible.builtin.user` - User creation/management
+- `ansible.builtin.group` - Group management
+- `ansible.builtin.copy` - Copy files
+- `ansible.builtin.file` - File/directory operations
+- `ansible.builtin.lineinfile` - Edit single lines in files
+- `ansible.builtin.template` - Template files with Jinja2
+- `ansible.builtin.command` - Run commands
+- `ansible.builtin.shell` - Run shell commands
+- `ansible.builtin.git` - Git repository operations
+- `ansible.builtin.package` - Generic package management
+- `community.general.pacman` - Arch Linux package manager
+- `kewlfft.aur.aur` - AUR package installation
+
+**When implementing a new role:**
+
+```bash
+# Example: Implementing role 05_systemd_services
+
+# STEP 1: Check what systemd module can do
+ansible-doc ansible.builtin.systemd_service
+
+# STEP 2: Check if you need file operations
+ansible-doc ansible.builtin.file
+
+# STEP 3: Check if you need to symlink
+ansible-doc ansible.builtin.file  # Look for 'state: link'
+
+# STEP 4: Write tasks using documented parameters only
+```
+
+**This is NOT optional. Using ansible-doc is MANDATORY for:**
+
+- Writing new tasks
+- Modifying existing tasks
+- Debugging task failures
+- Understanding module capabilities
+- Ensuring compatibility with your Ansible version (2.19.3)
+
 ### Assumptions to Avoid
 
 - **Never assume it's a system/kernel/Ansible bug** - always check our configuration first
-- **Never check external documentation** for basic functionality issues - investigate locally first
+- **Never guess module syntax** - ALWAYS use `ansible-doc` first
+- **Never check external documentation** for basic functionality issues - use `ansible-doc` locally first
 - **Never add unnecessary become checks** - check environment configuration, not actual privilege escalation
