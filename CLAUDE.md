@@ -20,18 +20,18 @@ This is a consolidated Ansible repository that combines multiple projects into a
 
 ### ansible.cfg
 
-Primary Ansible configuration located at `/home/skogix/.ansible/ansible.cfg`:
+Primary Ansible configuration in repository root:
 
 - **Collections path**: `~/.ansible/.collections` - Custom collection installation location
 - **Fact caching**: Uses `community.general.yaml` backend with cache at `~/.ansible/.cache`
-- **Inventory**: References `.hosts` file (not currently present in this directory)
+- **Inventory**: References `.hosts` file in repository root
 - **Roles path**: `roles/` directory (relative to where ansible is executed)
 - **Working directories**: `/tmp/.ansible` for both local and remote temporary files
-- **Vault password**: Commented out, located at `~/.ssh/ansible-vault-password`
+- **Privilege escalation**: Configured via environment variables (see "Privilege Escalation" section)
 
 ### .envrc
 
-Manages environment through direnv with `use_ansible` directive.
+Manages environment through direnv - sources `.env` and exports additional configuration.
 
 ### .env
 
@@ -120,7 +120,7 @@ This configuration affects all Ansible commands run on the system. When working 
 ## Important Notes
 
 - **Security**: The `.env` file contains sensitive data and is protected by pre-tool-use hooks
-- **Vault**: Vault password file at `~/.ssh/ansible-vault-password` is used to decrypt become password
+- **Environment**: Environment variables are loaded via `.envrc` (uses direnv) which sources `.env`
 - **Force handlers**: Enabled globally (`force_handlers = true`) - handlers run even when tasks fail
 - **Diff mode**: Always enabled (`always = yes`) - shows file changes before applying
 - **Color output**: Forced on (`force_color = true`) for better readability
@@ -159,18 +159,23 @@ This configuration affects all Ansible commands run on the system. When working 
     sudo_configured: "{{ become_pass_file.stat.exists | default(false) }}"
 ```
 
-### Vault Setup
+### Privilege Escalation
 
-Become password is stored vault-encrypted at `/home/skogix/.ssh/ansible-become-password`:
-- Vault password file: `/home/skogix/.ssh/ansible-vault-password` (plaintext)
-- Become password file: `/home/skogix/.ssh/ansible-become-password` (vault-encrypted)
-- Environment variables set in `.env` and loaded via `.envrc`
+If a playbook aborts due to privilege issues, one of these is true:
 
-Ansible 2.12+ supports `ANSIBLE_BECOME_PASSWORD_FILE` which can point to:
-1. A plaintext file with the password
-2. An executable that outputs the password to stdout
+1. **You should not run it** - The playbook requires privileges you don't have
+2. **Wrong directory** - You're not in the correct folder (should be in repository root)
+3. **Environment not loaded** - `.direnv` or `.env` is broken - ask the user to:
+   - Run `direnv allow` to enable direnv
+   - Source the file manually: `source .env`
+   - Check that required environment variables are set
+4. **You should not run it** - The task genuinely requires different permissions
 
-The vault-encrypted file works as-is when `ANSIBLE_VAULT_PASSWORD_FILE` is set, allowing Ansible to automatically decrypt it.
+**Environment variables needed** (set in `.env`):
+- `ANSIBLE_BECOME_PASSWORD_FILE` - Path to file containing become password
+- `ANSIBLE_VAULT_PASSWORD_FILE` - Path to file containing vault password
+
+Ansible will use these environment variables automatically when they're set.
 
 ### Running Playbooks
 
@@ -178,53 +183,65 @@ The vault-encrypted file works as-is when `ANSIBLE_VAULT_PASSWORD_FILE` is set, 
 
 1. **`playbooks/all.yml`** - Original numbered roles (01-07) for sequential setup
    ```bash
-   bash run.sh playbooks/all.yml
+   ./run.sh
+   # or explicitly:
+   ./run.sh playbooks/all.yml
    ```
 
 2. **`playbooks/site.yml`** - NEW: Unified playbook with all roles
    ```bash
    # Run everything
-   bash run.sh playbooks/site.yml
+   ./run.sh playbooks/site.yml
 
    # Run only numbered roles
-   bash run.sh playbooks/site.yml -e numbered=true -e named=false
+   ./run.sh playbooks/site.yml -e numbered=true -e named=false
 
    # Run specific tags
-   bash run.sh playbooks/site.yml --tags dotfiles,ssh
+   ./run.sh playbooks/site.yml --tags dotfiles,ssh
    ```
 
 3. **`playbooks/skogai.yml`** - NEW: Comprehensive Arch Linux setup
    ```bash
-   bash run.sh playbooks/skogai.yml --become
+   ./run.sh playbooks/skogai.yml
    ```
 
 4. **`playbooks/update.yml`** - NEW: Quick system maintenance
    ```bash
-   bash run.sh playbooks/update.yml
+   ./run.sh playbooks/update.yml
    ```
 
-**NEVER run ansible-playbook directly.** The `run.sh` script properly handles vault and become password files.
+**Usage:** `./run.sh [playbook] [ansible-playbook options]`
+- Defaults to `playbooks/all.yml` if no playbook specified
+- Passes all additional arguments directly to ansible-playbook
+- Relies on environment variables from `.env` (loaded via `.envrc`)
 
 **For Claude Code:** Always run playbooks in background mode:
 ```bash
-bash run.sh  # with run_in_background: true
+./run.sh  # with run_in_background: true
 ```
 
 Then check output with `BashOutput` tool. This prevents long-running package installations from blocking the CLI.
 
 ### Pre-commit Hooks
 
-**Automated testing before every commit** using pre-commit hooks:
+**Automated testing before every commit** using pre-commit hooks.
 
+**Quick Setup (Recommended):**
 ```bash
-# Install pre-commit (one-time setup)
+# Run the setup script (installs pre-commit and all hooks)
+./setup-precommit.sh
+```
+
+**Manual Setup:**
+```bash
+# 1. Install pre-commit
 pip install pre-commit
 
-# Install hooks in the repository (one-time setup)
+# 2. Install the git hooks
 pre-commit install
 
-# Hooks now run automatically on every commit
-# To bypass hooks if needed: git commit --no-verify
+# 3. Install hook environments (downloads and sets up tools)
+pre-commit install-hooks
 ```
 
 The pre-commit hooks run automatically before each commit and include:
@@ -236,6 +253,12 @@ The pre-commit hooks run automatically before each commit and include:
 6. **check-merge-conflict** - Detects merge conflict markers
 7. **mixed-line-ending** - Auto-fixes line endings (LF)
 
+**Important Notes:**
+- The hooks use official pre-commit repositories that automatically install their dependencies
+- You don't need to manually install `yamllint` or `ansible-lint` - pre-commit handles this
+- First run will be slow as it downloads and caches the hook environments
+- Subsequent runs are fast using the cached environments
+
 **Manual run of pre-commit hooks:**
 ```bash
 # Run on all files
@@ -246,6 +269,9 @@ pre-commit run
 
 # Run specific hook
 pre-commit run ansible-lint
+
+# Bypass hooks if needed (use sparingly!)
+git commit --no-verify
 ```
 
 ### Testing Locally

@@ -3,12 +3,13 @@
 # Extracted from skogai-core.yml playbook
 
 - name: Update arch
+  become: true
   community.general.pacman:
     update_cache: true
     upgrade: true
 
 - name: Install core packages
-  community.general.pacman:
+  pacman:
     update_cache: yes
     name:
       # - [ ] github-cli kitty firefox-extension-bitwarden-git rcm neovim bitwarden lsd argc-git zoxide gitflow-avh tree lazydocker lazygit xclip ansible python-pipx
@@ -36,7 +37,7 @@
       - nmap
       # - gnu-netcat # diagnose network issues using tiny server
       # - tcpdump # diagnose network issues by wathing ports
-      - net-tools
+      # - net-tools
       - iperf3
       # - iproute2 # network utilities like ss
       - bind
@@ -46,212 +47,209 @@
       - fuse
       # - sqlite # simple database and utilities for it
       # - python-llfuse # bindings for fuse mounting
-      - python-pip
-      - python-setuptools
-      - python-pexpect # child application control
-
-- name: Disable need for password for yay
-  lineinfile:
-    path: /etc/sudoers.d/temp_allow_no_pswd_pacman
-    state: present
-    line: "ALL ALL=NOPASSWD: /usr/bin/pacman"
-    validate: /usr/sbin/visudo -cf %s
-    create: yes
-
-- name: Git clone yay-repo in to /tmp
-  become: no
-  git:
-    repo: "https://aur.archlinux.org/yay-bin.git"
-    dest: /tmp/yay-bin
-    clone: yes
-
-- name: Install yay using makepkg
-  become: no
-  expect:
-    chdir: /tmp/yay-bin
-    command: makepkg -si
-    async: 600
-    poll: 0
-    responses:
-      (?i)Proceed with installation: "y"
-
-- name: Re-enable need for password for pacman
-  file:
-    path: /etc/sudoers.d/temp_allow_no_pswd_pacman
-    state: absent
-
-- name: Set yay options to cleanafter package installation
-  become: no
-  shell: yay -Y --answerclean All --removemake --cleanafter --save
-  args:
-    executable: /usr/bin/bash
-
-- name: Pacman - enable color
-  lineinfile:
-    path: /etc/pacman.conf
-    regexp: "^#Color$"
-    line: "Color"
-
-- name: Pacman - enable ParallelDownloads = 5
-  lineinfile:
-    path: /etc/pacman.conf
-    regexp: "ParallelDownloads"
-    line: "ParallelDownloads = 5"
-
-- name: Makepkg - disable compression
-  lineinfile:
-    path: /etc/makepkg.conf
-    regexp: "PKGEXT='.pkg.tar.zst'"
-    line: "PKGEXT='.pkg.tar'"
-
-- name: Makepkg - enable parallel compilation MAKEFLAGS="-j$(nproc)"
-  lineinfile:
-    path: /etc/makepkg.conf
-    regexp: '#MAKEFLAGS="-j2"'
-    line: 'MAKEFLAGS="-j$(nproc)"'
-
-- name: Fstab change relatime to noatime
-  replace:
-    path: /etc/fstab
-    regexp: "relatime"
-    replace: "noatime"
-
-- name: Change number of failed logins that triger 10min lockout
-  lineinfile:
-    path: /etc/security/faillock.conf
-    regexp: "^# deny = 3$"
-    line: "deny = 10"
-
-- name: Enable members of wheel group to sudo
-  lineinfile:
-    path: /etc/sudoers.d/98_wheel_allow_sudo
-    state: present
-    line: "%wheel ALL=(ALL:ALL) ALL"
-    validate: /usr/sbin/visudo -cf %s
-    create: yes
-
-- name: Add the user to the root group, to be able to enter directories
-  user:
-    name: "{{ ansible_user }}"
-    groups: root
-    append: yes
-
-- name: Disable need for sudo password for the current user
-  lineinfile:
-    path: "/etc/sudoers.d/99_no_pswd_for_{{ ansible_env.SUDO_UID }}"
-    state: present
-    line: "{{ ansible_user }} ALL=(ALL:ALL) NOPASSWD: ALL"
-    validate: /usr/sbin/visudo -cf %s
-    create: yes
-
-- name: Install ssh
-  pacman:
-    name:
-      - openssh
-
-- name: Enable and start ssh service
-  systemd:
-    name: sshd
-    enabled: yes
-    state: started
-
-- name: Install plocate
-  pacman:
-    name:
-      - plocate
-
-- name: Enable and start ~12h updatedb timer
-  systemd:
-    name: plocate-updatedb.timer
-    enabled: yes
-    state: started
-
-- name: Archlinux-keyring - enable weekly update
-  systemd:
-    name: archlinux-keyring-wkd-sync.timer
-    enabled: yes
-    state: started
-
-- name: Install util-linux
-  pacman:
-    name:
-      - util-linux
-
-- name: Enable and start weekly ssd disks trim using fstrim timer
-  systemd:
-    name: fstrim.timer
-    enabled: yes
-    state: started
-- name: install trash-cli
-  pacman:
-    name:
-      - trash-cli
-
-- name: Create trash-empty.service file
-  copy:
-    dest: "/etc/systemd/system/trash-empty.service"
-    content: |
-      [Unit]
-      Description=Empty trash older than 30 days
-
-      [Service]
-      Type=oneshot
-      ExecStart=/usr/bin/trash-empty 30
-
-- name: Create trash-empty.timer file
-  copy:
-    dest: "/etc/systemd/system/trash-empty.timer"
-    content: |
-      [Unit]
-      Description=Empty trash older than 30 days daily
-
-      [Timer]
-      OnCalendar=daily
-      Persistent=true
-
-      [Install]
-      WantedBy=timers.target
-
-- name: Enable and start trash-empty.timer
-  systemd:
-    name: trash-empty.timer
-    enabled: yes
-    state: started
-
-- name: Install pacman-contrib
-  pacman:
-    name:
-      - pacman-contrib
-
-- name: Enable and start weekly cache cleanup paccache timer
-  systemd:
-    name: paccache.timer
-    enabled: yes
-    state: started
-
-- name: Install reflector
-  pacman:
-    name:
-      - reflector
-
-- name: Write reflector configuration file
-  copy:
-    dest: "/etc/xdg/reflector/reflector.conf"
-    content: |
-      --save /etc/pacman.d/mirrorlist
-      --protocol http
-      --country SK,CZ
-      --score 20
-      --sort rate
-
-- name: Enable and start reflector timer
-  systemd:
-    name: reflector.timer
-    enabled: yes
-    state: started
-
-- name: Do initial run of reflector.service
-  systemd:
-    name: reflector
-    enabled: yes
-    state: started
+      # - python-pip
+      # - python-setuptools
+      # - python-pexpect # child application control
+#
+# - name: Disable need for password for yay
+#   lineinfile:
+#     path: /etc/sudoers.d/temp_allow_no_pswd_pacman
+#     state: present
+#     line: "ALL ALL=NOPASSWD: /usr/bin/pacman"
+#     validate: /usr/sbin/visudo -cf %s
+#     create: yes
+#
+# - name: Git clone yay-repo in to /tmp
+#   git:
+#     repo: "https://aur.archlinux.org/yay-bin.git"
+#     dest: /tmp/yay-bin
+#     clone: yes
+#
+# - name: Install yay using makepkg
+#   expect:
+#     chdir: /tmp/yay-bin
+#     command: makepkg -si
+#     async: 600
+#     poll: 0
+#     responses:
+#       (?i)Proceed with installation: "y"
+#
+# - name: Re-enable need for password for pacman
+#   file:
+#     path: /etc/sudoers.d/temp_allow_no_pswd_pacman
+#     state: absent
+#
+# - name: Set yay options to cleanafter package installation
+#   shell: yay -Y --answerclean All --removemake --cleanafter --save
+#   args:
+#     executable: /usr/bin/bash
+#
+# - name: Pacman - enable color
+#   lineinfile:
+#     path: /etc/pacman.conf
+#     regexp: "^#Color$"
+#     line: "Color"
+#
+# - name: Pacman - enable ParallelDownloads = 5
+#   lineinfile:
+#     path: /etc/pacman.conf
+#     regexp: "ParallelDownloads"
+#     line: "ParallelDownloads = 5"
+#
+# - name: Makepkg - disable compression
+#   lineinfile:
+#     path: /etc/makepkg.conf
+#     regexp: "PKGEXT='.pkg.tar.zst'"
+#     line: "PKGEXT='.pkg.tar'"
+#
+# - name: Makepkg - enable parallel compilation MAKEFLAGS="-j$(nproc)"
+#   lineinfile:
+#     path: /etc/makepkg.conf
+#     regexp: '#MAKEFLAGS="-j2"'
+#     line: 'MAKEFLAGS="-j$(nproc)"'
+#
+# - name: Fstab change relatime to noatime
+#   replace:
+#     path: /etc/fstab
+#     regexp: "relatime"
+#     replace: "noatime"
+#
+# - name: Change number of failed logins that triger 10min lockout
+#   lineinfile:
+#     path: /etc/security/faillock.conf
+#     regexp: "^# deny = 3$"
+#     line: "deny = 10"
+#
+# - name: Enable members of wheel group to sudo
+#   lineinfile:
+#     path: /etc/sudoers.d/98_wheel_allow_sudo
+#     state: present
+#     line: "%wheel ALL=(ALL:ALL) ALL"
+#     validate: /usr/sbin/visudo -cf %s
+#     create: yes
+#
+# - name: Add the user to the root group, to be able to enter directories
+#   user:
+#     name: "{{ ansible_user }}"
+#     groups: root
+#     append: yes
+#
+# - name: Disable need for sudo password for the current user
+#   lineinfile:
+#     path: "/etc/sudoers.d/99_no_pswd_for_{{ ansible_env.SUDO_UID }}"
+#     state: present
+#     line: "{{ ansible_user }} ALL=(ALL:ALL) NOPASSWD: ALL"
+#     validate: /usr/sbin/visudo -cf %s
+#     create: yes
+#
+# - name: Install ssh
+#   pacman:
+#     name:
+#       - openssh
+#
+# - name: Enable and start ssh service
+#   systemd:
+#     name: sshd
+#     enabled: yes
+#     state: started
+#
+# - name: Install plocate
+#   pacman:
+#     name:
+#       - plocate
+#
+# - name: Enable and start ~12h updatedb timer
+#   systemd:
+#     name: plocate-updatedb.timer
+#     enabled: yes
+#     state: started
+#
+# - name: Archlinux-keyring - enable weekly update
+#   systemd:
+#     name: archlinux-keyring-wkd-sync.timer
+#     enabled: yes
+#     state: started
+#
+# - name: Install util-linux
+#   pacman:
+#     name:
+#       - util-linux
+#
+# - name: Enable and start weekly ssd disks trim using fstrim timer
+#   systemd:
+#     name: fstrim.timer
+#     enabled: yes
+#     state: started
+# - name: install trash-cli
+#   pacman:
+#     name:
+#       - trash-cli
+#
+# - name: Create trash-empty.service file
+#   copy:
+#     dest: "/etc/systemd/system/trash-empty.service"
+#     content: |
+#       [Unit]
+#       Description=Empty trash older than 30 days
+#
+#       [Service]
+#       Type=oneshot
+#       ExecStart=/usr/bin/trash-empty 30
+#
+# - name: Create trash-empty.timer file
+#   copy:
+#     dest: "/etc/systemd/system/trash-empty.timer"
+#     content: |
+#       [Unit]
+#       Description=Empty trash older than 30 days daily
+#
+#       [Timer]
+#       OnCalendar=daily
+#       Persistent=true
+#
+#       [Install]
+#       WantedBy=timers.target
+#
+# - name: Enable and start trash-empty.timer
+#   systemd:
+#     name: trash-empty.timer
+#     enabled: yes
+#     state: started
+#
+# - name: Install pacman-contrib
+#   pacman:
+#     name:
+#       - pacman-contrib
+#
+# - name: Enable and start weekly cache cleanup paccache timer
+#   systemd:
+#     name: paccache.timer
+#     enabled: yes
+#     state: started
+#
+# - name: Install reflector
+#   pacman:
+#     name:
+#       - reflector
+#
+# - name: Write reflector configuration file
+#   copy:
+#     dest: "/etc/xdg/reflector/reflector.conf"
+#     content: |
+#       --save /etc/pacman.d/mirrorlist
+#       --protocol http
+#       --country SK,CZ
+#       --score 20
+#       --sort rate
+#
+# - name: Enable and start reflector timer
+#   systemd:
+#     name: reflector.timer
+#     enabled: yes
+#     state: started
+#
+# - name: Do initial run of reflector.service
+#   systemd:
+#     name: reflector
+#     enabled: yes
+#     state: started

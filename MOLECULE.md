@@ -199,17 +199,17 @@ jobs:
           - 02_package_managers
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           pip install molecule molecule-plugins[docker]
           ansible-galaxy collection install community.docker ansible.posix
-      
+
       - name: Run molecule tests
         run: |
           cd roles/${{ matrix.role }}
