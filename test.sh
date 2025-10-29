@@ -229,15 +229,14 @@ if [ "$RUN_MOLECULE" = true ]; then
 
   if ! command -v molecule &> /dev/null; then
     print_warning "molecule is not installed. Install with: pip install molecule molecule-plugins[docker]"
-    print_warning "Skipping molecule tests"
+    print_warning "Skipping Molecule tests"
     TESTS_SKIPPED=$((TESTS_SKIPPED + 1))
   else
     TESTS_RUN=$((TESTS_RUN + 1))
-    echo ""
-    print_step "Testing roles with Molecule..."
     MOLECULE_FAILED=0
 
     # Find all roles with molecule scenarios
+    ROLES_TESTED=0
     for role_dir in roles/*/molecule/default; do
       if [ -d "$role_dir" ]; then
         role_name=$(basename $(dirname $(dirname "$role_dir")))
@@ -247,6 +246,7 @@ if [ "$RUN_MOLECULE" = true ]; then
         cd "$(dirname $(dirname "$role_dir"))"
         if molecule test --destroy=never 2>&1; then
           print_success "$role_name molecule tests passed"
+          ROLES_TESTED=$((ROLES_TESTED + 1))
         else
           print_error "$role_name molecule tests failed"
           MOLECULE_FAILED=1
@@ -255,11 +255,15 @@ if [ "$RUN_MOLECULE" = true ]; then
       fi
     done
 
-    if [ $MOLECULE_FAILED -eq 0 ]; then
-      print_success "All molecule tests passed"
+    if [ $ROLES_TESTED -eq 0 ]; then
+      print_warning "No roles with molecule scenarios found"
+      TESTS_SKIPPED=$((TESTS_SKIPPED + 1))
+      TESTS_RUN=$((TESTS_RUN - 1))
+    elif [ $MOLECULE_FAILED -eq 0 ]; then
+      print_success "All molecule tests passed ($ROLES_TESTED roles tested)"
       TESTS_PASSED=$((TESTS_PASSED + 1))
     else
-      print_error "Some molecule tests failed"
+      print_error "Molecule tests failed"
       TESTS_FAILED=$((TESTS_FAILED + 1))
       exit 1
     fi
@@ -279,7 +283,7 @@ if [ "$RUN_CHECK_MODE" = true ]; then
     echo "  ✓ Check mode (dry run)"
 fi
 if [ "$RUN_MOLECULE" = true ]; then
-    echo "  ✓ Molecule tests"
+    echo "  ✓ Molecule role tests"
 fi
 echo ""
 echo "Ready to commit and push!"

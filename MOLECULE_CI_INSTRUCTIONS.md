@@ -1,27 +1,20 @@
-# Adding Molecule Testing to CI Workflow
+# Adding Molecule Tests to CI Workflow
 
 ## Background
 
-This file contains instructions for manually adding Molecule testing to the GitHub Actions CI workflow. Due to GitHub App permissions, automated tools cannot modify workflow files directly.
+This repository has Molecule testing configured for the `01_host_info` role, but it's not currently integrated into the CI workflow. This document provides instructions for adding Molecule testing to the GitHub Actions workflow.
 
-## What Was Fixed
+## Why Not Automated?
 
-The `test.sh` script has been fixed to properly support molecule testing:
-- ✅ Removed duplicate molecule test code (was at lines 236-309 in the previous version)
-- ✅ Fixed undefined function references (`print_test_header`, `command_exists`, `print_test_result`)
-- ✅ Now uses existing functions (`print_step`, `print_success`, `print_error`, `print_warning`)
-- ✅ Properly tracks test counters (TESTS_RUN, TESTS_PASSED, TESTS_FAILED, TESTS_SKIPPED)
-- ✅ Added molecule tests to summary output
+GitHub App permissions prevent automated modifications to `.github/workflows/` files. You'll need to manually add the job definition below to your workflow file.
 
-## How to Add Molecule Testing to CI
+## Instructions
 
-### Option 1: Add as a Separate Job (Recommended)
-
-Add this job to `.github/workflows/ansible-test.yml` after the existing `ansible-test` job:
+Add the following job to `.github/workflows/ansible-test.yml` after the existing `ansible-test` job (after line 48):
 
 ```yaml
   molecule-test:
-    name: Molecule Role Testing
+    name: Molecule Role Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -39,102 +32,69 @@ Add this job to `.github/workflows/ansible-test.yml` after the existing `ansible
 
       - name: Install Ansible collections
         run: |
-          ansible-galaxy collection install -r requirements.yml
           ansible-galaxy collection install community.docker ansible.posix
+        continue-on-error: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Run molecule tests
+      - name: Run molecule tests for 01_host_info
         run: |
-          # Find all roles with molecule scenarios and test them
-          for role_dir in roles/*/molecule/default; do
-            if [ -d "$role_dir" ]; then
-              role_name=$(basename $(dirname $(dirname "$role_dir")))
-              echo "Testing role: $role_name"
-              cd "$(dirname $(dirname "$role_dir"))"
-              molecule test
-              cd -
-            fi
-          done
+          cd roles/01_host_info
+          molecule test
+        continue-on-error: false
 ```
 
-### Option 2: Add to Existing Job
+## What This Job Does
 
-Alternatively, add these steps to the existing `ansible-test` job in `.github/workflows/ansible-test.yml`:
+1. **Checks out the code** - Gets the repository contents
+2. **Sets up Python 3.11** - Required for Ansible and Molecule
+3. **Installs dependencies** - Ansible, Molecule, and Docker plugin
+4. **Installs collections** - `community.docker` and `ansible.posix` (required by molecule scenarios)
+5. **Sets up Docker** - Required for running containers
+6. **Runs molecule test** - Tests the `01_host_info` role in an Arch Linux container
 
-```yaml
-      - name: Install molecule dependencies
-        run: |
-          pip install molecule molecule-plugins[docker]
-          ansible-galaxy collection install community.docker ansible.posix
+## Testing Locally First
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Run molecule tests
-        run: |
-          for role_dir in roles/*/molecule/default; do
-            if [ -d "$role_dir" ]; then
-              role_name=$(basename $(dirname $(dirname "$role_dir")))
-              echo "Testing role: $role_name"
-              cd "$(dirname $(dirname "$role_dir"))"
-              molecule test
-              cd -
-            fi
-          done
-```
-
-### Option 3: Use the test.sh Script
-
-The simplest option - just run the test script with the `--molecule` flag:
-
-```yaml
-      - name: Install molecule dependencies
-        run: |
-          pip install molecule molecule-plugins[docker]
-          ansible-galaxy collection install community.docker ansible.posix
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Run all tests including molecule
-        run: |
-          ./test.sh --molecule
-```
-
-## Testing Locally
-
-Before pushing the workflow changes, test locally:
+Before adding to CI, verify molecule tests work locally:
 
 ```bash
 # Install dependencies
 pip install molecule molecule-plugins[docker]
 ansible-galaxy collection install community.docker ansible.posix
 
-# Run molecule tests using the test script
+# Test using the test.sh script
 ./test.sh --molecule
 
-# Or run molecule directly for a specific role
+# Or test directly
 cd roles/01_host_info
 molecule test
 ```
 
-## Current Molecule Coverage
+## Adding More Roles
 
-As of this update, the following roles have molecule scenarios configured:
+When you add Molecule scenarios to other roles, update the workflow to test them:
 
-- ✅ `01_host_info` - Basic system information gathering (no sudo required)
+```yaml
+      - name: Run molecule tests for all roles
+        run: |
+          for role_dir in roles/*/molecule/default; do
+            if [ -d "$role_dir" ]; then
+              role_name=$(basename $(dirname $(dirname "$role_dir")))
+              echo "Testing role: $role_name"
+              cd "$(dirname $(dirname "$role_dir"))"
+              molecule test
+              cd - > /dev/null
+            fi
+          done
+```
 
-## Next Steps
+## Why `continue-on-error: false`?
 
-1. Manually add one of the above configurations to `.github/workflows/ansible-test.yml`
-2. Commit and push the workflow change
-3. Watch the CI run to verify molecule tests work in GitHub Actions
-4. Add molecule scenarios to more roles (see `MOLECULE.md` for guidance)
+Unlike the syntax check which has `continue-on-error: true`, molecule tests should fail the build if they fail. This ensures role functionality is verified before merging.
 
 ## References
 
-- `MOLECULE.md` - Comprehensive molecule testing documentation
-- `test.sh` - Local testing script with `--molecule` flag
-- `roles/01_host_info/molecule/default/README.md` - Role-specific testing guide
+- [Molecule Documentation](https://molecule.readthedocs.io/)
+- [GitHub Actions - Docker Setup](https://github.com/docker/setup-buildx-action)
+- Repository-specific docs: `MOLECULE.md`
