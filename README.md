@@ -276,10 +276,11 @@ If tasks requiring sudo fail:
 # Check which test failed
 ./test.sh
 
-# For detailed output
-./test.sh --verbose
+# Run with different options for more detail
+./test.sh --check      # Include dry-run
+./test.sh --molecule   # Include Molecule tests
 
-# Check specific linters
+# Check specific linters individually
 yamllint .
 ansible-lint playbooks/ roles/
 ansible-playbook playbooks/all.yml --syntax-check
