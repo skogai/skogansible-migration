@@ -225,13 +225,16 @@ fi
 
 # Test 5: Molecule Tests (optional)
 if [ "$RUN_MOLECULE" = true ]; then
-  print_test_header "Molecule Role Tests"
+  print_step "Running Molecule role tests..."
 
-  if ! command_exists molecule; then
-    echo -e "${YELLOW}molecule is not installed. Install with: pip install molecule molecule-plugins[docker]${NC}"
-    print_test_result "Molecule Tests" "SKIP"
+  if ! command -v molecule &> /dev/null; then
+    print_warning "molecule is not installed. Install with: pip install molecule molecule-plugins[docker]"
+    print_warning "Skipping molecule tests"
+    TESTS_SKIPPED=$((TESTS_SKIPPED + 1))
   else
-    echo -e "${BLUE}Testing roles with Molecule...${NC}"
+    TESTS_RUN=$((TESTS_RUN + 1))
+    echo ""
+    print_step "Testing roles with Molecule..."
     MOLECULE_FAILED=0
 
     # Find all roles with molecule scenarios
@@ -239,13 +242,13 @@ if [ "$RUN_MOLECULE" = true ]; then
       if [ -d "$role_dir" ]; then
         role_name=$(basename $(dirname $(dirname "$role_dir")))
         echo ""
-        echo -e "${BLUE}Testing role: $role_name${NC}"
+        print_step "Testing role: $role_name"
 
         cd "$(dirname $(dirname "$role_dir"))"
         if molecule test --destroy=never 2>&1; then
-          echo -e "${GREEN}✓ $role_name molecule tests passed${NC}"
+          print_success "$role_name molecule tests passed"
         else
-          echo -e "${RED}✗ $role_name molecule tests failed${NC}"
+          print_error "$role_name molecule tests failed"
           MOLECULE_FAILED=1
         fi
         cd - > /dev/null
@@ -253,50 +256,15 @@ if [ "$RUN_MOLECULE" = true ]; then
     done
 
     if [ $MOLECULE_FAILED -eq 0 ]; then
-      print_test_result "Molecule Tests" "PASS"
+      print_success "All molecule tests passed"
+      TESTS_PASSED=$((TESTS_PASSED + 1))
     else
-      print_test_result "Molecule Tests" "FAIL"
+      print_error "Some molecule tests failed"
+      TESTS_FAILED=$((TESTS_FAILED + 1))
       exit 1
     fi
   fi
-fi
-
-# Test 5: Molecule Tests (optional)
-if [ "$RUN_MOLECULE" = true ]; then
-  print_test_header "Molecule Role Tests"
-
-  if ! command_exists molecule; then
-    echo -e "${YELLOW}molecule is not installed. Install with: pip install molecule molecule-plugins[docker]${NC}"
-    print_test_result "Molecule Tests" "SKIP"
-  else
-    echo -e "${BLUE}Testing roles with Molecule...${NC}"
-    MOLECULE_FAILED=0
-
-    # Find all roles with molecule scenarios
-    for role_dir in roles/*/molecule/default; do
-      if [ -d "$role_dir" ]; then
-        role_name=$(basename $(dirname $(dirname "$role_dir")))
-        echo ""
-        echo -e "${BLUE}Testing role: $role_name${NC}"
-
-        cd "$(dirname $(dirname "$role_dir"))"
-        if molecule test --destroy=never 2>&1; then
-          echo -e "${GREEN}✓ $role_name molecule tests passed${NC}"
-        else
-          echo -e "${RED}✗ $role_name molecule tests failed${NC}"
-          MOLECULE_FAILED=1
-        fi
-        cd - > /dev/null
-      fi
-    done
-
-    if [ $MOLECULE_FAILED -eq 0 ]; then
-      print_test_result "Molecule Tests" "PASS"
-    else
-      print_test_result "Molecule Tests" "FAIL"
-      exit 1
-    fi
-  fi
+  echo ""
 fi
 
 # Print summary
@@ -309,6 +277,9 @@ echo "  ✓ YAML linting"
 echo "  ✓ Ansible linting"
 if [ "$RUN_CHECK_MODE" = true ]; then
     echo "  ✓ Check mode (dry run)"
+fi
+if [ "$RUN_MOLECULE" = true ]; then
+    echo "  ✓ Molecule tests"
 fi
 echo ""
 echo "Ready to commit and push!"
