@@ -39,8 +39,6 @@ This is a centralized Ansible configuration directory for this system. In additi
 ### Security Notes
 
 - The `.env` file contains sensitive data - never commit secrets
-- Vault password file at `~/.ssh/ansible-vault-password` is used to decrypt become password
-- Become password is stored vault-encrypted at `/home/skogix/.ssh/ansible-become-password`
 
 ## Important Practices
 
@@ -52,7 +50,7 @@ This is a centralized Ansible configuration directory for this system. In additi
 bash run.sh
 ```
 
-**NEVER run ansible-playbook directly.** The `run.sh` script properly handles vault and become password files.
+**NEVER run ansible-playbook directly.** The `run.sh` script ensures consistent execution.
 
 ### Testing Changes
 
@@ -87,31 +85,12 @@ The `ansible-playbook` command is required (comes with ansible), while `ansible-
 
 ### Checking Sudo/Privilege Access
 
-**NEVER** use `become: true` to check if sudo is configured. This will try to escalate privileges and may fail.
+If privileged tasks fail, ensure:
+1. You are in the correct directory where .envrc can be loaded
+2. Your .env or .envrc files are properly sourced
+3. You have appropriate sudo access configured on your system
 
-**CORRECT approach:**
-1. Use `ansible_user_id` fact to check current user identity
-2. Check if `ANSIBLE_BECOME_PASSWORD_FILE` environment variable exists and file is readable
-3. Set a fact like `sudo_configured` based on file existence
-4. Skip privileged tasks if not configured - don't fail the entire playbook
-
-**Example:**
-
-```yaml
-- name: Display current user
-  ansible.builtin.debug:
-    msg: "Running as user: {{ ansible_user_id }}"
-
-- name: Check become password file exists
-  ansible.builtin.stat:
-    path: "{{ lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') }}"
-  register: become_pass_file
-  when: lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') != ''
-
-- name: Set sudo configuration status
-  ansible.builtin.set_fact:
-    sudo_configured: "{{ become_pass_file.stat.exists | default(false) }}"
-```
+The playbook will attempt to run tasks that require privileges using `become: true`. If this fails, check your environment setup.
 
 ### AUR Package Installation
 
@@ -175,20 +154,6 @@ AUR packages require a special setup because `makepkg` refuses to run as root.
 
 - Never assume it's a system/kernel/Ansible bug - always check our configuration first
 - Never check external documentation for basic functionality issues - investigate locally first
-- Never add unnecessary become checks - check environment configuration, not actual privilege escalation
-
-## Vault Setup
-
-Become password is stored vault-encrypted at `~/.ssh/ansible-become-password`:
-- Vault password file: `~/.ssh/ansible-vault-password` (plaintext)
-- Become password file: `~/.ssh/ansible-become-password` (vault-encrypted)
-- Environment variables set in `.env` and loaded via `.envrc`
-
-Ansible 2.12+ supports `ANSIBLE_BECOME_PASSWORD_FILE` which can point to:
-1. A plaintext file with the password
-2. An executable that outputs the password to stdout
-
-The vault-encrypted file works as-is when `ANSIBLE_VAULT_PASSWORD_FILE` is set, allowing Ansible to automatically decrypt it.
 
 ## Testing Results Interpretation
 
