@@ -179,8 +179,17 @@ Then check output with `BashOutput` tool. This prevents long-running package ins
 
 ### Pre-commit Hooks
 
-**Automated testing before every commit** using pre-commit hooks:
+**Automated testing before every commit** using pre-commit hooks.
 
+**Quick setup (recommended):**
+```bash
+# One-command automated setup
+./setup-precommit.sh
+```
+
+This script will install pre-commit, configure hooks, and prepare environments automatically.
+
+**Manual setup:**
 ```bash
 # Install pre-commit (one-time setup)
 pip install pre-commit
@@ -191,6 +200,8 @@ pre-commit install
 # Hooks now run automatically on every commit
 # To bypass hooks if needed: git commit --no-verify
 ```
+
+**See PRE-COMMIT.md for comprehensive documentation.**
 
 The pre-commit hooks run automatically before each commit and include:
 1. **yamllint** - YAML file linting
