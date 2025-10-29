@@ -224,17 +224,24 @@ Then check output with `BashOutput` tool. This prevents long-running package ins
 
 ### Pre-commit Hooks
 
-**Automated testing before every commit** using pre-commit hooks:
+**Automated testing before every commit** using pre-commit hooks.
 
+**Quick Setup (Recommended):**
 ```bash
-# Install pre-commit (one-time setup)
+# Run the setup script (installs pre-commit and all hooks)
+./setup-precommit.sh
+```
+
+**Manual Setup:**
+```bash
+# 1. Install pre-commit
 pip install pre-commit
 
-# Install hooks in the repository (one-time setup)
+# 2. Install the git hooks
 pre-commit install
 
-# Hooks now run automatically on every commit
-# To bypass hooks if needed: git commit --no-verify
+# 3. Install hook environments (downloads and sets up tools)
+pre-commit install-hooks
 ```
 
 The pre-commit hooks run automatically before each commit and include:
@@ -246,6 +253,12 @@ The pre-commit hooks run automatically before each commit and include:
 6. **check-merge-conflict** - Detects merge conflict markers
 7. **mixed-line-ending** - Auto-fixes line endings (LF)
 
+**Important Notes:**
+- The hooks use official pre-commit repositories that automatically install their dependencies
+- You don't need to manually install `yamllint` or `ansible-lint` - pre-commit handles this
+- First run will be slow as it downloads and caches the hook environments
+- Subsequent runs are fast using the cached environments
+
 **Manual run of pre-commit hooks:**
 ```bash
 # Run on all files
@@ -256,6 +269,9 @@ pre-commit run
 
 # Run specific hook
 pre-commit run ansible-lint
+
+# Bypass hooks if needed (use sparingly!)
+git commit --no-verify
 ```
 
 ### Testing Locally

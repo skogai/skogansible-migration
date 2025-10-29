@@ -1,29 +1,11 @@
 ---
-# Maintenance tasks - Regular system upkeep
-# Consolidated from syu.yml and hello.yml
+# Quick system update playbook
+# Usage: ansible-playbook playbooks/update.yml
 
-- name: Update package database
-  become: yes
-  pacman:
-    update_cache: yes
+- name: "System Update"
+  hosts: localhost
+  connection: local
 
-- name: Upgrade all packages
-  become: yes
-  pacman:
-    upgrade: yes
-
-- name: Clean package cache (keep last 3 versions)
-  become: yes
-  command: paccache -r
-  ignore_errors: yes
-
-- name: Remove orphan packages
-  become: yes
-  shell: pacman -Qtdq | pacman -Rns - || true
-  ignore_errors: yes
-
-- name: Update AUR packages (if yay is installed)
-  become: no
-  command: yay -Syu --noconfirm
-  when: ansible_facts.packages is defined and 'yay' in ansible_facts.packages
-  ignore_errors: yes
+  tasks:
+    - name: Run maintenance tasks
+      import_tasks: ../tasks/maintenance.yml

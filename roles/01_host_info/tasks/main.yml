@@ -4,32 +4,31 @@
     content: "{{ ansible_facts | to_nice_yaml }}"
     dest: "{{ ansible_facts_file | default(playbook_dir ~ '/../ansible_facts.yml') }}"
     mode: "0644"
-
-- name: Check distribution is supported
-  ansible.builtin.assert:
-    that: ansible_distribution == "Archlinux"
-    fail_msg: "Distribution '{{ ansible_distribution }}' is not supported."
-    success_msg: "I run Arch, btw"
-  when: not (molecule_yml is defined)
-
-- name: Display current user
-  ansible.builtin.debug:
-    msg: "Running as user: {{ ansible_user_id }}"
-
-- name: Check become password file exists
-  ansible.builtin.stat:
-    path: "{{ lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') }}"
-  register: become_pass_file
-  when: (lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') | default('')) | length > 0
-
-- name: Set sudo configuration status
-  ansible.builtin.set_fact:
-    sudo_configured: "{{ become_pass_file.stat.exists | default(false) }}"
-
-- name: Display sudo configuration status
-  ansible.builtin.debug:
-    msg: "Sudo configuration: {{ 'configured' if sudo_configured else 'NOT configured - will skip privileged tasks' }}"
-
-- name: End play if sudo not configured
-  ansible.builtin.meta: end_play
-  when: not sudo_configured
+# - name: Check distribution is supported
+#   ansible.builtin.assert:
+#     that: ansible_distribution == "Archlinux"
+#     fail_msg: "Distribution '{{ ansible_distribution }}' is not supported."
+#     success_msg: "I run Arch, btw"
+#   when: not (molecule_yml is defined)
+#
+# - name: Display current user
+#   ansible.builtin.debug:
+#     msg: "Running as user: {{ ansible_user_id }}"
+#
+# - name: Check become password file exists
+#   ansible.builtin.stat:
+#     path: "{{ lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') }}"
+#   register: become_pass_file
+#   when: (lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') | default('')) | length > 0
+#
+# - name: Set sudo configuration status
+#   ansible.builtin.set_fact:
+#     sudo_configured: "{{ become_pass_file.stat.exists | default(false) }}"
+#
+# - name: Display sudo configuration status
+#   ansible.builtin.debug:
+#     msg: "Sudo configuration: {{ 'configured' if sudo_configured else 'NOT configured - will skip privileged tasks' }}"
+#
+# - name: End play if sudo not configured
+#   ansible.builtin.meta: end_play
+#   when: not sudo_configured

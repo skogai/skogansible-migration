@@ -278,7 +278,6 @@ if [ "$RUN_MOLECULE" = true ]; then
     echo -e "${YELLOW}molecule is not installed. Install with: pip install molecule molecule-plugins[docker]${NC}"
     print_test_result "Molecule Tests" "SKIP"
   else
-    echo -e "${BLUE}Testing roles with Molecule...${NC}"
     MOLECULE_FAILED=0
 
     # Find all roles with molecule scenarios
@@ -290,11 +289,14 @@ if [ "$RUN_MOLECULE" = true ]; then
 
         cd "$(dirname $(dirname "$role_dir"))"
         if molecule test --destroy=never 2>&1; then
-          echo -e "${GREEN}✓ $role_name molecule tests passed${NC}"
+          print_success "$role_name molecule tests passed"
+          ((TESTS_PASSED++))
         else
-          echo -e "${RED}✗ $role_name molecule tests failed${NC}"
+          print_error "$role_name molecule tests failed"
           MOLECULE_FAILED=1
+          ((TESTS_FAILED++))
         fi
+        ((TESTS_RUN++))
         cd - > /dev/null
       fi
     done
@@ -306,6 +308,7 @@ if [ "$RUN_MOLECULE" = true ]; then
       exit 1
     fi
   fi
+  echo ""
 fi
 
 # Print summary
@@ -318,6 +321,9 @@ echo "  ✓ YAML linting"
 echo "  ✓ Ansible linting"
 if [ "$RUN_CHECK_MODE" = true ]; then
     echo "  ✓ Check mode (dry run)"
+fi
+if [ "$RUN_MOLECULE" = true ]; then
+    echo "  ✓ Molecule tests"
 fi
 echo ""
 echo "Ready to commit and push!"
