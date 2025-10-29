@@ -12,7 +12,8 @@ user:
   country: "Sweden"
 
 git:
-  name: "{{ user['Emil Skogsund'] }}"
+  # name: "{{ user['Emil Skogsund'] }}"
+  name: "Emil Skogsund"
   # email hopefully using ansible vault as well
   email: "{{ emil@skogsund.se }}"
   helper: "cache"

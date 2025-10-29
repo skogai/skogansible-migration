@@ -204,13 +204,18 @@ echo ""
 # Test 4: Optional check mode
 if [ "$RUN_CHECK_MODE" = true ]; then
     print_step "Running Ansible check mode (dry run)..."
-    print_warning "This requires proper environment setup (.env and .envrc sourced)"
+    print_warning "This requires vault password file at: ~/.ssh/ansible-vault-password"
+    print_warning "And become password file at: ~/.ssh/ansible-become-password"
 
-    if ansible-playbook \
-        playbooks/all.yml \
-        --check \
-        --diff; then
-        print_success "Check mode passed"
+    # Check if vault files exist
+    if [[ ! -f ~/.ssh/ansible-vault-password ]]; then
+        print_error "Vault password file not found at ~/.ssh/ansible-vault-password"
+        print_warning "Skipping check mode test"
+        echo ""
+    elif [[ ! -f ~/.ssh/ansible-become-password ]]; then
+        print_error "Become password file not found at ~/.ssh/ansible-become-password"
+        print_warning "Skipping check mode test"
+        echo ""
     else
         print_error "Check mode failed"
         echo ""
@@ -225,14 +230,50 @@ fi
 
 # Test 5: Molecule Tests (optional)
 if [ "$RUN_MOLECULE" = true ]; then
-  print_step "Running Molecule role tests..."
+  print_test_header "Molecule Role Tests"
 
-  if ! command -v molecule &> /dev/null; then
-    print_warning "molecule is not installed. Install with: pip install molecule molecule-plugins[docker]"
-    print_warning "Skipping Molecule tests"
-    TESTS_SKIPPED=$((TESTS_SKIPPED + 1))
+  if ! command_exists molecule; then
+    echo -e "${YELLOW}molecule is not installed. Install with: pip install molecule molecule-plugins[docker]${NC}"
+    print_test_result "Molecule Tests" "SKIP"
   else
-    TESTS_RUN=$((TESTS_RUN + 1))
+    echo -e "${BLUE}Testing roles with Molecule...${NC}"
+    MOLECULE_FAILED=0
+
+    # Find all roles with molecule scenarios
+    for role_dir in roles/*/molecule/default; do
+      if [ -d "$role_dir" ]; then
+        role_name=$(basename $(dirname $(dirname "$role_dir")))
+        echo ""
+        echo -e "${BLUE}Testing role: $role_name${NC}"
+
+        cd "$(dirname $(dirname "$role_dir"))"
+        if molecule test --destroy=never 2>&1; then
+          echo -e "${GREEN}✓ $role_name molecule tests passed${NC}"
+        else
+          echo -e "${RED}✗ $role_name molecule tests failed${NC}"
+          MOLECULE_FAILED=1
+        fi
+        cd - > /dev/null
+      fi
+    done
+
+    if [ $MOLECULE_FAILED -eq 0 ]; then
+      print_test_result "Molecule Tests" "PASS"
+    else
+      print_test_result "Molecule Tests" "FAIL"
+      exit 1
+    fi
+  fi
+fi
+
+# Test 5: Molecule Tests (optional)
+if [ "$RUN_MOLECULE" = true ]; then
+  print_test_header "Molecule Role Tests"
+
+  if ! command_exists molecule; then
+    echo -e "${YELLOW}molecule is not installed. Install with: pip install molecule molecule-plugins[docker]${NC}"
+    print_test_result "Molecule Tests" "SKIP"
+  else
     MOLECULE_FAILED=0
 
     # Find all roles with molecule scenarios
@@ -241,27 +282,24 @@ if [ "$RUN_MOLECULE" = true ]; then
       if [ -d "$role_dir" ]; then
         role_name=$(basename $(dirname $(dirname "$role_dir")))
         echo ""
-        print_step "Testing role: $role_name"
+        echo -e "${BLUE}Testing role: $role_name${NC}"
 
         cd "$(dirname $(dirname "$role_dir"))"
         if molecule test --destroy=never 2>&1; then
           print_success "$role_name molecule tests passed"
-          ROLES_TESTED=$((ROLES_TESTED + 1))
+          ((TESTS_PASSED++))
         else
           print_error "$role_name molecule tests failed"
           MOLECULE_FAILED=1
+          ((TESTS_FAILED++))
         fi
+        ((TESTS_RUN++))
         cd - > /dev/null
       fi
     done
 
-    if [ $ROLES_TESTED -eq 0 ]; then
-      print_warning "No roles with molecule scenarios found"
-      TESTS_SKIPPED=$((TESTS_SKIPPED + 1))
-      TESTS_RUN=$((TESTS_RUN - 1))
-    elif [ $MOLECULE_FAILED -eq 0 ]; then
-      print_success "All molecule tests passed ($ROLES_TESTED roles tested)"
-      TESTS_PASSED=$((TESTS_PASSED + 1))
+    if [ $MOLECULE_FAILED -eq 0 ]; then
+      print_test_result "Molecule Tests" "PASS"
     else
       print_error "Molecule tests failed"
       TESTS_FAILED=$((TESTS_FAILED + 1))
@@ -283,7 +321,7 @@ if [ "$RUN_CHECK_MODE" = true ]; then
     echo "  ✓ Check mode (dry run)"
 fi
 if [ "$RUN_MOLECULE" = true ]; then
-    echo "  ✓ Molecule role tests"
+    echo "  ✓ Molecule tests"
 fi
 echo ""
 echo "Ready to commit and push!"
