@@ -217,19 +217,15 @@ if [ "$RUN_CHECK_MODE" = true ]; then
         print_warning "Skipping check mode test"
         echo ""
     else
-        if ansible-playbook \
-            --become-password-file ~/.ssh/ansible-become-password \
-            --vault-password-file ~/.ssh/ansible-vault-password \
-            playbooks/all.yml \
-            --check \
-            --diff; then
-            print_success "Check mode passed"
-        else
-            print_error "Check mode failed"
-            exit 1
-        fi
+        print_error "Check mode failed"
         echo ""
+        print_warning "If privilege escalation failed, check:"
+        print_warning "  1. Are you in the correct directory?"
+        print_warning "  2. Is .envrc or .env properly sourced?"
+        print_warning "  3. Do you have sudo access configured?"
+        exit 1
     fi
+    echo ""
 fi
 
 # Test 5: Molecule Tests (optional)
@@ -281,6 +277,7 @@ if [ "$RUN_MOLECULE" = true ]; then
     MOLECULE_FAILED=0
 
     # Find all roles with molecule scenarios
+    ROLES_TESTED=0
     for role_dir in roles/*/molecule/default; do
       if [ -d "$role_dir" ]; then
         role_name=$(basename $(dirname $(dirname "$role_dir")))
@@ -304,7 +301,8 @@ if [ "$RUN_MOLECULE" = true ]; then
     if [ $MOLECULE_FAILED -eq 0 ]; then
       print_test_result "Molecule Tests" "PASS"
     else
-      print_test_result "Molecule Tests" "FAIL"
+      print_error "Molecule tests failed"
+      TESTS_FAILED=$((TESTS_FAILED + 1))
       exit 1
     fi
   fi

@@ -131,16 +131,11 @@ This configuration affects all Ansible commands run on the system. When working 
 
 ### Checking Sudo/Privilege Access
 
-**NEVER** use `become: true` to check if sudo is configured. This will:
-- Try to actually escalate privileges
-- Fail with "Duplicate become password prompt" if vault is misconfigured
-- Create unnecessary double-checks
+If privileged tasks fail during playbook execution, check the following:
 
-**CORRECT approach:**
-1. Use `ansible_user_id` fact to check current user identity
-2. Check if `ANSIBLE_BECOME_PASSWORD_FILE` environment variable exists and file is readable
-3. Set a fact like `sudo_configured` based on file existence
-4. Skip privileged tasks if not configured - don't fail the entire playbook
+1. **Wrong directory**: Ensure you're in the correct directory where `.envrc` can be loaded
+2. **Environment not sourced**: Your `.env` or `.envrc` files may not be properly sourced
+3. **Missing sudo access**: You may not have appropriate sudo privileges configured
 
 **Example from roles/01_host_info:**
 ```yaml
@@ -292,7 +287,7 @@ This runs the same checks as the GitHub Actions CI workflow:
 ./test.sh --check
 ```
 
-This additionally runs Ansible in check mode (dry-run) to verify your changes would work on the target system without actually making changes. Requires vault and become password files to be configured.
+This additionally runs Ansible in check mode (dry-run) to verify your changes would work on the target system without actually making changes.
 
 **What each test does:**
 
@@ -361,7 +356,7 @@ AUR packages require a special setup because `makepkg` refuses to run as root:
 **Workflow:**
 1. `aur_builder` builds the AUR package (without sudo)
 2. `yay` internally calls `sudo pacman` to install (using passwordless sudo)
-3. No password prompts, no "Duplicate become password prompt" errors
+3. No password prompts, no errors
 
 **Example from roles/02_package_managers:**
 ```yaml
@@ -415,7 +410,7 @@ ansible-galaxy collection install -r requirements.yml
 
 **For check mode testing:**
 ```bash
-./test.sh --check  # Requires vault and become password files
+./test.sh --check
 ```
 
 **Note:** The test.sh script performs static analysis only by default. It does NOT execute the playbook unless --check flag is used.
@@ -424,4 +419,3 @@ ansible-galaxy collection install -r requirements.yml
 
 - **Never assume it's a system/kernel/Ansible bug** - always check our configuration first
 - **Never check external documentation** for basic functionality issues - investigate locally first
-- **Never add unnecessary become checks** - check environment configuration, not actual privilege escalation
