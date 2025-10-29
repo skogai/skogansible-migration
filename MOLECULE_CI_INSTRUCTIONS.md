@@ -7,7 +7,7 @@ This file contains instructions for manually adding Molecule testing to the GitH
 ## What Was Fixed
 
 The `test.sh` script has been fixed to properly support molecule testing:
-- ✅ Removed duplicate molecule test code (was at lines 236-309)
+- ✅ Removed duplicate molecule test code (was at lines 236-309 in the previous version)
 - ✅ Fixed undefined function references (`print_test_header`, `command_exists`, `print_test_result`)
 - ✅ Now uses existing functions (`print_step`, `print_success`, `print_error`, `print_warning`)
 - ✅ Properly tracks test counters (TESTS_RUN, TESTS_PASSED, TESTS_FAILED, TESTS_SKIPPED)
