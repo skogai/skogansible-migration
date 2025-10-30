@@ -2,11 +2,19 @@
 
 This file provides guidance to GitHub Copilot when working with code in this repository.
 
+## Quick Reference
+
+**Tech Stack:** Ansible, YAML, Bash, Arch Linux  
+**Primary Language:** YAML (Ansible playbooks and roles)  
+**Testing:** ansible-lint, yamllint, Molecule  
+**CI/CD:** GitHub Actions  
+**Documentation:** [README.md](../README.md), [CLAUDE.md](../CLAUDE.md), [MOLECULE.md](../MOLECULE.md)
+
 ## Repository Purpose
 
 This is the centralized Ansible configuration directory (`~/.ansible`) that provides global settings and paths for all Ansible operations on this system.
 
-This is a centralized Ansible configuration directory for this system. In addition to global configuration files, it also houses local playbooks, roles, and variable files used for system management.
+This is a centralized Ansible configuration directory for this system. It houses global configuration files, local playbooks, roles, and variable files used for system management and Arch Linux configuration.
 
 ## Key Files and Directories
 
@@ -39,10 +47,26 @@ This is a centralized Ansible configuration directory for this system. In additi
 ### Security Notes
 
 - The `.env` file contains sensitive data - never commit secrets
-- Vault password file at `~/.ssh/ansible-vault-password` is used to decrypt become password
-- Become password is stored vault-encrypted at `/home/skogix/.ssh/ansible-become-password`
 
 ## Important Practices
+
+### Issue and PR Workflow
+
+When assigned to an issue or working on changes:
+
+1. **Understand the requirement** - Read the issue description and comments thoroughly
+2. **Review existing code** - Check similar implementations in other roles
+3. **Make minimal changes** - Only modify what's necessary to address the issue
+4. **Follow patterns** - Use existing conventions and code style
+5. **Test thoroughly** - Run `./test.sh` before committing
+6. **Document changes** - Update relevant documentation if needed
+
+**Working on PRs:**
+- Always create focused, single-purpose changes
+- Use descriptive commit messages
+- Reference issue numbers in commits
+- Respond to review comments promptly
+- Keep PRs small and reviewable
 
 ### Running Playbooks
 
@@ -52,7 +76,7 @@ This is a centralized Ansible configuration directory for this system. In additi
 bash run.sh
 ```
 
-**NEVER run ansible-playbook directly.** The `run.sh` script properly handles vault and become password files.
+**NEVER run ansible-playbook directly.** The `run.sh` script ensures consistent execution.
 
 ### Testing Changes
 
@@ -87,31 +111,12 @@ The `ansible-playbook` command is required (comes with ansible), while `ansible-
 
 ### Checking Sudo/Privilege Access
 
-**NEVER** use `become: true` to check if sudo is configured. This will try to escalate privileges and may fail.
+If privileged tasks fail, ensure:
+1. You are in the correct directory where .envrc can be loaded
+2. Your .env or .envrc files are properly sourced
+3. You have appropriate sudo access configured on your system
 
-**CORRECT approach:**
-1. Use `ansible_user_id` fact to check current user identity
-2. Check if `ANSIBLE_BECOME_PASSWORD_FILE` environment variable exists and file is readable
-3. Set a fact like `sudo_configured` based on file existence
-4. Skip privileged tasks if not configured - don't fail the entire playbook
-
-**Example:**
-
-```yaml
-- name: Display current user
-  ansible.builtin.debug:
-    msg: "Running as user: {{ ansible_user_id }}"
-
-- name: Check become password file exists
-  ansible.builtin.stat:
-    path: "{{ lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') }}"
-  register: become_pass_file
-  when: lookup('env', 'ANSIBLE_BECOME_PASSWORD_FILE') != ''
-
-- name: Set sudo configuration status
-  ansible.builtin.set_fact:
-    sudo_configured: "{{ become_pass_file.stat.exists | default(false) }}"
-```
+The playbook will attempt to run tasks that require privileges using `become: true`. If this fails, check your environment setup.
 
 ### AUR Package Installation
 
@@ -175,20 +180,6 @@ AUR packages require a special setup because `makepkg` refuses to run as root.
 
 - Never assume it's a system/kernel/Ansible bug - always check our configuration first
 - Never check external documentation for basic functionality issues - investigate locally first
-- Never add unnecessary become checks - check environment configuration, not actual privilege escalation
-
-## Vault Setup
-
-Become password is stored vault-encrypted at `~/.ssh/ansible-become-password`:
-- Vault password file: `~/.ssh/ansible-vault-password` (plaintext)
-- Become password file: `~/.ssh/ansible-become-password` (vault-encrypted)
-- Environment variables set in `.env` and loaded via `.envrc`
-
-Ansible 2.12+ supports `ANSIBLE_BECOME_PASSWORD_FILE` which can point to:
-1. A plaintext file with the password
-2. An executable that outputs the password to stdout
-
-The vault-encrypted file works as-is when `ANSIBLE_VAULT_PASSWORD_FILE` is set, allowing Ansible to automatically decrypt it.
 
 ## Testing Results Interpretation
 
@@ -197,3 +188,87 @@ The vault-encrypted file works as-is when `ANSIBLE_VAULT_PASSWORD_FILE` is set, 
 - ⊘ Yellow marks indicate skipped tests (missing tool or configuration)
 
 The test script exits with code 0 on success, non-zero on failure, making it suitable for use in git hooks or CI pipelines.
+
+## Development Environment
+
+### Initial Setup
+
+For first-time contributors or when setting up a development environment:
+
+```bash
+# 1. Install Python dependencies
+pip install ansible ansible-lint yamllint pre-commit
+
+# 2. Install Ansible collections
+ansible-galaxy collection install -r requirements.yml
+
+# 3. Set up pre-commit hooks (optional but recommended)
+pre-commit install
+
+# 4. Verify environment
+./test.sh
+```
+
+### Recommended Tools
+
+- **direnv** - Auto-loads environment variables from `.envrc`
+- **pre-commit** - Runs tests automatically before commits
+- **molecule** - Role testing in Docker (optional, see MOLECULE.md)
+- **ansible-navigator** - Enhanced Ansible CLI (optional)
+
+### IDE Integration
+
+For the best experience with Copilot:
+- Use VS Code with the Ansible extension
+- Enable YAML syntax validation
+- Configure yamllint and ansible-lint integration
+- Set up Ansible language server for better completions
+
+## Working with Copilot
+
+### Best Practices for AI Collaboration
+
+1. **Be specific in issues** - Clear requirements help Copilot generate better solutions
+2. **Provide context** - Reference existing files, patterns, or examples
+3. **Review suggestions** - Always verify Copilot's code against best practices
+4. **Iterate on feedback** - Use PR comments to refine Copilot's work
+5. **Test thoroughly** - Run `./test.sh` on all Copilot-generated changes
+
+### Common Tasks for Copilot
+
+**Adding a new package:**
+- Edit `vars/packages.yml` to add package to appropriate list
+- Run `./test.sh` to validate YAML syntax
+- Test with `./test.sh --check` to verify installation
+
+**Creating a new role:**
+- Follow existing role structure (see `roles/01_host_info/` as template)
+- Include `tasks/main.yml` with fully qualified module names
+- Add role to appropriate playbook (numbered or named)
+- Create Molecule test scenario (optional, see MOLECULE.md)
+- Document role purpose and variables in role README
+
+**Modifying existing roles:**
+- Preserve existing functionality unless explicitly requested
+- Follow existing patterns and conventions
+- Update documentation if behavior changes
+- Test changes with `./test.sh` and optionally `./test.sh --check`
+
+### Security Considerations
+
+When working with Copilot:
+- **Never** commit secrets or passwords to `.env` file
+- Use `ansible-vault` for sensitive data
+- Review all Copilot suggestions for security implications
+- Follow principle of least privilege
+- Validate file permissions (especially for sudoers files)
+- Test privilege escalation carefully
+
+## Additional Resources
+
+- **[README.md](../README.md)** - Quick start guide and overview
+- **[CLAUDE.md](../CLAUDE.md)** - Detailed development guide
+- **[MOLECULE.md](../MOLECULE.md)** - Testing guide
+- **.ansible-lint** - Linting rules configuration
+- **.yamllint** - YAML formatting rules
+- **.pre-commit-config.yaml** - Pre-commit hook configuration

@@ -1,0 +1,68 @@
+---
+# Molecule testing workflow
+#
+# This workflow runs Molecule tests for Ansible roles using Docker containers.
+# It requires network access to galaxy.ansible.com to install required collections
+# (community.docker, ansible.posix).
+#
+name: Molecule Tests
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  molecule:
+    name: Molecule Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        role:
+          - 01_host_info
+          # Add more roles as they get molecule scenarios:
+          # - 02_package_managers
+          # - 03_dotfiles
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache Ansible collections
+        uses: actions/cache@v4
+        with:
+          path: ~/.ansible/collections
+          key: ansible-collections-${{ hashFiles('roles/*/molecule/default/requirements.yml') }}
+          restore-keys: |
+            ansible-collections-
+
+      - name: Install Molecule and dependencies
+        run: |
+          pip install 'molecule>=25.0,<26.0' 'molecule-plugins[docker]>=25.0,<26.0'
+
+      - name: Install required Ansible collections
+        run: |
+          ansible-galaxy collection install community.docker ansible.posix
+
+      - name: Run Molecule tests
+        run: |
+          cd roles/${{ matrix.role }}
+          molecule test
+
+      - name: Molecule test summary
+        if: always()
+        run: |
+          echo "Molecule tests completed for role: ${{ matrix.role }}"
