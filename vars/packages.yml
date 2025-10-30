@@ -1,43 +1,20 @@
 ---
 # Package lists
 packages:
-  - git
-aur_packages:
-  - nvm
-  - rcm
-  - llm
-  - curl
-  - direnv
-  - fzf
-  - 7zip
-  - lazygit
-  - tailscale
-  - xclip
-  - zsh
-  - atuin
   - bat
-  - bitwarden-cli
   - btop
   - cloc
-  - diff-so-fancy
-  - difftastic
+  - curl
+  - direnv
   - eza
   - fd
   - fzf
   - gdu
   - gh
-  - git-delta
-  - glow
+  - git
   - graphviz
-  - jless
-  - jnv
   - jq
-  - lazydocker
-  - lazygit
-  - mise
   - most
-  - navi
-  - nb
   - ncdu
   - neovim
   - parallel
@@ -49,10 +26,31 @@ aur_packages:
   - tree
   - vifm
   - vim
+  - zoxide
+  - zsh
+aur_packages:
+  - 7zip
+  - atuin
+  - bitwarden-cli
+  - diff-so-fancy
+  - difftastic
+  - git-delta
+  - glow
+  - jless
+  - jnv
+  - lazydocker
+  - lazygit
+  - llm
+  - mise
+  - navi
+  - nb
+  - nvm
+  - rcm
+  - tailscale
+  - xclip
   - xdg-ninja
   - xq
   - yadm
   - yank
-  - zoxide
   - zplug
   # TODO: Add from: pacman -Qm | cut -d' ' -f1
