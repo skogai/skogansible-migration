@@ -5,7 +5,6 @@
 - name: "SkogAI Core Setup"
   hosts: localhost
   connection: local
-  become: true
 
   tasks:
     - name: Run SkogAI core tasks

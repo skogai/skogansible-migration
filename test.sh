@@ -204,13 +204,18 @@ echo ""
 # Test 4: Optional check mode
 if [ "$RUN_CHECK_MODE" = true ]; then
     print_step "Running Ansible check mode (dry run)..."
-    print_warning "This requires proper environment setup (.env and .envrc sourced)"
+    print_warning "This requires vault password file at: ~/.ssh/ansible-vault-password"
+    print_warning "And become password file at: ~/.ssh/ansible-become-password"
 
-    if ansible-playbook \
-        playbooks/all.yml \
-        --check \
-        --diff; then
-        print_success "Check mode passed"
+    # Check if vault files exist
+    if [[ ! -f ~/.ssh/ansible-vault-password ]]; then
+        print_error "Vault password file not found at ~/.ssh/ansible-vault-password"
+        print_warning "Skipping check mode test"
+        echo ""
+    elif [[ ! -f ~/.ssh/ansible-become-password ]]; then
+        print_error "Become password file not found at ~/.ssh/ansible-become-password"
+        print_warning "Skipping check mode test"
+        echo ""
     else
         print_error "Check mode failed"
         echo ""
@@ -238,6 +243,7 @@ if [ "$RUN_MOLECULE" = true ]; then
     MOLECULE_FAILED=0
 
     # Find all roles with molecule scenarios
+    ROLES_TESTED=0
     for role_dir in roles/*/molecule/default; do
       if [ -d "$role_dir" ]; then
         role_name=$(basename $(dirname $(dirname "$role_dir")))
@@ -250,7 +256,9 @@ if [ "$RUN_MOLECULE" = true ]; then
         else
           print_error "$role_name molecule tests failed"
           MOLECULE_FAILED=1
+          ((TESTS_FAILED++))
         fi
+        ((TESTS_RUN++))
         cd - > /dev/null
       fi
     done

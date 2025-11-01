@@ -1,0 +1,106 @@
+name: Auto-Merge Approved PRs
+
+on:
+  pull_request_review:
+    types: [submitted]
+  check_suite:
+    types: [completed]
+  status:
+    types: [success]
+
+permissions:
+  pull-requests: write
+  contents: write
+  checks: read
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Auto-merge if ready
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get all open PRs
+          echo "🔍 Checking for PRs ready to merge..."
+          
+          prs=$(gh pr list --state open --json number,title,headRefName,reviewDecision,statusCheckRollup,mergeable --limit 100)
+          
+          if [ "$prs" = "[]" ]; then
+            echo "No open PRs found."
+            exit 0
+          fi
+          
+          echo "$prs" | jq -c '.[]' | while IFS= read -r pr; do
+            number=$(echo "$pr" | jq -r '.number')
+            title=$(echo "$pr" | jq -r '.title')
+            branch=$(echo "$pr" | jq -r '.headRefName')
+            reviewDecision=$(echo "$pr" | jq -r '.reviewDecision // "PENDING"')
+            mergeable=$(echo "$pr" | jq -r '.mergeable')
+            
+            # Check CI status
+            statusCheckRollup=$(echo "$pr" | jq -r '.statusCheckRollup // []')
+            ci_status="unknown"
+            
+            if [ "$statusCheckRollup" != "[]" ] && [ "$statusCheckRollup" != "null" ]; then
+              # Check if all required checks passed
+              failed_checks=$(echo "$statusCheckRollup" | jq -r '[.[] | select(.conclusion != "SUCCESS" and .conclusion != "SKIPPED" and .conclusion != null)] | length')
+              pending_checks=$(echo "$statusCheckRollup" | jq -r '[.[] | select(.conclusion == null)] | length')
+              
+              if [ "$failed_checks" = "0" ] && [ "$pending_checks" = "0" ]; then
+                ci_status="passed"
+              elif [ "$pending_checks" -gt 0 ]; then
+                ci_status="pending"
+              else
+                ci_status="failed"
+              fi
+            else
+              # No status checks configured - consider as passed
+              ci_status="passed"
+            fi
+            
+            echo ""
+            echo "📋 PR #$number: $title"
+            echo "   Branch: $branch"
+            echo "   Review: $reviewDecision"
+            echo "   CI Status: $ci_status"
+            echo "   Mergeable: $mergeable"
+            
+            # Auto-merge conditions:
+            # 1. PR is approved (reviewDecision = APPROVED)
+            # 2. CI checks passed (ci_status = passed)
+            # 3. No merge conflicts (mergeable = MERGEABLE)
+            
+            if [ "$reviewDecision" = "APPROVED" ] && [ "$ci_status" = "passed" ] && [ "$mergeable" = "MERGEABLE" ]; then
+              echo "   ✅ All conditions met - auto-merging!"
+              
+              if gh pr merge "$number" --squash --delete-branch --repo "${{ github.repository }}"; then
+                echo "   🎉 Successfully merged and deleted branch!"
+                
+                # Add a comment to the PR
+                gh pr comment "$number" --body "🤖 **Auto-merged** by workflow
+          
+          ✅ All conditions met:
+          - Review: Approved
+          - CI: Passed
+          - Conflicts: None
+          
+          Branch \`${branch}\` has been merged and deleted." --repo "${{ github.repository }}"
+              else
+                echo "   ❌ Failed to merge PR #$number"
+                gh pr comment "$number" --body "⚠️ Auto-merge attempted but failed. Please merge manually." --repo "${{ github.repository }}"
+              fi
+            else
+              echo "   ⏸️  Not ready for auto-merge:"
+              [ "$reviewDecision" != "APPROVED" ] && echo "      - Waiting for approval (current: $reviewDecision)"
+              [ "$ci_status" != "passed" ] && echo "      - Waiting for CI (current: $ci_status)"
+              [ "$mergeable" != "MERGEABLE" ] && echo "      - Has merge conflicts or unknown state"
+            fi
+          done
+          
+          echo ""
+          echo "✅ Auto-merge check complete"

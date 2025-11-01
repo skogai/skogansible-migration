@@ -7,74 +7,45 @@
 # Documentation: https://pre-commit.com/
 
 repos:
-  # Local hooks using system-installed tools (faster and more reliable)
-  - repo: local
+  # Standard pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
     hooks:
-      # yamllint - YAML file linting
-      - id: yamllint
-        name: YAML Lint
-        description: Check YAML files for syntax and style issues
-        entry: yamllint
-        args: [--strict]
-        language: system
-        types: [yaml]
-        require_serial: false
+      - id: trailing-whitespace
+        exclude: ^\.env$
+      - id: end-of-file-fixer
+        exclude: ^\.env$
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: ['--fix=lf']
 
-      # ansible-lint - Ansible best practices and syntax checking
+  # YAML linting
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [--strict]
+        exclude: ^\.github/|^\.direnv/|^\.cache/|^\.collections/|^logs/
+
+  # Ansible linting
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v24.9.2
+    hooks:
       - id: ansible-lint
-        name: Ansible Lint
-        description: Check Ansible playbooks and roles for best practices
-        entry: ansible-lint
-        language: system
         files: \.(yaml|yml)$
         exclude: ^\.github/|^\.direnv/|^\.cache/|^\.collections/|^logs/
-        require_serial: true
 
-      # ansible-playbook syntax check
+  # Ansible syntax checking (using local hook)
+  - repo: local
+    hooks:
       - id: ansible-syntax-check
         name: Ansible Syntax Check
         description: Validate Ansible playbook syntax
-        entry: >-
-          bash -c 'ansible-playbook playbooks/all.yml --syntax-check 2>&1 |
-          grep -v "^\[WARNING\].*Error loading plugin\|^\[WARNING\].*Unable to load the cache plugin" || true'
+        entry: bash -c 'ansible-playbook playbooks/all.yml --syntax-check 2>&1 | grep -v "^\[WARNING\].*Error loading plugin\|^\[WARNING\].*Unable to load the cache plugin" || true'
         language: system
         pass_filenames: false
         files: ^(playbooks|roles|vars)/.*\.(yml|yaml)$
         require_serial: true
-
-      # trailing-whitespace check
-      - id: trailing-whitespace
-        name: Trim Trailing Whitespace
-        entry: bash -c 'for file in "$@"; do sed -i "s/[[:space:]]*$//" "$file"; done' --
-        language: system
-        types: [text]
-        exclude: ^\.env$
-
-      # end-of-file-fixer
-      - id: end-of-file-fixer
-        name: Fix End of Files
-        entry: >-
-          bash -c 'for file in "$@"; do if [ -s "$file" ] && [ -z "$(tail -c 1 "$file")" ];
-          then :; else echo >> "$file"; fi; done' --
-        language: system
-        types: [text]
-        exclude: ^\.env$
-
-      # check-merge-conflict
-      - id: check-merge-conflict
-        name: Check for Merge Conflicts
-        entry: >-
-          bash -c 'for file in "$@"; do if grep -q "^<<<<<<< " "$file";
-          then echo "Merge conflict markers found in $file"; exit 1; fi; done' --
-        language: system
-        types: [text]
-
-      # mixed-line-ending
-      - id: mixed-line-ending
-        name: Fix Mixed Line Endings
-        entry: bash -c 'for file in "$@"; do dos2unix "$file" 2>/dev/null || sed -i "s/\r$//" "$file"; done' --
-        language: system
-        types: [text]
 
 # Global configuration
 default_language_version:

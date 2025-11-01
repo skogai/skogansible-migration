@@ -3,12 +3,13 @@
 # Extracted from skogai-core.yml playbook
 
 - name: Update arch
+  become: true
   community.general.pacman:
     update_cache: true
     upgrade: true
 
 - name: Install core packages
-  pacman:
+  community.general.pacman:
     update_cache: yes
     name:
       # - [ ] github-cli kitty firefox-extension-bitwarden-git rcm neovim bitwarden lsd argc-git zoxide gitflow-avh tree lazydocker lazygit xclip ansible python-pipx
@@ -36,7 +37,7 @@
       - nmap
       # - gnu-netcat # diagnose network issues using tiny server
       # - tcpdump # diagnose network issues by wathing ports
-      - net-tools
+      # - net-tools
       - iperf3
       # - iproute2 # network utilities like ss
       - bind
@@ -145,7 +146,7 @@
     create: yes
 
 - name: Install ssh
-  pacman:
+  community.general.pacman:
     name:
       - openssh
 
@@ -156,7 +157,7 @@
     state: started
 
 - name: Install plocate
-  pacman:
+  community.general.pacman:
     name:
       - plocate
 
@@ -173,7 +174,7 @@
     state: started
 
 - name: Install util-linux
-  pacman:
+  community.general.pacman:
     name:
       - util-linux
 
@@ -183,7 +184,7 @@
     enabled: yes
     state: started
 - name: install trash-cli
-  pacman:
+  community.general.pacman:
     name:
       - trash-cli
 
@@ -219,7 +220,7 @@
     state: started
 
 - name: Install pacman-contrib
-  pacman:
+  community.general.pacman:
     name:
       - pacman-contrib
 
@@ -230,7 +231,7 @@
     state: started
 
 - name: Install reflector
-  pacman:
+  community.general.pacman:
     name:
       - reflector
 
