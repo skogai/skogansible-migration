@@ -9,20 +9,112 @@ timezone: Europe/Stockholm
 locale: en_US.UTF-8
 hostname: skogix-workstation
 
-# Package configuration
-update_system: true
-enable_multilib: false
-
-# Packages to install
+# Packages to install from official repos
 packages:
+  - ansible
+  - ansible-core
+  - base
   - base-devel
+  - bat
+  - bluez
+  - bluez-utils
+  - byobu
+  - cloudflared
+  - direnv
+  - dkms
+  - dmenu
+  - docker
+  - docker-buildx
+  - docker-compose
+  - dotnet-host
+  - dotnet-runtime
+  - dotnet-sdk
+  - dotnet-source-built-artifacts
+  - dunst
+  - feh
+  - firefox
+  - fzf
+  - gammastep
   - git
-  - curl
-  - wget
-  - tree
-  - vim
-  - openssh
+  - github-cli
+  - grub
+  - gst-plugin-pipewire
+  - htop
+  - i3-wm
+  - i3blocks
+  - i3lock
+  - i3status
+  - intel-ucode
+  - iwd
+  - kitty
+  - lazydocker
+  - lazygit
+  - less
+  - libnotify
+  - libpulse
+  - libva-nvidia-driver
+  - lightdm
+  - lightdm-gtk-greeter
+  - linux
+  - linux-firmware
+  - linux-headers
+  - maim
+  - mandoc
+  - nano
+  - ncspot
+  - neovim-nvim-treesitter
+  - network-manager-applet
   - networkmanager
-  - zip
+  - nvidia-dkms
+  - nvm
+  - ollama-cuda
+  - pgbouncer
+  - pgcli
+  - picom
+  - pipewire
+  - pipewire-alsa
+  - pipewire-jack
+  - pipewire-pulse
+  - polkit-gnome
+  - postgresql
+  - postgrest
+  - python-uv
+  - ripgrep
+  - sheldon
+  - smartmontools
+  - steam
+  - tree
   - unzip
-  - tar
+  - uv
+  - vim
+  - wget
+  - wireless_tools
+  - wireplumber
+  - xclip
+  - xdg-utils
+  - xdotool
+  - xorg-server-xvfb
+  - xorg-xinit
+  - xss-lock
+  - xterm
+  - zip
+  - zoxide
+  - zram-generator
+  - zsh
+
+# Packages to install from AUR (using yay)
+aur_packages:
+  - claude-code
+  - codename-goose
+  - discord-electron-openasar
+  - docker-rootless-extras
+  - google-chrome
+  - mods
+  - neovim-nightly-bin
+  - pwvucontrol
+  - rcm
+  - spotify
+  - stripe-cli-bin
+  - supabase-bin
+  - vencord
+  - vesktop

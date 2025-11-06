@@ -1,4 +1,14 @@
 ---
+# Setup AUR user and helper first
+- name: Setup AUR builder user
+  ansible.builtin.include_tasks: aur_user.yml
+  tags: [aur, aur_user]
+
+- name: Install yay AUR helper
+  ansible.builtin.include_tasks: aur_helper.yml
+  tags: [aur, yay]
+
+# Then handle regular package management
 - name: Update pacman package database
   become: true
   community.general.pacman:
@@ -14,3 +24,8 @@
   community.general.pacman:
     name: "{{ packages }}"
     state: present
+
+# Finally install AUR packages (requires yay to be installed)
+- name: Install AUR packages
+  ansible.builtin.include_tasks: aur_packages.yml
+  tags: [aur, aur_packages]
