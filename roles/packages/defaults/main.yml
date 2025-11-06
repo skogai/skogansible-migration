@@ -1,0 +1,4 @@
+---
+# Default variables for packages role
+update_system: false
+packages: []

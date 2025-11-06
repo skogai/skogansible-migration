@@ -1,0 +1,5 @@
+---
+- name: Ensure user exists
+  ansible.builtin.user:
+    name: "{{ username }}"
+    state: present
