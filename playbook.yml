@@ -7,9 +7,5 @@
     - vars/main.yml
 
   roles:
-    # - role: system
-    #   tags: [system, config]
-    # - role: users
-    #   tags: [users]
     - role: packages
       tags: [packages, install]
