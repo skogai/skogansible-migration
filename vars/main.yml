@@ -1,0 +1,28 @@
+---
+# User configuration
+username: skogix
+user_groups:
+  - wheel
+
+# System configuration
+timezone: Europe/Stockholm
+locale: en_US.UTF-8
+hostname: skogix-workstation
+
+# Package configuration
+update_system: true
+enable_multilib: false
+
+# Packages to install
+packages:
+  - base-devel
+  - git
+  - curl
+  - wget
+  - tree
+  - vim
+  - openssh
+  - networkmanager
+  - zip
+  - unzip
+  - tar
