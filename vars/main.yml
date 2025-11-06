@@ -1,14 +1,4 @@
 ---
-# User configuration
-username: skogix
-user_groups:
-  - wheel
-
-# System configuration
-timezone: Europe/Stockholm
-locale: en_US.UTF-8
-hostname: skogix-workstation
-
 # Packages to install from official repos
 packages:
   - ansible
