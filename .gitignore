@@ -19,6 +19,9 @@ tmp/
 *.tmp
 *.log
 
+# Planning/staging directory (may contain secrets)
+todo/
+
 # OS files
 .DS_Store
 Thumbs.db
