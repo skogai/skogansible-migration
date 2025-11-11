@@ -277,7 +277,6 @@ if [ "$RUN_MOLECULE" = true ]; then
     MOLECULE_FAILED=0
 
     # Find all roles with molecule scenarios
-    ROLES_TESTED=0
     for role_dir in roles/*/molecule/default; do
       if [ -d "$role_dir" ]; then
         role_name=$(basename $(dirname $(dirname "$role_dir")))
@@ -301,8 +300,7 @@ if [ "$RUN_MOLECULE" = true ]; then
     if [ $MOLECULE_FAILED -eq 0 ]; then
       print_test_result "Molecule Tests" "PASS"
     else
-      print_error "Molecule tests failed"
-      TESTS_FAILED=$((TESTS_FAILED + 1))
+      print_test_result "Molecule Tests" "FAIL"
       exit 1
     fi
   fi

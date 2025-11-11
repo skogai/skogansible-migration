@@ -2,19 +2,11 @@
 
 This file provides guidance to GitHub Copilot when working with code in this repository.
 
-## Quick Reference
-
-**Tech Stack:** Ansible, YAML, Bash, Arch Linux  
-**Primary Language:** YAML (Ansible playbooks and roles)  
-**Testing:** ansible-lint, yamllint, Molecule  
-**CI/CD:** GitHub Actions  
-**Documentation:** [README.md](../README.md), [CLAUDE.md](../CLAUDE.md), [MOLECULE.md](../MOLECULE.md)
-
 ## Repository Purpose
 
 This is the centralized Ansible configuration directory (`~/.ansible`) that provides global settings and paths for all Ansible operations on this system.
 
-This is a centralized Ansible configuration directory for this system. It houses global configuration files, local playbooks, roles, and variable files used for system management and Arch Linux configuration.
+This is a centralized Ansible configuration directory for this system. In addition to global configuration files, it also houses local playbooks, roles, and variable files used for system management.
 
 ## Key Files and Directories
 
@@ -49,24 +41,6 @@ This is a centralized Ansible configuration directory for this system. It houses
 - The `.env` file contains sensitive data - never commit secrets
 
 ## Important Practices
-
-### Issue and PR Workflow
-
-When assigned to an issue or working on changes:
-
-1. **Understand the requirement** - Read the issue description and comments thoroughly
-2. **Review existing code** - Check similar implementations in other roles
-3. **Make minimal changes** - Only modify what's necessary to address the issue
-4. **Follow patterns** - Use existing conventions and code style
-5. **Test thoroughly** - Run `./test.sh` before committing
-6. **Document changes** - Update relevant documentation if needed
-
-**Working on PRs:**
-- Always create focused, single-purpose changes
-- Use descriptive commit messages
-- Reference issue numbers in commits
-- Respond to review comments promptly
-- Keep PRs small and reviewable
 
 ### Running Playbooks
 
@@ -188,87 +162,3 @@ AUR packages require a special setup because `makepkg` refuses to run as root.
 - ⊘ Yellow marks indicate skipped tests (missing tool or configuration)
 
 The test script exits with code 0 on success, non-zero on failure, making it suitable for use in git hooks or CI pipelines.
-
-## Development Environment
-
-### Initial Setup
-
-For first-time contributors or when setting up a development environment:
-
-```bash
-# 1. Install Python dependencies
-pip install ansible ansible-lint yamllint pre-commit
-
-# 2. Install Ansible collections
-ansible-galaxy collection install -r requirements.yml
-
-# 3. Set up pre-commit hooks (optional but recommended)
-pre-commit install
-
-# 4. Verify environment
-./test.sh
-```
-
-### Recommended Tools
-
-- **direnv** - Auto-loads environment variables from `.envrc`
-- **pre-commit** - Runs tests automatically before commits
-- **molecule** - Role testing in Docker (optional, see MOLECULE.md)
-- **ansible-navigator** - Enhanced Ansible CLI (optional)
-
-### IDE Integration
-
-For the best experience with Copilot:
-- Use VS Code with the Ansible extension
-- Enable YAML syntax validation
-- Configure yamllint and ansible-lint integration
-- Set up Ansible language server for better completions
-
-## Working with Copilot
-
-### Best Practices for AI Collaboration
-
-1. **Be specific in issues** - Clear requirements help Copilot generate better solutions
-2. **Provide context** - Reference existing files, patterns, or examples
-3. **Review suggestions** - Always verify Copilot's code against best practices
-4. **Iterate on feedback** - Use PR comments to refine Copilot's work
-5. **Test thoroughly** - Run `./test.sh` on all Copilot-generated changes
-
-### Common Tasks for Copilot
-
-**Adding a new package:**
-- Edit `vars/packages.yml` to add package to appropriate list
-- Run `./test.sh` to validate YAML syntax
-- Test with `./test.sh --check` to verify installation
-
-**Creating a new role:**
-- Follow existing role structure (see `roles/01_host_info/` as template)
-- Include `tasks/main.yml` with fully qualified module names
-- Add role to appropriate playbook (numbered or named)
-- Create Molecule test scenario (optional, see MOLECULE.md)
-- Document role purpose and variables in role README
-
-**Modifying existing roles:**
-- Preserve existing functionality unless explicitly requested
-- Follow existing patterns and conventions
-- Update documentation if behavior changes
-- Test changes with `./test.sh` and optionally `./test.sh --check`
-
-### Security Considerations
-
-When working with Copilot:
-- **Never** commit secrets or passwords to `.env` file
-- Use `ansible-vault` for sensitive data
-- Review all Copilot suggestions for security implications
-- Follow principle of least privilege
-- Validate file permissions (especially for sudoers files)
-- Test privilege escalation carefully
-
-## Additional Resources
-
-- **[README.md](../README.md)** - Quick start guide and overview
-- **[CLAUDE.md](../CLAUDE.md)** - Detailed development guide
-- **[MOLECULE.md](../MOLECULE.md)** - Testing guide
-- **.ansible-lint** - Linting rules configuration
-- **.yamllint** - YAML formatting rules
-- **.pre-commit-config.yaml** - Pre-commit hook configuration
