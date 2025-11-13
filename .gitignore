@@ -5,14 +5,9 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Ansible generated files
+# Ansible generated files and internals
 *.retry
 .ansible/
-
-# Ansible Galaxy
-collections/
-galaxy_cache/
-galaxy_token
 
 # Temporary files
 tmp/
@@ -32,3 +27,5 @@ Thumbs.db
 *.swp
 *.swo
 *~
+galaxy_cache
+galaxy_cache
