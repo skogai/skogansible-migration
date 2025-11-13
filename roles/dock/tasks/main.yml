@@ -1,4 +1,0 @@
----
-- name: dock placeholder
-  debug:
-    msg: "To be implemented: dock role"
