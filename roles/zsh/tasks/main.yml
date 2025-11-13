@@ -1,4 +1,0 @@
----
-- name: zsh placeholder
-  debug:
-    msg: "To be implemented: zsh role"
