@@ -1,0 +1,52 @@
+---
+- name: ensure pacman-contrib is installed (provides paccache)
+  become: true
+  community.general.pacman:
+    name: pacman-contrib
+    state: present
+
+- name: install paccache systemd service
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/paccache.service
+    mode: '0644'
+    owner: root
+    group: root
+    content: |
+      [Unit]
+      Description=Clean pacman cache
+
+      [Service]
+      Type=oneshot
+      IOSchedulingClass=idle
+      CPUSchedulingPolicy=idle
+      ExecStart=/usr/bin/paccache -r
+      ExecStart=/usr/bin/paccache -ruk0
+  notify: reload systemd
+
+- name: install paccache systemd timer
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/paccache.timer
+    mode: '0644'
+    owner: root
+    group: root
+    content: |
+      [Unit]
+      Description=Clean pacman cache weekly
+
+      [Timer]
+      OnCalendar=weekly
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+  notify: reload systemd
+
+- name: enable and start paccache timer
+  become: true
+  ansible.builtin.systemd:
+    name: paccache.timer
+    enabled: true
+    state: started
+    daemon_reload: true

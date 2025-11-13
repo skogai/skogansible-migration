@@ -29,3 +29,8 @@
 - name: Install AUR packages
   ansible.builtin.include_tasks: aur_packages.yml
   tags: [aur, aur_packages]
+
+# Setup automatic pacman cache cleanup
+- name: Configure paccache timer
+  ansible.builtin.include_tasks: paccache.yml
+  tags: [paccache, maintenance]
