@@ -1,0 +1,44 @@
+---
+- name: ensure cloudflared package is installed
+  become: true
+  community.general.pacman:
+    name: cloudflared
+    state: present
+
+- name: create cloudflared config directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/cloudflared
+    state: directory
+    mode: '0700'
+    owner: root
+    group: root
+
+- name: install cloudflared token file
+  become: true
+  ansible.builtin.copy:
+    content: "{{ cloudflared_token }}"
+    dest: /etc/cloudflared/token
+    mode: '0600'
+    owner: root
+    group: root
+  when: cloudflared_token | length > 0
+  no_log: true  # don't log the token
+
+- name: install cloudflared systemd service
+  become: true
+  ansible.builtin.template:
+    src: cloudflared.service.j2
+    dest: /etc/systemd/system/cloudflared.service
+    mode: '0644'
+    owner: root
+    group: root
+  notify: reload systemd
+
+- name: enable and start cloudflared service
+  become: true
+  ansible.builtin.systemd:
+    name: cloudflared
+    enabled: true
+    state: started
+    daemon_reload: true

@@ -1,0 +1,5 @@
+---
+- name: configure cloudflared tunnel
+  ansible.builtin.include_tasks: cloudflared.yml
+  when: cloudflared_enabled | default(false)
+  tags: [cloudflared, services]

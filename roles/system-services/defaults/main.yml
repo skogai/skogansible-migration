@@ -1,0 +1,8 @@
+---
+# cloudflared tunnel configuration
+cloudflared_enabled: true
+cloudflared_token: ""  # should be set in vault or group_vars
+
+# note: to set token securely, create group_vars/localhost/vault.yml with:
+# cloudflared_token: "your-token-here"
+# then encrypt with: ansible-vault encrypt group_vars/localhost/vault.yml

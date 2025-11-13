@@ -1,0 +1,8 @@
+---
+# example vault file for sensitive variables
+# copy this to group_vars/localhost/vault.yml and encrypt with:
+# ansible-vault encrypt group_vars/localhost/vault.yml
+
+# cloudflared tunnel token
+# extract from: sudo grep "token" /etc/systemd/system/cloudflared.service
+cloudflared_token: "eyJhIjoiYWU5MzFlMjQxNTUwZTgzMjYxNDllZWRhMTBhZGE2MGQiLCJ0IjoiYWU3ZmQ2M2EtOTM1Zi00MmIyLWIxZDAtYTUzY2NhMGYyNzk4IiwicyI6Ik9Ea3pNemRoTldVdE9UQXlOUzAwWldNekxXRTFZV010TjJFNU1HTXdObU5pTmpVdyJ9"
