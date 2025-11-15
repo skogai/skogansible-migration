@@ -5,19 +5,17 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Ansible generated files
+# Ansible generated files and internals
 *.retry
 .ansible/
-
-# Ansible Galaxy
-collections/
-galaxy_cache/
-galaxy_token
 
 # Temporary files
 tmp/
 *.tmp
 *.log
+
+# Planning/staging directory (may contain secrets)
+todo/
 
 # OS files
 .DS_Store
@@ -29,3 +27,13 @@ Thumbs.db
 *.swp
 *.swo
 *~
+galaxy_cache
+galaxy_cache
+
+# cc-sessions runtime files
+sessions/sessions-state.json
+sessions/transcripts/
+sessions/.archived/
+galaxy_cache
+collections/ansible_collections
+galaxy_token

@@ -94,17 +94,17 @@ packages:
 
 # Packages to install from AUR (using yay)
 aur_packages:
-  - claude-code
-  - codename-goose
-  - discord-electron-openasar
-  - docker-rootless-extras
-  - google-chrome
+  # - claude-code
+  # - codename-goose
+  # - discord-electron-openasar
+  # - docker-rootless-extras
+  # - google-chrome
   - mods
   - neovim-nightly-bin
-  - pwvucontrol
+  # - pwvucontrol
   - rcm
-  - spotify
-  - stripe-cli-bin
-  - supabase-bin
-  - vencord
-  - vesktop
+  # - spotify
+  # - stripe-cli-bin
+  # - supabase-bin
+  # - vencord
+  # - vesktop

@@ -1,3 +1,6 @@
+
+@sessions/CLAUDE.sessions.md
+
 # Ansible Setup
 
 ## Key Details
