@@ -37,3 +37,5 @@ sessions/.archived/
 galaxy_cache
 collections/ansible_collections
 galaxy_token
+collections/ansible_collections
+collections/ansible_collections

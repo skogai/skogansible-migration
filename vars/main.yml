@@ -13,13 +13,13 @@ packages:
   - direnv
   - dkms
   - dmenu
-  - docker
-  - docker-buildx
-  - docker-compose
-  - dotnet-host
-  - dotnet-runtime
-  - dotnet-sdk
-  - dotnet-source-built-artifacts
+  # - docker
+  # - docker-buildx
+  # - docker-compose
+  # - dotnet-host
+  # - dotnet-runtime
+  # - dotnet-sdk
+  # - dotnet-source-built-artifacts
   - dunst
   - feh
   - firefox
@@ -27,69 +27,69 @@ packages:
   - gammastep
   - git
   - github-cli
-  - grub
+  # - grub
   - gst-plugin-pipewire
   - htop
-  - i3-wm
-  - i3blocks
-  - i3lock
-  - i3status
-  - intel-ucode
-  - iwd
+  # - i3-wm
+  # - i3blocks
+  # - i3lock
+  # - i3status
+  # - intel-ucode
+  # - iwd
   - kitty
   - lazydocker
   - lazygit
   - less
-  - libnotify
-  - libpulse
-  - libva-nvidia-driver
-  - lightdm
-  - lightdm-gtk-greeter
-  - linux
-  - linux-firmware
-  - linux-headers
-  - maim
-  - mandoc
-  - nano
-  - ncspot
-  - neovim-nvim-treesitter
-  - network-manager-applet
-  - networkmanager
-  - nvidia-dkms
-  - nvm
-  - ollama-cuda
-  - pgbouncer
-  - pgcli
-  - picom
-  - pipewire
-  - pipewire-alsa
-  - pipewire-jack
-  - pipewire-pulse
-  - polkit-gnome
-  - postgresql
-  - postgrest
-  - python-uv
-  - ripgrep
-  - sheldon
-  - smartmontools
+  # - libnotify
+  # - libpulse
+  # - libva-nvidia-driver
+  # - lightdm
+  # - lightdm-gtk-greeter
+  # - linux
+  # - linux-firmware
+  # - linux-headers
+  # - maim
+  # - mandoc
+  # - nano
+  # - ncspot
+  # - neovim-nvim-treesitter
+  # - network-manager-applet
+  # - networkmanager
+  # - nvidia-dkms
+  # - nvm
+  # - ollama-cuda
+  # - pgbouncer
+  # - pgcli
+  # - picom
+  # - pipewire
+  # - pipewire-alsa
+  # - pipewire-jack
+  # - pipewire-pulse
+  # - polkit-gnome
+  # - postgresql
+  # - postgrest
+  # - python-uv
+  # - ripgrep
+  # - sheldon
+  # - smartmontools
   - steam
   - tree
   - unzip
-  - uv
-  - vim
-  - wget
-  - wireless_tools
-  - wireplumber
-  - xclip
-  - xdg-utils
-  - xdotool
-  - xorg-server-xvfb
-  - xorg-xinit
-  - xss-lock
-  - xterm
-  - zip
-  - zoxide
-  - zram-generator
+  # - uv
+  # - vim
+  # - wget
+  # - wireless_tools
+  # - wireplumber
+  # - xclip
+  # - xdg-utils
+  # - xdotool
+  # - xorg-server-xvfb
+  # - xorg-xinit
+  # - xss-lock
+  # - xterm
+  # - zip
+  # - zoxide
+  # - zram-generator
   - zsh
 
 # Packages to install from AUR (using yay)
@@ -98,9 +98,9 @@ aur_packages:
   # - codename-goose
   # - discord-electron-openasar
   # - docker-rootless-extras
-  # - google-chrome
+  - google-chrome
   - mods
-  - neovim-nightly-bin
+  # - neovim-nightly-bin
   # - pwvucontrol
   - rcm
   # - spotify
