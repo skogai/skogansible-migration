@@ -40,3 +40,4 @@ galaxy_token
 collections/ansible_collections
 galaxy_cache
 galaxy_cache
+.aider.chat.history.md
