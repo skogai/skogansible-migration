@@ -8,6 +8,9 @@ __pycache__/
 # Ansible generated files and internals
 *.retry
 .ansible/
+galaxy_cache/
+galaxy_token
+collections/ansible_collections/
 
 # Temporary files
 tmp/
@@ -27,17 +30,14 @@ Thumbs.db
 *.swp
 *.swo
 *~
-galaxy_cache
-galaxy_cache
+
+# AI tools
+.aider.chat.history.md
+.aider.tags.cache.v4/
 
 # cc-sessions runtime files
 sessions/sessions-state.json
 sessions/transcripts/
 sessions/.archived/
-galaxy_cache
-collections/ansible_collections
-galaxy_token
-collections/ansible_collections
-galaxy_cache
-galaxy_cache
+.claude/tsc-cache/217b63f1-4079-4732-9c87-217e7eef66e2
 .aider.chat.history.md
