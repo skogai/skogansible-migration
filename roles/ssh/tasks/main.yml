@@ -2,6 +2,14 @@
 # SSH Role - Main Tasks
 
 # ==============================================================================
+# Deploy Entire .ssh Directory (Optional - Bulk Restore)
+# ==============================================================================
+
+- name: "SSH | Deploy entire .ssh directory from backup"
+  ansible.builtin.include_tasks: deploy_ssh_directory.yml
+  when: ssh_deploy_full_directory | default(false)
+
+# ==============================================================================
 # Ensure SSH Directory Exists
 # ==============================================================================
 
@@ -12,6 +20,7 @@
     mode: "{{ ssh_dir_mode }}"
     owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_facts['user_id'] }}"
+  when: not (ssh_deploy_full_directory | default(false))
 
 # ==============================================================================
 # SSH Key Deployment (from Vault)
@@ -107,11 +116,22 @@
 
 - name: "SSH | Manage known hosts"
   when: ssh_manage_known_hosts
-  ansible.builtin.known_hosts:
-    name: "{{ item }}"
-    state: present
-    path: "{{ ssh_dir }}/known_hosts"
-  loop: "{{ ssh_known_hosts | default([]) }}"
+  block:
+    - name: "SSH | Scan SSH host keys"
+      ansible.builtin.command:
+        cmd: "ssh-keyscan -H {{ item }}"
+      register: ssh_host_keys
+      loop: "{{ ssh_known_hosts | default([]) }}"
+      changed_when: false
+
+    - name: "SSH | Add hosts to known_hosts"
+      ansible.builtin.known_hosts:
+        name: "{{ item.item }}"
+        key: "{{ item.stdout }}"
+        state: present
+        path: "{{ ssh_dir }}/known_hosts"
+      loop: "{{ ssh_host_keys.results }}"
+      when: item.stdout != ""
 
 # ==============================================================================
 # Authorized Keys Management
