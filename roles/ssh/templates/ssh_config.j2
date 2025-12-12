@@ -1,5 +1,5 @@
 # SSH Config - Managed by Ansible
-# Generated: {{ ansible_date_time.iso8601 }}
+# Generated: {{ ansible_facts['date_time']['iso8601'] }}
 
 # Global SSH settings
 Host *
@@ -42,7 +42,7 @@ Host *
 # Personal Server
 # Host myserver
 #     HostName example.com
-#     User {{ ansible_user_id }}
+#     User {{ ansible_facts['user_id'] }}
 #     Port 22
 #     IdentityFile ~/.ssh/id_ed25519
 #     ForwardAgent yes
@@ -50,12 +50,12 @@ Host *
 # Jump Host / Bastion
 # Host bastion
 #     HostName bastion.example.com
-#     User {{ ansible_user_id }}
+#     User {{ ansible_facts['user_id'] }}
 #     IdentityFile ~/.ssh/id_ed25519
 #
 # Host internal-server
 #     HostName 10.0.1.100
-#     User {{ ansible_user_id }}
+#     User {{ ansible_facts['user_id'] }}
 #     ProxyJump bastion
 #     IdentityFile ~/.ssh/id_ed25519
 
