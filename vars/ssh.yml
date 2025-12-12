@@ -7,7 +7,7 @@
 # ==============================================================================
 
 # Deploy SSH keys from vault (set to true to deploy)
-ssh_deploy_from_vault: false
+ssh_deploy_from_vault: true
 
 # Key type (when generating new keys)
 ssh_key_type: "ed25519"

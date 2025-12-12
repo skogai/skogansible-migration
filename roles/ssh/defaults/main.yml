@@ -11,8 +11,8 @@ ssh_key_type: "ed25519"
 ssh_key_size: 4096  # Only used for RSA keys
 
 # SSH key file locations
-ssh_key_private: "{{ ansible_user_dir }}/.ssh/id_{{ ssh_key_type }}"
-ssh_key_public: "{{ ansible_user_dir }}/.ssh/id_{{ ssh_key_type }}.pub"
+ssh_key_private: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_{{ ssh_key_type }}"
+ssh_key_public: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_{{ ssh_key_type }}.pub"
 
 # Deploy from vaulted variables (loads from vars/ssh_vault.yml)
 ssh_deploy_from_vault: false
@@ -24,7 +24,7 @@ ssh_public_key_content: "{{ ssh_public_key | default('') }}"
 # ==============================================================================
 
 # SSH config file location
-ssh_config_file: "{{ ansible_user_dir }}/.ssh/config"
+ssh_config_file: "{{ ansible_facts['env']['HOME'] }}/.ssh/config"
 
 # Deploy custom SSH config
 ssh_deploy_config: false
@@ -36,7 +36,7 @@ ssh_deploy_config: false
 # SSH Directory Permissions
 # ==============================================================================
 
-ssh_dir: "{{ ansible_user_dir }}/.ssh"
+ssh_dir: "{{ ansible_facts['env']['HOME'] }}/.ssh"
 ssh_dir_mode: "0700"
 ssh_private_key_mode: "0600"
 ssh_public_key_mode: "0644"
@@ -50,14 +50,14 @@ ssh_config_mode: "0600"
 ssh_enable_backup: false
 
 # Backup directory
-ssh_backup_dir: "{{ ansible_user_dir }}/.ssh_backup"
-ssh_backup_archive: "{{ ansible_user_dir }}/.ssh_backup.tar.gz"
+ssh_backup_dir: "{{ ansible_facts['env']['HOME'] }}/.ssh_backup"
+ssh_backup_archive: "{{ ansible_facts['env']['HOME'] }}/.ssh_backup.tar.gz"
 
 # Encrypt backup with ansible-vault
 ssh_encrypt_backup: false
 
 # Vault password file location (if ssh_encrypt_backup is true)
-# ssh_vault_password_file: "{{ ansible_user_dir }}/.ssh/ansible-vault-password"
+# ssh_vault_password_file: "{{ ansible_facts['env']['HOME'] }}/.ssh/ansible-vault-password"
 
 # ==============================================================================
 # SSH Known Hosts Management
@@ -80,7 +80,7 @@ ssh_manage_known_hosts: false
 ssh_configure_agent: false
 
 # SSH agent socket location
-# ssh_agent_socket: "{{ ansible_user_dir }}/.ssh/ssh-agent.sock"
+# ssh_agent_socket: "{{ ansible_facts['env']['HOME'] }}/.ssh/ssh-agent.sock"
 
 # ==============================================================================
 # Authorized Keys Management
