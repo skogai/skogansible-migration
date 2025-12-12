@@ -30,10 +30,10 @@ packages:
   # - grub
   - gst-plugin-pipewire
   - htop
-  # - i3-wm
-  # - i3blocks
-  # - i3lock
-  # - i3status
+  - i3-wm
+  - i3blocks
+  - i3lock
+  - i3status
   # - intel-ucode
   # - iwd
   - kitty
@@ -51,16 +51,16 @@ packages:
   # - maim
   # - mandoc
   # - nano
-  # - ncspot
-  # - neovim-nvim-treesitter
+  - ncspot
+  - neovim-nvim-treesitter
   # - network-manager-applet
   # - networkmanager
-  # - nvidia-dkms
+  - nvidia-dkms
   # - nvm
-  # - ollama-cuda
+  - ollama-cuda
   # - pgbouncer
   # - pgcli
-  # - picom
+  - picom
   # - pipewire
   # - pipewire-alsa
   # - pipewire-jack
@@ -69,7 +69,7 @@ packages:
   # - postgresql
   # - postgrest
   # - python-uv
-  # - ripgrep
+  - ripgrep
   # - sheldon
   # - smartmontools
   - steam
@@ -79,16 +79,16 @@ packages:
   # - vim
   # - wget
   # - wireless_tools
-  # - wireplumber
-  # - xclip
+  - wireplumber
+  - xclip
   # - xdg-utils
-  # - xdotool
+  - xdotool
   # - xorg-server-xvfb
   # - xorg-xinit
   # - xss-lock
   # - xterm
   # - zip
-  # - zoxide
+  - zoxide
   # - zram-generator
   - zsh
 
@@ -97,12 +97,13 @@ aur_packages:
   # - claude-code
   # - codename-goose
   # - discord-electron-openasar
-  # - docker-rootless-extras
+  - docker-rootless-extras
   - google-chrome
   - mods
-  # - neovim-nightly-bin
-  # - pwvucontrol
+  - neovim-nightly-bin
+  - pwvucontrol
   - rcm
+  - rustup
   # - spotify
   # - stripe-cli-bin
   # - supabase-bin

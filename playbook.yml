@@ -1,6 +1,6 @@
 ---
 - name: Configure Arch Linux system
-  hosts: localhost
+  hosts: all
   connection: local
 
   vars_files:
