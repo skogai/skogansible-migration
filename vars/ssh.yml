@@ -1,0 +1,65 @@
+---
+# SSH Role Configuration
+# Enable/disable SSH features as needed
+
+# ==============================================================================
+# SSH Key Deployment
+# ==============================================================================
+
+# Deploy SSH keys from vault (set to true to deploy)
+ssh_deploy_from_vault: false
+
+# Key type (when generating new keys)
+ssh_key_type: "ed25519"
+
+# ==============================================================================
+# SSH Configuration File
+# ==============================================================================
+
+# Deploy custom SSH config
+ssh_deploy_config: false
+
+# SSH config template (if ssh_deploy_config is true)
+# ssh_config_template: "ssh_config.j2"
+
+# ==============================================================================
+# Known Hosts Management
+# ==============================================================================
+
+# Manage known_hosts file
+ssh_manage_known_hosts: false
+
+# Known hosts to add (uncomment and modify as needed)
+# ssh_known_hosts:
+#   - github.com
+#   - gitlab.com
+#   - bitbucket.org
+
+# ==============================================================================
+# Authorized Keys Management
+# ==============================================================================
+
+# Manage authorized_keys file
+ssh_manage_authorized_keys: false
+
+# List of public keys to add to authorized_keys
+# ssh_authorized_keys:
+#   - "ssh-ed25519 AAAAC3... user@host"
+#   - "ssh-rsa AAAAB3... another@host"
+
+# ==============================================================================
+# SSH Key Generation
+# ==============================================================================
+
+# Generate new SSH key if it doesn't exist
+ssh_generate_key: false
+
+# Key comment (usually email)
+# ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
+
+# ==============================================================================
+# Backup
+# ==============================================================================
+
+# Enable SSH backup functionality
+ssh_enable_backup: false

@@ -1,0 +1,27 @@
+---
+galaxy_info:
+  author: Skogix
+  description: SSH key and configuration management with vault support
+  company: SkogAI
+  license: MIT
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Archlinux
+      versions:
+        - all
+
+  galaxy_tags:
+    - ssh
+    - security
+    - dotfiles
+    - vault
+    - keys
+
+dependencies: []

@@ -1,0 +1,27 @@
+---
+# Example 5: Manage Known Hosts
+# Automatically add hosts to known_hosts (prevents "unknown host" prompts)
+
+- name: Manage SSH known hosts
+  hosts: localhost
+  connection: local
+
+  vars:
+    # Enable known_hosts management
+    ssh_manage_known_hosts: true
+
+    # List of hosts to add
+    ssh_known_hosts:
+      - github.com
+      - gitlab.com
+      - bitbucket.org
+      # Add your own servers
+      # - myserver.example.com
+
+  roles:
+    - ssh
+
+  # This will:
+  # - Fetch and add host keys to ~/.ssh/known_hosts
+  # - Prevent "Are you sure you want to continue connecting?" prompts
+  # - Verify host keys on future connections

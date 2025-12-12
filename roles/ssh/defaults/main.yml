@@ -1,0 +1,109 @@
+---
+# SSH Role - Default Variables
+# Override these in your playbook or inventory
+
+# ==============================================================================
+# SSH Key Management
+# ==============================================================================
+
+# SSH key type (rsa, ed25519, ecdsa)
+ssh_key_type: "ed25519"
+ssh_key_size: 4096  # Only used for RSA keys
+
+# SSH key file locations
+ssh_key_private: "{{ ansible_user_dir }}/.ssh/id_{{ ssh_key_type }}"
+ssh_key_public: "{{ ansible_user_dir }}/.ssh/id_{{ ssh_key_type }}.pub"
+
+# Deploy from vaulted variables (loads from vars/ssh_vault.yml)
+ssh_deploy_from_vault: false
+ssh_private_key_content: "{{ ssh_private_key | default('') }}"
+ssh_public_key_content: "{{ ssh_public_key | default('') }}"
+
+# ==============================================================================
+# SSH Configuration
+# ==============================================================================
+
+# SSH config file location
+ssh_config_file: "{{ ansible_user_dir }}/.ssh/config"
+
+# Deploy custom SSH config
+ssh_deploy_config: false
+
+# SSH config template (if ssh_deploy_config is true)
+# ssh_config_template: "ssh_config.j2"
+
+# ==============================================================================
+# SSH Directory Permissions
+# ==============================================================================
+
+ssh_dir: "{{ ansible_user_dir }}/.ssh"
+ssh_dir_mode: "0700"
+ssh_private_key_mode: "0600"
+ssh_public_key_mode: "0644"
+ssh_config_mode: "0600"
+
+# ==============================================================================
+# SSH Backup & Vault Settings
+# ==============================================================================
+
+# Enable SSH backup functionality
+ssh_enable_backup: false
+
+# Backup directory
+ssh_backup_dir: "{{ ansible_user_dir }}/.ssh_backup"
+ssh_backup_archive: "{{ ansible_user_dir }}/.ssh_backup.tar.gz"
+
+# Encrypt backup with ansible-vault
+ssh_encrypt_backup: false
+
+# Vault password file location (if ssh_encrypt_backup is true)
+# ssh_vault_password_file: "{{ ansible_user_dir }}/.ssh/ansible-vault-password"
+
+# ==============================================================================
+# SSH Known Hosts Management
+# ==============================================================================
+
+# Manage known_hosts file
+ssh_manage_known_hosts: false
+
+# Known hosts to add (list of hostnames/IPs)
+# ssh_known_hosts:
+#   - github.com
+#   - gitlab.com
+#   - bitbucket.org
+
+# ==============================================================================
+# SSH Agent Settings
+# ==============================================================================
+
+# Configure SSH agent in shell profile
+ssh_configure_agent: false
+
+# SSH agent socket location
+# ssh_agent_socket: "{{ ansible_user_dir }}/.ssh/ssh-agent.sock"
+
+# ==============================================================================
+# Authorized Keys Management
+# ==============================================================================
+
+# Manage authorized_keys file
+ssh_manage_authorized_keys: false
+
+# List of public keys to add to authorized_keys
+# ssh_authorized_keys:
+#   - "ssh-ed25519 AAAAC3... user@host"
+#   - "ssh-rsa AAAAB3... another@host"
+
+# ==============================================================================
+# SSH Key Generation
+# ==============================================================================
+
+# Generate SSH key if it doesn't exist
+ssh_generate_key: false
+
+# Key comment (usually email)
+# ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
+
+# Passphrase for the key (leave empty for no passphrase)
+# IMPORTANT: Should be vaulted if used!
+ssh_key_passphrase: ""

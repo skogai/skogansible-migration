@@ -1,0 +1,56 @@
+---
+# Example 4: Deploy SSH Configuration
+# Deploy a custom SSH config with host definitions
+
+- name: Deploy SSH configuration
+  hosts: localhost
+  connection: local
+
+  vars:
+    # Enable SSH config deployment
+    ssh_deploy_config: true
+    ssh_config_template: "ssh_config.j2"
+
+    # Define custom hosts for the config
+    ssh_custom_hosts:
+      - name: github
+        hostname: github.com
+        user: git
+        identity_file: ~/.ssh/id_ed25519
+
+      - name: gitlab
+        hostname: gitlab.com
+        user: git
+        identity_file: ~/.ssh/id_ed25519
+
+      - name: personal-server
+        hostname: server.example.com
+        user: myuser
+        port: 2222
+        forward_agent: yes
+
+      # Example with jump host
+      - name: bastion
+        hostname: bastion.example.com
+        user: admin
+        identity_file: ~/.ssh/id_ed25519
+
+      - name: internal
+        hostname: 10.0.1.100
+        user: admin
+        proxy_jump: bastion
+        identity_file: ~/.ssh/id_ed25519
+
+  roles:
+    - ssh
+
+  # This will:
+  # - Deploy ~/.ssh/config from template
+  # - Include your custom host definitions
+  # - Backup existing config if it exists
+  # - Set permissions to 0600
+  #
+  # After running, you can connect with:
+  # ssh github
+  # ssh personal-server
+  # ssh internal (will jump through bastion)

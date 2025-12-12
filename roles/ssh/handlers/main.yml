@@ -1,0 +1,14 @@
+---
+# SSH Role - Handlers
+#
+# Currently no handlers are needed for this role.
+# Add handlers here if you need to respond to changes, for example:
+#
+# - name: restart ssh-agent
+#   ansible.builtin.command:
+#     cmd: pkill -u {{ ansible_user_id }} ssh-agent
+#   ignore_errors: true
+#
+# - name: reload ssh config
+#   ansible.builtin.debug:
+#     msg: "SSH config reloaded (no action needed, changes take effect immediately)"

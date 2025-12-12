@@ -1,0 +1,197 @@
+---
+# SSH Role - Main Tasks
+
+# ==============================================================================
+# Ensure SSH Directory Exists
+# ==============================================================================
+
+- name: "SSH | Ensure .ssh directory exists"
+  ansible.builtin.file:
+    path: "{{ ssh_dir }}"
+    state: directory
+    mode: "{{ ssh_dir_mode }}"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+
+# ==============================================================================
+# SSH Key Deployment (from Vault)
+# ==============================================================================
+
+- name: "SSH | Deploy SSH keys from vault"
+  when: ssh_deploy_from_vault
+  block:
+    - name: "SSH | Deploy SSH private key"
+      ansible.builtin.copy:
+        content: "{{ ssh_private_key_content }}"
+        dest: "{{ ssh_key_private }}"
+        mode: "{{ ssh_private_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      no_log: true  # Don't log private key content
+
+    - name: "SSH | Deploy SSH public key"
+      ansible.builtin.copy:
+        content: "{{ ssh_public_key_content }}"
+        dest: "{{ ssh_key_public }}"
+        mode: "{{ ssh_public_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+
+# ==============================================================================
+# SSH Key Generation
+# ==============================================================================
+
+- name: "SSH | Generate SSH key pair"
+  when: ssh_generate_key and not ssh_deploy_from_vault
+  block:
+    - name: "SSH | Check if SSH key already exists"
+      ansible.builtin.stat:
+        path: "{{ ssh_key_private }}"
+      register: ssh_key_stat
+
+    - name: "SSH | Generate SSH key if it doesn't exist"
+      ansible.builtin.command:
+        cmd: >
+          ssh-keygen
+          -t {{ ssh_key_type }}
+          {% if ssh_key_type == 'rsa' %}-b {{ ssh_key_size }}{% endif %}
+          -f {{ ssh_key_private }}
+          -N "{{ ssh_key_passphrase }}"
+          {% if ssh_key_comment is defined %}-C "{{ ssh_key_comment }}"{% endif %}
+      when: not ssh_key_stat.stat.exists
+      no_log: true  # Don't log passphrase
+
+    - name: "SSH | Set permissions on generated keys"
+      when: not ssh_key_stat.stat.exists
+      block:
+        - name: "SSH | Set private key permissions"
+          ansible.builtin.file:
+            path: "{{ ssh_key_private }}"
+            mode: "{{ ssh_private_key_mode }}"
+            owner: "{{ ansible_facts['user_id'] }}"
+            group: "{{ ansible_facts['user_id'] }}"
+
+        - name: "SSH | Set public key permissions"
+          ansible.builtin.file:
+            path: "{{ ssh_key_public }}"
+            mode: "{{ ssh_public_key_mode }}"
+            owner: "{{ ansible_facts['user_id'] }}"
+            group: "{{ ansible_facts['user_id'] }}"
+
+# ==============================================================================
+# SSH Configuration File
+# ==============================================================================
+
+- name: "SSH | Deploy SSH config"
+  when: ssh_deploy_config
+  ansible.builtin.template:
+    src: "{{ ssh_config_template }}"
+    dest: "{{ ssh_config_file }}"
+    mode: "{{ ssh_config_mode }}"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+    backup: true
+
+# ==============================================================================
+# Known Hosts Management
+# ==============================================================================
+
+- name: "SSH | Manage known hosts"
+  when: ssh_manage_known_hosts
+  ansible.builtin.known_hosts:
+    name: "{{ item }}"
+    state: present
+    path: "{{ ssh_dir }}/known_hosts"
+  loop: "{{ ssh_known_hosts | default([]) }}"
+
+# ==============================================================================
+# Authorized Keys Management
+# ==============================================================================
+
+- name: "SSH | Manage authorized_keys"
+  when: ssh_manage_authorized_keys
+  ansible.posix.authorized_key:
+    user: "{{ ansible_facts['user_id'] }}"
+    state: present
+    key: "{{ item }}"
+  loop: "{{ ssh_authorized_keys | default([]) }}"
+
+# ==============================================================================
+# SSH Backup (Optional - Advanced Feature)
+# ==============================================================================
+
+- name: "SSH | Backup SSH directory"
+  when: ssh_enable_backup
+  block:
+    - name: "SSH | Ensure backup directory exists"
+      ansible.builtin.file:
+        path: "{{ ssh_backup_dir }}"
+        state: directory
+        mode: "0700"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+
+    - name: "SSH | Copy .ssh directory to backup location"
+      ansible.builtin.copy:
+        src: "{{ ssh_dir }}/"
+        dest: "{{ ssh_backup_dir }}/"
+        remote_src: true
+        mode: preserve
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+
+    - name: "SSH | Archive backup directory"
+      ansible.builtin.archive:
+        path: "{{ ssh_backup_dir }}"
+        dest: "{{ ssh_backup_archive }}"
+        format: gz
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+        mode: "0600"
+
+# ==============================================================================
+# SSH Backup Encryption (Commented Out - Review Before Using)
+# ==============================================================================
+
+# IMPORTANT: This section encrypts SSH backups with ansible-vault.
+# Review the vault password file location and encryption method before enabling.
+#
+# - name: "SSH | Encrypt backup with ansible-vault"
+#   when: ssh_enable_backup and ssh_encrypt_backup
+#   block:
+#     - name: "SSH | Check if vault password file exists"
+#       ansible.builtin.stat:
+#         path: "{{ ssh_vault_password_file }}"
+#       register: vault_password_stat
+#       failed_when: not vault_password_stat.stat.exists
+#
+#     - name: "SSH | Encrypt backup archive"
+#       ansible.builtin.command:
+#         cmd: "ansible-vault encrypt {{ ssh_backup_archive }} --vault-password-file {{ ssh_vault_password_file }}"
+#       when: vault_password_stat.stat.exists
+#       register: encrypt_result
+#       changed_when: encrypt_result.rc == 0
+#       failed_when: encrypt_result.rc != 0
+
+# ==============================================================================
+# SSH Agent Configuration (Commented Out - Review Before Using)
+# ==============================================================================
+
+# IMPORTANT: This configures SSH agent in shell profile.
+# Review the configuration before enabling.
+#
+# - name: "SSH | Configure SSH agent in shell profile"
+#   when: ssh_configure_agent
+#   ansible.builtin.blockinfile:
+#     path: "{{ ansible_user_dir }}/.bashrc"  # Or .zshrc, .profile, etc.
+#     marker: "# {mark} ANSIBLE MANAGED - SSH AGENT"
+#     block: |
+#       # Start SSH agent if not running
+#       if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#           ssh-agent -t 1h > "{{ ssh_agent_socket }}"
+#       fi
+#       if [[ -f "{{ ssh_agent_socket }}" ]]; then
+#           source "{{ ssh_agent_socket }}" > /dev/null
+#       fi
+#     create: false
+#     backup: true

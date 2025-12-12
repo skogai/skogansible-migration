@@ -1,0 +1,74 @@
+---
+# Example 6: Complete SSH Setup
+# Everything together - keys, config, known hosts, and backup
+
+- name: Complete SSH environment setup
+  hosts: localhost
+  connection: local
+
+  vars_files:
+    - ../vars/ssh_vault.yml  # Your vaulted SSH keys
+
+  vars:
+    # ========================================
+    # SSH Key Deployment
+    # ========================================
+    ssh_deploy_from_vault: true
+    ssh_private_key_content: "{{ vault_ssh_private_key }}"
+    ssh_public_key_content: "{{ vault_ssh_public_key }}"
+    ssh_key_type: "ed25519"
+
+    # ========================================
+    # SSH Configuration
+    # ========================================
+    ssh_deploy_config: true
+    ssh_config_template: "ssh_config.j2"
+
+    ssh_custom_hosts:
+      - name: github
+        hostname: github.com
+        user: git
+        identity_file: ~/.ssh/id_ed25519
+
+      - name: gitlab
+        hostname: gitlab.com
+        user: git
+        identity_file: ~/.ssh/id_ed25519
+
+      # Add your own hosts here
+      # - name: myserver
+      #   hostname: example.com
+      #   user: myuser
+      #   port: 22
+
+    # ========================================
+    # Known Hosts Management
+    # ========================================
+    ssh_manage_known_hosts: true
+    ssh_known_hosts:
+      - github.com
+      - gitlab.com
+      - bitbucket.org
+
+    # ========================================
+    # Backup (Optional)
+    # ========================================
+    ssh_enable_backup: true
+
+    # Uncomment to encrypt backup (review tasks first!)
+    # ssh_encrypt_backup: true
+    # ssh_vault_password_file: "{{ ansible_user_dir }}/.ssh/ansible-vault-password"
+
+  roles:
+    - ssh
+
+  # Run with:
+  # ansible-playbook 06-complete-setup.yml --ask-vault-pass
+
+  # This will:
+  # 1. Create ~/.ssh directory with correct permissions
+  # 2. Deploy your SSH keys from vault
+  # 3. Deploy custom SSH config
+  # 4. Add known hosts (github, gitlab, etc.)
+  # 5. Create backup of ~/.ssh directory
+  # 6. Create compressed archive of backup

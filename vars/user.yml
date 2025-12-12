@@ -1,0 +1,7 @@
+---
+# User configuration
+users:
+  - name: skogix
+    git_email: emil@skogsund.se
+    git_name: skogix
+    editor: nvim

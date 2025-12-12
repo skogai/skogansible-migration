@@ -1,0 +1,29 @@
+---
+# Example 2: Generate New SSH Key
+# Generates a new ED25519 key pair
+
+- name: Generate SSH key
+  hosts: localhost
+  connection: local
+
+  vars:
+    # Enable key generation
+    ssh_generate_key: true
+
+    # Use modern ED25519 (recommended)
+    ssh_key_type: "ed25519"
+
+    # Add a comment (usually your email)
+    ssh_key_comment: "your.email@example.com"
+
+    # Optional: Add a passphrase (should be vaulted!)
+    # ssh_key_passphrase: "{{ vault_ssh_passphrase }}"
+
+  roles:
+    - ssh
+
+  # This will:
+  # - Generate ~/.ssh/id_ed25519 (private key)
+  # - Generate ~/.ssh/id_ed25519.pub (public key)
+  # - Set correct permissions
+  # - Will NOT overwrite if keys already exist
