@@ -8,6 +8,7 @@
     - vars/packages.yml  # Package lists
     - vars/ssh.yml       # SSH configuration
     - vars/user.yml      # User variables
+    - vars/ssh_vault.yml # SSH vault
 
   roles:
     - role: packages
