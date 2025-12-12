@@ -1,51 +1,69 @@
 ---
-# SSH Role Configuration
-# Enable/disable SSH features as needed
+# SSH Role Configuration - Granular Approach
+# Each SSH component managed separately for fine control
 
 # ==============================================================================
 # SSH Key Deployment
 # ==============================================================================
 
-# Deploy SSH keys from vault (set to true to deploy)
+# Deploy SSH keys from vault
 ssh_deploy_from_vault: true
 
 # Key type (when generating new keys)
 ssh_key_type: "ed25519"
 
+# Map vault variables to role variables
+ssh_private_key_content: "{{ ssh_private_key | default('') }}"
+ssh_public_key_content: "{{ ssh_public_key | default('') }}"
+
 # ==============================================================================
 # SSH Configuration File
 # ==============================================================================
 
-# Deploy custom SSH config
-ssh_deploy_config: false
+# Deploy custom SSH config from template
+ssh_deploy_config: true
+ssh_config_template: "ssh_config.j2"
 
-# SSH config template (if ssh_deploy_config is true)
-# ssh_config_template: "ssh_config.j2"
+# Custom hosts for SSH config
+ssh_custom_hosts:
+  - name: soft
+    hostname: git.skogix.se
+    identity_file: ~/.ssh/id_ed25519
+
+  - name: aldervall
+    hostname: soft-serve
+    user: root
+    port: 22
+    identity_file: ~/.ssh/id_ed25519
+    identities_only: yes
+
+  - name: ssh.skogai.se
+    hostname: ssh.skogai.se
+    proxy_command: /usr/bin/cloudflared access ssh --hostname %h
 
 # ==============================================================================
 # Known Hosts Management
 # ==============================================================================
 
-# Manage known_hosts file
+# Manage known_hosts file (DISABLED - file deployed from vault/backup)
 ssh_manage_known_hosts: false
 
-# Known hosts to add (uncomment and modify as needed)
+# Known hosts to add (not needed - file already in version control)
 # ssh_known_hosts:
 #   - github.com
 #   - gitlab.com
-#   - bitbucket.org
 
 # ==============================================================================
 # Authorized Keys Management
 # ==============================================================================
 
-# Manage authorized_keys file
+# Manage authorized_keys file (for incoming SSH access)
 ssh_manage_authorized_keys: false
 
 # List of public keys to add to authorized_keys
 # ssh_authorized_keys:
-#   - "ssh-ed25519 AAAAC3... user@host"
-#   - "ssh-rsa AAAAB3... another@host"
+#   - "ssh-ed25519 AAAAC3... user@laptop"
+#   - "ssh-rsa AAAAB3... user@desktop"
 
 # ==============================================================================
 # SSH Key Generation
@@ -55,11 +73,11 @@ ssh_manage_authorized_keys: false
 ssh_generate_key: false
 
 # Key comment (usually email)
-# ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
+# ssh_key_comment: "your.email@example.com"
 
 # ==============================================================================
 # Backup
 # ==============================================================================
 
-# Enable SSH backup functionality
+# Enable SSH backup functionality (creates ~/.ssh_backup/)
 ssh_enable_backup: false

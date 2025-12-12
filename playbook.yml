@@ -4,11 +4,11 @@
   connection: local
 
   vars_files:
-    - vars/main.yml      # Shared variables
-    - vars/packages.yml  # Package lists
-    - vars/ssh.yml       # SSH configuration
-    - vars/user.yml      # User variables
-    - vars/ssh_vault.yml # SSH vault
+    - vars/main.yml       # Shared variables
+    - vars/packages.yml   # Package lists
+    - vars/ssh.yml        # SSH configuration
+    - vars/ssh_vault.yml  # Encrypted SSH keys
+    - vars/user.yml       # User variables
 
   roles:
     - role: packages
