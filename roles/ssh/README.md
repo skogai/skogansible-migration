@@ -30,12 +30,12 @@ cp -r components/ssh-role /path/to/your/ansible/roles/ssh
 ```bash
 cat > vars/ssh_vault.yml <<'EOF'
 ---
-vault_ssh_private_key: |
+ssh_private_key: |
   -----BEGIN OPENSSH PRIVATE KEY-----
   (paste your private key here)
   -----END OPENSSH PRIVATE KEY-----
 
-vault_ssh_public_key: "ssh-ed25519 AAAA... your@email.com"
+ssh_public_key: "ssh-ed25519 AAAA... your@email.com"
 EOF
 
 # Encrypt it
@@ -55,8 +55,8 @@ ansible-vault encrypt vars/ssh_vault.yml
 
   vars:
     ssh_deploy_from_vault: true
-    ssh_private_key_content: "{{ vault_ssh_private_key }}"
-    ssh_public_key_content: "{{ vault_ssh_public_key }}"
+    ssh_private_key_content: "{{ ssh_private_key }}"
+    ssh_public_key_content: "{{ ssh_public_key }}"
 
   roles:
     - ssh
@@ -200,8 +200,8 @@ Full featured deployment with keys, config, and known hosts:
   vars:
     # Deploy keys from vault
     ssh_deploy_from_vault: true
-    ssh_private_key_content: "{{ vault_ssh_private_key }}"
-    ssh_public_key_content: "{{ vault_ssh_public_key }}"
+    ssh_private_key_content: "{{ ssh_private_key }}"
+    ssh_public_key_content: "{{ ssh_public_key }}"
 
     # Deploy custom config
     ssh_deploy_config: true

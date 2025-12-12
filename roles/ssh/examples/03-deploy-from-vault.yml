@@ -15,8 +15,8 @@
     ssh_deploy_from_vault: true
 
     # Reference the vaulted variables
-    ssh_private_key_content: "{{ vault_ssh_private_key }}"
-    ssh_public_key_content: "{{ vault_ssh_public_key }}"
+    ssh_private_key_content: "{{ ssh_private_key }}"
+    ssh_public_key_content: "{{ ssh_public_key }}"
 
     # Optional: Specify key type if not using default
     ssh_key_type: "ed25519"  # or "rsa"

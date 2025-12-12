@@ -18,12 +18,12 @@
 #
 #   cat > vars/ssh_vault.yml <<EOF
 #   ---
-#   vault_ssh_private_key: |
+#   ssh_private_key: |
 #     -----BEGIN OPENSSH PRIVATE KEY-----
 #     (paste your private key content here)
 #     -----END OPENSSH PRIVATE KEY-----
 #
-#   vault_ssh_public_key: "ssh-ed25519 AAAA... user@host"
+#   ssh_public_key: "ssh-ed25519 AAAA... user@host"
 #   EOF
 #
 #   ansible-vault encrypt vars/ssh_vault.yml
@@ -34,7 +34,7 @@
 # ==============================================================================
 
 # Private key content (multi-line string)
-vault_ssh_private_key: |
+ssh_private_key: |
   -----BEGIN OPENSSH PRIVATE KEY-----
   EXAMPLE_PRIVATE_KEY_CONTENT_HERE
   THIS_IS_NOT_A_REAL_KEY
@@ -42,7 +42,7 @@ vault_ssh_private_key: |
   -----END OPENSSH PRIVATE KEY-----
 
 # Public key content (single line string)
-vault_ssh_public_key: "ssh-ed25519 EXAMPLE_PUBLIC_KEY_HERE user@example.com"
+ssh_public_key: "ssh-ed25519 EXAMPLE_PUBLIC_KEY_HERE user@example.com"
 
 # ==============================================================================
 # Optional: Multiple key pairs
