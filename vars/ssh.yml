@@ -24,18 +24,22 @@ ssh_public_key_content: "{{ ssh_public_key | default('') }}"
 ssh_deploy_config: true
 ssh_config_template: "ssh_config.j2"
 
-# Custom hosts for SSH config (optional - examples in template)
-# ssh_custom_hosts:
-#   - name: github
-#     hostname: github.com
-#     user: git
-#     identity_file: ~/.ssh/id_ed25519
-#
-#   - name: myserver
-#     hostname: server.example.com
-#     user: myuser
-#     port: 22
-#     forward_agent: yes
+# Custom hosts for SSH config
+ssh_custom_hosts:
+  - name: soft
+    hostname: git.skogix.se
+    identity_file: ~/.ssh/id_ed25519
+
+  - name: aldervall
+    hostname: soft-serve
+    user: root
+    port: 22
+    identity_file: ~/.ssh/id_ed25519
+    identities_only: yes
+
+  - name: ssh.skogai.se
+    hostname: ssh.skogai.se
+    proxy_command: /usr/bin/cloudflared access ssh --hostname %h
 
 # ==============================================================================
 # Known Hosts Management

@@ -14,6 +14,7 @@ Host *
 
     # Security settings
     HashKnownHosts yes
+    UserKnownHostsFile ~/.ssh/known_hosts
 
     # Use modern key types
     IdentityFile ~/.ssh/id_ed25519
@@ -75,11 +76,17 @@ Host {{ host.name }}
 {% if host.identity_file is defined %}
     IdentityFile {{ host.identity_file }}
 {% endif %}
+{% if host.identities_only is defined %}
+    IdentitiesOnly {{ host.identities_only }}
+{% endif %}
 {% if host.forward_agent is defined %}
     ForwardAgent {{ host.forward_agent }}
 {% endif %}
 {% if host.proxy_jump is defined %}
     ProxyJump {{ host.proxy_jump }}
+{% endif %}
+{% if host.proxy_command is defined %}
+    ProxyCommand {{ host.proxy_command }}
 {% endif %}
 
 {% endfor %}
