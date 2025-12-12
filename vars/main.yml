@@ -68,16 +68,16 @@ packages:
   # - polkit-gnome
   # - postgresql
   # - postgrest
-  # - python-uv
+  - python-uv
   - ripgrep
   # - sheldon
   # - smartmontools
   - steam
   - tree
   - unzip
-  # - uv
+  - uv
   # - vim
-  # - wget
+  - wget
   # - wireless_tools
   - wireplumber
   - xclip
@@ -87,7 +87,8 @@ packages:
   # - xorg-xinit
   # - xss-lock
   # - xterm
-  # - zip
+  - zip
+  - unzip
   - zoxide
   # - zram-generator
   - zsh

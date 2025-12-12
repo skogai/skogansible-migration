@@ -2,3 +2,4 @@
 # Default variables for packages role
 update_system: true
 packages: []
+aur_packages: []
