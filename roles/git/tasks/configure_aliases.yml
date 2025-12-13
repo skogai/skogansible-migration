@@ -1,0 +1,13 @@
+---
+# Git Role - Configure Git Aliases
+
+- name: "Git | Configure git aliases"
+  community.general.git_config:
+    name: "alias.{{ item.key }}"
+    value: "{{ item.value }}"
+    scope: global
+  loop: "{{ git_aliases | dict2items }}"
+  when: git_aliases is defined and git_aliases | length > 0
+  tags:
+    - git
+    - git-aliases

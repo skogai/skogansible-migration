@@ -1,0 +1,22 @@
+---
+# Git Role - Git Maintenance
+
+- name: "Git | Run git maintenance on repositories"
+  ansible.builtin.command:
+    cmd: "git -C {{ item }} maintenance run --schedule={{ git_maintenance_schedule }}"
+  loop: "{{ git_maintenance_repos }}"
+  when: git_maintenance_repos is defined and git_maintenance_repos | length > 0
+  register: git_maintenance_result
+  changed_when: false
+  tags:
+    - git
+    - git-maintenance
+
+- name: "Git | Display maintenance results"
+  ansible.builtin.debug:
+    msg: "Maintenance completed for {{ item.item }}"
+  loop: "{{ git_maintenance_result.results }}"
+  when: git_maintenance_result is defined and git_maintenance_result.results is defined
+  tags:
+    - git
+    - git-maintenance

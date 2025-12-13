@@ -1,0 +1,24 @@
+---
+# Git Role - Deploy Global .gitignore
+
+- name: "Git | Deploy global .gitignore from template"
+  when: git_global_gitignore_template is defined
+  ansible.builtin.template:
+    src: "{{ git_global_gitignore_template }}"
+    dest: "{{ git_global_gitignore_file }}"
+    mode: "0644"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+    backup: true
+  tags:
+    - git
+    - git-gitignore
+
+- name: "Git | Configure global gitignore in git config"
+  community.general.git_config:
+    name: core.excludesFile
+    value: "{{ git_global_gitignore_file }}"
+    scope: global
+  tags:
+    - git
+    - git-gitignore

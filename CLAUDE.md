@@ -1,6 +1,6 @@
 # Ansible Arch Linux Setup
 
-Ansible setup for managing Arch Linux system packages, AUR packages, and SSH configuration.
+Ansible setup for managing Arch Linux system packages, AUR packages, SSH configuration, and Git configuration.
 
 ## Project Structure
 
@@ -8,13 +8,14 @@ Ansible setup for managing Arch Linux system packages, AUR packages, and SSH con
 .
 ├── @ansible.cfg              # Ansible configuration
 ├── @.inventory               # Localhost target
-├── @playbook.yml             # Main playbook (2 roles)
+├── @playbook.yml             # Main playbook (3 roles)
 ├── @.requirements.yml        # Ansible Galaxy collections (3 collections)
 ├── @vars/                    # Configuration variables (organized by role)
 │   ├── main.yml              # Shared variables
 │   ├── packages.yml          # Package lists (61 official + 7 AUR)
 │   ├── ssh.yml               # SSH role configuration
 │   ├── ssh_vault.yml         # Encrypted SSH keys
+│   ├── git.yml               # Git configuration
 │   └── user.yml              # User-specific variables
 ├── @roles/packages/          # Package management role
 │   ├── tasks/
@@ -33,6 +34,30 @@ Ansible setup for managing Arch Linux system packages, AUR packages, and SSH con
 │   ├── handlers/main.yml
 │   ├── meta/main.yml
 │   └── README.md             # Full SSH role documentation
+├── @roles/git/               # Git configuration role
+│   ├── tasks/                # Standardized, reusable git operations
+│   │   ├── main.yml          # Orchestrates all git tasks
+│   │   ├── install.yml       # Git installation
+│   │   ├── configure_global.yml # Global gitconfig
+│   │   ├── configure_aliases.yml # Git aliases
+│   │   ├── configure_credentials.yml # Credential helper
+│   │   ├── install_lfs.yml   # Git LFS
+│   │   ├── clone_repositories.yml # Repository cloning
+│   │   ├── deploy_gitignore.yml # Global gitignore
+│   │   ├── deploy_hooks.yml  # Git hooks
+│   │   ├── configure_signing.yml # GPG/SSH signing
+│   │   ├── configure_repo_specific.yml # Repo configs
+│   │   └── maintenance.yml   # Git maintenance
+│   ├── templates/
+│   │   ├── gitconfig.j2      # .gitconfig template
+│   │   ├── gitignore_global.j2 # Global gitignore
+│   │   └── hooks/            # Git hook templates
+│   │       ├── pre-commit.j2
+│   │       └── commit-msg.j2
+│   ├── defaults/main.yml
+│   ├── handlers/main.yml
+│   ├── meta/main.yml
+│   └── README.md             # Full Git role documentation
 ├── @setup.sh                 # Bootstrap script (creates venv, installs ansible)
 ├── @run.sh                   # Execution script (runs playbook)
 ├── @.envrc                   # direnv environment setup
@@ -46,8 +71,9 @@ Ansible setup for managing Arch Linux system packages, AUR packages, and SSH con
 - **Become method:** `become: true` on individual tasks (not playbook level)
 - **Sudo password:** Set via `$ANSIBLE_BECOME_PASSWORD_FILE` exported by `skogcli` through `.envrc`
 - **Python interpreter:** Hardcoded venv path in `ansible.cfg`: `/home/skogix/.ansible/.venv/bin/python`
-- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, user.yml)
+- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, git.yml, user.yml)
 - **AUR support:** Dedicated `aur_builder` user for secure AUR package building
+- **Git automation:** Standardized, reusable task files for all common git operations
 - **Collections:** community.general, kewlfft.aur, ansible.posix
 
 ## Usage
@@ -59,10 +85,11 @@ Ansible setup for managing Arch Linux system packages, AUR packages, and SSH con
 
 **Run playbook:**
 ```bash
-./run.sh                      # Run all roles (packages + ssh)
+./run.sh                      # Run all roles (packages + ssh + git)
 ./run.sh --check             # Dry-run mode
 ./run.sh --tags packages     # Run only package management
 ./run.sh --tags ssh          # Run only SSH configuration
+./run.sh --tags git          # Run only Git configuration
 ./run.sh --tags aur          # Run only AUR-related tasks
 ```
 
@@ -80,6 +107,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ **packages** - Official Arch repository packages via pacman (61 packages)
 - ✅ **packages** - AUR packages via yay (7 packages)
 - ✅ **ssh** - SSH directory setup, key deployment, config management, known_hosts
+- ✅ **git** - Comprehensive Git configuration and repository management
 
 **Features:**
 - ✅ AUR builder user setup with secure sudo config
@@ -88,6 +116,14 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ Known hosts management
 - ✅ Authorized keys management
 - ✅ SSH directory backup functionality
+- ✅ Git installation and global configuration
+- ✅ Git aliases and credential helper management
+- ✅ Global .gitignore patterns
+- ✅ Repository cloning and management
+- ✅ Git hooks deployment
+- ✅ GPG/SSH commit signing
+- ✅ Git LFS support
+- ✅ Repository-specific configurations
 - ⏸️  Additional system configuration (see `docs/system-inventory-by-primitives.md`)
 
 ## SSH Role Configuration
@@ -110,8 +146,67 @@ The SSH role manages SSH keys, configuration, and related settings. All features
 
 **See:** `roles/ssh/README.md` for complete documentation and examples.
 
+## Git Role Configuration
+
+The Git role provides standardized, reusable functions for all common git operations. All features are **configurable via vars/git.yml**.
+
+**Quick Start (Enabled by default in vars/git.yml):**
+- Git installation
+- Global .gitconfig with user name/email
+- Comprehensive git aliases
+- Global .gitignore patterns
+- Credential caching (2 hours)
+
+**To customize git configuration:**
+1. Edit `vars/git.yml` and set your user information:
+   ```yaml
+   git_user_name_override: "Your Name"
+   git_user_email_override: "your.email@example.com"
+   ```
+2. Run: `./run.sh --tags git`
+
+**Available Git Features (configure in vars/git.yml):**
+- `git_install: true` - Install git package
+- `git_deploy_config: true` - Deploy complete .gitconfig from template
+- `git_deploy_aliases: true` - Enable git aliases (with sensible defaults)
+- `git_configure_credentials: true` - Setup credential helper (cache/store)
+- `git_deploy_global_gitignore: true` - Deploy global gitignore patterns
+- `git_clone_repos: true` - Clone specified repositories
+- `git_deploy_hooks: true` - Deploy git hooks (pre-commit, commit-msg)
+- `git_lfs_install: true` - Install and configure Git LFS
+- `git_gpg_sign_commits: true` - Enable GPG commit signing
+- `git_ssh_sign_commits: true` - Enable SSH commit signing (Git 2.34+)
+- `git_deploy_repo_configs: true` - Set repository-specific configurations
+- `git_run_maintenance: true` - Run git maintenance on repositories
+
+**Granular tag support:**
+```bash
+./run.sh --tags git-install      # Only install git
+./run.sh --tags git-config       # Only configure gitconfig
+./run.sh --tags git-aliases      # Only setup aliases
+./run.sh --tags git-clone        # Only clone repositories
+./run.sh --tags git-hooks        # Only deploy hooks
+```
+
+**Standardized Task Files:**
+Each git operation has its own reusable task file in `roles/git/tasks/`:
+- `install.yml` - Git installation
+- `configure_global.yml` - Global gitconfig settings
+- `configure_aliases.yml` - Git aliases
+- `configure_credentials.yml` - Credential helper
+- `install_lfs.yml` - Git LFS
+- `clone_repositories.yml` - Repository cloning
+- `deploy_gitignore.yml` - Global gitignore
+- `deploy_hooks.yml` - Git hooks
+- `configure_signing.yml` - GPG/SSH signing
+- `configure_repo_specific.yml` - Repo-specific configs
+- `maintenance.yml` - Git maintenance
+
+**See:** `roles/git/README.md` for complete documentation and examples.
+
 ## Reference
 
 - **roles/ssh/README.md** - Complete SSH role documentation with examples
+- **roles/git/README.md** - Complete Git role documentation with examples
 - **docs/ansible-core.md** - Ansible reference documentation
 - **docs/system-inventory-by-primitives.md** - Complete system automation roadmap (future expansion)

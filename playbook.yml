@@ -9,6 +9,7 @@
     - vars/ssh.yml        # SSH configuration
     - vars/ssh_vault.yml  # Encrypted SSH keys
     - vars/user.yml       # User variables
+    - vars/git.yml        # Git configuration
 
   roles:
     - role: packages
@@ -16,3 +17,6 @@
 
     - role: ssh
       tags: [ssh, config]
+
+    - role: git
+      tags: [git, vcs]
