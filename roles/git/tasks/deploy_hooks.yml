@@ -1,0 +1,42 @@
+---
+# Git Role - Deploy Git Hooks
+
+- name: "Git | Ensure git template directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.git-templates/hooks"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+  tags:
+    - git
+    - git-hooks
+
+- name: "Git | Configure git template directory"
+  community.general.git_config:
+    name: init.templateDir
+    value: "{{ ansible_facts['env']['HOME'] }}/.git-templates"
+    scope: global
+  tags:
+    - git
+    - git-hooks
+
+- name: "Git | Deploy git hook templates"
+  ansible.builtin.template:
+    src: "{{ git_hooks_template_dir }}/{{ item.template }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.git-templates/hooks/{{ item.name }}"
+    mode: "{{ item.mode | default('0755') }}"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+  loop: "{{ git_hooks }}"
+  when: git_hooks is defined and git_hooks | length > 0
+  tags:
+    - git
+    - git-hooks
+
+- name: "Git | Info about applying hooks to existing repos"
+  ansible.builtin.debug:
+    msg: "Git hooks deployed to template directory. Run 'git init' in existing repos to apply them."
+  tags:
+    - git
+    - git-hooks

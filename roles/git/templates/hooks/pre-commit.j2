@@ -1,0 +1,40 @@
+#!/bin/bash
+# {{ ansible_managed }}
+# Git pre-commit hook template
+# This hook is called before a commit is made
+
+# Redirect output to stderr
+exec 1>&2
+
+# Example: Check for trailing whitespace
+git diff-index --check --cached HEAD --
+
+# Example: Run linters or formatters
+# Examples (uncomment as needed):
+# - Python: black --check . || exit 1
+# - JavaScript: npm run lint || exit 1
+# - Go: gofmt -l . | grep . && exit 1 || exit 0
+
+# Example: Prevent commits to protected branches
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+PROTECTED_BRANCHES="^(master|main|production)$"
+
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]; then
+    echo "Direct commits to $BRANCH are not allowed."
+    echo "Please create a feature branch and submit a pull request."
+    exit 1
+fi
+
+# Example: Check for debug statements
+FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(py|js|ts|go)$')
+if [ -n "$FILES" ]; then
+    for FILE in $FILES; do
+        if git diff --cached "$FILE" | grep -iE '(console\.log|debugger|pdb\.set_trace|binding\.pry)' > /dev/null; then
+            echo "Error: Debug statement found in $FILE"
+            echo "Please remove debug statements before committing."
+            exit 1
+        fi
+    done
+fi
+
+exit 0

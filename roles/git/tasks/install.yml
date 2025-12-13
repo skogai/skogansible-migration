@@ -1,0 +1,29 @@
+---
+# Git Role - Install Git Package
+
+- name: "Git | Check if git is installed"
+  ansible.builtin.command:
+    cmd: "which git"
+  register: git_check
+  changed_when: false
+  failed_when: false
+
+- name: "Git | Install git package"
+  become: true
+  ansible.builtin.package:
+    name: "{{ git_package_name }}"
+    state: present
+  when: git_check.rc != 0
+  tags:
+    - git
+    - git-install
+
+- name: "Git | Verify git installation"
+  ansible.builtin.command:
+    cmd: "git --version"
+  register: git_version
+  changed_when: false
+
+- name: "Git | Display git version"
+  ansible.builtin.debug:
+    msg: "Installed {{ git_version.stdout }}"

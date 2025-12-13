@@ -1,0 +1,37 @@
+---
+# Git Role - Install and Configure Git LFS
+
+- name: "Git LFS | Install git-lfs package"
+  become: true
+  ansible.builtin.package:
+    name: "{{ git_lfs_package_name }}"
+    state: present
+  tags:
+    - git
+    - git-lfs
+
+- name: "Git LFS | Initialize git-lfs for user"
+  when: git_lfs_user_install
+  ansible.builtin.command:
+    cmd: "git lfs install"
+  register: git_lfs_install_result
+  changed_when: "'Git LFS initialized' in git_lfs_install_result.stdout or 'Updated' in git_lfs_install_result.stdout"
+  tags:
+    - git
+    - git-lfs
+
+- name: "Git LFS | Display git-lfs version"
+  ansible.builtin.command:
+    cmd: "git lfs version"
+  register: git_lfs_version
+  changed_when: false
+  tags:
+    - git
+    - git-lfs
+
+- name: "Git LFS | Show version info"
+  ansible.builtin.debug:
+    msg: "{{ git_lfs_version.stdout }}"
+  tags:
+    - git
+    - git-lfs

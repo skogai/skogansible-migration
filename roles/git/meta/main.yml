@@ -1,0 +1,32 @@
+---
+galaxy_info:
+  author: Skogix
+  description: Comprehensive Git configuration and repository management
+  company: SkogAI
+  license: MIT
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Archlinux
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+
+  galaxy_tags:
+    - git
+    - vcs
+    - development
+    - dotfiles
+    - configuration
+    - repository
+    - gitconfig
+
+dependencies: []
