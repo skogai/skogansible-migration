@@ -1,0 +1,48 @@
+---
+# Filesystems Role - Main Tasks Orchestrator
+
+# ==============================================================================
+# Create Mount Points
+# ==============================================================================
+
+- name: "Filesystems | Ensure mount point directories exist"
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: "{{ filesystems_mount_point_mode }}"
+    owner: "{{ filesystems_mount_point_owner }}"
+    group: "{{ filesystems_mount_point_group }}"
+  loop: "{{ data_mounts }}"
+  when:
+    - filesystems_create_mount_points
+    - data_mounts is defined
+    - item.state is defined
+    - item.state in ['mounted', 'present']
+  tags:
+    - filesystems
+    - filesystems-mount-points
+
+# ==============================================================================
+# Manage fstab Entries and Mount Filesystems
+# ==============================================================================
+
+- name: "Filesystems | Manage fstab entries and mount filesystems"
+  become: true
+  ansible.posix.mount:
+    path: "{{ item.path }}"
+    src: "UUID={{ item.uuid }}"
+    fstype: "{{ item.fstype }}"
+    opts: "{{ item.opts | default('defaults') }}"
+    state: "{{ item.state | default('mounted') }}"
+    dump: "{{ item.dump | default(0) }}"
+    passno: "{{ item.passno | default(2) }}"
+    backup: "{{ filesystems_backup_fstab }}"
+  loop: "{{ data_mounts }}"
+  when:
+    - filesystems_manage_mounts
+    - data_mounts is defined
+  tags:
+    - filesystems
+    - filesystems-mount
+    - filesystems-fstab
