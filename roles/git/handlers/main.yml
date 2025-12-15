@@ -1,0 +1,22 @@
+---
+# Git Role - Handlers
+
+- name: reload git config
+  ansible.builtin.debug:
+    msg: "Git configuration has been updated. Changes will be effective immediately."
+  listen: reload git config
+
+- name: git garbage collection
+  ansible.builtin.command:
+    cmd: "git gc --auto"
+    chdir: "{{ item }}"
+  loop: "{{ git_maintenance_repos | default([]) }}"
+  when: git_maintenance_repos is defined and git_maintenance_repos | length > 0
+  listen: run git gc
+
+- name: refresh git credential cache
+  ansible.builtin.command:
+    cmd: "git credential-cache exit"
+  when: git_credential_helper == "cache"
+  failed_when: false
+  listen: refresh git credentials

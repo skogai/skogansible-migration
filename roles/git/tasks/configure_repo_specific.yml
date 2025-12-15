@@ -1,0 +1,36 @@
+---
+# Git Role - Configure Repository-Specific Git Settings
+
+- name: "Git | Configure repository-specific settings"
+  ansible.builtin.shell:
+    cmd: |
+      if [ -d "{{ item.0.path }}/.git" ]; then
+        cd "{{ item.0.path }}"
+        git config --local "{{ item.1.key }}" "{{ item.1.value }}"
+      else
+        echo "Repository not found: {{ item.0.path }}"
+        exit 1
+      fi
+    executable: /bin/bash
+  with_subelements:
+    - "{{ git_repo_configs }}"
+    - config
+  when: git_repo_configs is defined and git_repo_configs | length > 0
+  register: repo_config_result
+  changed_when: repo_config_result.rc == 0
+  failed_when: repo_config_result.rc != 0
+  tags:
+    - git
+    - git-repo-config
+
+- name: "Git | Display configured repository settings"
+  ansible.builtin.debug:
+    msg: "Configured {{ item.item.1.key }}={{ item.item.1.value }} for {{ item.item.0.path }}"
+  loop: "{{ repo_config_result.results }}"
+  when:
+    - repo_config_result is defined
+    - repo_config_result.results is defined
+    - item.changed
+  tags:
+    - git
+    - git-repo-config
