@@ -17,12 +17,12 @@ git_deploy_config: true
 git_config_template: "gitconfig.j2"
 
 # User information (CUSTOMIZE THESE!)
-git_user_name: "{{ git_user_name_override | default('') }}"
-git_user_email: "{{ git_user_email_override | default('') }}"
+git_user_name: "skogix"
+git_user_email: "emil@skogsund.se"
 
 # Editor and defaults
-git_editor: "vim"
-git_default_branch: "main"
+git_editor: "nvim"
+git_default_branch: "master"
 
 # ==============================================================================
 # Git Aliases
@@ -80,7 +80,7 @@ git_aliases:
 # Credential Management
 # ==============================================================================
 
-git_configure_credentials: true
+git_configure_credentials: false
 git_credential_helper: "cache"
 git_credential_cache_timeout: 7200  # 2 hours
 
@@ -177,8 +177,8 @@ git_push_followTags: true
 git_push_autoSetupRemote: true
 
 # Pull settings
-git_pull_rebase: false
-git_pull_ff: "only"
+git_pull_rebase: true
+git_pull_ff: "false"
 
 # Merge settings
 git_merge_ff: "false"
