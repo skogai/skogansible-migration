@@ -177,11 +177,11 @@ git_push_followTags: true
 git_push_autoSetupRemote: true
 
 # Pull settings
-git_pull_rebase: true
-git_pull_ff: "false"
+git_pull_rebase: true    # Rebase when pulling (your preferred workflow)
+git_pull_ff: "false"     # Don't fast-forward pulls (rebase instead)
 
 # Merge settings
-git_merge_ff: "false"
+git_merge_ff: "true"     # Allow fast-forward merges when possible
 git_merge_conflictstyle: "diff3"
 
 # Diff settings
