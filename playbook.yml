@@ -10,6 +10,7 @@
     - vars/ssh_vault.yml  # Encrypted SSH keys
     - vars/user.yml       # User variables
     - vars/git.yml        # Git configuration
+    - vars/chezmoi.yml    # Chezmoi configuration
 
   roles:
     - role: packages
@@ -20,3 +21,6 @@
 
     - role: git
       tags: [git, vcs]
+
+    - role: chezmoi
+      tags: [chezmoi, dotfiles]

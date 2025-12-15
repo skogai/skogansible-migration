@@ -1,6 +1,6 @@
 # Ansible Arch Linux Setup
 
-Ansible setup for managing Arch Linux system packages, AUR packages, SSH configuration, and Git configuration.
+Ansible setup for managing Arch Linux system packages, AUR packages, SSH configuration, Git configuration, and Chezmoi dotfiles management.
 
 ## Project Structure
 
@@ -8,7 +8,7 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 .
 ├── @ansible.cfg              # Ansible configuration
 ├── @.inventory               # Localhost target
-├── @playbook.yml             # Main playbook (3 roles)
+├── @playbook.yml             # Main playbook (4 roles)
 ├── @.requirements.yml        # Ansible Galaxy collections (3 collections)
 ├── @vars/                    # Configuration variables (organized by role)
 │   ├── main.yml              # Shared variables
@@ -16,6 +16,7 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 │   ├── ssh.yml               # SSH role configuration
 │   ├── ssh_vault.yml         # Encrypted SSH keys
 │   ├── git.yml               # Git configuration
+│   ├── chezmoi.yml           # Chezmoi configuration
 │   └── user.yml              # User-specific variables
 ├── @roles/packages/          # Package management role
 │   ├── tasks/
@@ -58,6 +59,18 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 │   ├── handlers/main.yml
 │   ├── meta/main.yml
 │   └── README.md             # Full Git role documentation
+├── @roles/chezmoi/           # Chezmoi dotfiles management role
+│   ├── tasks/
+│   │   ├── main.yml          # Orchestrates all chezmoi tasks
+│   │   ├── install.yml       # Chezmoi installation
+│   │   ├── init.yml          # Initialize source directory
+│   │   ├── configure.yml     # Template .chezmoidata.yaml
+│   │   └── apply.yml         # Apply dotfiles configuration
+│   ├── templates/
+│   │   └── chezmoidata.yaml.j2  # Machine-specific configuration
+│   ├── defaults/main.yml
+│   ├── handlers/main.yml
+│   └── meta/main.yml
 ├── @setup.sh                 # Bootstrap script (creates venv, installs ansible)
 ├── @run.sh                   # Execution script (runs playbook)
 ├── @.envrc                   # direnv environment setup
@@ -71,9 +84,10 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 - **Become method:** `become: true` on individual tasks (not playbook level)
 - **Sudo password:** Set via `$ANSIBLE_BECOME_PASSWORD_FILE` exported by `skogcli` through `.envrc`
 - **Python interpreter:** Hardcoded venv path in `ansible.cfg`: `/home/skogix/.ansible/.venv/bin/python`
-- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, git.yml, user.yml)
+- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, git.yml, chezmoi.yml, user.yml)
 - **AUR support:** Dedicated `aur_builder` user for secure AUR package building
 - **Git automation:** Standardized, reusable task files for all common git operations
+- **Chezmoi integration:** Templates `.chezmoidata.yaml` for machine-specific dotfiles configuration
 - **Collections:** community.general, kewlfft.aur, ansible.posix
 
 ## Usage
@@ -85,11 +99,12 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 
 **Run playbook:**
 ```bash
-./run.sh                      # Run all roles (packages + ssh + git)
+./run.sh                      # Run all roles (packages + ssh + git + chezmoi)
 ./run.sh --check             # Dry-run mode
 ./run.sh --tags packages     # Run only package management
 ./run.sh --tags ssh          # Run only SSH configuration
 ./run.sh --tags git          # Run only Git configuration
+./run.sh --tags chezmoi      # Run only Chezmoi configuration
 ./run.sh --tags aur          # Run only AUR-related tasks
 ```
 
@@ -108,6 +123,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ **packages** - AUR packages via yay (7 packages)
 - ✅ **ssh** - SSH directory setup, key deployment, config management, known_hosts
 - ✅ **git** - Comprehensive Git configuration and repository management
+- ✅ **chezmoi** - Dotfiles management via machine-specific configuration templating
 
 **Features:**
 - ✅ AUR builder user setup with secure sudo config
@@ -124,6 +140,10 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ GPG/SSH commit signing
 - ✅ Git LFS support
 - ✅ Repository-specific configurations
+- ✅ Chezmoi installation and verification
+- ✅ Machine profile templating (.chezmoidata.yaml)
+- ✅ Dotfiles application with change detection
+- ✅ Support for multiple machine types (workstation, laptop, WSL)
 - ⏸️  Additional system configuration (see `docs/system-inventory-by-primitives.md`)
 
 ## SSH Role Configuration
@@ -203,6 +223,64 @@ Each git operation has its own reusable task file in `roles/git/tasks/`:
 - `maintenance.yml` - Git maintenance
 
 **See:** `roles/git/README.md` for complete documentation and examples.
+
+## Chezmoi Role Configuration
+
+The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine-specific configuration. All features are **enabled by default**.
+
+**Quick Start (Default behavior):**
+- Verifies chezmoi is installed
+- Templates `.chezmoidata.yaml` with machine profile
+- Applies dotfiles configuration automatically
+
+**To customize machine profile:**
+1. Edit `vars/chezmoi.yml` and set machine-specific values:
+   ```yaml
+   chezmoi_machine_type: laptop        # workstation, laptop, wsl
+   chezmoi_wm: sway                    # i3, sway, none
+   chezmoi_laptop_mode: true           # Enable laptop features
+   chezmoi_headless: false             # WSL environments
+   ```
+2. Run: `./run.sh --tags chezmoi`
+
+**Available Chezmoi Features (configure in vars/chezmoi.yml):**
+- `chezmoi_ensure_installed: true` - Verify chezmoi installation
+- `chezmoi_init_source: true` - Check source directory exists
+- `chezmoi_deploy_config: true` - Template .chezmoidata.yaml
+- `chezmoi_apply_on_change: true` - Auto-apply after config changes
+
+**Machine Profile Variables:**
+- `chezmoi_machine_type` - Machine type (workstation, laptop, wsl)
+- `chezmoi_hostname` - Hostname for this machine
+- `chezmoi_wm` - Window manager (i3, sway, none)
+- `chezmoi_laptop_mode` - Enable laptop-specific features
+- `chezmoi_headless` - Headless environment (auto-true for WSL)
+- `chezmoi_gui` - GUI applications enabled (auto-false for headless)
+- `chezmoi_terminal` - Terminal emulator (kitty, alacritty, etc.)
+
+**SkogAI Integration:**
+- `chezmoi_agents` - Enable/disable individual AI agents (claude, letta, amy, goose, dot)
+- `chezmoi_skogai_home` - Path to SkogAI home directory
+- `chezmoi_ai_tools` - Enable AI tools integration
+- `chezmoi_development` - Enable development tools
+
+**Granular tag support:**
+```bash
+./run.sh --tags chezmoi-install   # Only verify installation
+./run.sh --tags chezmoi-init      # Only check initialization
+./run.sh --tags chezmoi-config    # Only template configuration
+./run.sh --tags chezmoi-apply     # Only apply dotfiles
+```
+
+**How it works:**
+1. Ansible templates `.chezmoidata.yaml` in chezmoi source directory
+2. Chezmoi uses this file to conditionally deploy dotfiles
+3. Profile-based `.chezmoiignore` patterns filter files automatically
+4. Changes are applied with proper change detection
+
+**Integration with Chezmoi:**
+This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the integration guide:
+- **~/.local/share/chezmoi/examples/ANSIBLE-INTEGRATION.md** - Full integration documentation
 
 ## Reference
 

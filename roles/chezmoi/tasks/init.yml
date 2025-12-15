@@ -1,0 +1,47 @@
+---
+# Initialize chezmoi source directory
+
+- name: Check if chezmoi source directory exists
+  ansible.builtin.stat:
+    path: "{{ chezmoi_source_dir }}"
+  register: chezmoi_source_stat
+  tags:
+    - chezmoi
+    - chezmoi-init
+
+- name: Display chezmoi source directory status
+  ansible.builtin.debug:
+    msg: "Chezmoi source directory {{ 'exists' if chezmoi_source_stat.stat.exists else 'does not exist' }} at {{ chezmoi_source_dir }}"
+  tags:
+    - chezmoi
+    - chezmoi-init
+
+- name: Warn if chezmoi not initialized
+  ansible.builtin.debug:
+    msg: >
+      WARNING: Chezmoi source directory not found.
+      You may need to initialize chezmoi manually with:
+      chezmoi init [--apply] [<repo>]
+  when: not chezmoi_source_stat.stat.exists
+  tags:
+    - chezmoi
+    - chezmoi-init
+
+- name: Check if .chezmoidata.yaml exists
+  ansible.builtin.stat:
+    path: "{{ chezmoi_source_dir }}/.chezmoidata.yaml"
+  register: chezmoidata_stat
+  when: chezmoi_source_stat.stat.exists
+  tags:
+    - chezmoi
+    - chezmoi-init
+
+- name: Display chezmoidata status
+  ansible.builtin.debug:
+    msg: "Found .chezmoidata.yaml in source directory"
+  when:
+    - chezmoi_source_stat.stat.exists
+    - chezmoidata_stat.stat.exists
+  tags:
+    - chezmoi
+    - chezmoi-init
