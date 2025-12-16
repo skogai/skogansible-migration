@@ -20,9 +20,22 @@ git_config_template: "gitconfig.j2"
 git_user_name: "skogix"
 git_user_email: "emil@skogsund.se"
 
-# Editor and defaults
-git_editor: "nvim"
+# ==============================================================================
+# Git Core Settings
+# ==============================================================================
+
+git_core_editor: "nvim"
 git_default_branch: "master"
+git_pull_rebase: true  # Use rebase instead of merge on pull
+git_push_default: "simple"
+git_push_autoSetupRemote: true  # Automatically setup remote tracking
+
+# ==============================================================================
+# Git UI/UX Settings
+# ==============================================================================
+
+git_color_ui: true
+git_pager: "less -FRX"
 
 # ==============================================================================
 # Git Aliases
