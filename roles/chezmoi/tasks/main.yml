@@ -1,0 +1,31 @@
+---
+# Main tasks file for chezmoi role
+# Orchestrates chezmoi installation, initialization, and configuration
+
+- name: Include install tasks
+  ansible.builtin.include_tasks: install.yml
+  when: chezmoi_ensure_installed | bool
+  tags:
+    - chezmoi
+    - chezmoi-install
+
+- name: Include init tasks
+  ansible.builtin.include_tasks: init.yml
+  when: chezmoi_init_source | bool
+  tags:
+    - chezmoi
+    - chezmoi-init
+
+- name: Include configure tasks
+  ansible.builtin.include_tasks: configure.yml
+  when: chezmoi_deploy_config | bool
+  tags:
+    - chezmoi
+    - chezmoi-config
+
+- name: Include apply tasks
+  ansible.builtin.include_tasks: apply.yml
+  when: chezmoi_apply_on_change | bool
+  tags:
+    - chezmoi
+    - chezmoi-apply

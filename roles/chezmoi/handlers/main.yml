@@ -1,0 +1,11 @@
+---
+# Handlers for chezmoi role
+
+- name: Apply chezmoi
+  ansible.builtin.command: chezmoi apply --verbose
+  register: chezmoi_handler_result
+  changed_when: >
+    'modified' in chezmoi_handler_result.stdout or
+    'added' in chezmoi_handler_result.stdout or
+    'removed' in chezmoi_handler_result.stdout
+  listen: Apply chezmoi
