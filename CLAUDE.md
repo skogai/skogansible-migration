@@ -15,8 +15,8 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 │   ├── packages.yml          # Package lists (61 official + 7 AUR)
 │   ├── ssh.yml               # SSH role configuration
 │   ├── ssh_vault.yml         # Encrypted SSH keys
-│   ├── git.yml               # Git configuration
-│   └── user.yml              # User-specific variables
+│   ├── user.yml              # User-specific variables
+│   └── git.yml               # Git configuration (aliases, settings, gh-cli)
 ├── @roles/packages/          # Package management role
 │   ├── tasks/
 │   │   ├── main.yml          # Orchestrates all package tasks
@@ -34,32 +34,8 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 │   ├── handlers/main.yml
 │   ├── meta/main.yml
 │   └── README.md             # Full SSH role documentation
-├── @roles/git/               # Git configuration role
-│   ├── tasks/                # Standardized, reusable git operations
-│   │   ├── main.yml          # Orchestrates all git tasks
-│   │   ├── install.yml       # Git installation
-│   │   ├── configure_global.yml # Global gitconfig
-│   │   ├── configure_aliases.yml # Git aliases
-│   │   ├── configure_credentials.yml # Credential helper
-│   │   ├── install_lfs.yml   # Git LFS
-│   │   ├── clone_repositories.yml # Repository cloning
-│   │   ├── deploy_gitignore.yml # Global gitignore
-│   │   ├── deploy_hooks.yml  # Git hooks
-│   │   ├── configure_signing.yml # GPG/SSH signing
-│   │   ├── configure_repo_specific.yml # Repo configs
-│   │   └── maintenance.yml   # Git maintenance
-│   ├── templates/
-│   │   ├── gitconfig.j2      # .gitconfig template
-│   │   ├── gitignore_global.j2 # Global gitignore
-│   │   └── hooks/            # Git hook templates
-│   │       ├── pre-commit.j2
-│   │       └── commit-msg.j2
-│   ├── defaults/main.yml
-│   ├── handlers/main.yml
-│   ├── meta/main.yml
-│   └── README.md             # Full Git role documentation
-├── @setup.sh                 # Bootstrap script (creates venv, installs ansible)
-├── @run.sh                   # Execution script (runs playbook)
+├── @bootstrap.sh             # Bootstrap script (system setup + venv + ansible)
+├── @run.sh                   # Execution script (runs playbook with venv)
 ├── @.envrc                   # direnv environment setup
 └── @docs/                    # Reference documentation
     ├── ansible-core.md
@@ -71,7 +47,7 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 - **Become method:** `become: true` on individual tasks (not playbook level)
 - **Sudo password:** Set via `$ANSIBLE_BECOME_PASSWORD_FILE` exported by `skogcli` through `.envrc`
 - **Python interpreter:** Hardcoded venv path in `ansible.cfg`: `/home/skogix/.ansible/.venv/bin/python`
-- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, git.yml, user.yml)
+- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, user.yml, git.yml)
 - **AUR support:** Dedicated `aur_builder` user for secure AUR package building
 - **Git automation:** Standardized, reusable task files for all common git operations
 - **Collections:** community.general, kewlfft.aur, ansible.posix
@@ -80,7 +56,7 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 
 **Initial setup:**
 ```bash
-./setup.sh                    # Creates venv, installs Ansible + collections
+./bootstrap.sh                # System setup (locale, keyring) + venv + Ansible + collections
 ```
 
 **Run playbook:**

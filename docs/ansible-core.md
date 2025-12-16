@@ -1,4 +1,4 @@
-# Ansible Core Primitives - Every Pattern Found in Current Repo
+# Ansible Core Primitives - Every Basic Pattern
 
 ## 1. TASK COMPOSITION
 # Include other task files (modularity/ordering)
@@ -133,7 +133,7 @@
 # 2. ensure_content(path, content, properties)
 #    - lineinfile: path=X line=Y mode=Z validate=W
 
-# 3. query_state(path) ’ register
+# 3. query_state(path) Â’ register
 #    - stat: path=X register=result
 
 # 4. sync_repo(url, dest)
