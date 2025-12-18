@@ -6,9 +6,10 @@
 
 ## ansible-pull — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-pull.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-pull.html>
 
 **Contents:**
+
 - ansible-pull
 - Synopsis
 - Description
@@ -135,6 +136,7 @@ ansible(1), ansible-config(1), ansible-console(1), ansible-doc(1), ansible-galax
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 usage: ansible-pull [-h] [--version] [-v] [--private-key PRIVATE_KEY_FILE]
                  [-u REMOTE_USER] [-c CONNECTION] [-T TIMEOUT]
@@ -160,9 +162,10 @@ usage: ansible-pull [-h] [--version] [-v] [--private-key PRIVATE_KEY_FILE]
 
 ## Connection plugins — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/connection.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/connection.html>
 
 **Contents:**
+
 - Connection plugins
 - ssh plugins
 - Using connection plugins
@@ -202,9 +205,10 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Ansible Core Documentation — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/
+**URL:** <https://docs.ansible.com/ansible-core/2.19/>
 
 **Contents:**
+
 - Ansible Core Documentation
 
 Ansible Core, or ansible-core is the main building block and architecture for Ansible, and includes:
@@ -231,9 +235,10 @@ Reference & Appendices
 
 ## Ansible-core 2.12 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.12.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.12.html>
 
 **Contents:**
+
 - Ansible-core 2.12 Porting Guide
 - Playbook
 - Python Interpreter Discovery
@@ -302,6 +307,7 @@ password_hash now uses passlib defaults when an option is unspecified, for examp
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 tasks:
   - dnf:
@@ -314,6 +320,7 @@ tasks:
 ```
 
 Example 2 (python):
+
 ```python
 vars:
   old: "{{ undef }}"
@@ -322,6 +329,7 @@ vars:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 vars:
   teardown: 'false'
@@ -338,9 +346,10 @@ tasks:
 
 ## Modules — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/module.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/module.html>
 
 **Contents:**
+
 - Modules
 - Enabling modules
 - Using modules
@@ -371,9 +380,10 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Testing Strategies — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/test_strategies.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/test_strategies.html>
 
 **Contents:**
+
 - Testing Strategies
 - Integrating Testing With Ansible Playbooks
 - The Right Level of Testing
@@ -469,6 +479,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 tasks:
   - ansible.builtin.service:
@@ -478,6 +489,7 @@ tasks:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 roles:
   - webserver
@@ -488,6 +500,7 @@ tasks:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
 
@@ -498,6 +511,7 @@ tasks:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 tasks:
 
@@ -513,9 +527,10 @@ tasks:
 
 ## Frequently Asked Questions — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/faq.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/faq.html>
 
 **Contents:**
+
 - Frequently Asked Questions
 - Where did all the modules go?
 - Where did this specific module go?
@@ -645,7 +660,7 @@ For more details, see: How do I handle not having a Python interpreter at /usr/b
 
 When ANSIBLE_PIPELINING is not enabled or when Ansible pipelining is enabled but the PYTHONSTDINENCODING property is not correctly set, the following error may result.
 
-SyntaxError: Non-UTF-8 code starting with ‘\x81’ in file <stdin> on line 1, but no encoding declared; see https://peps.python.org/pep-0263/ for details
+SyntaxError: Non-UTF-8 code starting with ‘\x81’ in file <stdin> on line 1, but no encoding declared; see <https://peps.python.org/pep-0263/> for details
 
 Note, the hex '\x81' below may vary depending source causing the error:
 
@@ -757,7 +772,7 @@ set bulk variables at a level of precedence greater than host facts in the order
 
 disable the INJECT_FACTS_AS_VARS configuration setting to prevent fact values from colliding with variables (this will also disable the original warning)
 
-Yes! See our services page for information on our services and training offerings. Email info@ansible.com for further details.
+Yes! See our services page for information on our services and training offerings. Email <info@ansible.com> for further details.
 
 We also offer free web-based training classes on a regular basis. See our webinar page for more info on upcoming webinars.
 
@@ -846,6 +861,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 shell:
   cmd: date
@@ -854,6 +870,7 @@ environment:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 hosts: servers
 environment:
@@ -862,6 +879,7 @@ environment:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 [webservers]
 asdf.example.com  ansible_port=5000   ansible_user=alice
@@ -869,6 +887,7 @@ jkl.example.com   ansible_port=5001   ansible_user=bob
 ```
 
 Example 4 (unknown):
+
 ```unknown
 [testcluster]
 localhost           ansible_connection=local
@@ -880,9 +899,10 @@ foo.example.com     ansible_connection=paramiko
 
 ## Debugging tasks — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_debugger.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_debugger.html>
 
 **Contents:**
+
 - Debugging tasks
 - Enabling the debugger
   - Enabling the debugger with the debugger keyword
@@ -1011,6 +1031,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Execute a command
   ansible.builtin.command: "false"
@@ -1018,6 +1039,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: My play
   hosts: all
@@ -1029,6 +1051,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - name: Play
   hosts: all
@@ -1040,6 +1063,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 [defaults]
 enable_task_debugger = True
@@ -1049,9 +1073,10 @@ enable_task_debugger = True
 
 ## Manipulating data — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/complex_data_manipulation.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/complex_data_manipulation.html>
 
 **Contents:**
+
 - Manipulating data
 - Loops and list comprehensions
   - Extract keys from a dictionary matching elements from a list
@@ -1126,6 +1151,7 @@ Jinja2 documentation, includes lists for core filters and tests
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: try wait_for_connection up to 10 times with exponential delay
   ansible.builtin.wait_for_connection:
@@ -1140,6 +1166,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 chains = [1, 2]
 for chain in chains:
@@ -1148,6 +1175,7 @@ for chain in chains:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
    - name: Show extracted list of keys from a list of dictionaries
@@ -1173,6 +1201,7 @@ tasks:
 ```
 
 Example 4 (javascript):
+
 ```javascript
 ok: [localhost] => {
        "msg": [
@@ -1188,9 +1217,10 @@ ok: [localhost] => {
 
 ## Galaxy User Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/galaxy/user_guide.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/galaxy/user_guide.html>
 
 **Contents:**
+
 - Galaxy User Guide
 - Finding collections on Galaxy
 - Finding roles on Galaxy
@@ -1252,7 +1282,7 @@ This returns everything found in Galaxy for the role:
 
 The ansible-galaxy command comes bundled with Ansible, and you can use it to install roles from Galaxy or directly from a Git based SCM. You can also use it to create a new role, remove roles, or perform tasks on the Galaxy website.
 
-The command line tool by default communicates with the Galaxy website API using the server address https://galaxy.ansible.com. If you run your own internal Galaxy server and want to use it instead of the default one, pass the --server option followed by the address of this galaxy server. You can set this option permanently by setting the Galaxy server value in your ansible.cfg file. See GALAXY_SERVER for details on setting the value in ansible.cfg .
+The command line tool by default communicates with the Galaxy website API using the server address <https://galaxy.ansible.com>. If you run your own internal Galaxy server and want to use it instead of the default one, pass the --server option followed by the address of this galaxy server. You can set this option permanently by setting the Galaxy server value in your ansible.cfg file. See GALAXY_SERVER for details on setting the value in ansible.cfg .
 
 Use the ansible-galaxy command to download roles from the Galaxy website
 
@@ -1353,11 +1383,13 @@ Perform other related operations
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
-$ ansible-galaxy role search elasticsearch --author geerlingguy
+ansible-galaxy role search elasticsearch --author geerlingguy
 ```
 
 Example 2 (unknown):
+
 ```unknown
 Found 6 roles matching your search:
 
@@ -1371,11 +1403,13 @@ geerlingguy.kibana                Kibana for Linux.
 ```
 
 Example 3 (unknown):
+
 ```unknown
-$ ansible-galaxy role info username.role_name
+ansible-galaxy role info username.role_name
 ```
 
 Example 4 (unknown):
+
 ```unknown
 Role: username.role_name
     description: Installs and configures a thing, a distributed, highly available NoSQL thing.
@@ -1408,9 +1442,10 @@ Role: username.role_name
 
 ## Advanced playbook syntax — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_advanced_syntax.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_advanced_syntax.html>
 
 **Contents:**
+
 - Advanced playbook syntax
 - Unsafe or raw strings
 - YAML anchors and aliases: sharing variable values
@@ -1442,12 +1477,14 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 mypassword: !unsafe 234%234{435lkj{{lkjsdf
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ---
 hosts: all
@@ -1458,6 +1495,7 @@ tasks:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ---
 my_unsafe_array:
@@ -1469,6 +1507,7 @@ my_unsafe_hash:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ---
 # ...
@@ -1489,9 +1528,10 @@ vars:
 
 ## ansible.builtin.pause module – Pause playbook execution — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pause_module.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pause_module.html>
 
 **Contents:**
+
 - ansible.builtin.pause module – Pause playbook execution
 - Synopsis
 - Parameters
@@ -1585,6 +1625,7 @@ Tim Bielawa (@tbielawa)
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Pause for 5 minutes to build app cache
   ansible.builtin.pause:
@@ -1607,9 +1648,10 @@ Example 1 (unknown):
 
 ## Ansible-core 2.14 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.14.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.14.html>
 
 **Contents:**
+
 - Ansible-core 2.14 Porting Guide
 - Playbook
 - Command Line
@@ -1648,6 +1690,7 @@ The following modules no longer exist:
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: task with a module result (always untrusted by Ansible)
   shell: echo "hi mom"
@@ -1664,6 +1707,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - assert:
     that:
@@ -1680,9 +1724,10 @@ Example 2 (unknown):
 
 ## ansible-playbook — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-playbook.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-playbook.html>
 
 **Contents:**
+
 - ansible-playbook
 - Synopsis
 - Description
@@ -1695,7 +1740,7 @@ Example 2 (unknown):
 
 Runs Ansible playbooks, executing the defined tasks on the targeted hosts.
 
-the tool to run Ansible playbooks, which are a configuration and multinode deployment system. See the project home page (https://docs.ansible.com) for more information.
+the tool to run Ansible playbooks, which are a configuration and multinode deployment system. See the project home page (<https://docs.ansible.com>) for more information.
 
 privilege escalation method to use (default=sudo), use ansible-doc -t become -l to list valid choices.
 
@@ -1796,6 +1841,7 @@ ansible(1), ansible-config(1), ansible-console(1), ansible-doc(1), ansible-galax
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 usage: ansible-playbook [-h] [--version] [-v] [--private-key PRIVATE_KEY_FILE]
                      [-u REMOTE_USER] [-c CONNECTION] [-T TIMEOUT]
@@ -1822,9 +1868,10 @@ usage: ansible-playbook [-h] [--version] [-v] [--private-key PRIVATE_KEY_FILE]
 
 ## Controlling playbook execution: strategies and more — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_strategies.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_strategies.html>
 
 **Contents:**
+
 - Controlling playbook execution: strategies and more
 - Selecting a strategy
 - Setting the number of forks
@@ -1925,6 +1972,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - hosts: all
   strategy: free
@@ -1933,18 +1981,21 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 [defaults]
 strategy = free
 ```
 
 Example 3 (unknown):
+
 ```unknown
 [defaults]
 forks = 30
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ---
 - name: test play
@@ -1963,9 +2014,10 @@ Example 4 (unknown):
 
 ## Distributing collections — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_distributing.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_distributing.html>
 
 **Contents:**
+
 - Distributing collections
 - Initial configuration of your distribution server or servers
   - Creating a namespace
@@ -2069,7 +2121,7 @@ You can specify the API token at the command line using the --token argument of 
 
 using the --server argument of the ansible-galaxy command
 
-relying on the default (https://galaxy.ansible.com)
+relying on the default (<https://galaxy.ansible.com>)
 
 setting a server in configuration by creating a GALAXY_SERVER setting in your ansible.cfg file
 
@@ -2157,7 +2209,7 @@ You can install a collection from a git repository instead of from Galaxy or Aut
 
 The repository must contain a galaxy.yml or MANIFEST.json file. This file provides metadata such as the version number and namespace of the collection.
 
-To install a collection from a git repository at the command line, use the URI of the repository instead of a collection name or path to a tar.gz file. Use the prefix git+, unless you’re using SSH authentication with the user git (for example, git@github.com:ansible-collections/ansible.windows.git). You can specify a branch, commit, or tag using the comma-separated git commit-ish syntax.
+To install a collection from a git repository at the command line, use the URI of the repository instead of a collection name or path to a tar.gz file. Use the prefix git+, unless you’re using SSH authentication with the user git (for example, <git@github.com>:ansible-collections/ansible.windows.git). You can specify a branch, commit, or tag using the comma-separated git commit-ish syntax.
 
 Embedding credentials into a git URI is not secure. Use safe authentication options to prevent your credentials from being exposed in logs or elsewhere.
 
@@ -2230,6 +2282,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 [galaxy]
 server_list = release_galaxy
@@ -2240,16 +2293,19 @@ token=abcdefghijklmnopqrtuvwxyz
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible-galaxy collection publish path/to/my_namespace-my_collection-1.0.0.tar.gz --token abcdefghijklmnopqrtuvwxyz
 ```
 
 Example 3 (unknown):
+
 ```unknown
 collection_dir#> ansible-galaxy collection build
 ```
 
 Example 4 (unknown):
+
 ```unknown
 my_collection/
 ├── galaxy.yml
@@ -2262,9 +2318,10 @@ my_collection/
 
 ## Handlers: running operations on change — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_handlers.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_handlers.html>
 
 **Contents:**
+
 - Handlers: running operations on change
 - Handler example
 - Notifying handlers
@@ -2363,6 +2420,7 @@ A handler cannot run import_role nor include_role. Handlers ignore tags.
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 - name: Verify apache installation
@@ -2397,6 +2455,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 tasks:
 - name: Template configuration file
@@ -2420,6 +2479,7 @@ handlers:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
 - name: Template services
@@ -2445,6 +2505,7 @@ handlers:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 tasks:
   - name: Restart everything
@@ -2469,9 +2530,10 @@ handlers:
 
 ## The undef function: add hint for undefined variables — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_templating_undef.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_templating_undef.html>
 
 **Contents:**
+
 - The undef function: add hint for undefined variables
 
 The Jinja2 undef() function returns a Python AnsibleUndefined object, derived from jinja2.StrictUndefined. Use undef() to undefine variables of lesser precedence. For example, a host variable can be overridden for a block of tasks:
@@ -2483,6 +2545,7 @@ Give a custom hint about the undefined variable if DEFAULT_UNDEFINED_VAR_BEHAVIO
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 - hosts: localhost
@@ -2504,9 +2567,10 @@ Example 1 (unknown):
 
 ## Roles — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_reuse_roles.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_reuse_roles.html>
 
 **Contents:**
+
 - Roles
 - Role directory structure
 - Storing and finding roles
@@ -2819,6 +2883,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 # playbooks
 site.yml
@@ -2827,6 +2892,7 @@ fooservers.yml
 ```
 
 Example 2 (unknown):
+
 ```unknown
 roles/
     common/               # this hierarchy represents a "role"
@@ -2855,6 +2921,7 @@ roles/
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # roles/example/tasks/main.yml
 - name: Install the correct web server for RHEL
@@ -2879,6 +2946,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: include apt tasks
   include_role:
@@ -2891,9 +2959,10 @@ Example 4 (unknown):
 
 ## Playbook Keywords — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/playbooks_keywords.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/playbooks_keywords.html>
 
 **Contents:**
+
 - Playbook Keywords
 - Play
 - Role
@@ -3202,9 +3271,10 @@ The same as loop but magically adds the output of any lookup plugin to generate 
 
 ## Blocks — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_blocks.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_blocks.html>
 
 **Contents:**
+
 - Blocks
 - Grouping tasks with blocks
 - Handling errors with blocks
@@ -3258,6 +3328,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 tasks:
    - name: Install, configure, and start Apache
@@ -3286,6 +3357,7 @@ tasks:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 tasks:
    - name: Handle the error
@@ -3307,6 +3379,7 @@ tasks:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
    - name: Always do X
@@ -3328,6 +3401,7 @@ tasks:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 tasks:
    - name: Attempt and graceful roll back demo
@@ -3363,9 +3437,10 @@ tasks:
 
 ## Setting the remote environment — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_environment.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_environment.html>
 
 **Contents:**
+
 - Setting the remote environment
 - Setting the remote environment in a task
 - Working with language-specific version managers
@@ -3401,6 +3476,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - hosts: all
   remote_user: root
@@ -3416,6 +3492,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - hosts: all
   remote_user: root
@@ -3435,6 +3512,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ---
 # file: group_vars/boston
@@ -3447,6 +3525,7 @@ proxy_env:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - hosts: testing
 
@@ -3462,9 +3541,10 @@ Example 4 (unknown):
 
 ## Ansible-core 2.17 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.17.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.17.html>
 
 **Contents:**
+
 - Ansible-core 2.17 Porting Guide
 - Playbook
 - Command Line
@@ -3501,6 +3581,7 @@ The following modules no longer exist:
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: task with a module result (always untrusted by Ansible)
   shell: echo "hi mom"
@@ -3520,9 +3601,10 @@ Example 1 (unknown):
 
 ## Ansible playbooks — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_intro.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_intro.html>
 
 **Contents:**
+
 - Ansible playbooks
 - Playbook syntax
 - Playbook execution
@@ -3613,6 +3695,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 - name: Update web servers
@@ -3647,16 +3730,19 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible-playbook playbook.yml -f 10
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ansible-playbook --check playbook.yaml
 ```
 
 Example 4 (unknown):
+
 ```unknown
 $ ansible-lint verify-apache.yml
 [403] Package installs should not use latest
@@ -3668,9 +3754,10 @@ Task/Handler: ensure apache is at the latest version
 
 ## Conditionals — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_conditionals.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_conditionals.html>
 
 **Contents:**
+
 - Conditionals
 - Basic conditionals with when
   - Conditionals based on ansible_facts
@@ -3686,7 +3773,7 @@ In a playbook, you may want to execute different tasks or have different goals, 
 
 Ansible uses Jinja2 tests and filters in conditionals. Ansible supports all the standard tests and filters and adds some unique ones as well.
 
-There are many options to control execution flow in Ansible. You can find more examples of supported conditionals at https://jinja.palletsprojects.com/en/latest/templates/#comparisons.
+There are many options to control execution flow in Ansible. You can find more examples of supported conditionals at <https://jinja.palletsprojects.com/en/latest/templates/#comparisons>.
 
 Basic conditionals with when
 
@@ -3843,6 +3930,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 tasks:
   - name: Configure SELinux to start mysql on any port
@@ -3855,6 +3943,7 @@ tasks:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: Show facts available on the system
   ansible.builtin.debug:
@@ -3862,6 +3951,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
   - name: Shut down Debian flavored systems
@@ -3870,6 +3960,7 @@ tasks:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 tasks:
   - name: Shut down CentOS 6 and Debian 7 systems
@@ -3882,9 +3973,10 @@ tasks:
 
 ## Reusing Ansible artifacts — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_reuse.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_reuse.html>
 
 **Contents:**
+
 - Reusing Ansible artifacts
 - Creating reusable files and roles
 - Reusing playbooks
@@ -4020,7 +4112,7 @@ Includes are executed at run-time, so the name of the include exists during play
 
 Imports are processed before the play begins, so the name of the import no longer exists during play execution, but the names of the individual imported tasks do exist. To use the Restart apache task with static reuse, refer to the name of each task or tasks within the imported file. For example, with the task file shown above:
 
-Documentation of the include* and import* modules discussed here.
+Documentation of the include*and import* modules discussed here.
 
 Review the basic Playbook language features
 
@@ -4037,12 +4129,14 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - import_playbook: webservers.yml
 - import_playbook: databases.yml
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - import_playbook: "/path/to/{{ import_from_extra_var }}"
 - import_playbook: "{{ import_from_vars }}"
@@ -4051,6 +4145,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
 - import_tasks: wordpress.yml
@@ -4067,6 +4162,7 @@ tasks:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 # restarts.yml
 - name: Restart apache
@@ -4084,9 +4180,10 @@ Example 4 (unknown):
 
 ## Ansible-core 2.15 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.15.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.15.html>
 
 **Contents:**
+
 - Ansible-core 2.15 Porting Guide
 - Playbook
   - Handlers
@@ -4139,6 +4236,7 @@ The following modules no longer exist:
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: task with a module result (always untrusted by Ansible)
   shell: echo "hi mom"
@@ -4155,6 +4253,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - include_role:
     name: foo
@@ -4172,6 +4271,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 vars:
   - var1: foo
@@ -4179,6 +4279,7 @@ vars:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 vars:
   var1: foo
@@ -4189,9 +4290,10 @@ vars:
 
 ## Module defaults — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_module_defaults.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_module_defaults.html>
 
 **Contents:**
+
 - Module defaults
 - Module defaults groups
 
@@ -4248,6 +4350,7 @@ More information on meta/runtime.yml, including the complete format for action_g
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - hosts: localhost
   module_defaults:
@@ -4273,6 +4376,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - block:
     - name: Print a message
@@ -4284,6 +4388,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - name: Create file1
   ansible.builtin.file:
@@ -4294,6 +4399,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - hosts: localhost
   module_defaults:
@@ -4319,9 +4425,10 @@ Example 4 (unknown):
 
 ## Developing collections — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections.html>
 
 **Contents:**
+
 - Developing collections
 
 Collections are a distribution format for Ansible content. You can package and distribute playbooks, roles, modules, and plugins using collections. A typical collection addresses a set of related use cases. For example, the cisco.ios collection automates management of Cisco IOS devices.
@@ -4348,9 +4455,10 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Using filters to manipulate data — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_filters.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_filters.html>
 
 **Contents:**
+
 - Using filters to manipulate data
 - Handling undefined variables
   - Providing default values
@@ -4906,7 +5014,7 @@ To format a date using a string (like with the shell date command), use the “s
 
 strftime takes an optional utc argument, defaulting to False, meaning times are in the local timezone:
 
-To get all string possibilities, check https://docs.python.org/3/library/time.html#time.strftime
+To get all string possibilities, check <https://docs.python.org/3/library/time.html#time.strftime>
 
 These filters have migrated to the kubernetes.core collection. Follow the installation instructions to install that collection.
 
@@ -4929,16 +5037,19 @@ How to use inline regular expression flags
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 {{ some_variable | default(5) }}
 ```
 
 Example 2 (unknown):
+
 ```unknown
 {{ lookup('env', 'MY_USER') | default('admin', true) }}
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - name: Touch files with an optional mode
   ansible.builtin.file:
@@ -4953,6 +5064,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 {{ variable | mandatory }}
 ```
@@ -4961,9 +5073,10 @@ Example 4 (unknown):
 
 ## Loops — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_loops.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_loops.html>
 
 **Contents:**
+
 - Loops
 - Comparing loops
 - Using loops
@@ -5204,6 +5317,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 with_items:
   - 1
@@ -5212,16 +5326,19 @@ with_items:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 loop: "{{ [1, [2, 3], 4] | flatten(1) }}"
 ```
 
 Example 3 (unknown):
+
 ```unknown
 loop: "{{ lookup('fileglob', '*.txt', wantlist=True) }}"
 ```
 
 Example 4 (unknown):
+
 ```unknown
 with_fileglob: '*.txt'
 ```
@@ -5230,9 +5347,10 @@ with_fileglob: '*.txt'
 
 ## Galaxy Developer Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/galaxy/dev_guide.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/galaxy/dev_guide.html>
 
 **Contents:**
+
 - Galaxy Developer Guide
 - Creating collections for Galaxy
 - Creating roles for Galaxy
@@ -5290,7 +5408,7 @@ Click Load Token and then copy it.
 
 Save your token in the path set in the GALAXY_TOKEN_PATH.
 
-The import``command requires that you authenticate with the API token. You can include it in your ``ansible.cfg file or use the --token command option. You are only allowed to remove roles where you have access to the repository in GitHub.
+The import``command requires that you authenticate with the API token. You can include it in your``ansible.cfg file or use the --token command option. You are only allowed to remove roles where you have access to the repository in GitHub.
 
 To import a new role:
 
@@ -5329,11 +5447,13 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
-$ ansible-galaxy role init role_name
+ansible-galaxy role init role_name
 ```
 
 Example 2 (unknown):
+
 ```unknown
 role_name/
     README.md
@@ -5355,11 +5475,13 @@ role_name/
 ```
 
 Example 3 (unknown):
+
 ```unknown
-$ ansible-galaxy init --role-skeleton=/path/to/skeleton role_name
+ansible-galaxy init --role-skeleton=/path/to/skeleton role_name
 ```
 
 Example 4 (unknown):
+
 ```unknown
 [galaxy]
 role_skeleton = /path/to/skeleton
@@ -5370,9 +5492,10 @@ role_skeleton_ignore = ^.git$,^.*/.git_keep$
 
 ## Ansible-core 2.16 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.16.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.16.html>
 
 **Contents:**
+
 - Ansible-core 2.16 Porting Guide
 - Playbook
 - Command Line
@@ -5403,6 +5526,7 @@ Conditionals - due to mitigation of security issue CVE-2023-5764 in ansible-core
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: task with a module result (always untrusted by Ansible)
   shell: echo "hi mom"
@@ -5422,9 +5546,10 @@ Example 1 (unknown):
 
 ## Templating (Jinja2) — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_templating.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_templating.html>
 
 **Contents:**
+
 - Templating (Jinja2)
 - Jinja2 Example
 
@@ -5449,6 +5574,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ├── hostname.yml
 ├── templates
@@ -5456,6 +5582,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ---
 - name: Write hostname
@@ -5468,6 +5595,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 My name is {{ ansible_facts['hostname'] }}
 ```
@@ -5476,9 +5604,10 @@ My name is {{ ansible_facts['hostname'] }}
 
 ## Test plugins — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/test.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/test.html>
 
 **Contents:**
+
 - Test plugins
 - Enabling test plugins
 - Using test plugins
@@ -5514,6 +5643,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 vars:
   is_ready: '{{ task_result is success }}'
@@ -5525,6 +5655,7 @@ tasks:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 tasks:
 - name: pass a positional parameter to match test
@@ -5541,6 +5672,7 @@ tasks:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # give me only defined variables from a list of variables, using 'defined' test
 good_vars: "{{ all_vars|select('defined') }}"
@@ -5556,9 +5688,10 @@ only_fixed_addresses:  "{{ all_addresses|rejectattr('type', 'equalto', 'fixed') 
 
 ## Tests — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_tests.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_tests.html>
 
 **Contents:**
+
 - Tests
 - Test syntax
 - Testing strings
@@ -5665,16 +5798,19 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 variable is test_name
 ```
 
 Example 2 (unknown):
+
 ```unknown
 result is failed
 ```
 
 Example 3 (unknown):
+
 ```unknown
 vars:
   url: "https://example.com/users/foo/resources/bar"
@@ -5698,6 +5834,7 @@ tasks:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 vars:
   variable: !vault |
@@ -5717,9 +5854,10 @@ tasks:
 
 ## Tags — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_tags.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_tags.html>
 
 **Contents:**
+
 - Tags
 - Adding tags with the tags keyword
   - Adding tags to individual tasks
@@ -5880,6 +6018,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 tasks:
 - name: Install the servers
@@ -5901,6 +6040,7 @@ tasks:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ---
 # file: roles/common/tasks/main.yml
@@ -5936,6 +6076,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # myrole/tasks/main.yml
 - name: ntp tasks
@@ -5969,6 +6110,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - block:
   - debug: msg=run with tag, but always fail
@@ -5986,9 +6128,10 @@ Example 4 (unknown):
 
 ## Search paths in Ansible — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbook_pathing.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbook_pathing.html>
 
 **Contents:**
+
 - Search paths in Ansible
 - Config paths
 - Task paths
@@ -6031,9 +6174,10 @@ When you execute Ansible, the variable ansible_search_path will contain the path
 
 ## Ansible Core Porting Guides — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/core_porting_guides.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/core_porting_guides.html>
 
 **Contents:**
+
 - Ansible Core Porting Guides
 
 This section lists porting guides that can help you in updating playbooks, plugins and other parts of your Ansible infrastructure from one version of ansible-core to the next.
@@ -6044,9 +6188,10 @@ Please note that this is not a complete list. If you believe any extra informati
 
 ## Advanced playbooks features — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_special_topics.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_special_topics.html>
 
 **Contents:**
+
 - Advanced playbooks features
 
 This page is obsolete. Refer to the main User Guide index page for links to all playbook-related topics. Please update any links you may have made directly to this page.
@@ -6055,9 +6200,10 @@ This page is obsolete. Refer to the main User Guide index page for links to all 
 
 ## Ansible-core 2.11 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.11.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.11.html>
 
 **Contents:**
+
 - Ansible-core 2.11 Porting Guide
 - Playbook
 - Command Line
@@ -6175,9 +6321,10 @@ The choices are now validated, so plugins that were using incorrect or incomplet
 
 ## Controlling where tasks run: delegation and local actions — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_delegation.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_delegation.html>
 
 **Contents:**
+
 - Controlling where tasks run: delegation and local actions
 - Tasks that cannot be delegated
 - Delegating tasks
@@ -6241,6 +6388,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 - hosts: webservers
@@ -6262,6 +6410,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ---
 # ...
@@ -6277,6 +6426,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ---
 # ...
@@ -6287,6 +6437,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ---
 # ...
@@ -6305,9 +6456,10 @@ Example 4 (unknown):
 
 ## Validating tasks: check mode and diff mode — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_checkmode.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_checkmode.html>
 
 **Contents:**
+
 - Validating tasks: check mode and diff mode
 - Using check mode
   - Enforcing or preventing check mode on tasks
@@ -6346,11 +6498,13 @@ Because the --diff option can reveal sensitive information, you can disable it f
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible-playbook foo.yml --check
 ```
 
 Example 2 (unknown):
+
 ```unknown
 tasks:
   - name: This task will always make changes to the system
@@ -6367,6 +6521,7 @@ tasks:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
 
@@ -6384,6 +6539,7 @@ tasks:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ansible-playbook foo.yml --check --diff --limit foo.example.com
 ```
@@ -6392,9 +6548,10 @@ ansible-playbook foo.yml --check --diff --limit foo.example.com
 
 ## Executing playbooks for troubleshooting — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_startnstep.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_startnstep.html>
 
 **Contents:**
+
 - Executing playbooks for troubleshooting
 - start-at-task
 - Step mode
@@ -6418,16 +6575,19 @@ Using the Ansible debugger
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible-playbook playbook.yml --start-at-task="install packages"
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible-playbook playbook.yml --step
 ```
 
 Example 3 (unknown):
+
 ```unknown
 Perform task: configure ssh (y/n/c):
 ```
@@ -6436,9 +6596,10 @@ Perform task: configure ssh (y/n/c):
 
 ## ansible.builtin.import_playbook module – Import a playbook — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/import_playbook_module.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/import_playbook_module.html>
 
 **Contents:**
+
 - ansible.builtin.import_playbook module – Import a playbook
 - Synopsis
 - Parameters
@@ -6518,6 +6679,7 @@ Ansible Core Team (@ansible)
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - hosts: localhost
   tasks:
@@ -6549,9 +6711,10 @@ Example 1 (unknown):
 
 ## Lookup plugins — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/lookup.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/lookup.html>
 
 **Contents:**
+
 - Lookup plugins
 - Enabling lookup plugins
 - Using lookup plugins
@@ -6613,12 +6776,14 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 vars:
   file_contents: "{{ lookup('file', 'path/to/file.txt') }}"
 ```
 
 Example 2 (unknown):
+
 ```unknown
 tasks:
   - name: count to 3
@@ -6627,6 +6792,7 @@ tasks:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 tasks:
   - name: Complicated chained lookups and filters
@@ -6638,6 +6804,7 @@ tasks:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: if this file does not exist, I do not care .. file plugin itself warns anyway ...
   debug: msg="{{ lookup('file', '/nosuchfile', errors='ignore') }}"
@@ -6647,9 +6814,10 @@ Example 4 (unknown):
 
 ## YAML Syntax — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/YAMLSyntax.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/YAMLSyntax.html>
 
 **Contents:**
+
 - YAML Syntax
 - YAML Basics
 - Gotchas
@@ -6733,6 +6901,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 # A list of tasty fruits
@@ -6744,6 +6913,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 # An employee record
 martin:
@@ -6753,6 +6923,7 @@ martin:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # Employee records
 - martin:
@@ -6772,6 +6943,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ---
 martin: {name: Martin D'vloper, job: Developer, skill: Elite}
@@ -6782,9 +6954,10 @@ fruits: ['Apple', 'Orange', 'Strawberry', 'Mango']
 
 ## Playbook Example: Continuous Delivery and Rolling Upgrades — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/guide_rolling_upgrade.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/guide_rolling_upgrade.html>
 
 **Contents:**
+
 - Playbook Example: Continuous Delivery and Rolling Upgrades
 - What is continuous delivery?
 - Site deployment
@@ -6903,6 +7076,7 @@ An introduction to Continuous Delivery with Ansible
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 # This playbook deploys the whole application stack in this site.
@@ -6944,6 +7118,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ---
 httpd_port: 80
@@ -6951,6 +7126,7 @@ ntpserver: 192.0.2.23
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ---
 mysqlservice: mysqld
@@ -6961,6 +7137,7 @@ upassword: usersecret
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: Create Application Database
   mysql_db:
@@ -6980,9 +7157,10 @@ Example 4 (unknown):
 
 ## Working with playbooks — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks.html>
 
 **Contents:**
+
 - Working with playbooks
 
 Playbooks record and execute Ansible’s configuration, deployment, and orchestration functions. They can describe a policy you want your remote systems to enforce, or a set of steps in a general IT process.
@@ -6997,9 +7175,10 @@ Playbooks are designed to be human-readable and are developed in a basic text la
 
 ## Ansible-core 2.18 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.18.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.18.html>
 
 **Contents:**
+
 - Ansible-core 2.18 Porting Guide
 - Playbook
 - Command Line
@@ -7036,6 +7215,7 @@ The ssh connection plugin now officially supports targeting Windows hosts. A bre
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Run with win_shell
   ansible.windows.win_shell: Write-Host "Hello, Café"
@@ -7049,9 +7229,10 @@ Example 1 (unknown):
 
 ## Asynchronous actions and polling — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_async.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_async.html>
 
 **Contents:**
+
 - Asynchronous actions and polling
 - Asynchronous ad hoc tasks
 - Asynchronous playbook tasks
@@ -7117,21 +7298,25 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
-$ ansible all -B 3600 -P 0 -a "/usr/bin/long_running_operation --do-stuff"
+ansible all -B 3600 -P 0 -a "/usr/bin/long_running_operation --do-stuff"
 ```
 
 Example 2 (unknown):
+
 ```unknown
-$ ansible web1.example.com -m async_status -a "jid=488359678239.2844"
+ansible web1.example.com -m async_status -a "jid=488359678239.2844"
 ```
 
 Example 3 (unknown):
+
 ```unknown
-$ ansible all -B 1800 -P 60 -a "/usr/bin/long_running_operation --do-stuff"
+ansible all -B 1800 -P 60 -a "/usr/bin/long_running_operation --do-stuff"
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ---
 
@@ -7150,9 +7335,10 @@ Example 4 (unknown):
 
 ## Integration tests — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_integration.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_integration.html>
 
 **Contents:**
+
 - Integration tests
 - Quick Start
 - Configuration
@@ -7263,22 +7449,26 @@ If you’d like to know more about the plans for improving testing Ansible, join
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 source hacking/env-setup
 ansible-test --help
 ```
 
 Example 2 (unknown):
+
 ```unknown
 bin/ansible-test --help
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ansible-test integration shippable/ --docker fedora34
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ansible-test integration --exclude git
 ```
@@ -7287,9 +7477,10 @@ ansible-test integration --exclude git
 
 ## General tips — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/tips_tricks/ansible_tips_tricks.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/tips_tricks/ansible_tips_tricks.html>
 
 **Contents:**
+
 - General tips
 - Keep it simple
 - Use version control
@@ -7349,7 +7540,7 @@ In the vars file, define all of the variables needed, including any sensitive on
 
 Copy all of the sensitive variables over to the vault file and prefix these variables with vault_.
 
-Adjust the variables in the vars file to point to the matching vault_ variables using jinja2 syntax: db_password: "{{ vault_db_password }}".
+Adjust the variables in the vars file to point to the matching vault_variables using jinja2 syntax: db_password: "{{ vault_db_password }}".
 
 Encrypt the vault file to protect its contents.
 
@@ -7396,11 +7587,13 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible-playbook --syntax-check
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: Talk to all hosts just so we can learn about them
   hosts: all
@@ -7412,6 +7605,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - hosts: os_CentOS
   gather_facts: False
@@ -7423,6 +7617,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ---
 # file: group_vars/all
@@ -7437,9 +7632,10 @@ asdf: 42
 
 ## ansible.builtin.junit callback – write playbook output to a JUnit file. — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/junit_callback.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/junit_callback.html>
 
 **Contents:**
+
 - ansible.builtin.junit callback – write playbook output to a JUnit file.
 - Callback plugin
 - Synopsis
@@ -7507,9 +7703,10 @@ Environment variable: JUNIT_TEST_CASE_PREFIX
 
 ## Executing playbooks — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_execution.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_execution.html>
 
 **Contents:**
+
 - Executing playbooks
 
 Ready to run your Ansible playbook?
@@ -7520,9 +7717,10 @@ Running complex playbooks requires some trial and error so learn about some of t
 
 ## Discovering variables: facts and magic variables — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_vars_facts.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_vars_facts.html>
 
 **Contents:**
+
 - Discovering variables: facts and magic variables
 - Ansible facts
   - Package requirements for fact gathering
@@ -7644,6 +7842,7 @@ To adapt playbook behavior to different versions of Ansible, you can use the var
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Print all available facts
   ansible.builtin.debug:
@@ -7651,11 +7850,13 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible <hostname> -m ansible.builtin.setup
 ```
 
 Example 3 (unknown):
+
 ```unknown
 {
     "ansible_all_ipv4_addresses": [
@@ -8116,6 +8317,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 {{ ansible_facts['devices']['xvda']['model'] }}
 ```
@@ -8124,9 +8326,10 @@ Example 4 (unknown):
 
 ## Ansible-core 2.19 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.19.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.19.html>
 
 **Contents:**
+
 - Ansible-core 2.19 Porting Guide
 - Introduction
 - Playbook
@@ -8463,23 +8666,27 @@ Passing nested non-scalars with embedded templates that may resolve to Undefined
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - assert:
     that: inventory_hostname
 ```
 
 Example 2 (unknown):
+
 ```unknown
 Conditional result was 'localhost' of type 'str', which evaluates to True. Conditionals must have a boolean result.
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - assert:
     that: inventory_hostname | length > 0
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - assert:
     that: inventory_hostname is defined and 'inventory_hostname | length > 0'
@@ -8489,9 +8696,10 @@ Example 4 (unknown):
 
 ## Understanding privilege escalation: become — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_privilege_escalation.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_privilege_escalation.html>
 
 **Contents:**
+
 - Understanding privilege escalation: become
 - Using become
   - Become directives
@@ -8786,6 +8994,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Ensure the httpd service is running
   service:
@@ -8795,6 +9004,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: Run a command as the apache user
   command: somecommand
@@ -8803,6 +9013,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - name: Run a command as nobody
   command: somecommand
@@ -8813,6 +9024,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 webserver ansible_user=manager ansible_become=true
 ```
@@ -8821,9 +9033,10 @@ webserver ansible_user=manager ansible_become=true
 
 ## Python3 in templates — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_python_version.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_python_version.html>
 
 **Contents:**
+
 - Python3 in templates
 - Dictionary views
 - dict.iteritems()
@@ -8845,6 +9058,7 @@ The Dictionary views entry for information on why the list filter is necessary h
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 vars:
   hosts:
@@ -8860,6 +9074,7 @@ tasks:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 vars:
   hosts:
@@ -8878,9 +9093,10 @@ tasks:
 
 ## Interactive input: prompts — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_prompts.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_prompts.html>
 
 **Contents:**
+
 - Interactive input: prompts
 - Hashing values supplied by vars_prompt
 - Allowing special characters in vars_prompt values
@@ -8950,6 +9166,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ---
 - hosts: all
@@ -8970,6 +9187,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 vars_prompt:
 
@@ -8979,6 +9197,7 @@ vars_prompt:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 vars_prompt:
 
@@ -8991,6 +9210,7 @@ vars_prompt:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 vars_prompt:
   - name: my_password_with_weird_chars
@@ -9003,9 +9223,10 @@ vars_prompt:
 
 ## Python API — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_api.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_api.html>
 
 **Contents:**
+
 - Python API
 
 The Ansible API is intended for internal Ansible use. Ansible may make changes to this API at any time that could break backward compatibility with older versions of the API. Because of this, external use is not supported by Ansible. If you want to use Python API only for executing playbooks or modules, consider ansible-runner first.
@@ -9024,9 +9245,10 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Lookups — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_lookups.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_lookups.html>
 
 **Contents:**
+
 - Lookups
 - The lookup function
 - The query/q function
@@ -9054,6 +9276,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 vars:
   motd_value: "{{ lookup('file', '/etc/motd') }}"
@@ -9063,6 +9286,7 @@ tasks:
 ```
 
 Example 2 (unknown):
+
 ```unknown
 block:
   - debug:
@@ -9078,9 +9302,10 @@ block:
 
 ## Using variables — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_variables.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_variables.html>
 
 **Contents:**
+
 - Using variables
 - Creating valid variable names
 - Simple variables
@@ -9357,11 +9582,13 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 remote_install_path: /opt/my_app_config
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible.builtin.template:
   src: foo.cfg.j2
@@ -9369,6 +9596,7 @@ ansible.builtin.template:
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - hosts: app_servers
   vars:
@@ -9376,6 +9604,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - hosts: app_servers
   vars:
@@ -9386,9 +9615,10 @@ Example 4 (unknown):
 
 ## Ansible collection creator path — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_path.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_path.html>
 
 **Contents:**
+
 - Ansible collection creator path
 - Examine currently available solutions
 - Create your content
@@ -9510,9 +9740,10 @@ A set of guidelines about collection development aspects
 
 ## The now function: get the current time — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_templating_now.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_templating_now.html>
 
 **Contents:**
+
 - The now function: get the current time
 
 The now() Jinja2 function retrieves a Python datetime object or a string representation for the current time.
@@ -9529,9 +9760,10 @@ For example: dtg: "Current time (UTC): {{ now(utc=true,fmt='%Y-%m-%d %H:%M:%S') 
 
 ## Ansible module architecture — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_program_flow_modules.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_program_flow_modules.html>
 
 **Contents:**
+
 - Ansible module architecture
 - Types of modules
   - Action plugins
@@ -9631,7 +9863,7 @@ It pushes the module and module parameters to the remote host, although the modu
 
 It handles any special cases regarding modules (for example, async execution, or complications around Windows modules that must have the same names as Python modules, so that internal calling of modules from other Action Plugins work.)
 
-Much of this functionality comes from the BaseAction class, which lives in plugins/action/__init__.py. It uses the Connection and Shell objects to do its work.
+Much of this functionality comes from the BaseAction class, which lives in plugins/action/**init**.py. It uses the Connection and Shell objects to do its work.
 
 When tasks are run with the async: parameter, Ansible uses the async Action Plugin instead of the normal Action Plugin to invoke it. That program flow is currently not documented. Read the source for information on how that works.
 
@@ -9653,9 +9885,9 @@ Replacements that only happen in the module file. These are public replacement s
 
 from ansible.module_utils.MOD_LIB_NAME import * is replaced with the contents of the ansible/module_utils/MOD_LIB_NAME.py These should only be used with new-style Python modules.
 
-#<<INCLUDE_ANSIBLE_MODULE_COMMON>> is equivalent to from ansible.module_utils.basic import * and should also only apply to new-style Python modules.
+# <<INCLUDE_ANSIBLE_MODULE_COMMON>> is equivalent to from ansible.module_utils.basic import * and should also only apply to new-style Python modules
 
-# POWERSHELL_COMMON substitutes the contents of ansible/module_utils/powershell.ps1. It should only be used with new-style Powershell modules.
+# POWERSHELL_COMMON substitutes the contents of ansible/module_utils/powershell.ps1. It should only be used with new-style Powershell modules
 
 Replacements that are used by ansible.module_utils code. These are internal replacement patterns. They may be used internally, in the above public replacements, but shouldn’t be used directly by modules.
 
@@ -9669,7 +9901,7 @@ Replacements that are used by ansible.module_utils code. These are internal repl
 
 The string syslog.LOG_USER is replaced wherever it occurs with the syslog_facility which was named in ansible.cfg or any ansible_syslog_facility inventory variable that applies to this host. In new-style Python modules this has changed slightly. If you really need to access it, you should instantiate an AnsibleModule and then use AnsibleModule._syslog_facility to access it. It is no longer the actual syslog facility and is now the name of the syslog facility. See the documentation on internal arguments for details.
 
-The Ansiballz framework was adopted in Ansible 2.1 and is used for all new-style Python modules. Unlike the Module Replacer, Ansiballz uses real Python imports of things in ansible/module_utils instead of merely preprocessing the module. It does this by constructing a zipfile – which includes the module file, files in ansible/module_utils that are imported by the module, and some boilerplate to pass in the module’s parameters. The zipfile is then Base64 encoded and wrapped in a small Python script which decodes the Base64 encoding and places the zipfile into a temp directory on the managed node. It then extracts just the Ansible module script from the zip file and places that in the temporary directory as well. Then it sets the PYTHONPATH to find Python modules inside of the zip file and imports the Ansible module as the special name, __main__. Importing it as __main__ causes Python to think that it is executing a script rather than simply importing a module. This lets Ansible run both the wrapper script and the module code in a single copy of Python on the remote machine.
+The Ansiballz framework was adopted in Ansible 2.1 and is used for all new-style Python modules. Unlike the Module Replacer, Ansiballz uses real Python imports of things in ansible/module_utils instead of merely preprocessing the module. It does this by constructing a zipfile – which includes the module file, files in ansible/module_utils that are imported by the module, and some boilerplate to pass in the module’s parameters. The zipfile is then Base64 encoded and wrapped in a small Python script which decodes the Base64 encoding and places the zipfile into a temp directory on the managed node. It then extracts just the Ansible module script from the zip file and places that in the temporary directory as well. Then it sets the PYTHONPATH to find Python modules inside of the zip file and imports the Ansible module as the special name, **main**. Importing it as **main** causes Python to think that it is executing a script rather than simply importing a module. This lets Ansible run both the wrapper script and the module code in a single copy of Python on the remote machine.
 
 Ansible wraps the zipfile in the Python script for two reasons:
 
@@ -9685,7 +9917,7 @@ Arguments are passed differently by the two frameworks:
 
 In Module Replacer framework, module arguments are turned into a JSON-ified string and substituted into the combined module file.
 
-In Ansiballz framework, the JSON-ified string is part of the script which wraps the zipfile. Just before the wrapper script imports the Ansible module as __main__, it monkey-patches the private, _ANSIBLE_ARGS variable in basic.py with the variable values. When a ansible.module_utils.basic.AnsibleModule is instantiated, it parses this string and places the args into AnsibleModule.params where it can be accessed by the module’s other code.
+In Ansiballz framework, the JSON-ified string is part of the script which wraps the zipfile. Just before the wrapper script imports the Ansible module as **main**, it monkey-patches the private, _ANSIBLE_ARGS variable in basic.py with the variable values. When a ansible.module_utils.basic.AnsibleModule is instantiated, it parses this string and places the args into AnsibleModule.params where it can be accessed by the module’s other code.
 
 If you are writing modules, remember that the way we pass arguments is an internal implementation detail: it has changed in the past and will change again as soon as changes to the common module_utils code allow Ansible modules to forgo using ansible.module_utils.basic.AnsibleModule. Do not rely on the internal global _ANSIBLE_ARGS variable.
 
@@ -9697,7 +9929,7 @@ Both Module Replacer framework and Ansiballz framework send additional arguments
 
 The internal arguments in this section are global. If you need to add a local internal argument to a custom module, create an action plugin for that specific module. See _original_basename in the copy action plugin for an example.
 
-Set to True whenever an argument in a task or play specifies no_log. Any module that calls the AnsibleModule.log() function handles this action automatically. If you have a module that implements its own logging then you need to check the value of _ansible_no_log. To access _ansible_no_log in a module, instantiate the AnsibleModule utility and then check the value of AnsibleModule.no_log.
+Set to True whenever an argument in a task or play specifies no_log. Any module that calls the AnsibleModule.log() function handles this action automatically. If you have a module that implements its own logging then you need to check the value of_ansible_no_log. To access _ansible_no_log in a module, instantiate the AnsibleModule utility and then check the value of AnsibleModule.no_log.
 
 no_log specified in a module’s argument_spec is handled by a different mechanism.
 
@@ -9713,7 +9945,7 @@ This argument provides modules with the names of file systems which should have 
 
 Most modules can use the built-in AnsibleModule methods to manipulate files. To access in a module that needs to know about these special context file systems, instantiate AnsibleModule and examine the list in AnsibleModule._selinux_special_fs.
 
-This argument replaces ansible.module_utils.basic.SELINUX_SPECIAL_FS from Module Replacer framework. In the module replacer framework the argument was formatted as a comma-separated string of file system names. Under the Ansiballz framework it is a list. You can access _ansible_selinux_special_fs using the corresponding environment variable. For more details, see the DEFAULT_SELINUX_SPECIAL_FS configuration option.
+This argument replaces ansible.module_utils.basic.SELINUX_SPECIAL_FS from Module Replacer framework. In the module replacer framework the argument was formatted as a comma-separated string of file system names. Under the Ansiballz framework it is a list. You can access_ansible_selinux_special_fs using the corresponding environment variable. For more details, see the DEFAULT_SELINUX_SPECIAL_FS configuration option.
 
 This argument controls which syslog facility the module logs to. Most modules should just use the AnsibleModule.log() function which will then make use of this. If a module has to use this on its own, it should instantiate the AnsibleModule method and then retrieve the name of the syslog facility from AnsibleModule._syslog_facility. The Ansiballz code is less elegant than the Module Replacer framework code:
 
@@ -9870,16 +10102,19 @@ The helper functions module.load_file_common_arguments() and module.set_fs_attri
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 json_arguments = """<<INCLUDE_ANSIBLE_MODULE_JSON_ARGS>>"""
 ```
 
 Example 2 (unknown):
+
 ```unknown
 json_arguments = """{"param1": "test's quotes", "param2": "\"To be or not to be\" - Hamlet"}"""
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # Old module_replacer way
 import syslog
@@ -9893,6 +10128,7 @@ syslog.openlog(NAME, 0, facility)
 ```
 
 Example 4 (unknown):
+
 ```unknown
 module = AnsibleModule(argument_spec=dict(
     top_level=dict(
@@ -9911,9 +10147,10 @@ module = AnsibleModule(argument_spec=dict(
 
 ## Error handling in playbooks — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_error_handling.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/playbook_guide/playbooks_error_handling.html>
 
 **Contents:**
+
 - Error handling in playbooks
 - Ignoring failed commands
 - Ignoring unreachable host errors
@@ -10012,6 +10249,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Do not count this as a failure
   ansible.builtin.command: /bin/false
@@ -10019,6 +10257,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: This executes, fails, and the failure is ignored
   ansible.builtin.command: /bin/true
@@ -10029,6 +10268,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - hosts: all
   ignore_unreachable: true
@@ -10042,6 +10282,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: Fail task when the command error output prints FAILED
   ansible.builtin.command: /usr/bin/example-command -x -y -z
@@ -10053,9 +10294,10 @@ Example 4 (unknown):
 
 ## Ansible Automation Hub — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/automationhub.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/automationhub.html>
 
 **Contents:**
+
 - Ansible Automation Hub
 
 Ansible Automation Hub is the official location to discover and download certified collections, included as part of an Ansible Automation Platform subscription. These content collections contain modules, plugins, roles, and playbooks in a downloadable package.
@@ -10068,9 +10310,10 @@ Ansible Automation Hub is the downstream Red Hat supported product version of An
 
 ## Other Tools and Programs — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/community/other_tools_and_programs.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/community/other_tools_and_programs.html>
 
 **Contents:**
+
 - Other Tools and Programs
 - Popular editors
   - Text editors
@@ -10113,9 +10356,10 @@ Refer to Awesome Ansible Tools List, a community-curated list of awesome Ansible
 
 ## Ansible Vault — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/vault_guide/vault.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/vault_guide/vault.html>
 
 **Contents:**
+
 - Ansible Vault
 
 Ansible Vault encrypts variables and files so you can protect sensitive content such as passwords or keys rather than leaving it visible as plaintext in playbooks or roles. To use Ansible Vault you need one or more passwords to encrypt and decrypt content. If you store your vault passwords in a third-party tool such as a secret manager, you need a script to access them. Use the passwords with the ansible-vault command-line tool to create and view encrypted variables, create encrypted files, encrypt existing files, or edit, re-key, or decrypt files. You can then place encrypted content under source control and share it more safely.
@@ -10128,9 +10372,10 @@ You can use encrypted variables and files in ad hoc commands and playbooks by su
 
 ## Using collections in a playbook — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_using_playbooks.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_using_playbooks.html>
 
 **Contents:**
+
 - Using collections in a playbook
 - Simplifying module names with the collections keyword
 - Using collections in roles
@@ -10174,6 +10419,7 @@ Playbooks in collections do not support ‘adjacent’ plugins, all plugins must
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Reference a collection content using its FQCN
   hosts: all
@@ -10185,6 +10431,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: Reference collections contents using their FQCNs
   hosts: all
@@ -10204,6 +10451,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # myrole/meta/main.yml
 collections:
@@ -10213,6 +10461,7 @@ collections:
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: Run a play using the collections keyword
   hosts: all
@@ -10238,9 +10487,10 @@ Example 4 (unknown):
 
 ## Ansible-core 2.13 Porting Guide — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.13.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_core_2.13.html>
 
 **Contents:**
+
 - Ansible-core 2.13 Porting Guide
 - Playbook
 - Command Line
@@ -10268,7 +10518,7 @@ Porting custom scripts
 
 Templating - You can no longer perform arithmetic and concatenation operations outside of the jinja template. The following statement will need to be rewritten to produce [1, 2]:
 
-The return value of the __repr__ method of an undefined variable represented by the AnsibleUndefined object changed. {{ '%r'|format(undefined_variable) }} returns AnsibleUndefined(hint=None, obj=missing, name='undefined_variable') in 2.13 as opposed to just AnsibleUndefined in versions 2.12 and prior.
+The return value of the **repr** method of an undefined variable represented by the AnsibleUndefined object changed. {{ '%r'|format(undefined_variable) }} returns AnsibleUndefined(hint=None, obj=missing, name='undefined_variable') in 2.13 as opposed to just AnsibleUndefined in versions 2.12 and prior.
 
 The finalize method is no longer exposed in the globals for use in templating. To convert None to an empty string the following expression can be used: {{ value if value is not none }}.
 
@@ -10281,6 +10531,7 @@ ansible.module_utils.urls.fetch_url will now return the captured HTTPError excep
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Prior to 2.13
   debug:

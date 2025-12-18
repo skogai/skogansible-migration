@@ -50,16 +50,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## age
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### release.yaml
+
 - Get checksum
 - Registering checksums related vars
 - Get checksums list
@@ -72,16 +75,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## atuin
 
 ### main.yaml
+
 - Preflight preparation
 - Installing Atuin
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### release.yaml
+
 - Get checksum
 - Registering checksums related vars
 - Get checksums list
@@ -94,10 +100,12 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## awscli
 
 ### main.yaml
+
 - Preflight preparation
 - Installing awscli on the Linux OS from archive
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Binary path data
 - Get installed version if any
@@ -105,6 +113,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Reporting installed version
 
 ### linux.yaml
+
 - Getting awscli release artifact archive
 - Creating extraction dir {{ awscli_extraction_dst }}
 - Extracting archive
@@ -117,10 +126,12 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## bat
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting preflight facts
 - Reporting installed version
@@ -129,6 +140,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if Fish completions path exists
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ bat_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ bat_extraction_path }}
@@ -143,15 +155,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## cfssl
 
 ### main.yaml
+
 - Preflight preparation
 - Deploy cfssl from release archive
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ cfssl_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ cfssl_extraction_path }}
@@ -169,6 +184,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## chezmoi
 
 ### main.yaml
+
 - Preflight preparation
 - Get checksum
 - Install chezmoi release archive
@@ -176,6 +192,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Install chezmoi release OS package
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Set final artifact name
@@ -184,11 +201,13 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if Fish completions path exists
 
 ### checksums.yaml
+
 - Registering Github API headers
 - Get checksums list
 - Get checksum for {{ _chezmoi_artifact_name }}
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ chezmoi_extraction_path }}
 - Dowloading release archive
 - Extracting archive to {{ chezmoi_extraction_path }}
@@ -199,11 +218,13 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Deleting release artifacts
 
 ### release_package.yaml
+
 - Getting release chezmoi
 - Install RPM package
 - Install DEB package
 
 ### release_binary.yaml
+
 - Download chezmoi binary
 
 ---
@@ -211,15 +232,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## croc
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ croc_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ croc_extraction_path }}
@@ -231,16 +255,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## direnv
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying current version
 
 ### release.yaml
+
 - Deploying direnv {{ direnv_v }}
 - Set permissions
 
@@ -249,10 +276,12 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## eza
 
 ### main.yaml
+
 - Preflight preparation
 - Release archive installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
@@ -261,6 +290,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if Fish completions path exists
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ eza_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ eza_extraction_path }}
@@ -283,10 +313,12 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## fd
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
@@ -295,6 +327,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if Fish completions path exists
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ fd_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ fd_extraction_path }}
@@ -310,17 +343,20 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## fzf
 
 ### main.yaml
+
 - Preflight preparation
 - Get fzf-tmux completions path
 - Installing fzf from release archive
 - Installing fzf from OS packages
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ fzf_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ fzf_extraction_path }}
@@ -336,10 +372,12 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## git_delta
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
@@ -348,6 +386,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if Fish completions path exists
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ git_delta_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ git_delta_extraction_path }}
@@ -362,16 +401,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## golang
 
 ### main.yaml
+
 - Preflight preparation
 - Installing golang from release archive
 
 ### preflight.yaml
+
 - Check if golang binary already exists
 - Get installed version if any
 - Register golang version vars
 - Displaying installed golang version
 
 ### release_archive.yaml
+
 - Getting golang release archive
 - Creating golang installation directory {{ golang_install_path }}
 - Removing old golang version
@@ -383,18 +425,21 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## haproxy
 
 ### main.yaml
+
 - Preflight preparation
 - Getting haproxy installed version
 - Installing haproxy from release archive
 - Installing haproxy OS packages
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ haproxy_extraction_path }}
 - Extracting archive
 - Copying binary to {{ haproxy_bin_dst }}/{{ haproxy_bin }}
@@ -411,11 +456,13 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## iaac
 
 ### main.yaml
+
 - Check current state
 - Deployment plan
 - Apply deployment
 
 ### preflight.yaml
+
 - Assert iaac_action value
 - Setup output variable
 
@@ -424,10 +471,12 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## just
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
@@ -436,6 +485,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if Fish completions path exists
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ just_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ just_extraction_path }}
@@ -451,12 +501,14 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## k8s
 
 ### main.yaml
+
 - Preflight preparation
 - Deploy kubectl from release archive
 - Deploying helm from release archive
 - Deploying kubectx from release archive
 
 ### preflight.yaml
+
 - Check if kubectl binary already exists
 - Get kubectl installed version if any
 - Register kubectl version vars
@@ -471,6 +523,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Displaying installed kubectx version
 
 ### helm_archive.yaml
+
 - Creating helm extraction dir {{ helm_extraction_path }}
 - Getting helm release archive
 - Extracting helm archive to {{ helm_extraction_path }}
@@ -479,6 +532,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Deleting helm release artifacts
 
 ### kubectl_archive.yaml
+
 - Creating kubectl extraction dir {{ kubectl_extraction_path }}
 - Getting kubectl release archive
 - Extracting kubectl archive to {{ kubectl_extraction_path }}
@@ -487,6 +541,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Deleting kubectl release artifacts
 
 ### kubectx_archive.yaml
+
 - Creating kubectx extraction dir {{ kubectx_extraction_path }}
 - Getting kubectx release archive
 - Extracting kubectx archive to {{ kubectx_extraction_path }}
@@ -500,17 +555,20 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## kitty
 
 ### main.yaml
+
 - Preflight preparation
 - Installing kitty from repository
 - Installing kitty from release archive
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ kitty_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ kitty_extraction_path }}
@@ -526,15 +584,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## lazydocker
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ lazydocker_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ lazydocker_extraction_path }}
@@ -546,15 +607,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## lazygit
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ lazygit_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ lazygit_extraction_path }}
@@ -566,23 +630,27 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## minio
 
 ### main.yaml
+
 - Preflight preparation
 - Getting minio installed version
 - Installing minio client from release archive
 - Installing minio server from release archive
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### minio_client.yaml
+
 - Getting minio client release archive
 - Installing minio client binary to {{ minio_bin_dst }}/{{ minio_mc_bin }}
 - Setting minio client permissions
 
 ### minio_server.yaml
+
 - Getting minio server release archive
 - Installing minio server binary to {{ minio_bin_dst }}/{{ minio_bin }}
 - Setting minio server permissions
@@ -598,16 +666,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## mkcert
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### release.yaml
+
 - Deploying mkcert {{ mkcert_v }}
 - Set permissions
 
@@ -616,15 +687,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## nvim_bob
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ nvim_bob_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ nvim_bob_extraction_path }}
@@ -636,16 +710,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## nvm
 
 ### main.yaml
+
 - Preflight preparation
 - Installing nvm from release archive
 
 ### preflight.yaml
+
 - Checking if nvm directory exists
 - Getting installed nvm version if any
 - Registering nvm version vars
 - Displaying installed nvm version
 
 ### release_archive.yaml
+
 - Creating nvm installation directory
 - Cloning nvm from GitHub
 - Checking out nvm version {{ nvm_v }}
@@ -656,11 +733,13 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## ohmyzsh
 
 ### main.yaml
+
 - Preflight preparation
 - Dependencies installation
 - Oh-my-zsh setup on a Linux host
 
 ### example.yaml
+
 - Example Oh-my-zsh setup on ubuntu
 - Install oh-my-zsh for the current user
 - Install zsh-syntax-highlighting
@@ -668,15 +747,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Installing powerlevel10k
 
 ### preflight.yaml
+
 - Assert omz_update_mode value
 - Assert omz_update_frequency value
 - Set omz_users variable if empty
 
 ### deps.yaml
+
 - Installing dependencies on Linux
 - Create global fpath directories
 
 ### ohmyzsh.yaml
+
 - Get zsh path
 - Set zsh path fact
 - Checking if user "{{ omz_user.name }}" exists
@@ -696,23 +778,27 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## prek
 
 ### main.yaml
+
 - Preflight preparation
 - Getting prek installed version
 - Creating prek config file
 - Installing prek from release
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### config.yaml
+
 - Set prek config path facts
 - Create prek config directory
 - Create prek configuration file
 
 ### release.yaml
+
 - Creating extraction dir {{ prek_extraction_path }}
 - Getting prek release archive
 - Extracting archive to {{ prek_extraction_path }}
@@ -725,16 +811,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## python
 
 ### main.yaml
+
 - Preflight preparation
 - Installing pyenv from release archive
 
 ### preflight.yaml
+
 - Check if pyenv binary already exists
 - Get installed version if any
 - Register pyenv version vars
 - Displaying installed pyenv version
 
 ### release_archive.yaml
+
 - Creating pyenv installation directory
 - Cloning pyenv from GitHub
 - Installing pyenv build dependencies
@@ -745,10 +834,12 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## rclone
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
@@ -756,6 +847,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if ZSH completions path exists
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ rclone_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ rclone_extraction_path }}
@@ -770,15 +862,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## restic
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_binary.yaml
+
 - Getting release binary
 - Installing binary to {{ restic_bin_dst }}/{{ restic_bin }}
 - Setting restic binary permissions
@@ -788,12 +883,14 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## ripgrep
 
 ### main.yaml
+
 - Preflight preparation
 - Deploy from release archive
 - Install ripgrep on a Debian based OS
 - Install ripgrep on a RedHat based OS
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting preflight facts
 - Reporting installed version
@@ -802,6 +899,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Check if Fish completions path exists
 
 ### uninstall.yaml
+
 - Uninstall ripgrep installed from release archive
 - Removing ripgrep binary
 - Removing ripgrep man pages
@@ -810,12 +908,14 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Removing ripgrep Fish completions
 
 ### debian.yaml
+
 - Install ripgrep on Debian based OS
 - Install ripgrep from release deb package
 - Install ripgrep from OS packages
 - Uninstall ripgrep
 
 ### redhat.yaml
+
 - Install ripgrep from EPEL packages
 - Install epel-release
 - Install ripgrep from epel
@@ -823,6 +923,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Uninstall ripgrep
 
 ### release.yaml
+
 - Get checksum
 - Registering checksums related vars
 - Get checksums list
@@ -838,6 +939,7 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 - Deleting release artifacts
 
 ### handlers/main.yaml
+
 - Remove ripgrep archive
 - Set ripgrep permissions and ownership
 
@@ -846,15 +948,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## shellcheck
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ shellcheck_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ shellcheck_extraction_path }}
@@ -866,16 +971,19 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## shfmt
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### release.yaml
+
 - Get checksum
 - Registering checksums related vars
 - Get checksums list
@@ -888,15 +996,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## sops
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ sops_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ sops_extraction_path }}
@@ -908,15 +1019,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## starship
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ starship_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ starship_extraction_path }}
@@ -928,17 +1042,20 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## syncthing
 
 ### main.yaml
+
 - Preflight preparation
 - Getting syncthing installed version
 - Installing syncthing from release archive
 
 ### preflight.yaml
+
 - Check if binary already exists in $PATH
 - Get installed version if any
 - Register installed version vars
 - Displaying installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ syncthing_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ syncthing_extraction_path }}
@@ -954,15 +1071,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## taplo
 
 ### main.yaml
+
 - Preflight preparation
 - Release archive installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ taplo_extraction_path }}
 - Getting release archive
 - Gunzip file in-place
@@ -974,15 +1094,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## yazi
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ yazi_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ yazi_extraction_path }}
@@ -994,15 +1117,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## yq
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_binary.yaml
+
 - Getting release binary
 - Installing binary to {{ yq_bin_dst }}/{{ yq_bin }}
 - Setting yq binary permissions
@@ -1012,15 +1138,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## zellij
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ zellij_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ zellij_extraction_path }}
@@ -1032,15 +1161,18 @@ This document contains a complete inventory of all Ansible tasks defined in the 
 ## zoxide
 
 ### main.yaml
+
 - Preflight preparation
 - Binary download and installation
 
 ### preflight.yaml
+
 - Get currently installed version if any
 - Setting version facts
 - Reporting installed version
 
 ### release_archive.yaml
+
 - Creating extraction dir {{ zoxide_extraction_path }}
 - Getting release archive
 - Extracting archive to {{ zoxide_extraction_path }}

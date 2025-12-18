@@ -5,6 +5,7 @@ Organized playbooks for different deployment scenarios.
 ## Available Playbooks
 
 ### default.yml
+
 **Default playbook** - Runs when no playbook specified.
 
 Current default configuration (modify as needed).
@@ -15,6 +16,7 @@ Current default configuration (modify as needed).
 ```
 
 ### site.yml
+
 **Main playbook** - Complete system configuration with all roles.
 
 Use this for full system setup or comprehensive updates.
@@ -24,6 +26,7 @@ Use this for full system setup or comprehensive updates.
 ```
 
 ### workstation.yml
+
 **Workstation setup** - Full desktop/development environment configuration.
 
 Includes all packages, SSH, git, and dotfiles management.
@@ -33,6 +36,7 @@ Includes all packages, SSH, git, and dotfiles management.
 ```
 
 ### bootstrap.yml
+
 **Initial bootstrap** - Minimal setup for fresh Arch installation.
 
 Only installs essential packages, skips configuration and updates.
@@ -42,6 +46,7 @@ Only installs essential packages, skips configuration and updates.
 ```
 
 ### maintenance.yml
+
 **Regular maintenance** - System updates and cleanup only.
 
 Updates package cache and upgrades system without changing configuration.
@@ -53,22 +58,26 @@ Updates package cache and upgrades system without changing configuration.
 ## Usage Patterns
 
 **Run entire playbook:**
+
 ```bash
 ./run.sh site.yml
 ```
 
 **Dry-run (check mode):**
+
 ```bash
 ./run.sh site.yml --check
 ```
 
 **Run specific tags:**
+
 ```bash
 ./run.sh site.yml --tags packages
 ./run.sh site.yml --tags git,ssh
 ```
 
 **Skip specific tags:**
+
 ```bash
 ./run.sh site.yml --skip-tags packages
 ```
@@ -76,6 +85,7 @@ Updates package cache and upgrades system without changing configuration.
 ## Playbook Structure
 
 All playbooks follow the same pattern:
+
 - Define target hosts (`all` for localhost)
 - Load required vars files from `../vars/`
 - Apply roles with appropriate tags

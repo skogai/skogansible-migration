@@ -181,6 +181,7 @@ Create a backup of your SSH directory:
 ```
 
 This creates:
+
 - `~/.ssh_backup/` (copy of .ssh directory)
 - `~/.ssh_backup.tar.gz` (compressed archive)
 
@@ -276,6 +277,7 @@ Some advanced features are commented out in the tasks file. Review and uncomment
 ### SSH Agent Configuration
 
 Automatically start SSH agent in shell profile. **Review before enabling:**
+
 - Uncomment the "SSH Agent Configuration" section in `tasks/main.yml`
 - Set `ssh_configure_agent: true`
 - Define `ssh_agent_socket` location
@@ -283,6 +285,7 @@ Automatically start SSH agent in shell profile. **Review before enabling:**
 ### Backup Encryption
 
 Encrypt SSH backups with ansible-vault. **Review before enabling:**
+
 - Uncomment the "SSH Backup Encryption" section in `tasks/main.yml`
 - Set `ssh_encrypt_backup: true`
 - Define `ssh_vault_password_file` location
@@ -293,7 +296,9 @@ Encrypt SSH backups with ansible-vault. **Review before enabling:**
 ### Private Keys in Vault
 
 When using `ssh_deploy_from_vault`:
+
 1. Always encrypt vars files containing private keys:
+
    ```bash
    ansible-vault encrypt vars/ssh_vault.yml
    ```
@@ -305,6 +310,7 @@ When using `ssh_deploy_from_vault`:
 ### File Permissions
 
 Default permissions follow SSH security best practices:
+
 - `.ssh/` directory: `0700` (rwx------)
 - Private keys: `0600` (rw-------)
 - Public keys: `0644` (rw-r--r--)
@@ -313,6 +319,7 @@ Default permissions follow SSH security best practices:
 ### Passphrases
 
 If using `ssh_key_passphrase`:
+
 1. Store in a vaulted variable
 2. Use `no_log: true` (already included)
 3. Consider using SSH agent instead
@@ -322,6 +329,7 @@ If using `ssh_key_passphrase`:
 ### Keys not deploying from vault
 
 Check:
+
 1. `ssh_deploy_from_vault` is set to `true`
 2. Variables `ssh_private_key_content` and `ssh_public_key_content` are defined
 3. Vault file is properly encrypted and decryptable
@@ -330,6 +338,7 @@ Check:
 ### Permission denied errors
 
 Check:
+
 1. SSH directory has correct permissions (`0700`)
 2. Private key has correct permissions (`0600`)
 3. Files owned by correct user
@@ -337,6 +346,7 @@ Check:
 ### Key generation fails
 
 Check:
+
 1. `ssh_generate_key` is set to `true`
 2. `ssh_deploy_from_vault` is set to `false` (they're mutually exclusive)
 3. Key doesn't already exist (role won't overwrite)
@@ -344,6 +354,7 @@ Check:
 ### Config not deploying
 
 Check:
+
 1. `ssh_deploy_config` is set to `true`
 2. `ssh_config_template` points to valid template file
 3. Template file exists in `templates/` directory
@@ -374,13 +385,15 @@ your-ansible-project/
 
 If migrating from the original `roles/ssh_vault`:
 
-### Key Changes:
+### Key Changes
+
 1. **No hardcoded paths** - Uses `{{ ansible_user_dir }}` variables
 2. **Everything is optional** - Enable only what you need
 3. **Vault encryption commented out** - Review before enabling
 4. **No user-specific paths** - Works for any user
 
-### Migration Steps:
+### Migration Steps
+
 1. Copy vaulted SSH keys from `vars/ssh_keys.yml` to new structure
 2. Update playbook to use new variables
 3. Review and uncomment advanced features if needed

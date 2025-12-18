@@ -6,9 +6,10 @@
 
 ## Ansible Reference: Module Utilities — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/module_utils.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/module_utils.html>
 
 **Contents:**
+
 - Ansible Reference: Module Utilities
 - AnsibleModule
 - Basic
@@ -45,7 +46,7 @@ return from the module, without error
 
 Return from the module with an error message and optional exception/traceback detail. A traceback will only be included in the result if error traceback capturing has been enabled.
 
-When exception is an exception object, its message chain will be automatically combined with msg to create the final error message. The message chain includes the exception’s message as well as messages from any __cause__ exceptions. The traceback from exception will be used for the formatted traceback.
+When exception is an exception object, its message chain will be automatically combined with msg to create the final error message. The message chain includes the exception’s message as well as messages from any **cause** exceptions. The traceback from exception will be used for the formatted traceback.
 
 When exception is a string, it will be used as the formatted traceback.
 
@@ -101,7 +102,7 @@ Execute a command, returns rc, stdout, and stderr.
 
 The mechanism of this method for reading stdout and stderr differs from that of CPython subprocess.Popen.communicate, in that this method will stop reading once the spawned command has exited and stdout and stderr have been consumed, as opposed to waiting until stdout/stderr are closed. This can be an important distinction, when taken into account that a forked or backgrounded process may hold stdout or stderr open for longer than the spawned command.
 
-args – is the command to run * If args is a list, the command will be run with shell=False. * If args is a string and use_unsafe_shell=False it will split args to a list and run with shell=False * If args is a string and use_unsafe_shell=True it runs with shell=True.
+args – is the command to run *If args is a list, the command will be run with shell=False.* If args is a string and use_unsafe_shell=False it will split args to a list and run with shell=False * If args is a string and use_unsafe_shell=True it runs with shell=True.
 
 Whether to call fail_json in case of non zero RC. Default False
 
@@ -442,6 +443,7 @@ Unsupported parameters were supplied
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 argument_spec = {
     'name': {'type': 'str'},
@@ -463,6 +465,7 @@ valid_params = result.validated_parameters
 ```
 
 Example 2 (unknown):
+
 ```unknown
 required_if=[
     ['state', 'present', ('path',), True],
@@ -471,6 +474,7 @@ required_if=[
 ```
 
 Example 3 (unknown):
+
 ```unknown
 [
     {
@@ -487,9 +491,10 @@ Example 3 (unknown):
 
 ## Return Values — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/common_return_values.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/common_return_values.html>
 
 **Contents:**
+
 - Return Values
 - Common
   - backup_file
@@ -552,16 +557,19 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 "backup_file": "./foo.txt.32729.2020-07-30@06:24:19~"
 ```
 
 Example 2 (unknown):
+
 ```unknown
 "changed": true
 ```
 
 Example 3 (unknown):
+
 ```unknown
 "diff": [
         {
@@ -577,6 +585,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 "failed": false
 ```
@@ -585,9 +594,10 @@ Example 4 (unknown):
 
 ## Special Variables — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/special_variables.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/special_variables.html>
 
 **Contents:**
+
 - Special Variables
 - Magic variables
 - Facts
@@ -659,7 +669,7 @@ The directory of the inventory source in which the inventory_hostname was first 
 
 The inventory name for the ‘current’ host being iterated over in the play. This is not affected by delegation, it always reflects the original host for the task
 
-The short version of inventory_hostname, is the first section after splitting it via .. As an example, for the inventory_hostname of www.example.com, www would be the inventory_hostname_short This is affected by delegation, so it will reflect the ‘short name’ of the delegated host
+The short version of inventory_hostname, is the first section after splitting it via .. As an example, for the inventory_hostname of <www.example.com>, www would be the inventory_hostname_short This is affected by delegation, so it will reflect the ‘short name’ of the delegated host
 
 The file name of the inventory source in which the inventory_hostname was first defined. Ignores delegation and always reflects the information for the inventory_hostname.
 
@@ -697,9 +707,10 @@ The user Ansible ‘logs in’ as.
 
 ## Controlling how Ansible behaves: precedence rules — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/general_precedence.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/general_precedence.html>
 
 **Contents:**
+
 - Controlling how Ansible behaves: precedence rules
 - Precedence categories
   - Configuration settings
@@ -795,16 +806,19 @@ Inventory plugins are a bit tricky as they use ‘inventory sources’ and these
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible -u mike -m ping myhost -u carol
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible -i /path/inventory1 -i /path/inventory2 -m ping all
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - hosts: all
   connection: ssh
@@ -818,6 +832,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - hosts: cloud
   gather_facts: false
@@ -846,9 +861,10 @@ Example 4 (unknown):
 
 ## Logging Ansible output — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/logging.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/logging.html>
 
 **Contents:**
+
 - Logging Ansible output
 - Protecting sensitive data with no_log
 
@@ -866,9 +882,10 @@ If you save Ansible output to a log, you expose any secret data in your Ansible 
 
 ## Releases and maintenance — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/release_and_maintenance.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/release_and_maintenance.html>
 
 **Contents:**
+
 - Releases and maintenance
 - Release cycle overview
   - Ansible community package release cycle
@@ -988,7 +1005,7 @@ The Ansible community package follows semantic versioning rules. Minor releases 
 
 Work in Collections is tracked within the individual Collection repositories.
 
-You can refer to the Ansible package porting guides for tips on updating your playbooks to run on newer versions of Ansible. For Ansible 2.10 and later releases, you can install the Ansible package with pip. See Installing Ansible for details. You can download older Ansible releases from https://releases.ansible.com/ansible/.
+You can refer to the Ansible package porting guides for tips on updating your playbooks to run on newer versions of Ansible. For Ansible 2.10 and later releases, you can install the Ansible package with pip. See Installing Ansible for details. You can download older Ansible releases from <https://releases.ansible.com/ansible/>.
 
 This table links to the changelogs for each major Ansible release. These changelogs contain the dates and significant changes in each minor release.
 
@@ -1126,9 +1143,10 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Glossary — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/glossary.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/glossary.html>
 
 **Contents:**
+
 - Glossary
 
 The following is a list (and re-explanation) of term definitions used elsewhere in the Ansible documentation.
@@ -1183,7 +1201,7 @@ The full definition of a module, plugin, or role hosted within a collection, in 
 
 Facts are mentioned above. Sometimes when running a multi-play playbook, it is desirable to have some plays that don’t bother with fact computation if they aren’t going to need to utilize any of these values. Setting gather_facts: False on a playbook allows this implicit fact gathering to be skipped.
 
-Globbing is a way to select several hosts based on wildcards, rather than the name of the host specifically, or the name of the group they are in. For example, it is possible to select ww* to match all hosts starting with www. This concept is pulled directly from Func, one of Michael DeHaan’s (an Ansible Founder) earlier projects. In addition to basic globbing, various set operations are also possible, such as ‘hosts in this group and not in another group’, and so on.
+Globbing is a way to select several hosts based on wildcards, rather than the name of the host specifically, or the name of the group they are in. For example, it is possible to select ww* to match all hosts starting with <www>. This concept is pulled directly from Func, one of Michael DeHaan’s (an Ansible Founder) earlier projects. In addition to basic globbing, various set operations are also possible, such as ‘hosts in this group and not in another group’, and so on.
 
 A group consists of several hosts assigned to a pool that can be conveniently targeted together, as well as given variables that they share in common.
 
@@ -1291,9 +1309,10 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Interpreter Discovery — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/interpreter_discovery.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/interpreter_discovery.html>
 
 **Contents:**
+
 - Interpreter Discovery
 
 Most Ansible modules that execute under a POSIX environment require a Python interpreter on the target host. Unless configured otherwise, Ansible will attempt to discover a suitable Python interpreter on each target host the first time a Python module is executed for that host.
@@ -1320,9 +1339,10 @@ You can still set ansible_python_interpreter to a specific path at any variable 
 
 ## Ansible Configuration Settings — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/config.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/config.html>
 
 **Contents:**
+
 - Ansible Configuration Settings
 - The configuration file
   - Generating a sample ansible.cfg file
@@ -1436,7 +1456,7 @@ Sets the default value for the any_errors_fatal keyword, if True, Task failures 
 
 ANSIBLE_ANY_ERRORS_FATAL
 
-When False``(default), Ansible will skip using become if the remote user is the same as the become user, as this is normally a redundant operation. In other words root sudo to root. If ``True, this forces Ansible to use the become plugin anyways as there are cases in which this is needed.
+When False``(default), Ansible will skip using become if the remote user is the same as the become user, as this is normally a redundant operation. In other words root sudo to root. If``True, this forces Ansible to use the become plugin anyways as there are cases in which this is needed.
 
 [privilege_escalation]
 
@@ -1958,7 +1978,7 @@ ANSIBLE_DOC_FRAGMENT_PLUGINS
 
 Root docsite URL used to generate docs URLs in warning/error text; must be an absolute URL with a valid scheme and trailing slash.
 
-https://docs.ansible.com/ansible-core/
+<https://docs.ansible.com/ansible-core/>
 
 By default, Ansible will issue a warning when a duplicate dict key is encountered in YAML. These warnings can be silenced by adjusting this setting to False.
 
@@ -2036,7 +2056,7 @@ If set to yes, ansible-galaxy will not validate TLS certificates. This can be us
 
 ANSIBLE_GALAXY_IGNORE
 
-A list of GPG status codes to ignore during GPG signature verification. See L(https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes) for status code descriptions. If fewer signatures successfully verify the collection than GALAXY_REQUIRED_VALID_SIGNATURE_COUNT, signature verification will fail even if all error codes are ignored.
+A list of GPG status codes to ignore during GPG signature verification. See L(<https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes>) for status code descriptions. If fewer signatures successfully verify the collection than GALAXY_REQUIRED_VALID_SIGNATURE_COUNT, signature verification will fail even if all error codes are ignored.
 
 ignore_signature_status_codes
 
@@ -2060,7 +2080,7 @@ ANSIBLE_GALAXY_ROLE_SKELETON_IGNORE
 
 URL to prepend when roles don’t specify the full URI, assume they are referencing this server as the source.
 
-https://galaxy.ansible.com
+<https://galaxy.ansible.com>
 
 ANSIBLE_GALAXY_SERVER
 
@@ -2258,7 +2278,7 @@ ANSIBLE_PLAYBOOK_VARS_ROOT
 
 A path to configuration for filtering which plugins installed on the system are allowed to be used. See Rejecting modules for details of the filter file’s format. The default is /etc/ansible/plugin_filters.yml
 
-Attempts to set RLIMIT_NOFILE soft limit to the specified value when executing Python modules (can speed up subprocess usage on Python 2.x. See https://bugs.python.org/issue11284). The value will be limited by the existing hard limit. Default value of 0 does not attempt to adjust existing system-defined limits.
+Attempts to set RLIMIT_NOFILE soft limit to the specified value when executing Python modules (can speed up subprocess usage on Python 2.x. See <https://bugs.python.org/issue11284>). The value will be limited by the existing hard limit. Default value of 0 does not attempt to adjust existing system-defined limits.
 
 python_module_rlimit_nofile
 
@@ -2454,7 +2474,7 @@ Sets the default value for the any_errors_fatal keyword, if True, Task failures 
 
 See also ANY_ERRORS_FATAL
 
-When False``(default), Ansible will skip using become if the remote user is the same as the become user, as this is normally a redundant operation. In other words root sudo to root.If ``True, this forces Ansible to use the become plugin anyways as there are cases in which this is needed.
+When False``(default), Ansible will skip using become if the remote user is the same as the become user, as this is normally a redundant operation. In other words root sudo to root.If``True, this forces Ansible to use the become plugin anyways as there are cases in which this is needed.
 
 See also BECOME_ALLOW_SAME_USER
 
@@ -2684,7 +2704,7 @@ This setting controls the default policy of fact gathering (facts discovered abo
 
 See also DEFAULT_GATHERING
 
-This setting controls how duplicate definitions of dictionary variables (aka hash, map, associative array) are handled in Ansible.This does not affect variables whose values are scalars (integers, strings) or arrays.**WARNING**, changing this setting is not recommended as this is fragile and makes your content (plays, roles, collections) nonportable, leading to continual confusion and misuse. Don’t change this setting unless you think you have an absolute need for it.We recommend avoiding reusing variable names and relying on the combine filter and vars and varnames lookups to create merged versions of the individual variables. In our experience, this is rarely needed and is a sign that too much complexity has been introduced into the data structures and plays.For some uses you can also look into custom vars_plugins to merge on input, even substituting the default host_group_vars that is in charge of parsing the host_vars/ and group_vars/ directories. Most users of this setting are only interested in inventory scope, but the setting itself affects all sources and makes debugging even harder.All playbooks and roles in the official examples repos assume the default for this setting.Changing the setting to merge applies across variable sources, but many sources will internally still overwrite the variables. For example include_vars will dedupe variables internally before updating Ansible, with ‘last defined’ overwriting previous definitions in same file.The Ansible project recommends you avoid ``merge`` for new projects.**It is the intention of the Ansible developers to eventually deprecate and remove this setting, but it is being kept as some users do heavily rely on it. New projects should **avoid ‘merge’.
+This setting controls how duplicate definitions of dictionary variables (aka hash, map, associative array) are handled in Ansible.This does not affect variables whose values are scalars (integers, strings) or arrays.**WARNING**, changing this setting is not recommended as this is fragile and makes your content (plays, roles, collections) nonportable, leading to continual confusion and misuse. Don’t change this setting unless you think you have an absolute need for it.We recommend avoiding reusing variable names and relying on the combine filter and vars and varnames lookups to create merged versions of the individual variables. In our experience, this is rarely needed and is a sign that too much complexity has been introduced into the data structures and plays.For some uses you can also look into custom vars_plugins to merge on input, even substituting the default host_group_vars that is in charge of parsing the host_vars/ and group_vars/ directories. Most users of this setting are only interested in inventory scope, but the setting itself affects all sources and makes debugging even harder.All playbooks and roles in the official examples repos assume the default for this setting.Changing the setting to merge applies across variable sources, but many sources will internally still overwrite the variables. For example include_vars will dedupe variables internally before updating Ansible, with ‘last defined’ overwriting previous definitions in same file.The Ansible project recommends you avoid ``merge`` for new projects.**It is the intention of the Ansible developers to eventually deprecate and remove this setting, but it is being kept as some users do heavily rely on it. New projects should**avoid ‘merge’.
 
 See also DEFAULT_HASH_BEHAVIOUR
 
@@ -2968,7 +2988,7 @@ Configure the keyring used for GPG signature verification during collection inst
 
 See also GALAXY_GPG_KEYRING
 
-A list of GPG status codes to ignore during GPG signature verification. See L(https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes) for status code descriptions.If fewer signatures successfully verify the collection than GALAXY_REQUIRED_VALID_SIGNATURE_COUNT, signature verification will fail even if all error codes are ignored.
+A list of GPG status codes to ignore during GPG signature verification. See L(<https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes>) for status code descriptions.If fewer signatures successfully verify the collection than GALAXY_REQUIRED_VALID_SIGNATURE_COUNT, signature verification will fail even if all error codes are ignored.
 
 See also GALAXY_IGNORE_INVALID_SIGNATURE_STATUS_CODES
 
@@ -3082,7 +3102,7 @@ This sets which playbook dirs will be used as a root to process vars plugins, wh
 
 See also PLAYBOOK_VARS_ROOT
 
-Attempts to set RLIMIT_NOFILE soft limit to the specified value when executing Python modules (can speed up subprocess usage on Python 2.x. See https://bugs.python.org/issue11284). The value will be limited by the existing hard limit. Default value of 0 does not attempt to adjust existing system-defined limits.
+Attempts to set RLIMIT_NOFILE soft limit to the specified value when executing Python modules (can speed up subprocess usage on Python 2.x. See <https://bugs.python.org/issue11284>). The value will be limited by the existing hard limit. Default value of 0 does not attempt to adjust existing system-defined limits.
 
 See also PYTHON_MODULE_RLIMIT_NOFILE
 
@@ -3175,28 +3195,32 @@ See also VERBOSE_TO_STDERR
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 # some basic default values...
 inventory = /etc/ansible/hosts  ; This points to the file that lists your hosts
 ```
 
 Example 2 (unknown):
+
 ```unknown
-$ ansible-config init --disabled > ansible.cfg
+ansible-config init --disabled > ansible.cfg
 ```
 
 Example 3 (unknown):
+
 ```unknown
-$ ansible-config init --disabled -t all > ansible.cfg
+ansible-config init --disabled -t all > ansible.cfg
 ```
 
 ---
 
 ## Python 3 Support — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/python_3_support.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/python_3_support.html>
 
 **Contents:**
+
 - Python 3 Support
 - On the control node side
 - Using Python 3 on the managed machines with commands and playbooks
@@ -3231,6 +3255,7 @@ If you would like to fix the code and submit a pull request on github, you can r
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 $ pip3 install ansible
 $ ansible --version | grep "python version"
@@ -3238,13 +3263,15 @@ $ ansible --version | grep "python version"
 ```
 
 Example 2 (unknown):
+
 ```unknown
-$ source ./hacking/env-setup
-$ python3 $(which ansible) localhost -m ping
-$ python3 $(which ansible-playbook) sample-playbook.yml
+source ./hacking/env-setup
+python3 $(which ansible) localhost -m ping
+python3 $(which ansible-playbook) sample-playbook.yml
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # Example inventory that makes an alias for localhost that uses Python3
 localhost-py3 ansible_host=localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
@@ -3259,9 +3286,10 @@ ansible_python_interpreter=/usr/bin/python3
 ```
 
 Example 4 (unknown):
+
 ```unknown
-$ ansible localhost-py3 -m ping
-$ ansible-playbook sample-playbook.yml
+ansible localhost-py3 -m ping
+ansible-playbook sample-playbook.yml
 ```
 
 ---

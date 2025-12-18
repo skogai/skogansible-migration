@@ -3,6 +3,7 @@
 Comprehensive package management role for Arch Linux systems using pacman and AUR.
 
 This role provides secure, idempotent package management including:
+
 - Official repository packages via pacman
 - AUR packages via yay helper
 - Dedicated AUR builder user for security
@@ -53,6 +54,7 @@ ansible_python_interpreter: /usr/bin/python  # Python for AUR tasks
 ## Dependencies
 
 None. This role installs all required dependencies including:
+
 - base-devel (for building AUR packages)
 - git (for cloning AUR repositories)
 - yay (AUR helper, installed from source)
@@ -110,6 +112,7 @@ The role executes tasks in this order:
 ### 1. AUR User Setup (`aur_user.yml`)
 
 Creates a dedicated user for building AUR packages:
+
 - Creates `aur_builder` user with wheel group membership
 - Configures passwordless sudo for pacman operations only
 - Allows wheel group users to become aur_builder without password
@@ -120,6 +123,7 @@ Creates a dedicated user for building AUR packages:
 ### 2. AUR Helper Installation (`aur_helper.yml`)
 
 Installs yay AUR helper from source:
+
 - Ensures base-devel and git are installed
 - Checks if yay already exists
 - Clones yay repository from AUR
@@ -131,6 +135,7 @@ Installs yay AUR helper from source:
 ### 3. Official Package Installation (`main.yml`)
 
 Manages official repository packages:
+
 - Updates pacman package database cache
 - Upgrades all installed packages (optional)
 - Installs packages from `packages` list
@@ -139,6 +144,7 @@ Manages official repository packages:
 ### 4. AUR Package Installation (`aur_packages.yml`)
 
 Installs packages from AUR:
+
 - Runs as `aur_builder` user (via become_user)
 - Uses kewlfft.aur collection
 - Installs packages with yay helper
@@ -220,6 +226,7 @@ aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman
 ```
 
 This configuration:
+
 - Allows aur_builder to install packages without password
 - Allows wheel group to switch to aur_builder without password
 - Validates sudoers syntax with `visudo -cf` before applying

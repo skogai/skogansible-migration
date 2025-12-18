@@ -3,6 +3,7 @@
 Brief description of what this role does and why it exists.
 
 This role provides:
+
 - Feature 1
 - Feature 2
 - Feature 3
@@ -28,7 +29,7 @@ All role variables are defined in `defaults/main.yml` with sensible defaults. Ov
 
 ```yaml
 <role>_deploy_config: false       # Deploy configuration file
-<role>_config_file: "{{ ansible_facts['env']['HOME'] }}/.<role>rc" 
+<role>_config_file: "{{ ansible_facts['env']['HOME'] }}/.<role>rc"
 # [@skogix:i like the idea of a role-rc file being able to override/be used but for now i think we should look in the .ansible folder for them until we get to implementing that feature]
 ```
 
@@ -94,6 +95,7 @@ Run specific parts of the role:
 ```
 
 Available tags:
+
 - `<role>` - Run all tasks
 - `<role>-install` - Installation tasks
 - `<role>-config` - Configuration tasks

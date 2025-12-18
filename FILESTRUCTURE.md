@@ -135,6 +135,7 @@ SkogAI/skogansible/
 ## Key Files
 
 ### Core Configuration
+
 - **ansible.cfg** - Ansible configuration defining Python interpreter, inventory location, and collections path
 - **.inventory** - Defines localhost as the managed host for all playbook runs
 - **.requirements.yml** - Lists required Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
@@ -142,13 +143,16 @@ SkogAI/skogansible/
 - **./tmp/ENV** - Output from bootstrap.sh which dumps the current environment variables (!`ansible-config dump --type all`)
 
 ### Execution Scripts
+
 - **bootstrap.sh** - Initial setup script that creates Python venv, installs Ansible and collections
 - **run.sh** - Wrapper script to activate venv and execute ansible-playbook with provided arguments
 
 ### Playbooks
+
 - **playbook.yml** - Main playbook that orchestrates all 4 roles (packages, ssh, git, chezmoi) with proper variable loading
 
 ### Documentation
+
 - **README.md** - Project overview with quick start guide and repository identity
 - **CLAUDE.md** - Comprehensive project documentation covering all features, configuration, and usage patterns
 - **FILESTRUCTURE.md** - This file, complete file structure reference with descriptions
@@ -158,22 +162,29 @@ SkogAI/skogansible/
 - **docs/repos/CLAUDE.md** - Historical documentation consolidation guide for 7 previous ansible repositories
 
 ### Roles
+
 Each role follows standard Ansible structure with tasks/, templates/, defaults/, handlers/, and meta/ directories.
 
 #### packages/
+
 Manages system packages from official Arch repositories (pacman) and AUR (yay). Creates secure aur_builder user for AUR package building.
 
 #### ssh/
+
 Manages SSH configuration including key deployment from vault, config templating, known_hosts management, and authorized_keys.
 
 #### git/
+
 Comprehensive Git configuration with modular tasks for installation, global config, aliases, credential management, LFS, hooks, signing, and repository-specific settings.
 
 #### chezmoi/
+
 Manages dotfiles by templating machine-specific .chezmoidata.yaml configuration and applying dotfiles automatically.
 
 ### Variables
+
 All role-specific configuration stored in `vars/` directory:
+
 - **packages.yml** - Lists of official and AUR packages to install
 - **ssh.yml** - SSH role feature flags and configuration
 - **ssh_vault.yml** - Encrypted SSH keys (use ansible-vault to edit)
@@ -183,13 +194,17 @@ All role-specific configuration stored in `vars/` directory:
 - **main.yml** - Shared variables across all roles
 
 ### Collections
+
 Installed Ansible Galaxy collections in `collections/ansible_collections/`:
+
 - **community.general** - Community-maintained modules (pacman, etc.)
 - **kewlfft.aur** - AUR package management module
 - **ansible.posix** - POSIX-specific modules
 
 ### Claude Code Integration
+
 The `.claude/` directory contains Claude Code configuration:
+
 - Custom agents for code review, context gathering, logging, and documentation
 - Custom slash commands for session management
 - Project-specific skills (ansible-core primitives skill)
@@ -197,6 +212,7 @@ The `.claude/` directory contains Claude Code configuration:
 ## Ignored Paths
 
 The following directories are excluded from version control (see .gitignore):
+
 - `.venv/` - Python virtual environment
 - `*.retry` - Ansible retry files
 - `.ansible/collections/` - Downloaded collections cache

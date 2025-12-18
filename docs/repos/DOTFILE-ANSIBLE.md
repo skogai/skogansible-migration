@@ -1,6 +1,7 @@
 # Ansible Task Inventory
 
-Complete inventory of all Ansible task names extracted from the dotfile-ansible repository. Tasks are organized by category: Playbooks, Components, Primitives, and Roles.
+Complete inventory of all Ansible task names extracted from the dotfile-ansible repository.
+Tasks are organized by category: Playbooks, Components, Primitives, and Roles.
 
 **Generated:** 2025-12-18
 **Total Tasks Found:** 33
@@ -12,12 +13,15 @@ Complete inventory of all Ansible task names extracted from the dotfile-ansible 
 Main orchestration playbooks that define top-level execution flows.
 
 ### skogix.yml
+
 - **Skogix Playbook** - Main entry point for skogix user configuration
 
 ### skogai.yml
+
 - **Deploy Dotfiles** - Deploy system dotfiles configuration
 
 ### playbooks/disaster_recovery.yml
+
 - **Complete System Recovery** - Full system disaster recovery workflow
 
 ---
@@ -76,7 +80,9 @@ Primitive for managing individual lines in files.
 
 Primitive for managing package installation state across package managers.
 
-- **Primitive | Ensure package {{ package_state }}: {{ package_names if package_names is string else package_names | join(', ') }}** - Install/remove packages with cache management
+- **Primitive | Ensure package {{ package_state }}:
+  {{ package_names if package_names is string else package_names | join(', ') }}** -
+  Install/remove packages with cache management
 
 #### primitives/ensure_state/user.yml
 
@@ -89,7 +95,10 @@ Primitive for managing system users.
 Primitive for managing systemd services.
 
 - **Primitive | Reload systemd daemon** - Reload systemd daemon after service file changes
-- **Primitive | Ensure service {{ service_name }} is {{ service_enabled | default(true) | ternary('enabled', 'disabled') }} and {{ service_state | default('started') }}** - Manage service state (started/stopped) and enabled state
+- **Primitive | Ensure service {{ service_name }} is
+  {{ service_enabled | default(true) | ternary('enabled', 'disabled') }} and
+  {{ service_state | default('started') }}** -
+  Manage service state (started/stopped) and enabled state
 
 ---
 

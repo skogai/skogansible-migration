@@ -13,21 +13,27 @@ This document is an auto-generated inventory of all Ansible task names found in 
 ## Playbooks
 
 ### playbooks/site.yml
+
 - Run all the things
 
 ### playbooks/arch-base.yml
+
 - Arch Linux Base System Configuration
 
 ### playbooks/arch-maintenance.yml
+
 - Arch Linux System Maintenance
 
 ### playbooks/wsl-base.yml
+
 - WSL Arch Linux Base Configuration
 
 ### playbooks/test-02.yml
+
 - Test 02_basics role
 
 ### playbooks/install_requirements.yml
+
 - Install and update Ansible Galaxy requirements
 
 ---
@@ -35,12 +41,14 @@ This document is an auto-generated inventory of all Ansible task names found in 
 ## Root-Level Tasks (Direct task files)
 
 ### tasks/bootstrap.yml
+
 - Update package database
 - Install essential packages
 - Ensure ansible dependencies are installed
 - Check system information
 
 ### tasks/maintenance.yml
+
 - Update package database
 - Upgrade all packages
 - Clean package cache (keep last 3 versions)
@@ -48,6 +56,7 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Update AUR packages (if yay is installed)
 
 ### tasks/skogai-core.yml
+
 - Update arch
 - Install core packages
 - Disable need for password for yay
@@ -87,33 +96,43 @@ This document is an auto-generated inventory of all Ansible task names found in 
 ## Tests
 
 ### tests/test_arch_detection.yml
+
 - Test arch detection functionality
 
 ### tests/test_systemd_services.yml
+
 - Test systemd services configuration
 
 ### tests/test_claude_workflow.yml
+
 - Claude Workflow Integration Test
 
 ### tests/test_role_dependencies.yml
+
 - Test role dependencies and execution order
 
 ### tests/test_package_lists.yml
+
 - Test package management variables
 
 ### test_arch_detection.yml (root level)
+
 - Test arch detection functionality
 
 ### test_systemd_services.yml (root level)
+
 - Test systemd services configuration
 
 ### test_claude_workflow.yml (root level)
+
 - Claude Workflow Integration Test
 
 ### test_role_dependencies.yml (root level)
+
 - Test role dependencies and execution order
 
 ### test_package_lists.yml (root level)
+
 - Test package management variables
 
 ---
@@ -121,9 +140,11 @@ This document is an auto-generated inventory of all Ansible task names found in 
 ## Roles
 
 ### roles/01_host_info/tasks/main.yml
+
 - Check distribution is supported
 
 ### roles/02_basics/tasks/main.yml
+
 - Start systemd service - systemd-timesyncd
 - Start systemd service - paccache.timer
 - Update reflector configuration file
@@ -133,34 +154,43 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Upgrade system
 
 ### roles/02_basics/handlers/main.yml
+
 - run reflector
 
 ### roles/03_display_server/tasks/main.yml
+
 - 03_display_server placeholder
 
 ### roles/03_gui_backup/tasks/main.yml
+
 - GUI placeholder
 
 ### roles/04_desktop/tasks/main.yml
+
 - Install window manager
 
 ### roles/05_packages/tasks/main.yml
+
 - Install packages
 - Install Sunshine
 - Install font packages
 - Start systemd service - systemd-modules-load.service
 
 ### roles/05_packages/tasks/fonts.yml
+
 - Install fonts
 
 ### roles/05_packages/tasks/aur.yml
+
 - Installing AUR helper
 - Install AUR packages
 
 ### roles/06_microcode/tasks/main.yml
+
 - Placeholder task for 06_microcode role
 
 ### roles/07_users/tasks/main.yml
+
 - Create user
 - Git config user.name
 - Git config user.email
@@ -174,15 +204,19 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Mask systemd services - systemd homed
 
 ### roles/08_hardware/tasks/main.yml
+
 - Placeholder task for 08_hardware role
 
 ### roles/09_bluetooth/tasks/main.yml
+
 - Placeholder task for 09_bluetooth role
 
 ### roles/10_laptop/tasks/main.yml
+
 - Placeholder task for 10_laptop role
 
 ### roles/git/tasks/main.yml
+
 - Template gitconfig
 - Ensure gitconfig.d directory exists
 - Register SSH key with Github
@@ -191,24 +225,29 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Import signing key tasks
 
 ### roles/git/tasks/clone_repos.yml
+
 - Start ssh-agent
 - Add key to ssh-agent
 - Create repository directories
 - Clone repositories
 
 ### roles/git/tasks/get_authorized_keys.yml
+
 - Get list of existing Github SSH keys
 - Add matching public keys to `authorized_keys`
 
 ### roles/git/tasks/manage_signing_key.yml
+
 - Create allowed signers file
 - Get list of existing Github SSH signing keys
 - Register SSH signing key with Github
 
 ### roles/git/handlers/main.yml
+
 - Stop ssh-agent
 
 ### roles/ssh/tasks/main.yml
+
 - Ensure SSH directory is present
 - Set proper permissions on ~/.ssh/authorized_keys
 - Create SSH key
@@ -217,32 +256,40 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Load SSH hardening tasks
 
 ### roles/ssh/tasks/hardening.yml
+
 - Load SSH hardening vars
 - Set SSH hardening vars for LMDE
 - Secure SSH settings
 
 ### roles/dotfiles/tasks/main.yml
+
 - Create directories
 - Install dotfiles
 - Render dotfile templates
 - Post-processing
 
 ### roles/fonts/tasks/main.yml
+
 - fonts placeholder
 
 ### roles/dock/tasks/main.yml
+
 - dock placeholder
 
 ### roles/logi/tasks/main.yml
+
 - logi placeholder
 
 ### roles/vim/tasks/main.yml
+
 - vim placeholder
 
 ### roles/zsh/tasks/main.yml
+
 - zsh placeholder
 
 ### roles/tmux/tasks/main.yml
+
 - Install tmux (via OS package manager)
 - Install tmux (via Homebrew)
 - Ensure tmux config path exists
@@ -250,9 +297,11 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Install tmux plugins
 
 ### roles/cloud/tasks/main.yml
+
 - cloud placeholder
 
 ### roles/packages/tasks/main.yml
+
 - Stop packagekit
 - Include distro-specific package managers
 - Install Homebrew packages for Linux
@@ -263,6 +312,7 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Download binaries
 
 ### roles/packages/tasks/pkg_mgr/apt.yml
+
 - Install gpg keys
 - Install repositories
 - Update apt cache
@@ -271,6 +321,7 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Install Desktop Environment or Window Manager packages
 
 ### roles/packages/tasks/pkg_mgr/dnf.yml
+
 - Install gpg keys
 - Install repositories
 - Update dnf cache
@@ -279,27 +330,33 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Install Desktop Environment or Window Manager packages
 
 ### roles/packages/tasks/pkg_mgr/flatpak.yml
+
 - Install flatpak
 - Install flatpak remotes
 - Install flatpak packages
 
 ### roles/packages/tasks/pkg_mgr/homebrew.yml
+
 - Install Homebrew taps
 - Install Homebrew formulas
 - Install Homebrew casks
 
 ### roles/packages/tasks/pkg_mgr/mas.yml
+
 - Install mas formula
 - Install apps via mas
 
 ### roles/packages/handlers/main.yml
+
 - Start packagekit
 
 ### roles/system/tasks/main.yml
+
 - Set hostname
 - Include system-specific tasks
 
 ### roles/system/tasks/Darwin.yml
+
 - Set macOS default settings
 - Set launchd services
 - Put display to sleep after X minutes
@@ -310,15 +367,18 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - Set /Volumes hidden state
 
 ### roles/system/tasks/Linux.yml
+
 - Load per-system package definitions
 - Add DNS fallback
 - Apply dconf settings
 - Apply Dracut settings
 
 ### roles/system/tasks/dconf.yml
+
 - Apply dconf settings
 
 ### roles/system/handlers/main.yml
+
 - Restart macOS dock
 - Regenerate Dracut
 
@@ -327,24 +387,28 @@ This document is an auto-generated inventory of all Ansible task names found in 
 ## Statistics by Category
 
 ### Playbooks: 6 playbooks
+
 - 1 main site playbook
 - 3 system configuration playbooks (arch-base, arch-maintenance, wsl-base)
 - 1 test playbook
 - 1 requirements installation playbook
 
 ### Direct Tasks: 3 task files
+
 - bootstrap.yml: 4 tasks
 - maintenance.yml: 5 tasks
 - skogai-core.yml: 35 tasks
 
 ### Tests: 10 test files
+
 - 5 in /tests/ subdirectory
 - 5 duplicates at root level
 - 1 unique test per file (some duplicated at root)
 
 ### Roles: 61+ task files across 30+ roles
 
-#### Core Infrastructure Roles:
+#### Core Infrastructure Roles
+
 - **01_host_info**: Distribution checking (1 task)
 - **02_basics**: System services & mirrors (7 tasks + 1 handler)
 - **03_display_server**: Display server setup (placeholder)
@@ -356,7 +420,8 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - **09_bluetooth**: Bluetooth setup (placeholder)
 - **10_laptop**: Laptop-specific config (placeholder)
 
-#### Package Management Roles:
+#### Package Management Roles
+
 - **packages**: Multi-platform package management (8 main tasks)
   - pkg_mgr/apt: Debian/Ubuntu (6 tasks)
   - pkg_mgr/dnf: Fedora/RHEL (6 tasks)
@@ -365,7 +430,8 @@ This document is an auto-generated inventory of all Ansible task names found in 
   - pkg_mgr/mas: Mac App Store (2 tasks)
 - handlers: PackageKit management (1 handler)
 
-#### Development & Tools Roles:
+#### Development & Tools Roles
+
 - **git**: Git configuration & SSH (7 main tasks)
   - get_authorized_keys: GitHub SSH key management (2 tasks)
   - clone_repos: Repository cloning (4 tasks)
@@ -375,7 +441,8 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - **dotfiles**: Configuration file management (4 tasks)
 - **tmux**: Terminal multiplexer setup (5 tasks)
 
-#### Application/Configuration Roles:
+#### Application/Configuration Roles
+
 - **vim**: Vi/Vim setup (placeholder)
 - **zsh**: Zsh shell setup (placeholder)
 - **fonts**: Font installation (placeholder)
@@ -383,7 +450,8 @@ This document is an auto-generated inventory of all Ansible task names found in 
 - **logi**: Logitech devices (placeholder)
 - **dock**: Dock configuration (placeholder)
 
-#### System Configuration Roles:
+#### System Configuration Roles
+
 - **system**: Cross-platform system settings
   - main.yml: Hostname & OS dispatch (2 tasks)
   - Darwin.yml: macOS settings (8 tasks)

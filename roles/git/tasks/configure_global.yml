@@ -60,9 +60,9 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "core.autocrlf", value: "{{ git_core_autocrlf }}" }
-    - { name: "core.fileMode", value: "{{ git_core_filemode }}" }
-    - { name: "core.ignoreCase", value: "{{ git_core_ignorecase }}" }
+    - {name: "core.autocrlf", value: "{{ git_core_autocrlf }}"}
+    - {name: "core.fileMode", value: "{{ git_core_filemode }}"}
+    - {name: "core.ignoreCase", value: "{{ git_core_ignorecase }}"}
   tags:
     - git
     - git-config
@@ -82,9 +82,9 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "push.default", value: "{{ git_push_default }}" }
-    - { name: "push.followTags", value: "{{ git_push_followTags }}" }
-    - { name: "push.autoSetupRemote", value: "{{ git_push_autoSetupRemote }}" }
+    - {name: "push.default", value: "{{ git_push_default }}"}
+    - {name: "push.followTags", value: "{{ git_push_followTags }}"}
+    - {name: "push.autoSetupRemote", value: "{{ git_push_autoSetupRemote }}"}
   tags:
     - git
     - git-config
@@ -95,8 +95,8 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "pull.rebase", value: "{{ git_pull_rebase }}" }
-    - { name: "pull.ff", value: "{{ git_pull_ff }}" }
+    - {name: "pull.rebase", value: "{{ git_pull_rebase }}"}
+    - {name: "pull.ff", value: "{{ git_pull_ff }}"}
   tags:
     - git
     - git-config
@@ -107,8 +107,8 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "merge.ff", value: "{{ git_merge_ff }}" }
-    - { name: "merge.conflictStyle", value: "{{ git_merge_conflictstyle }}" }
+    - {name: "merge.ff", value: "{{ git_merge_ff }}"}
+    - {name: "merge.conflictStyle", value: "{{ git_merge_conflictstyle }}"}
   tags:
     - git
     - git-config
@@ -119,8 +119,8 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "diff.algorithm", value: "{{ git_diff_algorithm }}" }
-    - { name: "diff.colorMoved", value: "{{ git_diff_colorMoved }}" }
+    - {name: "diff.algorithm", value: "{{ git_diff_algorithm }}"}
+    - {name: "diff.colorMoved", value: "{{ git_diff_colorMoved }}"}
   tags:
     - git
     - git-config
@@ -131,8 +131,8 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "rebase.autoSquash", value: "{{ git_rebase_autosquash }}" }
-    - { name: "rebase.autoStash", value: "{{ git_rebase_autostash }}" }
+    - {name: "rebase.autoSquash", value: "{{ git_rebase_autosquash }}"}
+    - {name: "rebase.autoStash", value: "{{ git_rebase_autostash }}"}
   tags:
     - git
     - git-config
@@ -143,8 +143,8 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "fetch.prune", value: "{{ git_fetch_prune }}" }
-    - { name: "fetch.pruneTags", value: "{{ git_fetch_pruneTags }}" }
+    - {name: "fetch.prune", value: "{{ git_fetch_prune }}"}
+    - {name: "fetch.pruneTags", value: "{{ git_fetch_pruneTags }}"}
   tags:
     - git
     - git-config
@@ -156,8 +156,8 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "rerere.enabled", value: "{{ git_rerere_enabled }}" }
-    - { name: "rerere.autoUpdate", value: "{{ git_rerere_autoupdate }}" }
+    - {name: "rerere.enabled", value: "{{ git_rerere_enabled }}"}
+    - {name: "rerere.autoUpdate", value: "{{ git_rerere_autoupdate }}"}
   tags:
     - git
     - git-config
@@ -178,8 +178,8 @@
     value: "{{ item.value }}"
     scope: global
   loop:
-    - { name: "pack.threads", value: "{{ git_pack_threads }}" }
-    - { name: "pack.windowMemory", value: "{{ git_pack_windowMemory }}" }
+    - {name: "pack.threads", value: "{{ git_pack_threads }}"}
+    - {name: "pack.windowMemory", value: "{{ git_pack_windowMemory }}"}
   tags:
     - git
     - git-config

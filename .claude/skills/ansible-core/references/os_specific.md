@@ -6,9 +6,10 @@
 
 ## Managing Windows hosts with Ansible — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/intro_windows.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/intro_windows.html>
 
 **Contents:**
+
 - Managing Windows hosts with Ansible
 - Bootstrapping Windows
 - Connecting to Windows nodes
@@ -135,11 +136,13 @@ How to join Ansible chat channels
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible windows -m setup
 ```
 
 Example 2 (unknown):
+
 ```unknown
 Get-WinEvent -FilterHashtable @{LogName = 'Security'; Id = 4625} |
     Select-Object -First 1 -ExpandProperty Message
@@ -149,9 +152,10 @@ Get-WinEvent -FilterHashtable @{LogName = 'Security'; Id = 4625} |
 
 ## WinRM Certificate Authentication — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_winrm_certificate.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_winrm_certificate.html>
 
 **Contents:**
+
 - WinRM Certificate Authentication
 - Ansible Configuration
 - Certificate Generation
@@ -223,6 +227,7 @@ The following Ansible playbook can be used to create a local user and map the ce
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 # psrp
 ansible_connection: psrp
@@ -238,11 +243,13 @@ ansible_winrm_cert_key_pem: /path/to/certificate/private_key.pem
 ```
 
 Example 2 (unknown):
+
 ```unknown
 Set-Item -Path WSMan:\localhost\Service\Auth\Certificate -Value $true
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # Set the username to the name of the user the certificate will be mapped to
 USERNAME="local-user"
@@ -281,6 +288,7 @@ rm openssl.conf cert.csr
 ```
 
 Example 4 (unknown):
+
 ```unknown
 # Set the username to the name of the user the certificate will be mapped to
 $username = 'local-user'
@@ -316,9 +324,10 @@ Remove-Item -LiteralPath $keyPath -Force
 
 ## Red Hat Ansible Automation Platform — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/reference_appendices/tower.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/reference_appendices/tower.html>
 
 **Contents:**
+
 - Red Hat Ansible Automation Platform
 
 Red Hat Ansible Automation Platform is available on multiple cloud platforms. See Ansible on Clouds for details.
@@ -335,9 +344,10 @@ RHAAP incorporates the downstream Red Hat supported product version of Ansible A
 
 ## Windows App Control — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_app_control.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_app_control.html>
 
 **Contents:**
+
 - Windows App Control
 - Requirements for Ansible to work with App Control
 - How to Sign Ansible Content
@@ -420,6 +430,7 @@ When referencing a signed script in Ansible, it is important that it is used in 
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 <SiPolicy>
    ...
@@ -446,6 +457,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 $certPassword = Read-Host "Enter the password for the certificate" -AsSecureString
 $cert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new(
@@ -475,6 +487,7 @@ New-AnsiblePowerShellSignature @signingParams -Verbose
 ```
 
 Example 3 (unknown):
+
 ```unknown
 New-AnsiblePowerShellSignature ... -Skip @(
     'ansible.windows.win_dsc'
@@ -483,6 +496,7 @@ New-AnsiblePowerShellSignature ... -Skip @(
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: Test out LanguageMode
   ansible.windows.win_powershell:
@@ -493,9 +507,10 @@ Example 4 (unknown):
 
 ## Desired State Configuration — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_dsc.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_dsc.html>
 
 **Contents:**
+
 - Desired State Configuration
 - What is Desired State Configuration?
 - Host Requirements
@@ -561,7 +576,7 @@ The invocation.module_args key shows the actual values that were set as well as 
 
 Each DSC resource property has a type that is associated with it. Ansible will try to convert the defined options to the correct type during execution. For simple types like [string] and [bool], this is a simple operation, but complex types like [PSCredential] or arrays (like [string[]]) require certain rules.
 
-A [PSCredential] object is used to store credentials in a secure way, but Ansible has no way to serialize this over JSON. To set a DSC PSCredential property, the definition of that parameter should have two entries that are suffixed with _username and _password for the username and password, respectively. For example:
+A [PSCredential] object is used to store credentials in a secure way, but Ansible has no way to serialize this over JSON. To set a DSC PSCredential property, the definition of that parameter should have two entries that are suffixed with _username and_password for the username and password, respectively. For example:
 
 On versions of Ansible older than 2.8, you should set no_log: true on the task definition in Ansible to ensure any credentials used are not stored in any log file or console output.
 
@@ -583,7 +598,7 @@ A [DateTime] object is a DateTime string representing the date and time in the I
 
 All the values above are equal to a UTC date time of February 22nd 2019 at 1:57pm with 31 seconds and 2311892 milliseconds.
 
-By default, DSC runs each resource as the SYSTEM account and not the account that Ansible uses to run the module. This means that resources that are dynamically loaded based on a user profile, like the HKEY_CURRENT_USER registry hive, will be loaded under the SYSTEM profile. The parameter PsDscRunAsCredential is a parameter that can be set for every DSC resource, and force the DSC engine to run under a different account. As PsDscRunAsCredential has a type of PSCredential, it is defined with the _username and _password suffix.
+By default, DSC runs each resource as the SYSTEM account and not the account that Ansible uses to run the module. This means that resources that are dynamically loaded based on a user profile, like the HKEY_CURRENT_USER registry hive, will be loaded under the SYSTEM profile. The parameter PsDscRunAsCredential is a parameter that can be set for every DSC resource, and force the DSC engine to run under a different account. As PsDscRunAsCredential has a type of PSCredential, it is defined with the _username and_password suffix.
 
 Using the Registry resource type as an example, this is how to define a task to access the HKEY_CURRENT_USER hive of the Ansible user:
 
@@ -622,6 +637,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 Registry [string] #ResourceName
 {
@@ -637,6 +653,7 @@ Registry [string] #ResourceName
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: Use win_dsc module with the Registry DSC resource
   win_dsc:
@@ -648,6 +665,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (javascript):
+
 ```javascript
 changed: [2016] => {
     "changed": true,
@@ -696,6 +714,7 @@ changed: [2016] => {
 ```
 
 Example 4 (unknown):
+
 ```unknown
 PsDscRunAsCredential_username: '{{ ansible_user }}'
 PsDscRunAsCredential_password: '{{ ansible_password }}'
@@ -708,9 +727,10 @@ SourceCredential_password: PasswordForAdminUser
 
 ## Windows SSH — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_ssh.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_ssh.html>
 
 **Contents:**
+
 - Windows SSH
 - SSH Setup
   - Default Shell Configuration
@@ -787,6 +807,7 @@ Password authentication works like WinRM CredSSP authentication where the userna
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 Get-WindowsCapability -Name OpenSSH.Server* -Online |
     Add-WindowsCapability -Online
@@ -815,6 +836,7 @@ New-ItemProperty @shellParams
 ```
 
 Example 2 (unknown):
+
 ```unknown
 # Set default to powershell.exe
 $shellParams = @{
@@ -831,6 +853,7 @@ Remove-ItemProperty -Path HKLM:\SOFTWARE\OpenSSH -Name DefaultShell
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - name: set the default shell to PowerShell
   ansible.windows.win_regedit:
@@ -854,6 +877,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 Match Group administrators
     AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
@@ -863,9 +887,10 @@ Match Group administrators
 
 ## Kerberos Authentication — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_winrm_kerberos.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_winrm_kerberos.html>
 
 **Contents:**
+
 - Kerberos Authentication
 - Installing Kerberos
 - Configuring Host Kerberos
@@ -975,32 +1000,37 @@ If using the MIT Kerberos implementation, you can set the environment variable K
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
-$ sudo dnf install krb5-devel krb5-libs krb5-workstation python3-devel
+sudo dnf install krb5-devel krb5-libs krb5-workstation python3-devel
 ```
 
 Example 2 (unknown):
+
 ```unknown
-$ sudo apt-get install krb5-user libkrb5-dev python3-dev
+sudo apt-get install krb5-user libkrb5-dev python3-dev
 ```
 
 Example 3 (unknown):
+
 ```unknown
-$ sudo pacman -S krb5
+sudo pacman -S krb5
 ```
 
 Example 4 (unknown):
+
 ```unknown
-$ sudo pkg install heimdal
+sudo pkg install heimdal
 ```
 
 ---
 
 ## Managing z/OS UNIX hosts with Ansible — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/intro_zos.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/intro_zos.html>
 
 **Contents:**
+
 - Managing z/OS UNIX hosts with Ansible
 - Ansible and z/OS UNIX System Services
 - The z/OS landscape
@@ -1093,17 +1123,20 @@ Red Hat OpenShift on IBM zSystems and LinuxONE
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 - name: Tag my_file.txt as UTF-8.
   ansible.builtin.command: chtag -tc iso8859-1 my_file.txt
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible.builtin.shell: "some_pgm | iconv -f ibm-1047 -t iso8859-1"
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ansible.builtin.raw: |
     export _BPXK_AUTOCVT: "ON" ;
@@ -1115,6 +1148,7 @@ ansible.builtin.raw: |
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: Tag my_file.txt as UTF-8.
   ansible.builtin.command: chtag -tc iso8859-1 my_file.txt
@@ -1124,9 +1158,10 @@ Example 4 (unknown):
 
 ## Managing BSD hosts with Ansible — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/intro_bsd.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/intro_bsd.html>
 
 **Contents:**
+
 - Managing BSD hosts with Ansible
 - Connecting to BSD nodes
 - Bootstrapping BSD
@@ -1211,22 +1246,26 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 [freebsd]
 myfreebsdhost ansible_connection=paramiko
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible -m raw -a "pkg install -y python" myfreebsdhost
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ansible -m raw -a "pkg_add -I python%3.11" myopenbsdhost
 ```
 
 Example 4 (unknown):
+
 ```unknown
 [freebsd:vars]
 ansible_python_interpreter=/usr/local/bin/python
@@ -1238,9 +1277,10 @@ ansible_python_interpreter=/usr/local/bin/python3
 
 ## Windows Remote Management — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_winrm.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_winrm.html>
 
 **Contents:**
+
 - Windows Remote Management
 - What is WinRM?
 - WinRM Setup
@@ -1302,7 +1342,7 @@ The CertificateThumbprint value must be set to the thumbprint of a certificate t
 
 The Address selector value can be set to one of three values:
 
-* - binds to all addresses
+- - binds to all addresses
 
 IP:... - binds to the IPv4 or IPv6 address specified by ...
 
@@ -1445,18 +1485,21 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 pipx inject ansible "pypsrp<=1.0.0"  # for psrp
 pipx inject ansible "pywinrm>=0.4.0"  # for winrm
 ```
 
 Example 2 (unknown):
+
 ```unknown
 pip3 install "pypsrp<=1.0.0"  # for psrp
 pip3 install "pywinrm>=0.4.0"  # for winrm
 ```
 
 Example 3 (unknown):
+
 ```unknown
 # Enables the WinRM service and sets up the HTTP listener
 Enable-PSRemoting -Force
@@ -1486,6 +1529,7 @@ New-ItemProperty @tokenFilterParams
 ```
 
 Example 4 (unknown):
+
 ```unknown
 # Create self signed certificate
 $certParams = @{
@@ -1526,9 +1570,10 @@ New-NetFirewallRule @firewallParams
 
 ## Windows performance — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_performance.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_performance.html>
 
 **Contents:**
+
 - Windows performance
 - Optimize PowerShell performance to reduce Ansible task overhead
 - Fix high-CPU-on-boot for VMs/cloud instances
@@ -1550,6 +1595,7 @@ Place the following near the end of your playbook, bearing in mind the factors t
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 function Optimize-Assemblies {
     param (
@@ -1600,6 +1646,7 @@ Optimize-Assemblies -assemblyFilter "Microsoft.PowerShell."
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: generate native .NET images for CPU
   win_dotnet_ngen:
@@ -1609,9 +1656,10 @@ Example 2 (unknown):
 
 ## Using Ansible and Windows — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/os_guide/windows_usage.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/os_guide/windows_usage.html>
 
 **Contents:**
+
 - Using Ansible and Windows
 - Use Cases
   - Installing Software
@@ -1784,6 +1832,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 # Install/uninstall with chocolatey
 - name: Ensure 7-Zip is installed through Chocolatey
@@ -1833,6 +1882,7 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
+
 ```unknown
 - name: Install all critical and security updates
   win_updates:
@@ -1848,6 +1898,7 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
+
 ```unknown
 - name: Download KB3172729 for Server 2012 R2
   win_get_url:
@@ -1867,6 +1918,7 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
+
 ```unknown
 - name: Create local group to contain new users
   win_group:

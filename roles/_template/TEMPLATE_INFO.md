@@ -27,7 +27,9 @@ This directory contains template files showing the standard structure and patter
 ## File Purposes
 
 ### README.md
+
 LLM-facing documentation showing:
+
 - Role purpose and features
 - Requirements and dependencies
 - All variables with examples
@@ -36,45 +38,59 @@ LLM-facing documentation showing:
 - Troubleshooting
 
 ### defaults/main.yml
+
 Default values for all role variables:
+
 - Organized with section headers (`# ===...===`)
 - Every variable has explanatory comment
 - Conservative defaults (dangerous features disabled)
 - Commented examples for complex data structures
 
 ### tasks/main.yml
+
 Main task orchestrator:
+
 - Includes other task files conditionally
 - All tasks have proper naming (`"ROLE | Description"`)
 - All tasks have tags in bracket format: `tags: [role, role-feature]`
 - Uses `when:` conditions based on feature flags
 
 ### tasks/*.yml
+
 Modular task files:
+
 - One file per feature/operation
 - Declarative state management (not imperative checks)
 - Trust Ansible module idempotency
 
 ### templates/*.j2
+
 Jinja2 template files:
+
 - Use variables from defaults/vars
 - Include "Managed by Ansible" warning
 - Conditional sections based on feature flags
 
 ### vars/main.yml
+
 Optional variable overrides:
+
 - Environment-specific values
 - Values that override defaults
 - Typically empty or commented examples
 
 ### handlers/main.yml
+
 Event handlers triggered by `notify:`:
+
 - Service restarts
 - Configuration reloads
 - Use `listen:` for named handler groups
 
 ### meta/main.yml
+
 Role metadata:
+
 - Author information
 - Supported platforms
 - Minimum Ansible version
@@ -93,6 +109,7 @@ Role metadata:
 ## Standards Applied
 
 This template follows all standards defined in `./RULES.md`:
+
 - ✅ Task naming format: `"ROLE | Description"`
 - ✅ Tag format: `tags: [role, role-feature]` (bracket, kebab-case)
 - ✅ Conservative defaults philosophy

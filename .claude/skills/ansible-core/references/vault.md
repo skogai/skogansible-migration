@@ -6,9 +6,10 @@
 
 ## Using encrypted variables and files — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/vault_guide/vault_using_encrypted_content.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/vault_guide/vault_using_encrypted_content.html>
 
 **Contents:**
+
 - Using encrypted variables and files
 - Passing a single password
 - Passing vault IDs
@@ -111,21 +112,25 @@ padding up to the AES256 blocksize. (The data used for padding is based on RFC56
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible-playbook --ask-vault-pass site.yml
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible-playbook --vault-password-file /path/to/my/vault-password-file site.yml
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ansible-playbook --vault-password-file my-vault-password-client.py
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ansible-playbook --vault-id dev@prompt site.yml
 ```
@@ -134,9 +139,10 @@ ansible-playbook --vault-id dev@prompt site.yml
 
 ## Managing vault passwords — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/vault_guide/vault_managing_passwords.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/vault_guide/vault_managing_passwords.html>
 
 **Contents:**
+
 - Managing vault passwords
 - Choosing between a single password and multiple passwords
 - Managing multiple passwords with vault IDs
@@ -207,6 +213,7 @@ For an example of a client script that loads passwords from the system keyring, 
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 my_encrypted_var: !vault |
           $ANSIBLE_VAULT;1.2;AES256;dev
@@ -218,16 +225,19 @@ my_encrypted_var: !vault |
 ```
 
 Example 2 (unknown):
+
 ```unknown
 --vault-id label@source
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ansible-playbook --extra-vars @secrets.enc --vault-password-file secrets.pass
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ansible-playbook --vault-id dev@contrib-scripts/vault/vault-keyring-client.py
 ```
@@ -236,9 +246,10 @@ ansible-playbook --vault-id dev@contrib-scripts/vault/vault-keyring-client.py
 
 ## Encrypting content with Ansible Vault — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/vault_guide/vault_encrypting_content.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/vault_guide/vault_encrypting_content.html>
 
 **Contents:**
+
 - Encrypting content with Ansible Vault
 - Encrypting individual variables with Ansible Vault
   - Advantages and disadvantages of encrypting variables
@@ -385,16 +396,19 @@ Disable autosave files.
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible-vault encrypt_string <password_source> '<string_to_encrypt>' --name '<string_name_of_variable>'
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible-vault encrypt_string --vault-password-file a_password_file 'foobar' --name 'the_secret'
 ```
 
 Example 3 (unknown):
+
 ```unknown
 the_secret: !vault |
       $ANSIBLE_VAULT;1.1;AES256
@@ -406,6 +420,7 @@ the_secret: !vault |
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ansible-vault encrypt_string --vault-id dev@a_password_file 'foooodev' --name 'the_dev_secret'
 ```
@@ -414,9 +429,10 @@ ansible-vault encrypt_string --vault-id dev@a_password_file 'foooodev' --name 't
 
 ## ansible-vault — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-vault.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-vault.html>
 
 **Contents:**
+
 - ansible-vault
 - Synopsis
 - Description
@@ -533,6 +549,7 @@ ansible(1), ansible-config(1), ansible-console(1), ansible-doc(1), ansible-galax
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 usage: ansible-vault [-h] [--version] [-v]
                   {create,decrypt,edit,view,encrypt,encrypt_string,rekey}

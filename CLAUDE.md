@@ -11,6 +11,7 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 **See @FILESTRUCTURE.md for complete file tree and file-by-file documentation.**
 
 The repository follows standard Ansible structure:
+
 - **Core files:** ansible.cfg, playbook.yml, .inventory, .requirements.yml
 - **Execution scripts:** bootstrap.sh (setup), run.sh (execution)
 - **Roles:** packages/, ssh/, git/, chezmoi/ (each with tasks/, templates/, defaults/, meta/)
@@ -32,11 +33,13 @@ The repository follows standard Ansible structure:
 ## Usage
 
 **Initial setup:**
+
 ```bash
 ./bootstrap.sh                # System setup (locale, keyring) + venv + Ansible + collections
 ```
 
 **Run playbook:**
+
 ```bash
 ./run.sh                      # Run all roles (packages + ssh + git + chezmoi)
 ./run.sh --check             # Dry-run mode
@@ -48,6 +51,7 @@ The repository follows standard Ansible structure:
 ```
 
 **SSH key deployment (requires vault password):**
+
 ```bash
 # Enable in vars/ssh.yml first:
 # ssh_deploy_from_vault: true
@@ -58,6 +62,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 ## Current Scope
 
 **Active Roles:**
+
 - ✅ **packages** - Official Arch repository packages via pacman (61 packages)
 - ✅ **packages** - AUR packages via yay (7 packages)
 - ✅ **ssh** - SSH directory setup, key deployment, config management, known_hosts
@@ -65,6 +70,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ **chezmoi** - Dotfiles management via machine-specific configuration templating
 
 **Features:**
+
 - ✅ AUR builder user setup with secure sudo config
 - ✅ SSH key deployment from encrypted vault
 - ✅ SSH config template with connection multiplexing
@@ -90,6 +96,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 The Packages role manages system packages from official Arch repositories and AUR with secure package building infrastructure.
 
 **Quick Start (Default behavior):**
+
 - Updates pacman package database
 - Upgrades all installed packages
 - Installs packages from `vars/packages.yml`
@@ -98,7 +105,9 @@ The Packages role manages system packages from official Arch repositories and AU
 - Installs AUR packages securely
 
 **To customize package lists:**
+
 1. Edit `vars/packages.yml` to add/remove packages:
+
    ```yaml
    packages:
      - git
@@ -108,9 +117,11 @@ The Packages role manages system packages from official Arch repositories and AU
      - google-chrome
      - yay
    ```
+
 2. Run: `./run.sh --tags packages`
 
 **Available Package Features (all enabled by default):**
+
 - `pacman_update_cache: true` - Update package database
 - `pacman_upgrade_system: true` - Upgrade all packages before installing
 - Package installation from official repos
@@ -119,12 +130,14 @@ The Packages role manages system packages from official Arch repositories and AU
 - AUR package installation via yay
 
 **Security Model:**
+
 - Dedicated `aur_builder` user isolates AUR package building
 - User can only run `/usr/bin/pacman` with sudo (no privilege escalation)
 - Wheel group can become aur_builder without password
 - Build artifacts isolated in `/home/aur_builder`
 
 **Granular tag support:**
+
 ```bash
 ./run.sh --tags packages      # All package tasks
 ./run.sh --tags install       # Only install packages
@@ -134,6 +147,7 @@ The Packages role manages system packages from official Arch repositories and AU
 ```
 
 **Task Execution Order:**
+
 1. **AUR User Setup** - Creates aur_builder user with secure sudo config
 2. **AUR Helper Installation** - Installs yay from AUR source
 3. **Official Packages** - Updates cache, upgrades system, installs packages
@@ -146,6 +160,7 @@ The Packages role manages system packages from official Arch repositories and AU
 The SSH role manages SSH keys, configuration, and related settings. All features are **disabled by default** for safety.
 
 **To deploy SSH keys from vault:**
+
 1. Edit `vars/ssh.yml` and set `ssh_deploy_from_vault: true`
 2. Ensure `vars/ssh_vault.yml` contains your encrypted keys with variables:
    - `ssh_private_key` - Your private key content
@@ -153,6 +168,7 @@ The SSH role manages SSH keys, configuration, and related settings. All features
 3. Run: `ansible-playbook playbook.yml --tags ssh --ask-vault-pass`
 
 **Other SSH features (configure in vars/ssh.yml):**
+
 - `ssh_generate_key: true` - Generate new SSH key pair
 - `ssh_deploy_config: true` - Deploy custom SSH config from template
 - `ssh_manage_known_hosts: true` - Manage known_hosts entries
@@ -166,6 +182,7 @@ The SSH role manages SSH keys, configuration, and related settings. All features
 The Git role provides standardized, reusable functions for all common git operations. All features are **configurable via vars/git.yml**.
 
 **Quick Start (Enabled by default in vars/git.yml):**
+
 - Git installation
 - Global .gitconfig with user name/email
 - Comprehensive git aliases
@@ -173,14 +190,18 @@ The Git role provides standardized, reusable functions for all common git operat
 - Credential caching (2 hours)
 
 **To customize git configuration:**
+
 1. Edit `vars/git.yml` and set your user information:
+
    ```yaml
    git_user_name_override: "Your Name"
    git_user_email_override: "your.email@example.com"
    ```
+
 2. Run: `./run.sh --tags git`
 
 **Available Git Features (configure in vars/git.yml):**
+
 - `git_install: true` - Install git package
 - `git_deploy_config: true` - Deploy complete .gitconfig from template
 - `git_deploy_aliases: true` - Enable git aliases (with sensible defaults)
@@ -195,6 +216,7 @@ The Git role provides standardized, reusable functions for all common git operat
 - `git_run_maintenance: true` - Run git maintenance on repositories
 
 **Granular tag support:**
+
 ```bash
 ./run.sh --tags git-install      # Only install git
 ./run.sh --tags git-config       # Only configure gitconfig
@@ -205,6 +227,7 @@ The Git role provides standardized, reusable functions for all common git operat
 
 **Standardized Task Files:**
 Each git operation has its own reusable task file in `roles/git/tasks/`:
+
 - `install.yml` - Git installation
 - `configure_global.yml` - Global gitconfig settings
 - `configure_aliases.yml` - Git aliases
@@ -224,27 +247,33 @@ Each git operation has its own reusable task file in `roles/git/tasks/`:
 The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine-specific configuration. All features are **enabled by default**.
 
 **Quick Start (Default behavior):**
+
 - Verifies chezmoi is installed
 - Templates `.chezmoidata.yaml` with machine profile
 - Applies dotfiles configuration automatically
 
 **To customize machine profile:**
+
 1. Edit `vars/chezmoi.yml` and set machine-specific values:
+
    ```yaml
    chezmoi_machine_type: laptop        # workstation, laptop, wsl
    chezmoi_wm: sway                    # i3, sway, none
    chezmoi_laptop_mode: true           # Enable laptop features
    chezmoi_headless: false             # WSL environments
    ```
+
 2. Run: `./run.sh --tags chezmoi`
 
 **Available Chezmoi Features (configure in vars/chezmoi.yml):**
+
 - `chezmoi_ensure_installed: true` - Verify chezmoi installation
 - `chezmoi_init_source: true` - Check source directory exists
 - `chezmoi_deploy_config: true` - Template .chezmoidata.yaml
 - `chezmoi_apply_on_change: true` - Auto-apply after config changes
 
 **Machine Profile Variables:**
+
 - `chezmoi_machine_type` - Machine type (workstation, laptop, wsl)
 - `chezmoi_hostname` - Hostname for this machine
 - `chezmoi_wm` - Window manager (i3, sway, none)
@@ -254,12 +283,14 @@ The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine
 - `chezmoi_terminal` - Terminal emulator (kitty, alacritty, etc.)
 
 **SkogAI Integration:**
+
 - `chezmoi_agents` - Enable/disable individual AI agents (claude, letta, amy, goose, dot)
 - `chezmoi_skogai_home` - Path to SkogAI home directory
 - `chezmoi_ai_tools` - Enable AI tools integration
 - `chezmoi_development` - Enable development tools
 
 **Granular tag support:**
+
 ```bash
 ./run.sh --tags chezmoi-install   # Only verify installation
 ./run.sh --tags chezmoi-init      # Only check initialization
@@ -268,6 +299,7 @@ The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine
 ```
 
 **How it works:**
+
 1. Ansible templates `.chezmoidata.yaml` in chezmoi source directory
 2. Chezmoi uses this file to conditionally deploy dotfiles
 3. Profile-based `.chezmoiignore` patterns filter files automatically
@@ -275,23 +307,28 @@ The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine
 
 **Integration with Chezmoi:**
 This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the integration guide:
+
 - **~/.local/share/chezmoi/examples/ANSIBLE-INTEGRATION.md** - Full integration documentation
 
 ## Reference
 
 ### Essential Reading
+
 - @FILESTRUCTURE.md - Complete file structure overview
 - @docs/README.md - Documentation navigation
 - @docs/primitives/ansible-core.md - 7 fundamental Ansible primitives
 
 ### Role Documentation
+
 - roles/packages/README.md - Packages role documentation
 - roles/chezmoi/README.md - Chezmoi role documentation
 - roles/ssh/README.md - SSH role documentation
 - roles/git/README.md - Git role documentation
 
 ### System Expansion
+
 - docs/primitives/system-inventory-by-primitives.md - Complete automation roadmap
 
 ### Historical Context
+
 - docs/repos/CLAUDE.md - Consolidation reference for 7 previous repos

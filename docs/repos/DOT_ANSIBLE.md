@@ -9,9 +9,11 @@ This document catalogs all Ansible task names across the dot_ansible playbooks a
 ## Playbooks
 
 ### skogai-core.yml
+
 Main playbook for SkogAI core system configuration (hosts: all, become: true).
 
 #### Playbook: SkogAI core
+
 **Host**: all | **Become**: true
 
 - Update arch
@@ -46,12 +48,15 @@ Main playbook for SkogAI core system configuration (hosts: all, become: true).
 ---
 
 ### master.yml
+
 Orchestration playbook calling the file_structure role.
 
 #### Playbook: (implicit)
+
 **Host**: localhost
 
 **Roles invoked**:
+
 - file_structure
 
 ---
@@ -64,6 +69,7 @@ Orchestration playbook calling the file_structure role.
 **Host**: localhost
 
 #### Variables
+
 ```yaml
 directories:
   - Desktop
@@ -132,6 +138,7 @@ directories:
 **Host**: localhost
 
 #### Variables
+
 ```yaml
 input:
   path: "{{ lookup('env', 'HOME') }}/test.txt"
@@ -147,6 +154,7 @@ input:
 ## Summary by Category
 
 ### System Configuration Tasks (skogai-core.yml)
+
 - Package management (update, install)
 - System configuration (pacman, makepkg, fstab)
 - Security setup (sudo, faillock)
@@ -154,17 +162,20 @@ input:
 - Service management (plocate, fstrim, trash-empty, reflector, keyring)
 
 ### File & Directory Management Tasks
+
 - Directory creation and verification
 - File movement operations
 - Directory removal
 - File enumeration and scanning
 
 ### Security & Encryption Tasks
+
 - Ansible-vault encryption
 - File encryption verification
 - Vault authentication
 
 ### Monitoring Tasks
+
 - Disk space logging
 
 ---
@@ -172,6 +183,7 @@ input:
 ## Total Task Count: 65 unique task names
 
 **Distribution**:
+
 - skogai-core.yml: 34 tasks
 - file_structure role: 2 tasks
 - setup_file_structure role: 9 tasks

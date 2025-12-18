@@ -11,7 +11,10 @@
 
 - name: Display chezmoi source directory status
   ansible.builtin.debug:
-    msg: "Chezmoi source directory {{ 'exists' if chezmoi_source_stat.stat.exists else 'does not exist' }} at {{ chezmoi_source_dir }}"
+    msg: >-
+      Chezmoi source directory
+      {{ 'exists' if chezmoi_source_stat.stat.exists else 'does not exist' }}
+      at {{ chezmoi_source_dir }}
   tags:
     - chezmoi
     - chezmoi-init

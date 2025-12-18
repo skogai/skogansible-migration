@@ -6,9 +6,10 @@
 
 ## ansible — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible.html>
 
 **Contents:**
+
 - ansible
 - Synopsis
 - Description
@@ -120,6 +121,7 @@ ansible-config(1), ansible-console(1), ansible-doc(1), ansible-galaxy(1), ansibl
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 usage: ansible [-h] [--version] [-v] [-b] [--become-method BECOME_METHOD]
             [--become-user BECOME_USER]
@@ -144,9 +146,10 @@ usage: ansible [-h] [--version] [-v] [-b] [--become-method BECOME_METHOD]
 
 ## Ansible CLI cheatsheet — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/command_guide/cheatsheet.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/command_guide/cheatsheet.html>
 
 **Contents:**
+
 - Ansible CLI cheatsheet
 - ansible-playbook
 - ansible-galaxy
@@ -207,21 +210,25 @@ Show available plugins:
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 ansible-playbook -i /path/to/my_inventory_file -u my_connection_user -k -f 3 -T 30 -t my_tag -M /path/to/my_modules -b -K my_playbook.yml
 ```
 
 Example 2 (unknown):
+
 ```unknown
 ansible-galaxy collection install mynamespace.mycollection
 ```
 
 Example 3 (unknown):
+
 ```unknown
 ansible-galaxy collection install -r requirements.yml
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ansible-galaxy collection list
 ```
@@ -230,9 +237,10 @@ ansible-galaxy collection list
 
 ## Working with command line tools — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/command_guide/command_line_tools.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/command_guide/command_line_tools.html>
 
 **Contents:**
+
 - Working with command line tools
 
 Most users are familiar with ansible and ansible-playbook, but those are not the only utilities Ansible provides. Below is a complete list of Ansible utilities. Each page contains a description of the utility and a listing of supported parameters.
@@ -243,9 +251,10 @@ You should not run most Ansible CLI tools in parallel against the same targets.
 
 ## ansible-console — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-console.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-console.html>
 
 **Contents:**
+
 - ansible-console
 - Synopsis
 - Description
@@ -384,6 +393,7 @@ ansible(1), ansible-config(1), ansible-doc(1), ansible-galaxy(1), ansible-invent
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 usage: ansible-console [-h] [--version] [-v] [-b]
                     [--become-method BECOME_METHOD]
@@ -408,9 +418,10 @@ usage: ansible-console [-h] [--version] [-v] [-b]
 
 ## ansible-config — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-config.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-config.html>
 
 **Contents:**
+
 - ansible-config
 - Synopsis
 - Description
@@ -493,6 +504,7 @@ ansible(1), ansible-console(1), ansible-doc(1), ansible-galaxy(1), ansible-inven
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 usage: ansible-config [-h] [--version] [-v] {list,dump,view,init,validate} ...
 ```
@@ -501,9 +513,10 @@ usage: ansible-config [-h] [--version] [-v] {list,dump,view,init,validate} ...
 
 ## ansible-galaxy — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-galaxy.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-galaxy.html>
 
 **Contents:**
+
 - ansible-galaxy
 - Synopsis
 - Description
@@ -539,7 +552,7 @@ Include pre-release versions. Semantic versioning pre-releases are ignored by de
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -559,7 +572,7 @@ The path in which the skeleton collection will be created. The default is the cu
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -575,7 +588,7 @@ The path in which the collection is built to. The default is the current working
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -591,7 +604,7 @@ Don’t wait for import validation results.
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -607,7 +620,7 @@ Force overwriting an existing collection and its dependencies.
 
 ==SUPPRESS==. This argument may be specified multiple times.
 
-A space separated list of status codes to ignore during signature verification (for example, NO_PUBKEY FAILURE). Descriptions for the choices can be seen at L(https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes).Note: specify these after positional arguments or use – to separate them. This argument may be specified multiple times.
+A space separated list of status codes to ignore during signature verification (for example, NO_PUBKEY FAILURE). Descriptions for the choices can be seen at L(<https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes).Note>: specify these after positional arguments or use – to separate them. This argument may be specified multiple times.
 
 The keyring used during signature verification
 
@@ -623,7 +636,7 @@ An additional signature source to verify the authenticity of the MANIFEST.json b
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Upgrade installed collection artifacts. This will also update dependencies unless –no-deps is provided
 
@@ -647,7 +660,7 @@ Format to display the list of collections in.
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -659,7 +672,7 @@ Compare checksums with the collection(s) found on the server and the installed c
 
 ==SUPPRESS==. This argument may be specified multiple times.
 
-A space separated list of status codes to ignore during signature verification (for example, NO_PUBKEY FAILURE). Descriptions for the choices can be seen at L(https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes).Note: specify these after positional arguments or use – to separate them. This argument may be specified multiple times.
+A space separated list of status codes to ignore during signature verification (for example, NO_PUBKEY FAILURE). Descriptions for the choices can be seen at L(<https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes).Note>: specify these after positional arguments or use – to separate them. This argument may be specified multiple times.
 
 The keyring used during signature verification
 
@@ -671,7 +684,7 @@ An additional signature source to verify the authenticity of the MANIFEST.json b
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -695,7 +708,7 @@ The path to a role skeleton that the new role should be based upon.
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Initialize using an alternate role type. Valid types include: ‘container’, ‘apb’ and ‘network’.
 
@@ -711,7 +724,7 @@ removes the list of roles passed as arguments from the local system.
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -723,7 +736,7 @@ Delete a role from Ansible Galaxy.
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -733,7 +746,7 @@ List installed collections or roles
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -749,7 +762,7 @@ list of OS platforms to filter by
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -767,7 +780,7 @@ Check the status of the most recent import request for given github_user/github_
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -781,7 +794,7 @@ Remove the integration matching the provided ID value. Use –list to see ID val
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -795,7 +808,7 @@ Don’t query the galaxy API when creating roles
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -809,7 +822,7 @@ Force overwriting an existing role and its dependencies.
 
 The time to wait for operations against the galaxy server, defaults to 60s.
 
-The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.
+The Ansible Galaxy API key which can be found at <https://galaxy.ansible.com/me/preferences>.
 
 Ignore SSL certificate validation errors.
 
@@ -848,6 +861,7 @@ ansible(1), ansible-config(1), ansible-console(1), ansible-doc(1), ansible-inven
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 usage: ansible-galaxy [-h] [--version] [-v] TYPE ...
 ```

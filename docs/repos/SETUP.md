@@ -16,7 +16,6 @@ Generated task catalog for `/home/skogix/skogai/ansible/setup`
 
 Core infrastructure and foundational setup roles executed in sequence.
 
-
 ### 00-locale
 
 - `Ensure locale.gen is configured`

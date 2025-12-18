@@ -16,11 +16,13 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 ## Quick Start
 
 **Bootstrap (first time):**
+
 ```bash
 ./bootstrap.sh    # Creates venv, installs Ansible + collections
 ```
 
 **Run playbook:**
+
 ```bash
 ./run.sh                  # Run all roles
 ./run.sh --tags packages  # Only packages
@@ -67,6 +69,7 @@ SkogAI/skogansible/
 ## Configuration
 
 All role-specific configuration is in `vars/` directory:
+
 - **packages.yml** - Customize package lists (official + AUR)
 - **ssh.yml** - Enable/disable SSH features (keys, config, known_hosts)
 - **git.yml** - Configure git settings (user, aliases, hooks, signing)

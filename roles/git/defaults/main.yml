@@ -50,7 +50,10 @@ git_aliases:
   ci: "commit"
   unstage: "reset HEAD --"
   last: "log -1 HEAD"
-  lg: "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+  lg: >-
+    log --graph
+    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    --abbrev-commit
   hist: "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
   amend: "commit --amend --no-edit"
   pushf: "push --force-with-lease"

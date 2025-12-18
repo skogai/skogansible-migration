@@ -6,9 +6,10 @@
 
 ## Installing Ansible — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/installation_guide/intro_installation.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/installation_guide/intro_installation.html>
 
 **Contents:**
+
 - Installing Ansible
 - Control node requirements
 - Managed node requirements
@@ -185,32 +186,37 @@ How to join Ansible chat channels
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
-$ pipx install --include-deps ansible
+pipx install --include-deps ansible
 ```
 
 Example 2 (unknown):
+
 ```unknown
-$ pipx install ansible-core
+pipx install ansible-core
 ```
 
 Example 3 (unknown):
+
 ```unknown
-$ pipx install ansible-core==2.12.3
+pipx install ansible-core==2.12.3
 ```
 
 Example 4 (unknown):
+
 ```unknown
-$ pipx upgrade --include-injected ansible
+pipx upgrade --include-injected ansible
 ```
 
 ---
 
 ## ansible.builtin.setup module – Gathers facts about remote hosts — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/setup_module.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/setup_module.html>
 
 **Contents:**
+
 - ansible.builtin.setup module – Gathers facts about remote hosts
 - Synopsis
 - Parameters
@@ -252,7 +258,7 @@ Platforms: posix, windows
 
 Target OS/families that can be operated against
 
-More ansible facts will be added with successive releases. If facter or ohai are installed, variables from these programs will also be snapshotted into the JSON file for usage in templating. These variables are prefixed with facter_ and ohai_ so it’s easy to tell their source. All variables are bubbled up to the caller. Using the ansible facts and choosing to not install facter and ohai means you can avoid Ruby-dependencies on your remote systems. (See also community.general.facter and community.general.ohai.)
+More ansible facts will be added with successive releases. If facter or ohai are installed, variables from these programs will also be snapshotted into the JSON file for usage in templating. These variables are prefixed with facter_and ohai_ so it’s easy to tell their source. All variables are bubbled up to the caller. Using the ansible facts and choosing to not install facter and ohai means you can avoid Ruby-dependencies on your remote systems. (See also community.general.facter and community.general.ohai.)
 
 The filter option filters only the first level subkey below ansible_facts.
 
@@ -260,11 +266,12 @@ If the target host is Windows, you will not currently have the ability to use fi
 
 This module should be run with elevated privileges on BSD systems to gather facts like ansible_product_version.
 
-For more information about delegated facts, please check https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html#delegating-facts.
+For more information about delegated facts, please check <https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html#delegating-facts>.
 
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 # Display facts from all hosts and store them indexed by `hostname` at `/tmp/facts`.
 # ansible all -m ansible.builtin.setup --tree /tmp/facts
@@ -327,9 +334,10 @@ Example 1 (unknown):
 
 ## Sample Ansible setup — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/tips_tricks/sample_setup.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/tips_tricks/sample_setup.html>
 
 **Contents:**
+
 - Sample Ansible setup
 - Sample directory layout
 - Alternative directory layout
@@ -427,6 +435,7 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
 production                # inventory file for production servers
 staging                   # inventory file for staging environment
@@ -450,6 +459,7 @@ tasks/                    # task files included from playbooks
 ```
 
 Example 2 (unknown):
+
 ```unknown
 roles/
     common/               # this hierarchy represents a "role"
@@ -478,6 +488,7 @@ roles/
 ```
 
 Example 3 (unknown):
+
 ```unknown
 inventories/
    production/
@@ -514,6 +525,7 @@ roles/
 ```
 
 Example 4 (unknown):
+
 ```unknown
 ---
 # file: group_vars/atlanta
@@ -525,9 +537,10 @@ backup: backup-atlanta.example.com
 
 ## Installing Ansible on specific operating systems — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/installation_guide/installation_distros.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/installation_guide/installation_distros.html>
 
 **Contents:**
+
 - Installing Ansible on specific operating systems
 - Requirements for adding new distributions
 - Installing Ansible on Fedora Linux
@@ -627,32 +640,37 @@ Distro-specific installation on Clear Linux
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
-$ sudo dnf install ansible
+sudo dnf install ansible
 ```
 
 Example 2 (unknown):
+
 ```unknown
-$ sudo dnf install ansible-core
+sudo dnf install ansible-core
 ```
 
 Example 3 (unknown):
+
 ```unknown
-$ sudo dnf install ansible-collection-community-general
+sudo dnf install ansible-collection-community-general
 ```
 
 Example 4 (unknown):
+
 ```unknown
-$ sudo zypper install ansible
+sudo zypper install ansible
 ```
 
 ---
 
 ## Configuring Ansible — Ansible Core Documentation
 
-**URL:** https://docs.ansible.com/ansible-core/2.19/installation_guide/intro_configuration.html
+**URL:** <https://docs.ansible.com/ansible-core/2.19/installation_guide/intro_configuration.html>
 
 **Contents:**
+
 - Configuring Ansible
 - Configuration file
   - Getting the latest configuration
@@ -698,13 +716,15 @@ The full list of options available is in ansible-playbook and ansible.
 **Examples:**
 
 Example 1 (unknown):
+
 ```unknown
-$ ansible-config init --disabled > ansible.cfg
+ansible-config init --disabled > ansible.cfg
 ```
 
 Example 2 (unknown):
+
 ```unknown
-$ ansible-config init --disabled -t all > ansible.cfg
+ansible-config init --disabled -t all > ansible.cfg
 ```
 
 ---

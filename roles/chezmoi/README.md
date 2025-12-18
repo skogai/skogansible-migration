@@ -3,6 +3,7 @@
 Chezmoi dotfiles management role with machine-specific configuration templating.
 
 This role provides automated dotfiles management including:
+
 - Chezmoi installation verification
 - Source directory initialization
 - Machine-specific `.chezmoidata.yaml` templating
@@ -171,6 +172,7 @@ The role executes tasks in this order:
 ### 1. Installation Verification (`install.yml`)
 
 Verifies chezmoi is installed:
+
 - Checks for chezmoi binary in PATH
 - Fails with helpful message if not found
 - Recommends installing via packages role
@@ -178,6 +180,7 @@ Verifies chezmoi is installed:
 ### 2. Source Directory Initialization (`init.yml`)
 
 Checks source directory exists:
+
 - Verifies `~/.local/share/chezmoi` directory exists
 - Fails with helpful message if not initialized
 - Provides instructions for `chezmoi init`
@@ -185,6 +188,7 @@ Checks source directory exists:
 ### 3. Configuration Templating (`configure.yml`)
 
 Templates `.chezmoidata.yaml`:
+
 - Generates machine-specific configuration from template
 - Includes machine profile (type, hostname, WM)
 - Includes user information
@@ -195,6 +199,7 @@ Templates `.chezmoidata.yaml`:
 ### 4. Dotfiles Application (`apply.yml`)
 
 Applies dotfiles if configuration changed:
+
 - Runs `chezmoi apply` only when `.chezmoidata.yaml` changes
 - Uses change detection to avoid unnecessary applications
 - Provides verbose output in debug mode
@@ -353,6 +358,7 @@ This role complements your chezmoi dotfiles setup:
 The role supports three machine types:
 
 ### workstation
+
 - Full GUI environment
 - Desktop window manager (i3/sway)
 - All development tools
@@ -360,6 +366,7 @@ The role supports three machine types:
 - No laptop-specific features
 
 ### laptop
+
 - Full GUI environment
 - Laptop window manager (often sway)
 - Battery management tools
@@ -367,6 +374,7 @@ The role supports three machine types:
 - Laptop-specific keybindings
 
 ### wsl
+
 - Headless environment (auto-configured)
 - No GUI applications (auto-disabled)
 - No window manager
@@ -456,7 +464,7 @@ roles/chezmoi/
 
 ## Further Reading
 
-- **Chezmoi Documentation:** https://www.chezmoi.io/
+- **Chezmoi Documentation:** <https://www.chezmoi.io/>
 - **Ansible Integration Guide:** `~/.local/share/chezmoi/examples/ANSIBLE-INTEGRATION.md`
 - **SkogAI Documentation:** `~/skogai/docs/`
 

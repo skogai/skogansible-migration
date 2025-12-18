@@ -16,24 +16,29 @@ This documentation serves as a **consolidation reference** for future work:
 ### Active Development (Now Consolidated Here)
 
 **skogansible** (SkogAI/skogansible)
+
 - Primary ansible repository
 - Contains: SSH, Git, Chezmoi, Packages roles
 
 **dotfile-ansible** (Skogix/dotfile-ansible)
+
 - Dotfile management via ansible
 - Architecture: Primitives-based approach
 
 **setup** (SkogAI/setup)
+
 - System setup and configuration
 - Focus: Initial system provisioning
 
 ### Supporting Infrastructure
 
 **ansible-base** (SkogAI/ansible-base)
+
 - Base ansible configuration and roles
 - Contains: 45 roles (12 core + 34 tools)
 
 **ansible-collection-tools** (den-is/ansible-collection-tools)
+
 - External dependency (den-is)
 - Contains: 41 roles (shell, dev, k8s, crypto)
 - Note: Upstream maintained, reference only
@@ -41,10 +46,12 @@ This documentation serves as a **consolidation reference** for future work:
 ### Archived/Maintenance
 
 **archive-2025-10-05-ansible** (SkogAI/archive-2025-10-05-ansible)
+
 - Archived multi-OS configuration
 - Contains: 30+ roles
 
 **dot_ansible** (Skogix/.ansible)
+
 - Legacy .ansible configuration (11 months old)
 - Contains: Backup, file structure, encryption tasks
 
