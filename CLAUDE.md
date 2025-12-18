@@ -71,7 +71,7 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 │   ├── defaults/main.yml
 │   ├── handlers/main.yml
 │   └── meta/main.yml
-├── @setup.sh                 # Bootstrap script (creates venv, installs ansible)
+├── @bootstrap.sh             # Bootstrap script (creates venv, installs ansible)
 ├── @run.sh                   # Execution script (runs playbook)
 ├── @.envrc                   # direnv environment setup
 └── @docs/                    # Reference documentation
