@@ -25,4 +25,4 @@ uv venv --seed --clear .venv
 # uv tool install ansible --reinstall
 # uv tool install ansible-core --reinstall
 ansible-galaxy collection install -r .requirements.yml --force
-ansible-config dump --type all > ./ENV
+ansible-config dump --type all >./tmp/ENV

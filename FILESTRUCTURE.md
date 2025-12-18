@@ -139,6 +139,7 @@ SkogAI/skogansible/
 - **.inventory** - Defines localhost as the managed host for all playbook runs
 - **.requirements.yml** - Lists required Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
 - **.envrc** - direnv configuration that loads environment variables from skogcli (sudo password file, paths)
+- **./tmp/ENV** - Output from bootstrap.sh which dumps the current environment variables (!`ansible-config dump --type all`)
 
 ### Execution Scripts
 - **bootstrap.sh** - Initial setup script that creates Python venv, installs Ansible and collections
