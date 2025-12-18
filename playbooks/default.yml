@@ -14,12 +14,12 @@
     - ../vars/chezmoi.yml    # Chezmoi configuration
 
   roles:
-    - role: packages
-      tags: [packages, install]
+    # - role: packages
+    #   tags: [packages, install]
 
-    # - role: ssh
-    #   tags: [ssh, config]
-    #
+    - role: ssh
+      tags: [ssh, config]
+
     # - role: git
     #   tags: [git, vcs]
     #

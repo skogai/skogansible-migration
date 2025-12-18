@@ -91,15 +91,6 @@
 # SSH Configuration File
 # ==============================================================================
 
-- name: "SSH | Ensure socket directory exists for ControlPath"
-  when: ssh_deploy_config
-  ansible.builtin.file:
-    path: "{{ ssh_dir }}/sockets"
-    state: directory
-    mode: "0700"
-    owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_facts['user_id'] }}"
-
 - name: "SSH | Deploy SSH config"
   when: ssh_deploy_config
   ansible.builtin.template:

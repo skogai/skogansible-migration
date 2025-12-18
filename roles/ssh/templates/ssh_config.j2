@@ -77,10 +77,10 @@ Host {{ host.name }}
     IdentityFile {{ host.identity_file }}
 {% endif %}
 {% if host.identities_only is defined %}
-    IdentitiesOnly {{ host.identities_only }}
+    IdentitiesOnly {{ host.identities_only | ternary('yes', 'no') }}
 {% endif %}
 {% if host.forward_agent is defined %}
-    ForwardAgent {{ host.forward_agent }}
+    ForwardAgent {{ host.forward_agent | ternary('yes', 'no') }}
 {% endif %}
 {% if host.proxy_jump is defined %}
     ProxyJump {{ host.proxy_jump }}
