@@ -1,10 +1,10 @@
 ---
-# Template Role - Metadata
+# <role> Role - Metadata
 
 galaxy_info:
-  author: Your Name
-  description: Description of the role
-  company: Your Company (optional)
+  author: <author_name>
+  description: <role_description>
+  company: <company_name> (optional)
 
   license: MIT
 
@@ -16,13 +16,13 @@ galaxy_info:
         - all
 
   galaxy_tags:
-    - development
-    - system
-    - configuration
+    - <tag_1>
+    - <tag_2>
+    - <tag_3>
 
 # Role dependencies (if any)
 dependencies: []
   # Example:
-  # - role: common
+  # - role: <dependency_role>
   #   vars:
-  #     common_variable: value
+  #     <variable_name>: <value>

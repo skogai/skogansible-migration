@@ -1,46 +1,46 @@
 ---
 # Template Role - Default Variables
-# Override these in your playbook, inventory, or vars/template.yml
+# Override these in your playbook, inventory, or vars/<role>.yml
 
 # ==============================================================================
 # Installation
 # ==============================================================================
 
-# Install the tool
-template_install: true
+# Install the role
+<role>_install: true
 
 # Package name (varies by distribution)
-template_package_name: "tool"
+<role>_package_name: "<role>"
 
 # ==============================================================================
 # Configuration
 # ==============================================================================
 
 # Deploy configuration file from template
-template_deploy_config: false
+<role>_deploy_config: false
 
 # Configuration file location
-template_config_file: "{{ ansible_facts['env']['HOME'] }}/.toolrc"
+<role>_config_file: "{{ ansible_facts['env']['HOME'] }}/.<role>rc"
 
 # Template to use for config
-template_config_template: "toolrc.j2"
+<role>_config_template: "<role>rc.j2"
 
 # ==============================================================================
 # Feature Flags
 # ==============================================================================
 
-# Enable experimental feature X (CAUTION: may break things)
-template_enable_feature_x: false
+# Enable experimental <feature-x> (CAUTION: may break things)
+<role>_enable_<feature-x>: false
 
-# Enable feature Y (safe, recommended)
-template_enable_feature_y: true
+# Enable <feature-y> (safe, recommended)
+<role>_enable_<feature-y>: true
 
 # ==============================================================================
 # Advanced Options
 # ==============================================================================
 
 # Example of commented data structure
-# template_items:
+# <role>_items:
 #   - name: "item1"
 #     value: "value1"
 #     enabled: true

@@ -5,7 +5,7 @@ This directory contains template files showing the standard structure and patter
 ## Directory Structure
 
 ```
-_template/
+./roles/_template/
 ├── README.md              # Role documentation (user-facing)
 ├── TEMPLATE_INFO.md       # This file (explains template usage)
 ├── defaults/
@@ -27,7 +27,7 @@ _template/
 ## File Purposes
 
 ### README.md
-User-facing documentation showing:
+LLM-facing documentation showing:
 - Role purpose and features
 - Requirements and dependencies
 - All variables with examples
@@ -82,8 +82,8 @@ Role metadata:
 
 ## Using This Template
 
-1. Copy the entire `_template/` directory to `roles/newrole/`
-2. Rename all occurrences of `template` to `newrole`
+1. Copy the entire `_template/` directory to `roles/<role>/`
+2. Rename all occurrences of `<role>` to the new role name
 3. Update README.md with actual role description
 4. Define variables in defaults/main.yml
 5. Implement tasks in tasks/*.yml
@@ -92,7 +92,7 @@ Role metadata:
 
 ## Standards Applied
 
-This template follows all standards defined in `/home/skogix/.ansible/RULES.md`:
+This template follows all standards defined in `./RULES.md`:
 - ✅ Task naming format: `"ROLE | Description"`
 - ✅ Tag format: `tags: [role, role-feature]` (bracket, kebab-case)
 - ✅ Conservative defaults philosophy

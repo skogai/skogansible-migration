@@ -1,10 +1,11 @@
 ---
-# Template Role - Feature X Tasks
+# <role> Role - <feature-x> Tasks
+# [@skogix:also not implemented right now but worth keeping in mind - the whole config-file-idea]
 
-- name: "Template | Enable feature X"
+- name: "<role> | Enable <feature-x>"
   ansible.builtin.lineinfile:
-    path: "{{ template_config_file }}"
-    line: "feature_x_enabled=true"
+    path: "{{ <role>_config_file }}"
+    line: "<feature-x>_enabled=true"
     create: true
     mode: '0644'
-  tags: [template, template-feature-x]
+  tags: [<role>, <role>-<feature-x>]

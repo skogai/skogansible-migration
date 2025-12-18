@@ -1,4 +1,4 @@
-# Ansible Role: Template
+# Ansible Role: <role>
 
 Brief description of what this role does and why it exists.
 
@@ -15,27 +15,28 @@ This role provides:
 
 ## Role Variables
 
-All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/template.yml`.
+All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/<role>.yml`.
 
 ### Installation
 
 ```yaml
-template_install: true              # Install the tool
-template_package_name: "tool"       # Package name
+<role>_install: true              # Install the tool
+<role>_package_name: "<role>"       # <role> name
 ```
 
 ### Configuration
 
 ```yaml
-template_deploy_config: false       # Deploy configuration file
-template_config_file: "{{ ansible_facts['env']['HOME'] }}/.toolrc"
+<role>_deploy_config: false       # Deploy configuration file
+<role>_config_file: "{{ ansible_facts['env']['HOME'] }}/.<role>rc" 
+# [@skogix:i like the idea of a role-rc file being able to override/be used but for now i think we should look in the .ansible folder for them until we get to implementing that feature]
 ```
 
 ### Feature Flags
 
 ```yaml
-template_enable_feature_x: false    # Enable experimental feature X (CAUTION)
-template_enable_feature_y: true     # Enable feature Y (safe)
+<role>_enable_<feature-x>: false    # Enable experimental <feature-x> (CAUTION)
+<role>_enable_<feature-y>: true     # Enable <feature-y> (safe)
 ```
 
 ## Dependencies
@@ -49,9 +50,9 @@ None (or list role dependencies here)
 ```yaml
 - hosts: localhost
   roles:
-    - role: template
+    - role: <role>
       vars:
-        template_install: true
+        <role>_install: true
 ```
 
 ### Advanced Usage
@@ -59,11 +60,11 @@ None (or list role dependencies here)
 ```yaml
 - hosts: localhost
   roles:
-    - role: template
+    - role: <role>
       vars:
-        template_install: true
-        template_deploy_config: true
-        template_enable_feature_y: true
+        <role>_install: true
+        <role>_deploy_config: true
+        <role>_enable_<feature-x>: true
 ```
 
 ### Custom Configuration
@@ -71,10 +72,10 @@ None (or list role dependencies here)
 ```yaml
 - hosts: localhost
   roles:
-    - role: template
+    - role: <role>
       vars:
-        template_package_name: "custom-tool"
-        template_config_file: "/etc/tool.conf"
+        <role>_package_name: "custom-role"
+        <role>_config_file: "/path/to/<role>.conf"
 ```
 
 ## Tags
@@ -83,28 +84,19 @@ Run specific parts of the role:
 
 ```bash
 # Run entire role
-./run.sh --tags template
+./run.sh --tags <role>
 
 # Run only installation
-./run.sh --tags template-install
+./run.sh --tags <role>-install
 
 # Run only configuration
-./run.sh --tags template-config
+./run.sh --tags <role>-config
 ```
 
 Available tags:
-- `template` - Run all tasks
-- `template-install` - Installation tasks
-- `template-config` - Configuration tasks
-
-## Troubleshooting
-
-### Issue: Tool not found after installation
-
-Check that the package name is correct for your distribution:
-```bash
-pacman -Ss tool-name
-```
+- `<role>` - Run all tasks
+- `<role>-install` - Installation tasks
+- `<role>-config` - Configuration tasks
 
 ## License
 

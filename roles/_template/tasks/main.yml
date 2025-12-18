@@ -1,32 +1,32 @@
 ---
-# Template Role - Main Tasks
+# <role> Role - Main Tasks
 
 # ==============================================================================
 # Installation
 # ==============================================================================
 
-- name: "Template | Ensure tool is installed"
+- name: "<role> | Ensure <role> is installed"
   become: true
   ansible.builtin.package:
-    name: "{{ template_package_name }}"
+    name: "{{ <role>_package_name }}"
     state: present
-  when: template_install
-  tags: [template, template-install]
+  when: <role>_install
+  tags: [<role>, <role>-install]
 
 # ==============================================================================
 # Configuration
 # ==============================================================================
 
-- name: "Template | Deploy configuration"
+- name: "<role> | Deploy configuration"
   ansible.builtin.include_tasks: configure.yml
-  when: template_deploy_config
-  tags: [template, template-config]
+  when: <role>_deploy_config
+  tags: [<role>, <role>-config]
 
 # ==============================================================================
 # Features
 # ==============================================================================
 
-- name: "Template | Enable feature X"
-  ansible.builtin.include_tasks: feature-x.yml
-  when: template_enable_feature_x
-  tags: [template, template-feature-x]
+- name: "<role> | Enable <feature-x>"
+  ansible.builtin.include_tasks: <feature-x>.yml
+  when: <role>_enable_<feature-x>
+  tags: [<role>, <role>-<feature-x>]

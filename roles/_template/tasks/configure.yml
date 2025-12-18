@@ -1,17 +1,17 @@
 ---
-# Template Role - Configuration Tasks
+# <role> Role - Configuration Tasks
 
-- name: "Template | Ensure config directory exists"
+- name: "<role> | Ensure config directory exists"
   ansible.builtin.file:
-    path: "{{ template_config_file | dirname }}"
+    path: "{{ <role>_config_file | dirname }}"
     state: directory
     mode: '0755'
-  tags: [template, template-config]
+  tags: [<role>, <role>-config]
 
-- name: "Template | Deploy configuration file"
+- name: "<role> | Deploy configuration file"
   ansible.builtin.template:
-    src: "{{ template_config_template }}"
-    dest: "{{ template_config_file }}"
+    src: "{{ <role>_config_template }}"
+    dest: "{{ <role>_config_file }}"
     mode: '0644'
     backup: true
-  tags: [template, template-config]
+  tags: [<role>, <role>-config]
