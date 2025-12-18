@@ -1,19 +1,24 @@
 ---
 # <role> Role - Variables
-# These override defaults/main.yml for specific use cases
-# Typically used for environment-specific values
+# Your personal standard configuration for this role
+# These values apply to YOUR deployments (not sane defaults for anyone)
 
-# Example: Override package name for specific distribution
-# <role>_package_name: "<alternative_package>"
+# Reference shared variables from ./vars/main.yml
+<role>_user_name: "{{ <user_name> }}"
+<role>_user_email: "{{ <user_email> }}"
 
-# Example: Custom configuration path
-# <role>_config_file: "/etc/<role>/config.conf"
+# Your standard feature flag preferences
+<role>_enable_<feature_x>: true    # You typically want this enabled
+<role>_enable_<feature_y>: false   # You typically want this disabled
 
-# Example: Complex data structures
+# Your standard paths/configuration
+<role>_config_file: "{{ ansible_user_dir }}/.config/<role>/<role>rc"
+
+# Complex data structures for your standard setup
 # <role>_items:
-#   - name: "<environment_1>"
+#   - name: "<your_standard_item_1>"
 #     enabled: true
 #     value: 100
-#   - name: "<environment_2>"
+#   - name: "<your_standard_item_2>"
 #     enabled: false
 #     value: 50
