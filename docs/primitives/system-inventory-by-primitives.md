@@ -1,8 +1,47 @@
 # Complete System Inventory - Organized by Ansible Primitives
 
 ## Overview
-This document categorizes ALL system configuration into the 7 Ansible primitives.
-Goal: Complete disaster recovery - rebuild entire system from scratch.
+
+This document categorizes ALL system configuration into the 7 Ansible primitives documented in `ansible-core.md` (this directory).
+
+**Goal:** Complete disaster recovery - rebuild entire system from scratch using Ansible automation.
+
+## Current Implementation Status
+
+### ✅ Implemented Roles
+
+**packages** - Package management (roles/packages/)
+- 51 official Arch packages via pacman
+- 5 AUR packages via yay
+- AUR builder user infrastructure
+- Automatic yay installation
+
+**ssh** - SSH configuration management (roles/ssh/)
+- SSH key deployment from vault
+- SSH config templating
+- Known hosts management
+- Authorized keys management
+- Directory backup functionality
+
+**git** - Git configuration (roles/git/)
+- Global gitconfig with user settings
+- Git aliases
+- Credential helper (cache/store)
+- Global gitignore patterns
+- Repository cloning
+- Git hooks deployment
+- GPG/SSH commit signing
+- Git LFS support
+
+**chezmoi** - Dotfiles management (roles/chezmoi/)
+- Machine profile templating (.chezmoidata.yaml)
+- Automatic dotfiles application
+- Profile-based filtering (workstation/laptop/WSL)
+- SkogAI integration variables
+
+### 📋 Expansion Roadmap
+
+The sections below document system configurations **not yet automated**. Use the 7 primitives to expand automation coverage.
 
 ---
 
@@ -10,14 +49,16 @@ Goal: Complete disaster recovery - rebuild entire system from scratch.
 *Make resources exist with specific properties*
 
 ### 1.1 Packages (pacman)
-**Data source:** `packages_explicit.txt` (477 packages)
+**Current:** 51 packages in `vars/packages.yml` (✅ implemented in packages role)
+**Expansion available:** `packages_explicit.txt` contains 477 total system packages
 **Operation:** `community.general.pacman: name={{ item }} state=present`
-**Notes:** Already in vars/main.yml (93 packages) - need to merge/expand
+**Next step:** Merge additional packages into vars/packages.yml as needed
 
 ### 1.2 AUR Packages
-**Data source:** `packages_aur.txt` (67 packages)
+**Current:** 5 packages in `vars/packages.yml` (✅ implemented in packages role)
+**Expansion available:** `packages_aur.txt` contains 67 total AUR packages
 **Operation:** `kewlfft.aur.aur: name={{ item }} use=yay state=present`
-**Notes:** Already in vars/main.yml (18 packages) - need to merge/expand
+**Next step:** Merge additional AUR packages into vars/packages.yml as needed
 
 ### 1.3 Users
 **Data source:** `user_credentials.json`
@@ -114,7 +155,8 @@ OR selective `lineinfile` for specific options
 **Source:** `extra-settings/sshd_config`
 **Content:** Hardened SSH config (modern crypto, no root login, only skogix user)
 **Operation:** `copy: src=sshd_config dest=/etc/ssh/sshd_config mode=0600`
-**Note:** File says "Ansible managed" - already templated?
+**Note:** Server-side SSH config (not yet automated)
+**Related:** ✅ Client-side SSH already handled by ssh role (roles/ssh/)
 
 ### 2.2 Xorg Configurations
 
@@ -215,12 +257,15 @@ OR selective `lineinfile` for specific options
 ## 4. SYNC_REPO (Git Repository Management)
 *Clone/update git repositories*
 
-### 4.1 Identified Needs
+**Current:** ✅ Git role (roles/git/) provides repository cloning infrastructure
+**Implementation:** Configure repositories in `vars/git.yml` with `git_repositories` list
+
+### 4.1 Additional Repository Needs
 - Custom scripts in /usr/local/bin (if tracked in git)
-- Dotfiles repository (if used - not explicit in data but common pattern)
-- Any custom tool repositories
+- Any custom tool repositories beyond those in vars/git.yml
 
 **Pattern:** `git: repo=X dest=Y update=true`
+**Implemented in:** roles/git/tasks/clone_repositories.yml
 
 ### 4.2 ZSH Related (from user's message)
 ```bash
@@ -496,15 +541,14 @@ lightdm_configs:
 ## GAPS / MISSING DATA
 
 ### 1. Dotfiles (User-level configs)
-Not in system backup - mentioned as "already backed up" in SYSTEM_CONFIGS_TO_RESTORE.md
-- ~/.zshrc (ZSH config - user showed snippet with zplug)
-- ~/.gitconfig
-- ~/.config/i3/ (i3wm config)
-- ~/.config/kitty/
-- ~/.config/nvim/
-- All other dotfiles
+**Status:** ✅ Handled by chezmoi role (roles/chezmoi/)
+**Implementation:**
+- Chezmoi manages dotfiles from `~/.local/share/chezmoi`
+- Ansible templates `.chezmoidata.yaml` with machine-specific configuration
+- Profile-based filtering (workstation/laptop/WSL) automatically applied
+- Examples: ~/.zshrc, ~/.config/i3/, ~/.config/kitty/, ~/.config/nvim/
 
-**Strategy:** Separate dotfile management? Or include in Ansible?
+**Note:** Git configuration also managed by git role (roles/git/) for global settings
 
 ### 2. Custom Scripts
 **Mentioned in SYSTEM_CONFIGS_TO_RESTORE.md:**
@@ -541,7 +585,13 @@ Not mentioned in current data
 
 1. ✅ Gather all config data (DONE)
 2. ✅ Categorize by primitives (DONE - this document)
-3. → Structure vars/main.yml with all data
-4. → Create task files (or single task file) using the 7 primitives
-5. → Test in isolated environment (git worktree)
-6. → Iterate until complete
+3. ✅ Implement core roles (packages, ssh, git, chezmoi - DONE)
+4. → Expand package coverage (51→477 official, 5→67 AUR)
+5. → Automate system configs (fstab, systemd services, X11, etc.)
+6. → Create additional roles as needed for logical grouping
+7. → Test in isolated environment (git worktree)
+8. → Iterate until complete system automation achieved
+
+## Reference
+
+**Primitive patterns:** See `ansible-core.md` (this directory) for working examples of all 7 primitives used throughout this codebase.

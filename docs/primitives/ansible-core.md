@@ -1,5 +1,15 @@
 # Ansible Core Primitives - Every Basic Pattern
 
+This document demonstrates all fundamental Ansible operations using real examples from this codebase. Every complex automation task breaks down into these 7 primitives.
+
+## Purpose
+
+**For learning:** Understand Ansible's building blocks through working examples
+**For reference:** Quick lookup of syntax patterns when writing new tasks
+**For expansion:** Use these patterns to automate any system configuration
+
+---
+
 ## 1. TASK COMPOSITION
 # Include other task files (modularity/ordering)
 - name: Setup AUR builder user
