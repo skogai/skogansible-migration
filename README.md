@@ -1,157 +1,98 @@
 # Ansible Arch Linux Setup
 
-Automated Arch Linux package management using Ansible.
+**Repository:** SkogAI/skogansible (active/canonical ansible repository)
+
+Automated Arch Linux system configuration using Ansible with comprehensive role-based management.
 
 ## Features
 
-- Package installation from official repos
-- AUR package support via yay
-- Dedicated AUR builder user for security
-- Environment management via direnv
+- **Package Management** - Official repos (61 packages) + AUR packages (7 packages) via yay
+- **SSH Configuration** - Key deployment, config templating, known_hosts management
+- **Git Configuration** - Complete git setup with aliases, hooks, signing, LFS support
+- **Chezmoi Integration** - Machine-specific dotfiles templating and deployment
+- **Security** - Dedicated AUR builder user, vault-encrypted secrets
+- **Documentation** - Primitives-based reference architecture and system inventory
+
+## Quick Start
+
+**Bootstrap (first time):**
+```bash
+./bootstrap.sh    # Creates venv, installs Ansible + collections
+```
+
+**Run playbook:**
+```bash
+./run.sh                  # Run all roles
+./run.sh --tags packages  # Only packages
+./run.sh --tags ssh       # Only SSH setup
+./run.sh --tags git       # Only Git config
+./run.sh --tags chezmoi   # Only Chezmoi
+./run.sh --check          # Dry-run mode
+```
+
+## Project Structure
+
+```
+SkogAI/skogansible/
+├── playbook.yml              # Main playbook (4 roles)
+├── bootstrap.sh              # Initial setup script
+├── run.sh                    # Playbook execution wrapper
+├── roles/
+│   ├── packages/             # Package management (pacman + AUR)
+│   ├── ssh/                  # SSH configuration
+│   ├── git/                  # Git configuration
+│   └── chezmoi/              # Dotfiles management
+├── vars/                     # Role-specific configuration
+│   ├── packages.yml          # Package lists
+│   ├── ssh.yml               # SSH settings
+│   ├── git.yml               # Git settings
+│   ├── chezmoi.yml           # Chezmoi settings
+│   └── user.yml              # User variables
+└── docs/                     # Reference documentation
+    ├── README.md             # Documentation index
+    ├── primitives/           # Core Ansible patterns
+    │   ├── ansible-core.md
+    │   └── system-inventory-by-primitives.md
+    └── repos/                # Historical repository documentation
+        └── CLAUDE.md         # Consolidation reference
+```
 
 ## Prerequisites
 
 - Arch Linux system
 - `uv` (Python package manager)
-- `skogcli` for environment variable management
-- `direnv` (optional, for automatic environment loading)
-
-## Setup
-
-1. Run the setup script to create the virtual environment and install dependencies:
-
-```bash
-./setup.sh
-```
-
-This will:
-- Create a Python virtual environment using `uv`
-- Install Ansible and required collections
-- Activate the virtual environment
+- `skogcli` (environment variable management via `.envrc`)
+- `direnv` (optional, for automatic environment activation)
 
 ## Configuration
 
-### Environment Variables
+All role-specific configuration is in `vars/` directory:
+- **packages.yml** - Customize package lists (official + AUR)
+- **ssh.yml** - Enable/disable SSH features (keys, config, known_hosts)
+- **git.yml** - Configure git settings (user, aliases, hooks, signing)
+- **chezmoi.yml** - Machine profile settings (type, WM, laptop mode)
 
-The `.envrc` file loads environment variables via `skogcli`:
-- `$ANSIBLE_BECOME_PASSWORD_FILE` for sudo operations
-- Other ansible/uv/skogai namespace variables
+Each role has comprehensive documentation in its `README.md` file.
 
-### Ansible Configuration
+## Documentation
 
-- `ansible.cfg` - Ansible configuration (inventory, Python interpreter)
-- `.inventory` - Defines localhost target
-- `.requirements.yml` - Ansible collections (community.general, kewlfft.aur)
+- **CLAUDE.md** - Complete project documentation (detailed usage, configuration, all features)
+- **roles/*/README.md** - Role-specific documentation with examples
+- **docs/README.md** - Documentation index and navigation
+- **docs/primitives/** - Core Ansible patterns and system inventory
+- **docs/repos/** - Historical ansible repository documentation (7 repos, 1,275+ tasks)
 
-### Package Lists
+## Historical Context
 
-Edit `vars/main.yml` to customize:
-- `packages` - Official repository packages
-- `aur_packages` - AUR packages
+This is the main active ansible repository for SkogAI. Historical documentation from 7 previous ansible repository iterations (ansible-base, dotfile-ansible, setup, etc.) is preserved in `docs/repos/` for consolidation and pattern reference.
 
-## Usage
+## Repository Identity
 
-Run the playbook using the wrapper script:
+- **Active Repository:** SkogAI/skogansible
+- **Purpose:** Main ansible automation for Arch Linux system configuration
+- **Approach:** Primitives-based role architecture with comprehensive documentation
+- **Status:** 4 roles implemented (packages, ssh, git, chezmoi), system expansion roadmap documented
 
-```bash
-./run.sh
-```
+---
 
-Or with specific tags:
-
-```bash
-./run.sh --tags packages
-./run.sh --tags aur
-./run.sh --tags aur_user,yay
-```
-
-Or run ansible-playbook directly:
-
-```bash
-source .venv/bin/activate
-ansible-playbook playbook.yml
-```
-
-## How It Works
-
-### Package Role
-
-The `packages` role follows this sequence:
-
-1. **AUR User Setup** (`aur_user.yml`)
-   - Creates `aur_builder` user
-   - Configures passwordless sudo for pacman
-   - Allows wheel group to become aur_builder
-
-2. **AUR Helper Installation** (`aur_helper.yml`)
-   - Installs base-devel and git
-   - Clones and builds yay from AUR
-   - Cleans up build directory
-
-3. **Official Package Installation** (`main.yml`)
-   - Updates pacman database
-   - Upgrades all packages
-   - Installs packages from `packages` list
-
-4. **AUR Package Installation** (`aur_packages.yml`)
-   - Installs packages from `aur_packages` list using yay
-   - Runs as `aur_builder` user
-
-## Tags
-
-- `packages` - All package-related tasks
-- `install` - Package installation tasks
-- `aur` - All AUR-related tasks
-- `aur_user` - AUR builder user setup
-- `yay` - yay installation
-
-## Security Notes
-
-- AUR packages are built and installed by a dedicated `aur_builder` user
-- The aur_builder user can only run pacman with sudo (no password)
-- Wheel group users can become aur_builder without password
-
-## Directory Structure
-
-```
-.ansible/
-├── ansible.cfg          # Ansible configuration
-├── .envrc               # direnv environment setup
-├── .inventory           # Inventory file (localhost)
-├── .requirements.yml    # Ansible Galaxy requirements
-├── playbook.yml         # Main playbook
-├── run.sh               # Wrapper script to run playbook
-├── setup.sh             # Initial setup script
-├── vars/
-│   └── main.yml         # Package lists and variables
-└── roles/
-    └── packages/
-        ├── defaults/
-        ├── handlers/
-        ├── meta/
-        └── tasks/
-            ├── main.yml          # Main package tasks
-            ├── aur_user.yml      # AUR user setup
-            ├── aur_helper.yml    # yay installation
-            └── aur_packages.yml  # AUR package installation
-```
-
-## Troubleshooting
-
-### Virtual environment not found
-
-Run `./setup.sh` to create the virtual environment.
-
-### Permission denied errors
-
-Ensure `$ANSIBLE_BECOME_PASSWORD_FILE` is set correctly via skogcli.
-
-### AUR package installation fails
-
-1. Check that `aur_builder` user exists
-2. Verify yay is installed: `which yay`
-3. Check sudo configuration in `/etc/sudoers.d/`
-
-### Collections not found
-
-Run: `ansible-galaxy collection install -r .requirements.yml --force`
+For comprehensive documentation, configuration details, and usage examples, see **CLAUDE.md**.

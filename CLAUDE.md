@@ -1,6 +1,10 @@
 # Ansible Arch Linux Setup
 
+**Repository:** SkogAI/skogansible (active/canonical ansible repository)
+
 Ansible setup for managing Arch Linux system packages, AUR packages, SSH configuration, Git configuration, and Chezmoi dotfiles management.
+
+**Historical Context:** This is the main active ansible repository. Historical documentation from 7 previous ansible repository iterations is preserved in `docs/repos/` for consolidation and pattern reference.
 
 ## Project Structure
 
@@ -286,5 +290,7 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 
 - **roles/ssh/README.md** - Complete SSH role documentation with examples
 - **roles/git/README.md** - Complete Git role documentation with examples
-- **docs/ansible-core.md** - Ansible reference documentation
-- **docs/system-inventory-by-primitives.md** - Complete system automation roadmap (future expansion)
+- **docs/README.md** - Documentation index and navigation
+- **docs/primitives/ansible-core.md** - Ansible core primitives reference
+- **docs/primitives/system-inventory-by-primitives.md** - Complete system automation roadmap (future expansion)
+- **docs/repos/CLAUDE.md** - Historical documentation from 7 previous ansible repositories (consolidation reference)
