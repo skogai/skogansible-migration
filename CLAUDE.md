@@ -8,6 +8,8 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 
 ## Project Structure
 
+**See FILESTRUCTURE.md for complete file-by-file documentation with descriptions.**
+
 ```
 .
 ├── @ansible.cfg              # Ansible configuration
@@ -288,9 +290,17 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 
 ## Reference
 
-- **roles/ssh/README.md** - Complete SSH role documentation with examples
-- **roles/git/README.md** - Complete Git role documentation with examples
-- **docs/README.md** - Documentation index and navigation
-- **docs/primitives/ansible-core.md** - Ansible core primitives reference
-- **docs/primitives/system-inventory-by-primitives.md** - Complete system automation roadmap (future expansion)
-- **docs/repos/CLAUDE.md** - Historical documentation from 7 previous ansible repositories (consolidation reference)
+### Essential Reading
+- @FILESTRUCTURE.md - Complete file structure overview
+- @docs/README.md - Documentation navigation
+- @docs/primitives/ansible-core.md - 7 fundamental Ansible primitives
+
+### Role Documentation
+- roles/ssh/README.md - SSH role documentation
+- roles/git/README.md - Git role documentation
+
+### System Expansion
+- docs/primitives/system-inventory-by-primitives.md - Complete automation roadmap
+
+### Historical Context
+- docs/repos/CLAUDE.md - Consolidation reference for 7 previous repos
