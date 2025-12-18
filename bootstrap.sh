@@ -20,8 +20,9 @@ set -e
 # sudo pacman -S --noconfirm git github-cli uv
 #
 
-sudo pacman -S python-uv uv ansible ansible-core
+sudo pacman -S python-uv uv ansible ansible-core --noconfirm
 uv venv --seed --clear .venv
-uv tool install ansible --reinstall
-uv tool install ansible-core --reinstall
+# uv tool install ansible --reinstall
+# uv tool install ansible-core --reinstall
 ansible-galaxy collection install -r .requirements.yml --force
+ansible-config dump --type all > ./ENV
