@@ -8,82 +8,15 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 
 ## Project Structure
 
-**See FILESTRUCTURE.md for complete file-by-file documentation with descriptions.**
+**See @FILESTRUCTURE.md for complete file tree and file-by-file documentation.**
 
-```
-.
-├── @ansible.cfg              # Ansible configuration
-├── @.inventory               # Localhost target
-├── @playbook.yml             # Main playbook (4 roles)
-├── @.requirements.yml        # Ansible Galaxy collections (3 collections)
-├── @vars/                    # Configuration variables (organized by role)
-│   ├── main.yml              # Shared variables
-│   ├── packages.yml          # Package lists (61 official + 7 AUR)
-│   ├── ssh.yml               # SSH role configuration
-│   ├── ssh_vault.yml         # Encrypted SSH keys
-│   ├── git.yml               # Git configuration
-│   ├── chezmoi.yml           # Chezmoi configuration
-│   └── user.yml              # User-specific variables
-├── @roles/packages/          # Package management role
-│   ├── tasks/
-│   │   ├── main.yml          # Orchestrates all package tasks
-│   │   ├── aur_user.yml      # Creates aur_builder user
-│   │   ├── aur_helper.yml    # Installs yay AUR helper
-│   │   └── aur_packages.yml  # Installs AUR packages
-│   ├── defaults/main.yml
-│   ├── handlers/main.yml
-│   └── meta/main.yml
-├── @roles/ssh/               # SSH management role
-│   ├── tasks/main.yml        # SSH key, config, known_hosts management
-│   ├── templates/
-│   │   └── ssh_config.j2     # SSH config template
-│   ├── defaults/main.yml
-│   ├── handlers/main.yml
-│   ├── meta/main.yml
-│   └── README.md             # Full SSH role documentation
-├── @roles/git/               # Git configuration role
-│   ├── tasks/                # Standardized, reusable git operations
-│   │   ├── main.yml          # Orchestrates all git tasks
-│   │   ├── install.yml       # Git installation
-│   │   ├── configure_global.yml # Global gitconfig
-│   │   ├── configure_aliases.yml # Git aliases
-│   │   ├── configure_credentials.yml # Credential helper
-│   │   ├── install_lfs.yml   # Git LFS
-│   │   ├── clone_repositories.yml # Repository cloning
-│   │   ├── deploy_gitignore.yml # Global gitignore
-│   │   ├── deploy_hooks.yml  # Git hooks
-│   │   ├── configure_signing.yml # GPG/SSH signing
-│   │   ├── configure_repo_specific.yml # Repo configs
-│   │   └── maintenance.yml   # Git maintenance
-│   ├── templates/
-│   │   ├── gitconfig.j2      # .gitconfig template
-│   │   ├── gitignore_global.j2 # Global gitignore
-│   │   └── hooks/            # Git hook templates
-│   │       ├── pre-commit.j2
-│   │       └── commit-msg.j2
-│   ├── defaults/main.yml
-│   ├── handlers/main.yml
-│   ├── meta/main.yml
-│   └── README.md             # Full Git role documentation
-├── @roles/chezmoi/           # Chezmoi dotfiles management role
-│   ├── tasks/
-│   │   ├── main.yml          # Orchestrates all chezmoi tasks
-│   │   ├── install.yml       # Chezmoi installation
-│   │   ├── init.yml          # Initialize source directory
-│   │   ├── configure.yml     # Template .chezmoidata.yaml
-│   │   └── apply.yml         # Apply dotfiles configuration
-│   ├── templates/
-│   │   └── chezmoidata.yaml.j2  # Machine-specific configuration
-│   ├── defaults/main.yml
-│   ├── handlers/main.yml
-│   └── meta/main.yml
-├── @bootstrap.sh             # Bootstrap script (creates venv, installs ansible)
-├── @run.sh                   # Execution script (runs playbook)
-├── @.envrc                   # direnv environment setup
-└── @docs/                    # Reference documentation
-    ├── ansible-core.md
-    └── system-inventory-by-primitives.md  # Full system expansion plan
-```
+The repository follows standard Ansible structure:
+- **Core files:** ansible.cfg, playbook.yml, .inventory, .requirements.yml
+- **Execution scripts:** bootstrap.sh (setup), run.sh (execution)
+- **Roles:** packages/, ssh/, git/, chezmoi/ (each with tasks/, templates/, defaults/, meta/)
+- **Variables:** vars/ directory with role-specific configuration files
+- **Documentation:** docs/ with primitives reference and historical repos
+- **Collections:** Installed Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
 
 ## Key Details
 
@@ -151,6 +84,62 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ Dotfiles application with change detection
 - ✅ Support for multiple machine types (workstation, laptop, WSL)
 - ⏸️  Additional system configuration (see `docs/system-inventory-by-primitives.md`)
+
+## Packages Role Configuration
+
+The Packages role manages system packages from official Arch repositories and AUR with secure package building infrastructure.
+
+**Quick Start (Default behavior):**
+- Updates pacman package database
+- Upgrades all installed packages
+- Installs packages from `vars/packages.yml`
+- Creates dedicated aur_builder user for security
+- Installs yay AUR helper from source
+- Installs AUR packages securely
+
+**To customize package lists:**
+1. Edit `vars/packages.yml` to add/remove packages:
+   ```yaml
+   packages:
+     - git
+     - vim
+     - htop
+   aur_packages:
+     - google-chrome
+     - yay
+   ```
+2. Run: `./run.sh --tags packages`
+
+**Available Package Features (all enabled by default):**
+- `pacman_update_cache: true` - Update package database
+- `pacman_upgrade_system: true` - Upgrade all packages before installing
+- Package installation from official repos
+- AUR builder user creation and configuration
+- Automatic yay installation from source
+- AUR package installation via yay
+
+**Security Model:**
+- Dedicated `aur_builder` user isolates AUR package building
+- User can only run `/usr/bin/pacman` with sudo (no privilege escalation)
+- Wheel group can become aur_builder without password
+- Build artifacts isolated in `/home/aur_builder`
+
+**Granular tag support:**
+```bash
+./run.sh --tags packages      # All package tasks
+./run.sh --tags install       # Only install packages
+./run.sh --tags aur           # AUR tasks (user + helper + packages)
+./run.sh --tags aur_user      # Only setup aur_builder user
+./run.sh --tags yay           # Only install yay helper
+```
+
+**Task Execution Order:**
+1. **AUR User Setup** - Creates aur_builder user with secure sudo config
+2. **AUR Helper Installation** - Installs yay from AUR source
+3. **Official Packages** - Updates cache, upgrades system, installs packages
+4. **AUR Packages** - Installs AUR packages as aur_builder user
+
+**See:** `roles/packages/README.md` for complete documentation and troubleshooting.
 
 ## SSH Role Configuration
 
@@ -296,6 +285,8 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 - @docs/primitives/ansible-core.md - 7 fundamental Ansible primitives
 
 ### Role Documentation
+- roles/packages/README.md - Packages role documentation
+- roles/chezmoi/README.md - Chezmoi role documentation
 - roles/ssh/README.md - SSH role documentation
 - roles/git/README.md - Git role documentation
 
