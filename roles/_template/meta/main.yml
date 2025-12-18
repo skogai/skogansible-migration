@@ -1,0 +1,28 @@
+---
+# Template Role - Metadata
+
+galaxy_info:
+  author: Your Name
+  description: Description of the role
+  company: Your Company (optional)
+
+  license: MIT
+
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: ArchLinux
+      versions:
+        - all
+
+  galaxy_tags:
+    - development
+    - system
+    - configuration
+
+# Role dependencies (if any)
+dependencies: []
+  # Example:
+  # - role: common
+  #   vars:
+  #     common_variable: value

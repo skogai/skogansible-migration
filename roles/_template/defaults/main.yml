@@ -1,0 +1,49 @@
+---
+# Template Role - Default Variables
+# Override these in your playbook, inventory, or vars/template.yml
+
+# ==============================================================================
+# Installation
+# ==============================================================================
+
+# Install the tool
+template_install: true
+
+# Package name (varies by distribution)
+template_package_name: "tool"
+
+# ==============================================================================
+# Configuration
+# ==============================================================================
+
+# Deploy configuration file from template
+template_deploy_config: false
+
+# Configuration file location
+template_config_file: "{{ ansible_facts['env']['HOME'] }}/.toolrc"
+
+# Template to use for config
+template_config_template: "toolrc.j2"
+
+# ==============================================================================
+# Feature Flags
+# ==============================================================================
+
+# Enable experimental feature X (CAUTION: may break things)
+template_enable_feature_x: false
+
+# Enable feature Y (safe, recommended)
+template_enable_feature_y: true
+
+# ==============================================================================
+# Advanced Options
+# ==============================================================================
+
+# Example of commented data structure
+# template_items:
+#   - name: "item1"
+#     value: "value1"
+#     enabled: true
+#   - name: "item2"
+#     value: "value2"
+#     enabled: false

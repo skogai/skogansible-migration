@@ -1,0 +1,15 @@
+# Tool Configuration File
+# Managed by Ansible - DO NOT EDIT MANUALLY
+
+# Basic settings
+tool_name = example
+tool_enabled = {{ template_enable_feature_y | lower }}
+
+# Advanced settings
+{% if template_enable_feature_x %}
+feature_x = enabled
+{% endif %}
+
+# User-specific settings
+user = {{ ansible_user }}
+home = {{ ansible_facts['env']['HOME'] }}

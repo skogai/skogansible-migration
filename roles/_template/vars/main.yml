@@ -1,0 +1,19 @@
+---
+# Template Role - Variables
+# These override defaults/main.yml for specific use cases
+# Typically used for environment-specific values
+
+# Example: Override package name for specific distribution
+# template_package_name: "alternative-tool"
+
+# Example: Custom configuration path
+# template_config_file: "/etc/tool/config.conf"
+
+# Example: Complex data structures
+# template_items:
+#   - name: "production"
+#     enabled: true
+#     value: 100
+#   - name: "staging"
+#     enabled: false
+#     value: 50

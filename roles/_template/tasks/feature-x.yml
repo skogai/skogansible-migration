@@ -1,0 +1,10 @@
+---
+# Template Role - Feature X Tasks
+
+- name: "Template | Enable feature X"
+  ansible.builtin.lineinfile:
+    path: "{{ template_config_file }}"
+    line: "feature_x_enabled=true"
+    create: true
+    mode: '0644'
+  tags: [template, template-feature-x]

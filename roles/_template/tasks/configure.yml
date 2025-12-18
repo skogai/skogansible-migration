@@ -1,0 +1,17 @@
+---
+# Template Role - Configuration Tasks
+
+- name: "Template | Ensure config directory exists"
+  ansible.builtin.file:
+    path: "{{ template_config_file | dirname }}"
+    state: directory
+    mode: '0755'
+  tags: [template, template-config]
+
+- name: "Template | Deploy configuration file"
+  ansible.builtin.template:
+    src: "{{ template_config_template }}"
+    dest: "{{ template_config_file }}"
+    mode: '0644'
+    backup: true
+  tags: [template, template-config]
