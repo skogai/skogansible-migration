@@ -150,6 +150,26 @@ Ansible variable hierarchy (lowest to highest precedence):
   # Never do: become: true at play/playbook level
   ```
 
+## Playbook Organization
+
+Use `playbooks/` directory for different deployment scenarios:
+
+- **site.yml** - Main playbook (all roles, complete setup)
+- **workstation.yml** - Full desktop/development environment
+- **bootstrap.yml** - Minimal initial setup (fresh install)
+- **maintenance.yml** - Updates and cleanup only
+
+Usage:
+```bash
+./run.sh default.yml              # The default playbook
+./run.sh site.yml              # Full setup
+./run.sh bootstrap.yml         # Minimal bootstrap
+./run.sh site.yml --check      # Dry-run
+./run.sh site.yml --tags git   # Specific role
+```
+
+Backwards compatibility: `./run.sh` (no args) uses `default.yml`
+
 ## README Structure
 - See `roles/_template/README.md` for complete example
 - Must include: purpose, requirements, variables, usage examples, tags
