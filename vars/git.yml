@@ -181,16 +181,10 @@ git_core_autocrlf: "input"
 git_core_filemode: true
 git_core_ignorecase: false
 
-# Color
-git_color_ui: "auto"
-
 # Push settings
-git_push_default: "simple"
 git_push_followTags: true
-git_push_autoSetupRemote: true
 
 # Pull settings
-git_pull_rebase: true    # Rebase when pulling (your preferred workflow)
 git_pull_ff: "false"     # Don't fast-forward pulls (rebase instead)
 
 # Merge settings
