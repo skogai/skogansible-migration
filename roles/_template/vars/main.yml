@@ -4,8 +4,9 @@
 # These values apply to YOUR deployments (not sane defaults for anyone)
 
 # Reference shared variables from ./vars/main.yml
-<role>_user_name: "{{ <user_name> }}"
-<role>_user_email: "{{ <user_email> }}"
+<role>_user_name: "{{ user_name }}" # Where user_name is set in the global ./vars/main.yml
+<role>_user_email: "{{ user_email }}" # Where user_email is set in the global ./vars/main.yml
+
 
 # Your standard feature flag preferences
 <role>_enable_<feature_x>: true    # You typically want this enabled
