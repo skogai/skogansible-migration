@@ -8,6 +8,7 @@
 - name: "SSH | Deploy entire .ssh directory from backup"
   ansible.builtin.include_tasks: deploy_ssh_directory.yml
   when: ssh_deploy_full_directory | default(false)
+  tags: [ssh, ssh-deploy-directory]
 
 # ==============================================================================
 # Ensure SSH Directory Exists
@@ -21,6 +22,7 @@
     owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_facts['user_id'] }}"
   when: not (ssh_deploy_full_directory | default(false))
+  tags: [ssh]
 
 # ==============================================================================
 # SSH Key Deployment (from Vault)
@@ -28,6 +30,7 @@
 
 - name: "SSH | Deploy SSH keys from vault"
   when: ssh_deploy_from_vault
+  tags: [ssh, ssh-keys, ssh-vault]
   block:
     - name: "SSH | Deploy SSH private key"
       ansible.builtin.copy:
@@ -52,6 +55,7 @@
 
 - name: "SSH | Generate SSH key pair"
   when: ssh_generate_key and not ssh_deploy_from_vault
+  tags: [ssh, ssh-keys, ssh-generate]
   block:
     - name: "SSH | Check if SSH key already exists"
       ansible.builtin.stat:
@@ -100,6 +104,7 @@
     owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_facts['user_id'] }}"
     backup: true
+  tags: [ssh, ssh-config]
 
 # ==============================================================================
 # Known Hosts Management
@@ -107,6 +112,7 @@
 
 - name: "SSH | Manage known hosts"
   when: ssh_manage_known_hosts
+  tags: [ssh, ssh-known-hosts]
   block:
     - name: "SSH | Scan SSH host keys"
       ansible.builtin.command:
@@ -135,6 +141,7 @@
     state: present
     key: "{{ item }}"
   loop: "{{ ssh_authorized_keys | default([]) }}"
+  tags: [ssh, ssh-authorized-keys]
 
 # ==============================================================================
 # SSH Backup (Optional - Advanced Feature)
@@ -142,6 +149,7 @@
 
 - name: "SSH | Backup SSH directory"
   when: ssh_enable_backup
+  tags: [ssh, ssh-backup]
   block:
     - name: "SSH | Ensure backup directory exists"
       ansible.builtin.file:

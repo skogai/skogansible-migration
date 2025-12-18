@@ -1,0 +1,14 @@
+---
+# SSH Role - Variables
+# Your personal standard configuration for this role
+# These values apply to YOUR deployments (not sane defaults for anyone)
+
+# Reference shared variables from ./vars/main.yml
+ssh_key_comment: "{{ user_email }}"  # Use global user email as key comment
+
+# Your standard feature flag preferences
+ssh_deploy_config: true     # You typically want SSH config deployed
+ssh_generate_key: false     # You typically deploy from vault, not generate
+ssh_manage_known_hosts: false  # You don't typically manage known_hosts via Ansible
+ssh_manage_authorized_keys: false  # You don't typically manage authorized_keys via Ansible
+ssh_enable_backup: false    # You don't typically enable SSH backups

@@ -4,6 +4,7 @@
 
 - name: "SSH | Deploy entire .ssh directory from files"
   when: ssh_deploy_full_directory | default(false)
+  tags: [ssh, ssh-deploy-directory]
   block:
     - name: "SSH | Ensure .ssh directory exists"
       ansible.builtin.file:
@@ -27,11 +28,3 @@
         find {{ ansible_facts['env']['HOME'] }}/.ssh -type f -name 'id_*' ! -name '*.pub' -exec chmod 600 {} \;
         find {{ ansible_facts['env']['HOME'] }}/.ssh -type f -name '*.pub' -exec chmod 644 {} \;
       changed_when: false
-
-    - name: "SSH | Create sockets directory if needed"
-      ansible.builtin.file:
-        path: "{{ ansible_facts['env']['HOME'] }}/.ssh/sockets"
-        state: directory
-        mode: "0700"
-        owner: "{{ ansible_facts['user_id'] }}"
-        group: "{{ ansible_facts['user_id'] }}"

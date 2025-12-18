@@ -1,6 +1,6 @@
 ---
 # SSH Role - Default Variables
-# Override these in your playbook or inventory
+# Override these in your playbook, inventory, or vars/ssh.yml
 
 # ==============================================================================
 # SSH Key Management
