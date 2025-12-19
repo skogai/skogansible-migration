@@ -3,6 +3,13 @@
 # Override these in your playbook, inventory, or vars/ssh.yml
 
 # ==============================================================================
+# SSH Directory Deployment
+# ==============================================================================
+
+# Deploy entire .ssh directory from backup/files (CAUTION: bulk restore)
+ssh_deploy_full_directory: false
+
+# ==============================================================================
 # SSH Key Management
 # ==============================================================================
 

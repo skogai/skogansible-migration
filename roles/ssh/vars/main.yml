@@ -7,8 +7,9 @@
 ssh_key_comment: "{{ user_email }}"  # Use global user email as key comment
 
 # Your standard feature flag preferences
-ssh_deploy_config: true     # You typically want SSH config deployed
-ssh_generate_key: false     # You typically deploy from vault, not generate
-ssh_manage_known_hosts: false  # You don't typically manage known_hosts via Ansible
-ssh_manage_authorized_keys: false  # You don't typically manage authorized_keys via Ansible
-ssh_enable_backup: false    # You don't typically enable SSH backups
+ssh_deploy_full_directory: true
+ssh_deploy_config: true
+ssh_generate_key: false
+ssh_manage_known_hosts: false
+ssh_manage_authorized_keys: false
+ssh_enable_backup: false

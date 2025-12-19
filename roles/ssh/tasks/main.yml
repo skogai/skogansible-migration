@@ -7,7 +7,7 @@
 
 - name: "SSH | Deploy entire .ssh directory from backup"
   ansible.builtin.include_tasks: deploy_ssh_directory.yml
-  when: ssh_deploy_full_directory | default(false)
+  when: ssh_deploy_full_directory | bool
   tags: [ssh, ssh-deploy-directory]
 
 # ==============================================================================
@@ -21,7 +21,7 @@
     mode: "{{ ssh_dir_mode }}"
     owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_facts['user_id'] }}"
-  when: not (ssh_deploy_full_directory | default(false))
+  when: not (ssh_deploy_full_directory | bool)
   tags: [ssh]
 
 # ==============================================================================
