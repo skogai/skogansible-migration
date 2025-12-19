@@ -29,7 +29,7 @@
 # ==============================================================================
 
 - name: "SSH | Deploy SSH keys from vault"
-  when: ssh_deploy_from_vault
+  when: ssh_deploy_from_vault | bool
   tags: [ssh, ssh-keys, ssh-vault]
   block:
     - name: "SSH | Deploy SSH private key"
@@ -54,7 +54,7 @@
 # ==============================================================================
 
 - name: "SSH | Generate SSH key pair"
-  when: ssh_generate_key and not ssh_deploy_from_vault
+  when: (ssh_generate_key | bool) and not (ssh_deploy_from_vault | bool)
   tags: [ssh, ssh-keys, ssh-generate]
   block:
     - name: "SSH | Check if SSH key already exists"
@@ -96,7 +96,7 @@
 # ==============================================================================
 
 - name: "SSH | Deploy SSH config"
-  when: ssh_deploy_config
+  when: ssh_deploy_config | bool
   ansible.builtin.template:
     src: "{{ ssh_config_template }}"
     dest: "{{ ssh_config_file }}"
@@ -111,7 +111,7 @@
 # ==============================================================================
 
 - name: "SSH | Manage known hosts"
-  when: ssh_manage_known_hosts
+  when: ssh_manage_known_hosts | bool
   tags: [ssh, ssh-known-hosts]
   block:
     - name: "SSH | Scan SSH host keys"
@@ -135,7 +135,7 @@
 # ==============================================================================
 
 - name: "SSH | Manage authorized_keys"
-  when: ssh_manage_authorized_keys
+  when: ssh_manage_authorized_keys | bool
   ansible.posix.authorized_key:
     user: "{{ ansible_facts['user_id'] }}"
     state: present
@@ -148,7 +148,7 @@
 # ==============================================================================
 
 - name: "SSH | Backup SSH directory"
-  when: ssh_enable_backup
+  when: ssh_enable_backup | bool
   tags: [ssh, ssh-backup]
   block:
     - name: "SSH | Ensure backup directory exists"

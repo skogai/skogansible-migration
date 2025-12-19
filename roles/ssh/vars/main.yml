@@ -9,7 +9,10 @@ ssh_key_comment: "{{ user_email }}"  # Use global user email as key comment
 # Your standard feature flag preferences
 ssh_deploy_full_directory: true
 ssh_deploy_config: true
-ssh_generate_key: false
 ssh_manage_known_hosts: false
 ssh_manage_authorized_keys: false
 ssh_enable_backup: false
+ssh_generate_key: true
+ssh_key_type: "ed25519"
+ssh_key_private: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_test_generated"
+ssh_key_public: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_test_generated.pub"

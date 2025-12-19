@@ -45,13 +45,12 @@ ssh_custom_hosts:
 # Known Hosts Management
 # ==============================================================================
 
-# Manage known_hosts file (DISABLED - file deployed from vault/backup)
-ssh_manage_known_hosts: false
+# Manage known_hosts file
+ssh_manage_known_hosts: true
 
-# Known hosts to add (not needed - file already in version control)
-# ssh_known_hosts:
-#   - github.com
-#   - gitlab.com
+# Known hosts to add
+ssh_known_hosts:
+  - skogai.se
 
 # ==============================================================================
 # Authorized Keys Management
@@ -70,7 +69,7 @@ ssh_manage_authorized_keys: false
 # ==============================================================================
 
 # Generate new SSH key if it doesn't exist
-ssh_generate_key: false
+ssh_generate_key: true
 
 # Key comment (usually email)
 # ssh_key_comment: "your.email@example.com"
