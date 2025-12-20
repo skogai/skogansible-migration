@@ -6,10 +6,9 @@
 
 ## Reporting bugs and requesting features — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/reporting_bugs_and_features.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/reporting_bugs_and_features.html
 
 **Contents:**
-
 - Reporting bugs and requesting features
 - Reporting a bug
   - Security bugs
@@ -19,7 +18,7 @@
 
 How to write a good bug report
 
-Ansible practices responsible disclosure. To report security-related bugs, send an email to <security@ansible.com> for an immediate response. Do not submit a ticket or post to any public groups.
+Ansible practices responsible disclosure. To report security-related bugs, send an email to security@ansible.com for an immediate response. Do not submit a ticket or post to any public groups.
 
 Before reporting a bug, search in GitHub for already reported issues and open pull requests to see if someone has already addressed your issue. Unsure if you found a bug? Discuss the behavior with the community on the Ansible Forum.
 

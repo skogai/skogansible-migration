@@ -6,10 +6,9 @@
 
 ## ansible.builtin.sha1 filter – SHA-1 hash of input data — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sha1_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sha1_filter.html
 
 **Contents:**
-
 - ansible.builtin.sha1 filter – SHA-1 hash of input data
 - Synopsis
 - Input
@@ -33,7 +32,6 @@ The SHA-1 hash of the input.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # sha1hash => "dc724af18fbdd4e59189f5fe768a5f8311527050"
 sha1hash: "{{ 'testing' | sha1 }}"
@@ -43,10 +41,9 @@ sha1hash: "{{ 'testing' | sha1 }}"
 
 ## ansible.builtin.to_nice_yaml filter – Convert variable to YAML string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_nice_yaml_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_nice_yaml_filter.html
 
 **Contents:**
-
 - ansible.builtin.to_nice_yaml filter – Convert variable to YAML string
 - Synopsis
 - Input
@@ -84,7 +81,6 @@ The YAML serialized string representing the variable structure inputted.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # dump variable in a template to create a YAML document
 {{ github_workflow | to_nice_yaml }}
@@ -94,10 +90,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.subset test – is the list a subset of this other list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subset_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subset_test.html
 
 **Contents:**
-
 - ansible.builtin.subset test – is the list a subset of this other list
 - Synopsis
 - Input
@@ -126,7 +121,6 @@ Returns True if the specified list is a subset of the provided list, False other
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 big: [1,2,3,4,5]
 small: [3,4]
@@ -137,10 +131,9 @@ issmallinbig: '{{ small is subset(big) }}'
 
 ## Contributing to collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_contributing.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_contributing.html
 
 **Contents:**
-
 - Contributing to collections
 - Contributing to a collection: community.general
   - Prerequisites
@@ -179,20 +172,17 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 mkdir -p ~/dev/ansible/collections/ansible_collections/community
 ```
 
 Example 2 (unknown):
-
 ```unknown
 cd ~/dev/ansible/collections/ansible_collections/community
 git clone [email protected]:ansible-collections/community.general.git general
 ```
 
 Example 3 (unknown):
-
 ```unknown
 cd ~/dev/ansible/collections/ansible_collections/community/general
 git remote add upstream [email protected]:ansible-collections/community.general.git
@@ -202,10 +192,9 @@ git remote add upstream [email protected]:ansible-collections/community.general
 
 ## ansible.builtin.include_vars module – Load variables from files, dynamically within a task — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/include_vars_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/include_vars_module.html
 
 **Contents:**
-
 - ansible.builtin.include_vars module – Load variables from files, dynamically within a task
 - Synopsis
 - Parameters
@@ -333,7 +322,6 @@ Allen Sanabria (@linuxdynasty)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
   ansible.builtin.include_vars:
@@ -405,10 +393,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.win_basename filter – Get a Windows path’s base name — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/win_basename_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/win_basename_filter.html
 
 **Contents:**
-
 - ansible.builtin.win_basename filter – Get a Windows path’s base name
 - Synopsis
 - Input
@@ -433,7 +420,6 @@ The base name from the Windows path provided.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get the last name of a file Windows path, like 'foo.txt' out of 'C:\Users\asdf\foo.txt'
 filename: "{{ mypath | win_basename }}"
@@ -447,10 +433,9 @@ filename: "{{ mypath | win_basename }}"
 
 ## ansible.builtin.together lookup – merges lists into synchronized list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/together_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/together_lookup.html
 
 **Contents:**
-
 - ansible.builtin.together lookup – merges lists into synchronized list
 - Synopsis
 - Terms
@@ -474,7 +459,6 @@ list of lists to merge
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: item.0 returns from the 'a' list, item.1 returns from the '1' list
   ansible.builtin.debug:
@@ -488,10 +472,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.include_role module – Load and execute a role — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/include_role_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/include_role_module.html
 
 **Contents:**
-
 - ansible.builtin.include_role module – Load and execute a role
 - Synopsis
 - Parameters
@@ -591,7 +574,6 @@ Ansible Core Team (@ansible)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - ansible.builtin.include_role:
     name: myrole
@@ -635,10 +617,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.path_join filter – Join one or more path components — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/path_join_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/path_join_filter.html
 
 **Contents:**
-
 - ansible.builtin.path_join filter – Join one or more path components
 - Synopsis
 - Input
@@ -668,7 +649,6 @@ Anthony Bourguignon (@Toniob)
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # If path == 'foo/bar' and file == 'baz.txt', the result is '/etc/foo/bar/subdir/baz.txt'
 {{ ('/etc', path, 'subdir', file) | path_join }}
@@ -689,10 +669,9 @@ backup_path: "{{ ('/etc', backup_dir, backup_file) | path_join }}"
 
 ## ansible.builtin.realpath filter – Turn path into real path — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/realpath_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/realpath_filter.html
 
 **Contents:**
-
 - ansible.builtin.realpath filter – Turn path into real path
 - Synopsis
 - Input
@@ -714,7 +693,6 @@ darkone23 (@darkone23)
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # realpath => /usr/bin/somebinary
 realpath: {{ '/path/to/synlink' | realpath }}
@@ -724,10 +702,9 @@ realpath: {{ '/path/to/synlink' | realpath }}
 
 ## ansible.builtin.ini lookup – read data from an ini file — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ini_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ini_lookup.html
 
 **Contents:**
-
 - ansible.builtin.ini lookup – read data from an ini file
 - Synopsis
 - Terms
@@ -767,7 +744,7 @@ Default: "ansible.ini"
 
 added in ansible-core 2.18
 
-Allows for interpolation of values, see <https://docs.python.org/3/library/configparser.html#configparser.BasicInterpolation>
+Allows for interpolation of values, see https://docs.python.org/3/library/configparser.html#configparser.BasicInterpolation
 
 Flag to indicate if the key supplied is a regexp.
 
@@ -788,7 +765,6 @@ Yannig Perre <yannig.perre(at)gmail.com>
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - ansible.builtin.debug: msg="User in integration is {{ lookup('ansible.builtin.ini', 'user', section='integration', file='users.ini') }}"
 
@@ -809,10 +785,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.b64encode filter – Encode a string as Base64 — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/b64encode_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/b64encode_filter.html
 
 **Contents:**
-
 - ansible.builtin.b64encode filter – Encode a string as Base64
 - Synopsis
 - Input
@@ -843,7 +818,6 @@ A Base64 encoded string.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # Base64 encode a string
 b64lola: "{{ 'lola'| b64encode }}"
@@ -864,10 +838,9 @@ b64stuff: "{{ 'https://www.python.org/example-1' | b64encode(urlsafe=True) }}"
 
 ## ansible.builtin.basename filter – get a path’s base name — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/basename_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/basename_filter.html
 
 **Contents:**
-
 - ansible.builtin.basename filter – get a path’s base name
 - Synopsis
 - Input
@@ -893,7 +866,6 @@ The base name from the path provided.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'.
 {{ mypath | basename }}
@@ -903,10 +875,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.rpm_key module – Adds or removes a gpg key from the rpm db — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/rpm_key_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/rpm_key_module.html
 
 **Contents:**
-
 - ansible.builtin.rpm_key module – Adds or removes a gpg key from the rpm db
 - Synopsis
 - Parameters
@@ -946,7 +917,6 @@ Hector Acosta (@hacosta)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Import a key from a url
   ansible.builtin.rpm_key:
@@ -980,10 +950,9 @@ Example 1 (unknown):
 
 ## Collection Galaxy metadata structure — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/collections_galaxy_meta.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/collections_galaxy_meta.html
 
 **Contents:**
-
 - Collection Galaxy metadata structure
 - Structure
 - Examples
@@ -1054,7 +1023,7 @@ A pattern is matched from the relative path of the file or directory of the coll
 
 This uses fnmatch to match the files or directories.
 
-Some directories and files like galaxy.yml, *.pyc,*.retry, and .git are always filtered.
+Some directories and files like galaxy.yml, *.pyc, *.retry, and .git are always filtered.
 
 Mutually exclusive with manifest
 
@@ -1074,12 +1043,11 @@ Learn how to install and use collections.
 
 The development mailing list
 
-# ansible IRC chat channel
+#ansible IRC chat channel
 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 namespace: "namespace_name"
 name: "collection_name"
@@ -1105,10 +1073,9 @@ repository: "https://www.github.com/my_org/my_collection"
 
 ## ansible.builtin.set_stats module – Define and display stats for the current ansible run — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/set_stats_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/set_stats_module.html
 
 **Contents:**
-
 - ansible.builtin.set_stats module – Define and display stats for the current ansible run
 - Synopsis
 - Parameters
@@ -1175,7 +1142,6 @@ In order for custom stats to be displayed, you must set show_custom_stats in sec
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Aggregating packages_installed stat per host
   ansible.builtin.set_stats:
@@ -1202,10 +1168,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.gather_facts module – Gathers facts about remote hosts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/gather_facts_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/gather_facts_module.html
 
 **Contents:**
-
 - ansible.builtin.gather_facts module – Gathers facts about remote hosts
 - Synopsis
 - Parameters
@@ -1270,7 +1235,6 @@ Facts returned by each module will be merged, conflicts will favor ‘last merge
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # Display facts from all hosts and store them indexed by hostname at /tmp/facts.
 # ansible all -m ansible.builtin.gather_facts --tree /tmp/facts
@@ -1280,10 +1244,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.minimal callback – minimal Ansible screen output — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/minimal_callback.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/minimal_callback.html
 
 **Contents:**
-
 - ansible.builtin.minimal callback – minimal Ansible screen output
 - Callback plugin
 - Synopsis
@@ -1323,14 +1286,12 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 callback_format_pretty = VALUE
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [defaults]
 callback_result_format = json
@@ -1340,10 +1301,9 @@ callback_result_format = json
 
 ## ansible.builtin.product filter – cartesian product of lists — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/product_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/product_filter.html
 
 **Contents:**
-
 - ansible.builtin.product filter – cartesian product of lists
 - Synopsis
 - Input
@@ -1380,7 +1340,6 @@ List of lists of combined elements from the input lists.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # product => [ [ 1, "a" ], [ 1, "b" ], [ 1, "c" ], [ 2, "a" ], [ 2, "b" ], [ 2, "c" ], [ 3, "a" ], [ 3, "b" ], [ 3, "c" ], [ 4, "a" ], [ 4, "b" ], [ 4, "c" ], [ 5, "a" ], [ 5, "b" ], [ 5, "c" ] ]
 product:  "{{ [1,2,3,4,5] | product(['a', 'b', 'c']) }}"
@@ -1399,10 +1358,9 @@ domains: "{{ [ 'example', 'ansible', 'redhat'] | product(['com']) | map('join', 
 
 ## ansible.builtin.filter test – Check if a filter exists by name. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/filter_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/filter_test.html
 
 **Contents:**
-
 - ansible.builtin.filter test – Check if a filter exists by name.
 - Synopsis
   - Collection links
@@ -1413,16 +1371,15 @@ Check if a filter exists by name.
 
 This is the Jinja builtin test plugin ‘filter’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.filter>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.filter
 
 ---
 
 ## ansible.builtin.default filter – If the value is undefined it will return the passed default value, otherwise the value of the variable. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/default_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/default_filter.html
 
 **Contents:**
-
 - ansible.builtin.default filter – If the value is undefined it will return the passed default value, otherwise the value of the variable.
 - Synopsis
   - Collection links
@@ -1433,16 +1390,15 @@ If the value is undefined it will return the passed default value, otherwise the
 
 This is the Jinja builtin filter plugin ‘default’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.default>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.default
 
 ---
 
 ## ansible.builtin.vault filter – vault your secrets — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vault_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vault_filter.html
 
 **Contents:**
-
 - ansible.builtin.vault filter – vault your secrets
 - Synopsis
 - Input
@@ -1489,7 +1445,6 @@ The vault string that contains the secret data (or VaultedValue-tagged string ob
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # Encrypt a value using the vault filter
 vars:
@@ -1511,10 +1466,9 @@ vars:
 
 ## ansible.builtin.undefined test – Like :func:`defined` but the other way round. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/undefined_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/undefined_test.html
 
 **Contents:**
-
 - ansible.builtin.undefined test – Like :func:`defined` but the other way round.
 - Synopsis
   - Collection links
@@ -1525,16 +1479,15 @@ Like :func:`defined` but the other way round.
 
 This is the Jinja builtin test plugin ‘undefined’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.undefined>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.undefined
 
 ---
 
 ## ansible.builtin.to_yaml filter – Convert variable to YAML string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_yaml_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_yaml_filter.html
 
 **Contents:**
-
 - ansible.builtin.to_yaml filter – Convert variable to YAML string
 - Synopsis
 - Input
@@ -1570,7 +1523,6 @@ The YAML serialized string representing the variable structure inputted.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # dump variable in a template to create a YAML document
 {{ github_workflow | to_yaml }}
@@ -1583,10 +1535,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.finished test – Did async task finish — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/finished_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/finished_test.html
 
 **Contents:**
-
 - ansible.builtin.finished test – Did async task finish
 - Synopsis
 - Input
@@ -1612,7 +1563,6 @@ Returns True if the async task has finished, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ (asynctaskpoll is finished}}
@@ -1622,10 +1572,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.filesizeformat filter – Format the value like a ‘human-readable’ file size. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/filesizeformat_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/filesizeformat_filter.html
 
 **Contents:**
-
 - ansible.builtin.filesizeformat filter – Format the value like a ‘human-readable’ file size.
 - Synopsis
   - Collection links
@@ -1636,16 +1585,15 @@ Format the value like a ‘human-readable’ file size.
 
 This is the Jinja builtin filter plugin ‘filesizeformat’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.filesizeformat>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.filesizeformat
 
 ---
 
 ## ansible.builtin.center filter – Centers the value in a field of a given width. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/center_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/center_filter.html
 
 **Contents:**
-
 - ansible.builtin.center filter – Centers the value in a field of a given width.
 - Synopsis
   - Collection links
@@ -1656,16 +1604,15 @@ Centers the value in a field of a given width.
 
 This is the Jinja builtin filter plugin ‘center’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.center>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.center
 
 ---
 
 ## ansible.builtin.dict2items filter – Convert a dictionary into an itemized list of dictionaries — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dict2items_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dict2items_filter.html
 
 **Contents:**
-
 - ansible.builtin.dict2items filter – Convert a dictionary into an itemized list of dictionaries
 - Synopsis
 - Input
@@ -1703,7 +1650,6 @@ A list of dictionaries.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # items => [ { "key": "a", "value": 1 }, { "key": "b", "value": 2 } ]
 items: "{{ {'a': 1, 'b': 2}| dict2items }}"
@@ -1729,10 +1675,9 @@ vars:
 
 ## ansible.builtin.random_choice lookup – return random element from list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/random_choice_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/random_choice_lookup.html
 
 **Contents:**
-
 - ansible.builtin.random_choice lookup – return random element from list
 - Synopsis
 - Examples
@@ -1749,7 +1694,6 @@ At a more basic level, they can be used to add chaos and excitement to otherwise
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Magic 8 ball for MUDs
   ansible.builtin.debug:
@@ -1765,10 +1709,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.wait_for_connection module – Waits until remote system is reachable/usable — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wait_for_connection_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wait_for_connection_module.html
 
 **Contents:**
-
 - ansible.builtin.wait_for_connection module – Waits until remote system is reachable/usable
 - Synopsis
 - Parameters
@@ -1834,7 +1777,6 @@ Dag Wieers (@dagwieers)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Wait 600 seconds for target connection to become reachable/usable
   ansible.builtin.wait_for_connection:
@@ -1887,10 +1829,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.splitext filter – split a path into root and file extension — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/splitext_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/splitext_filter.html
 
 **Contents:**
-
 - ansible.builtin.splitext filter – split a path into root and file extension
 - Synopsis
 - Input
@@ -1912,7 +1853,6 @@ A list consisting of root of the path and the extension.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # gobble => [ '/etc/make', '.conf' ]
 gobble: "{{ '/etc/make.conf' | splitext }}"
@@ -1928,10 +1868,9 @@ hoax: "{{ '/etc/hoasdf' | splitext }}"
 
 ## ansible.builtin.timedout test – did the task time out — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/timedout_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/timedout_test.html
 
 **Contents:**
-
 - ansible.builtin.timedout test – did the task time out
 - Synopsis
 - Input
@@ -1957,7 +1896,6 @@ A dictionary with 2 keys ‘frame’ showing the ‘frame of code’ in which th
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ taskresults is timedout }}
@@ -1967,10 +1905,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.boolean test – Return true if the object is a boolean value. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/boolean_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/boolean_test.html
 
 **Contents:**
-
 - ansible.builtin.boolean test – Return true if the object is a boolean value.
 - Synopsis
   - Collection links
@@ -1981,16 +1918,15 @@ Return true if the object is a boolean value.
 
 This is the Jinja builtin test plugin ‘boolean’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.boolean>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.boolean
 
 ---
 
 ## ansible.builtin.service_facts module – Return service state information as fact data — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/service_facts_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/service_facts_module.html
 
 **Contents:**
-
 - ansible.builtin.service_facts module – Return service state information as fact data
 - Synopsis
 - Requirements
@@ -2050,7 +1986,6 @@ Adam Miller (@maxamillion)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Populate service facts
   ansible.builtin.service_facts:
@@ -2076,10 +2011,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.systemd module — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/systemd_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/systemd_module.html
 
 **Contents:**
-
 - ansible.builtin.systemd module
 
 This redirect is part of ansible-core and included in all Ansible installations. In most cases, you can use the short module name systemd even without specifying the collections keyword. Despite that, we recommend you use the Fully Qualified Collection Name (FQCN) ansible.builtin.systemd for easy linking to the module documentation and to avoid conflicting with other collections that may have the same module name.
@@ -2090,10 +2024,9 @@ This is a redirect to the ansible.builtin.systemd_service module.
 
 ## ansible.builtin.raw module – Executes a low-down and dirty command — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/raw_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/raw_module.html
 
 **Contents:**
-
 - ansible.builtin.raw module – Executes a low-down and dirty command
 - Synopsis
 - Parameters
@@ -2159,7 +2092,6 @@ The official documentation on the ansible.windows.win_shell module.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Bootstrap a host without Python installed
   ansible.builtin.raw: dnf install -y python3 python3-libdnf
@@ -2180,10 +2112,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.sudo become – Substitute User DO — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sudo_become.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sudo_become.html
 
 **Contents:**
-
 - ansible.builtin.sudo become – Substitute User DO
 - Synopsis
 - Parameters
@@ -2249,28 +2180,24 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [privilege_escalation]
 become_exe = sudo
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [sudo_become_plugin]
 executable = sudo
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [privilege_escalation]
 become_flags = -H -S -n
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [sudo_become_plugin]
 flags = -H -S -n
@@ -2280,10 +2207,9 @@ flags = -H -S -n
 
 ## ansible.builtin.to_datetime filter – Get datetime from string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_datetime_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_datetime_filter.html
 
 **Contents:**
-
 - ansible.builtin.to_datetime filter – Get datetime from string
 - Synopsis
 - Input
@@ -2316,7 +2242,6 @@ datetime object from the represented value.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # Get total amount of seconds between two dates. Default date format is %Y-%m-%d %H:%M:%S but you can pass your own format
 secsdiff: '{{ (("2016-08-14 20:00:12" | to_datetime) - ("2015-12-25" | to_datetime("%Y-%m-%d"))).total_seconds()  }}'
@@ -2343,10 +2268,9 @@ vars:
 
 ## ansible.builtin.find module – Return a list of files based on specific criteria — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/find_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/find_module.html
 
 **Contents:**
-
 - ansible.builtin.find module – Return a list of files based on specific criteria
 - Synopsis
 - Parameters
@@ -2455,7 +2379,7 @@ When using regexen, the pattern MUST match the ENTIRE file name, not just parts 
 
 This parameter expects a list, which can be either comma separated or YAML. If any of the patterns contain a comma, make sure to put them in a list to avoid splitting the patterns in undesirable ways.
 
-Defaults to *when use_regex=False, or .* when use_regex=True.
+Defaults to * when use_regex=False, or .* when use_regex=True.
 
 added in ansible-core 2.11
 
@@ -2508,7 +2432,6 @@ Sample: {"/laskdfj": "'/laskdfj' is not a directory"}
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Recursively find /tmp files older than 2 days
   ansible.builtin.find:
@@ -2584,10 +2507,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.unvault filter – Open an Ansible Vault — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unvault_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unvault_filter.html
 
 **Contents:**
-
 - ansible.builtin.unvault filter – Open an Ansible Vault
 - Synopsis
 - Input
@@ -2626,7 +2548,6 @@ The string that was contained in the vault.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # simply decrypt my key from a vault
 vars:
@@ -2642,10 +2563,9 @@ vars:
 
 ## ansible.builtin.apt_repository module – Add and remove APT repositories — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/apt_repository_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/apt_repository_module.html
 
 **Contents:**
-
 - ansible.builtin.apt_repository module – Add and remove APT repositories
 - Synopsis
 - Requirements
@@ -2713,7 +2633,7 @@ Common return values are documented here, the following are the fields unique to
 
 A source string for the repository
 
-Sample: "deb <https://artifacts.elastic.co/packages/6.x/apt> stable main"
+Sample: "deb https://artifacts.elastic.co/packages/6.x/apt stable main"
 
 list / elements=string
 
@@ -2740,7 +2660,6 @@ Alexander Saltanov (@sashka)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Add specified repository into sources list
   ansible.builtin.apt_repository:
@@ -2789,10 +2708,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.true test – Return true if the object is True. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/true_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/true_test.html
 
 **Contents:**
-
 - ansible.builtin.true test – Return true if the object is True.
 - Synopsis
   - Collection links
@@ -2803,16 +2721,15 @@ Return true if the object is True.
 
 This is the Jinja builtin test plugin ‘true’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.true>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.true
 
 ---
 
 ## ansible.builtin.any test – is any condition in a list true — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/any_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/any_test.html
 
 **Contents:**
-
 - ansible.builtin.any test – is any condition in a list true
 - Synopsis
 - Input
@@ -2838,7 +2755,6 @@ Returns True if any element of the list was true, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 varexpression: "{{ 3 == 3 }}"
 # is any statement true?
@@ -2849,10 +2765,9 @@ varexpression: "{{ 3 == 3 }}"
 
 ## Collection structure — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_structure.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_structure.html
 
 **Contents:**
-
 - Collection structure
 - Collection directories and files
   - galaxy.yml
@@ -2904,7 +2819,7 @@ When coding with module_utils in a collection, the Python import statement needs
 
 The following example snippets show a Python and PowerShell module using both default Ansible module_utils and those provided by a collection. In this example the namespace is community, the collection is test_collection. In the Python example the module_util in question is called qradar such that the FQCN is community.test_collection.plugins.module_utils.qradar:
 
-Note that importing something from an **init**.py file requires using the file name:
+Note that importing something from an __init__.py file requires using the file name:
 
 In the PowerShell example the module_util in question is called hyperv such that the FQCN is community.test_collection.plugins.module_utils.hyperv:
 
@@ -2961,7 +2876,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 collection/
 ├── docs/
@@ -2987,7 +2901,6 @@ collection/
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ---
 sections:
@@ -2997,13 +2910,11 @@ sections:
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-doc -t lookup my_namespace.my_collection.lookup1
 ```
 
 Example 4 (python):
-
 ```python
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.common.text.converters import to_text
@@ -3033,10 +2944,9 @@ qradar_request = QRadarRequest(
 
 ## ansible.builtin.intersect filter – intersection of lists — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/intersect_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/intersect_filter.html
 
 **Contents:**
-
 - ansible.builtin.intersect filter – intersection of lists
 - Synopsis
 - Input
@@ -3074,7 +2984,6 @@ A list with unique elements common to both lists, also known as a set.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # return only the common elements of list1 and list2
 # list1: [1, 2, 5, 3, 4, 10]
@@ -3087,10 +2996,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.jsonfile cache – JSON formatted files. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/jsonfile_cache.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/jsonfile_cache.html
 
 **Contents:**
-
 - ansible.builtin.jsonfile cache – JSON formatted files.
 - Synopsis
 - Parameters
@@ -3120,21 +3028,18 @@ Ansible Core (@ansible-core)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 fact_caching_prefix = VALUE
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [defaults]
 fact_caching_timeout = 86400
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [defaults]
 fact_caching_connection = VALUE
@@ -3144,10 +3049,9 @@ fact_caching_connection = VALUE
 
 ## ansible.builtin.reject filter – Filters a sequence of objects by applying a test to each object, and rejecting the objects with the test succeeding. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reject_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reject_filter.html
 
 **Contents:**
-
 - ansible.builtin.reject filter – Filters a sequence of objects by applying a test to each object, and rejecting the objects with the test succeeding.
 - Synopsis
   - Collection links
@@ -3158,16 +3062,15 @@ Filters a sequence of objects by applying a test to each object, and rejecting t
 
 This is the Jinja builtin filter plugin ‘reject’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.reject>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.reject
 
 ---
 
 ## ansible.builtin.b64decode filter – Decode a Base64 string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/b64decode_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/b64decode_filter.html
 
 **Contents:**
-
 - ansible.builtin.b64decode filter – Decode a Base64 string
 - Synopsis
 - Input
@@ -3204,7 +3107,6 @@ The contents of the Base64 encoded string.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # Base64 decode a string
 lola: "{{ 'bG9sYQ==' | b64decode }}"
@@ -3225,10 +3127,9 @@ stuff: "{{ 'aHR0cHM6Ly93d3cucHl0aG9uLm9yZy9leGFtcGxlLTE=' | b64decode(urlsafe=Tr
 
 ## ansible.builtin.mount test – does the path resolve to mount point — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mount_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mount_test.html
 
 **Contents:**
-
 - ansible.builtin.mount test – does the path resolve to mount point
 - Synopsis
 - Input
@@ -3248,7 +3149,6 @@ Returns True if the path corresponds to a mount point on the controller, False i
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 vars:
   ihopefalse: "{{ '/etc/hosts' is mount }}"
@@ -3259,10 +3159,9 @@ vars:
 
 ## ansible.builtin.ne test – Same as a . — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ne_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ne_test.html
 
 **Contents:**
-
 - ansible.builtin.ne test – Same as a .
 - Synopsis
   - Collection links
@@ -3271,16 +3170,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘ne’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.ne>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.ne
 
 ---
 
 ## ansible.builtin.template lookup – retrieve contents of file after templating with Jinja2 — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/template_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/template_lookup.html
 
 **Contents:**
-
 - ansible.builtin.template lookup – retrieve contents of file after templating with Jinja2
 - Synopsis
 - Terms
@@ -3357,7 +3255,6 @@ file(s) content after templating
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: show templating results
   ansible.builtin.debug:
@@ -3380,10 +3277,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.float test – Return true if the object is a float. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/float_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/float_test.html
 
 **Contents:**
-
 - ansible.builtin.float test – Return true if the object is a float.
 - Synopsis
   - Collection links
@@ -3394,16 +3290,15 @@ Return true if the object is a float.
 
 This is the Jinja builtin test plugin ‘float’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.float>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.float
 
 ---
 
 ## ansible.builtin.superset test – is the list a superset of this other list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/superset_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/superset_test.html
 
 **Contents:**
-
 - ansible.builtin.superset test – is the list a superset of this other list
 - Synopsis
 - Input
@@ -3432,7 +3327,6 @@ Returns True if the specified list is a superset of the provided list, False oth
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 big: [1,2,3,4,5]
 small: [3,4]
@@ -3443,10 +3337,9 @@ issmallinbig: '{{ big is superset(small) }}'
 
 ## ansible.builtin.copy module – Copy files to remote locations — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/copy_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/copy_module.html
 
 **Contents:**
-
 - ansible.builtin.copy module – Copy files to remote locations
 - Synopsis
 - Parameters
@@ -3683,7 +3576,6 @@ Owner id of the file, after execution.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Copy file with owner and permissions
   ansible.builtin.copy:
@@ -3753,10 +3645,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.zip filter – combine list elements — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/zip_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/zip_filter.html
 
 **Contents:**
-
 - ansible.builtin.zip filter – combine list elements
 - Synopsis
 - Input
@@ -3794,7 +3685,6 @@ List of lists made of elements matching the positions of the input lists.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # two => [[1, "a"], [2, "b"], [3, "c"], [4, "d"], [5, "e"], [6, "f"]]
 two: "{{ [1,2,3,4,5,6] | zip(['a','b','c','d','e','f']) }}"
@@ -3813,10 +3703,9 @@ mydict: "{{ dict(keys_list | zip(values_list)) }}"
 
 ## Installing collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_installing.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_installing.html
 
 **Contents:**
-
 - Installing collections
 - Installing collections in containers
 - Installing collections with ansible-galaxy
@@ -3832,7 +3721,7 @@ If you install a collection manually as described in this paragraph, the collect
 
 You can install collections with their dependencies in containers known as Execution Environments. See Getting started with Execution Environments for details.
 
-By default, ansible-galaxy collection install uses <https://galaxy.ansible.com> as the Galaxy server (as listed in the ansible.cfg file under GALAXY_SERVER). You do not need any further configuration. By default, Ansible installs the collection in ~/.ansible/collections under the ansible_collections directory.
+By default, ansible-galaxy collection install uses https://galaxy.ansible.com as the Galaxy server (as listed in the ansible.cfg file under GALAXY_SERVER). You do not need any further configuration. By default, Ansible installs the collection in ~/.ansible/collections under the ansible_collections directory.
 
 See Configuring the ansible-galaxy client if you are using any other Galaxy server, such as Red Hat Automation Hub.
 
@@ -3960,7 +3849,7 @@ You can install a collection from a git repository instead of from Galaxy or Aut
 
 The repository must contain a galaxy.yml or MANIFEST.json file. This file provides metadata such as the version number and namespace of the collection.
 
-To install a collection from a git repository at the command line, use the URI of the repository instead of a collection name or path to a tar.gz file. Use the prefix git+, unless you’re using SSH authentication with the user git (for example, <git@github.com>:ansible-collections/ansible.windows.git). You can specify a branch, commit, or tag using the comma-separated git commit-ish syntax.
+To install a collection from a git repository at the command line, use the URI of the repository instead of a collection name or path to a tar.gz file. Use the prefix git+, unless you’re using SSH authentication with the user git (for example, git@github.com:ansible-collections/ansible.windows.git). You can specify a branch, commit, or tag using the comma-separated git commit-ish syntax.
 
 Embedding credentials into a git URI is not secure. Use safe authentication options to prevent your credentials from being exposed in logs or elsewhere.
 
@@ -3988,7 +3877,7 @@ In some repositories, the main directory corresponds to the namespace:
 
 You can install all collections in this repository, or install one collection from a specific commit:
 
-By default, ansible-galaxy uses <https://galaxy.ansible.com> as the Galaxy server (as listed in the ansible.cfg file under GALAXY_SERVER).
+By default, ansible-galaxy uses https://galaxy.ansible.com as the Galaxy server (as listed in the ansible.cfg file under GALAXY_SERVER).
 
 You can use either option below to configure ansible-galaxy collection to use other servers (such as a custom Galaxy server):
 
@@ -4004,7 +3893,7 @@ Create a new section for each server name.
 
 Set the url option for each server name.
 
-Optionally, set the API token for each server name. Go to <https://galaxy.ansible.com/me/preferences> and click Show API key.
+Optionally, set the API token for each server name. Go to https://galaxy.ansible.com/me/preferences and click Show API key.
 
 The url option for each server name must end with a forward slash /. If you do not set the API token in your Galaxy server list, use the --api-key argument to pass in the token to the ansible-galaxy collection publish command.
 
@@ -4043,25 +3932,21 @@ If you no longer need a collection, simply remove the installation directory fro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible-galaxy collection install my_namespace.my_collection
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-galaxy collection install my_namespace.my_collection --upgrade
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-galaxy collection install my_namespace-my_collection-1.0.0.tar.gz -p ./collections
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible-galaxy collection install /path/to/collection -p ./collections
 ```
@@ -4070,10 +3955,9 @@ ansible-galaxy collection install /path/to/collection -p ./collections
 
 ## ansible.builtin.e filter – Replace the characters ``&``, ``<``, ``>``, ``’``, and ``”`` in the string with HTML-safe sequences. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/e_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/e_filter.html
 
 **Contents:**
-
 - ansible.builtin.e filter – Replace the characters ``&``, ``<``, ``>``, ``’``, and ``”`` in the string with HTML-safe sequences.
 - Synopsis
   - Collection links
@@ -4084,16 +3968,15 @@ Replace the characters ``&``, ``<``, ``>``, ``’``, and ``”`` in the string w
 
 This is the Jinja builtin filter plugin ‘e’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.e>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.e
 
 ---
 
 ## ansible.builtin.paramiko_ssh connection – Run tasks via Python SSH (paramiko) — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/paramiko_ssh_connection.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/paramiko_ssh_connection.html
 
 **Contents:**
-
 - ansible.builtin.paramiko_ssh connection – Run tasks via Python SSH (paramiko)
 - Synopsis
 - Parameters
@@ -4283,28 +4166,24 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [paramiko_connection]
 banner_timeout = 30.0
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [paramiko_connection]
 host_key_auto_add = VALUE
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [defaults]
 host_key_checking = true
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [paramiko_connection]
 host_key_checking = true
@@ -4314,10 +4193,9 @@ host_key_checking = true
 
 ## ansible.builtin.yum module — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/yum_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/yum_module.html
 
 **Contents:**
-
 - ansible.builtin.yum module
 
 This redirect is part of ansible-core and included in all Ansible installations. In most cases, you can use the short module name yum even without specifying the collections keyword. Despite that, we recommend you use the Fully Qualified Collection Name (FQCN) ansible.builtin.yum for easy linking to the module documentation and to avoid conflicting with other collections that may have the same module name.
@@ -4328,10 +4206,9 @@ This is a redirect to the ansible.builtin.dnf module.
 
 ## ansible.builtin.le test – Same as a <= b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/le_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/le_test.html
 
 **Contents:**
-
 - ansible.builtin.le test – Same as a <= b.
 - Synopsis
   - Collection links
@@ -4340,16 +4217,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘le’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.le>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.le
 
 ---
 
 ## ansible.builtin.powershell shell – Windows PowerShell — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/powershell_shell.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/powershell_shell.html
 
 **Contents:**
-
 - ansible.builtin.powershell shell – Windows PowerShell
 - Synopsis
 - Parameters
@@ -4384,14 +4260,12 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [powershell]
 async_dir = %USERPROFILE%\.ansible_async
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [powershell]
 remote_tmp = %TEMP%
@@ -4401,10 +4275,9 @@ remote_tmp = %TEMP%
 
 ## ansible.builtin.wordcount filter – Count the words in that string. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wordcount_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wordcount_filter.html
 
 **Contents:**
-
 - ansible.builtin.wordcount filter – Count the words in that string.
 - Synopsis
   - Collection links
@@ -4415,16 +4288,15 @@ Count the words in that string.
 
 This is the Jinja builtin filter plugin ‘wordcount’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.wordcount>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.wordcount
 
 ---
 
 ## ansible.builtin.relpath filter – Make a path relative — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/relpath_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/relpath_filter.html
 
 **Contents:**
-
 - ansible.builtin.relpath filter – Make a path relative
 - Synopsis
 - Input
@@ -4451,7 +4323,6 @@ Jakub Jirutka (@jirutka)
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # foobar => ../test/me.txt
 testing: "{{ '/tmp/test/me.txt' | relpath('/tmp/other/') }}"
@@ -4462,10 +4333,9 @@ otherrelpath: "{{ mypath | relpath(mydir) }}"
 
 ## ansible.builtin.first_found lookup – return first file found from list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/first_found_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/first_found_lookup.html
 
 **Contents:**
-
 - ansible.builtin.first_found lookup – return first file found from list
 - Synopsis
 - Terms
@@ -4518,7 +4388,6 @@ Search paths used for relative paths/files.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Set _found_file to the first existing file, raising an error if a file is not found
   ansible.builtin.set_fact:
@@ -4604,10 +4473,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.urldecode filter – Decode percent-encoded sequences — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urldecode_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urldecode_filter.html
 
 **Contents:**
-
 - ansible.builtin.urldecode filter – Decode percent-encoded sequences
 - Synopsis
 - Input
@@ -4630,7 +4498,6 @@ URL decoded value for the given string
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # Decode urlencoded string
 {{ '%7e/abc+def' | urldecode }}
@@ -4645,10 +4512,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.stat module – Retrieve file or file system status — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/stat_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/stat_module.html
 
 **Contents:**
-
 - ansible.builtin.stat module – Retrieve file or file system status
 - Synopsis
 - Parameters
@@ -4890,7 +4756,6 @@ Bruce Pennypacker (@bpennypacker)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # Obtain the stats of /etc/foo.conf, and check that the file still belongs
 # to 'root'. Fail otherwise.
@@ -4960,10 +4825,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.sequence lookup – generate a list based on a number sequence — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sequence_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sequence_lookup.html
 
 **Contents:**
-
 - ansible.builtin.sequence lookup – generate a list based on a number sequence
 - Synopsis
 - Keyword parameters
@@ -5005,7 +4869,6 @@ A list containing generated sequence of items
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: create some test users
   ansible.builtin.user:
@@ -5043,10 +4906,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.abs test – is the path absolute — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/abs_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/abs_test.html
 
 **Contents:**
-
 - ansible.builtin.abs test – is the path absolute
 - Synopsis
 - Input
@@ -5070,7 +4932,6 @@ Returns True if the path is absolute, False if it is relative.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 is_path_absolute: "{{ '/etc/hosts' is abs }}}"
 relative_paths: "{{ all_paths | reject('abs') }}"
@@ -5080,10 +4941,9 @@ relative_paths: "{{ all_paths | reject('abs') }}"
 
 ## ansible.builtin.count filter – Return the number of items in a container. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/count_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/count_filter.html
 
 **Contents:**
-
 - ansible.builtin.count filter – Return the number of items in a container.
 - Synopsis
   - Collection links
@@ -5094,16 +4954,15 @@ Return the number of items in a container.
 
 This is the Jinja builtin filter plugin ‘count’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.count>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.count
 
 ---
 
 ## ansible.builtin.root filter – root of (math operation) — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/root_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/root_filter.html
 
 **Contents:**
-
 - ansible.builtin.root filter – root of (math operation)
 - Synopsis
 - Input
@@ -5127,7 +4986,6 @@ This describes positional parameters of the filter. These are the values positio
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # => 8
 fiveroot: "{{ 32768 | root(5) }}"
@@ -5143,10 +5001,9 @@ cuberoot_me: "{{ me | root(3) }}"
 
 ## ansible.builtin.regex_replace filter – replace a string via regex — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_replace_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_replace_filter.html
 
 **Contents:**
-
 - ansible.builtin.regex_replace filter – replace a string via regex
 - Synopsis
 - Input
@@ -5198,7 +5055,6 @@ String with substitution (or original if no match).
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # whatami => 'able'
 whatami: "{{ 'ansible' | regex_replace('^a.*i(.*)$', 'a\\1') }}"
@@ -5223,10 +5079,9 @@ key_value: "{{ 'foo=bar=baz' | regex_replace('=', ':', count=1) }}"
 
 ## ansible.builtin.to_nice_json filter – Convert variable to ‘nicely formatted’ JSON string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_nice_json_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_nice_json_filter.html
 
 **Contents:**
-
 - ansible.builtin.to_nice_json filter – Convert variable to ‘nicely formatted’ JSON string
 - Synopsis
 - Input
@@ -5278,7 +5133,6 @@ The ‘nicely formatted’ JSON serialized string representing the variable stru
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # dump variable in a template to create a nicely formatted JSON document
 {{ docker_config | to_nice_json }}
@@ -5288,10 +5142,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.debconf module – Configure a .deb package — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/debconf_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/debconf_module.html
 
 **Contents:**
-
 - ansible.builtin.debconf module – Configure a .deb package
 - Synopsis
 - Requirements
@@ -5355,7 +5208,6 @@ However as dpkg-reconfigure only executes the <package>.config step if the file 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Set default locale to fr_FR.UTF-8
   ansible.builtin.debconf:
@@ -5395,10 +5247,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.runas become – Run As user — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/runas_become.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/runas_become.html
 
 **Contents:**
-
 - ansible.builtin.runas become – Run As user
 - Synopsis
 - Parameters
@@ -5453,28 +5304,24 @@ The Secondary Logon service (seclogon) must be running to use runas
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [privilege_escalation]
 become_flags = ""
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [runas_become_plugin]
 flags = ""
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [runas_become_plugin]
 password = VALUE
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [privilege_escalation]
 become_user = VALUE
@@ -5484,10 +5331,9 @@ become_user = VALUE
 
 ## ansible.builtin.package_facts module – Package information as facts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/package_facts_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/package_facts_module.html
 
 **Contents:**
-
 - ansible.builtin.package_facts module – Package information as facts
 - Synopsis
 - Requirements
@@ -5577,7 +5423,6 @@ Adam Miller (@maxamillion)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Gather the package facts
   ansible.builtin.package_facts:
@@ -5597,10 +5442,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.regex_escape filter – escape regex chars — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_escape_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_escape_filter.html
 
 **Contents:**
-
 - ansible.builtin.regex_escape filter – escape regex chars
 - Synopsis
 - Input
@@ -5627,7 +5471,6 @@ posix_extended is not implemented yet
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # safe_for_regex => '\^f\.\*o\(\.\*\)\$'
 safe_for_regex: "{{ '^f.*o(.*)$' | regex_escape() }}"
@@ -5637,10 +5480,9 @@ safe_for_regex: "{{ '^f.*o(.*)$' | regex_escape() }}"
 
 ## ansible.builtin.tree callback – Save host events to files — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/tree_callback.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/tree_callback.html
 
 **Contents:**
-
 - ansible.builtin.tree callback – Save host events to files
 - Callback plugin
 - Synopsis
@@ -5673,7 +5515,6 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [callback_tree]
 directory = ~/.ansible/tree
@@ -5683,10 +5524,9 @@ directory = ~/.ansible/tree
 
 ## ansible.builtin.oneline callback – oneline Ansible screen output — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/oneline_callback.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/oneline_callback.html
 
 **Contents:**
-
 - ansible.builtin.oneline callback – oneline Ansible screen output
 - Callback plugin
 - Synopsis
@@ -5702,10 +5542,9 @@ This is the output callback used by the -o/--one-line command line option.
 
 ## ansible.builtin.length filter – Return the number of items in a container. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/length_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/length_filter.html
 
 **Contents:**
-
 - ansible.builtin.length filter – Return the number of items in a container.
 - Synopsis
   - Collection links
@@ -5716,16 +5555,15 @@ Return the number of items in a container.
 
 This is the Jinja builtin filter plugin ‘length’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.length>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.length
 
 ---
 
 ## ansible.builtin.human_readable filter – Make bytes/bits human-readable — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/human_readable_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/human_readable_filter.html
 
 **Contents:**
-
 - ansible.builtin.human_readable filter – Make bytes/bits human-readable
 - Synopsis
 - Input
@@ -5755,7 +5593,6 @@ human-readable byte or bit size.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # size => "1.15 GB"
 size: "{{ 1232345345 | human_readable }}"
@@ -5771,10 +5608,9 @@ size_MB: "{{ 1232345345 | human_readable(unit='M') }}"
 
 ## ansible.builtin.nested lookup – composes a list with nested elements of other lists — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/nested_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/nested_lookup.html
 
 **Contents:**
-
 - ansible.builtin.nested lookup – composes a list with nested elements of other lists
 - Synopsis
 - Keyword parameters
@@ -5795,7 +5631,6 @@ A list composed of lists paring the elements of the input lists
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: give users access to multiple databases
   community.mysql.mysql_user:
@@ -5823,10 +5658,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.difference filter – the difference of one list from another — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/difference_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/difference_filter.html
 
 **Contents:**
-
 - ansible.builtin.difference filter – the difference of one list from another
 - Synopsis
 - Input
@@ -5864,7 +5698,6 @@ A unique list of the elements from the first list that do not appear on the seco
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # return the elements of list1 not in list2
 # list1: [1, 2, 5, 1, 3, 4, 10]
@@ -5877,10 +5710,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.import_role module – Import a role into a play — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/import_role_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/import_role_module.html
 
 **Contents:**
-
 - ansible.builtin.import_role module – Import a role into a play
 - Synopsis
 - Parameters
@@ -5984,7 +5816,6 @@ Ansible Core Team (@ansible)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - hosts: all
   tasks:
@@ -6012,10 +5843,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.subelements lookup – traverse nested key from a list of dictionaries — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subelements_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subelements_lookup.html
 
 **Contents:**
-
 - ansible.builtin.subelements lookup – traverse nested key from a list of dictionaries
 - Synopsis
 - Terms
@@ -6049,7 +5879,6 @@ Serge van Ginderachter
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: show var structure as it is needed for example to make sense
   hosts: all
@@ -6109,10 +5938,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.tempfile module – Creates temporary files and directories — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/tempfile_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/tempfile_module.html
 
 **Contents:**
-
 - ansible.builtin.tempfile module – Creates temporary files and directories
 - Synopsis
 - Parameters
@@ -6160,7 +5988,6 @@ Krzysztof Magosa (@krzysztof-magosa)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Create temporary build directory
   ansible.builtin.tempfile:
@@ -6190,10 +6017,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.winrm connection – Run tasks over Microsoft’s WinRM — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/winrm_connection.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/winrm_connection.html
 
 **Contents:**
-
 - ansible.builtin.winrm connection – Run tasks over Microsoft’s WinRM
 - Synopsis
 - Requirements
@@ -6328,21 +6154,18 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [winrm]
 kinit_env_vars =
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [defaults]
 pipelining = false
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [connection]
 pipelining = false
@@ -6352,10 +6175,9 @@ pipelining = false
 
 ## ansible.builtin.human_to_bytes filter – Get bytes from string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/human_to_bytes_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/human_to_bytes_filter.html
 
 **Contents:**
-
 - ansible.builtin.human_to_bytes filter – Get bytes from string
 - Synopsis
 - Input
@@ -6385,7 +6207,6 @@ Integer representing the bytes from the input.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # size => 1234803098
 size: '{{ "1.15 GB" | human_to_bytes }}'
@@ -6410,10 +6231,9 @@ size: '{{ "1 gigggabyte" | human_to_bytes }}'
 
 ## ansible.builtin.odd test – Return true if the variable is odd. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/odd_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/odd_test.html
 
 **Contents:**
-
 - ansible.builtin.odd test – Return true if the variable is odd.
 - Synopsis
   - Collection links
@@ -6424,16 +6244,15 @@ Return true if the variable is odd.
 
 This is the Jinja builtin test plugin ‘odd’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.odd>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.odd
 
 ---
 
 ## ansible.builtin.random filter – random number or list item — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/random_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/random_filter.html
 
 **Contents:**
-
 - ansible.builtin.random filter – random number or list item
 - Synopsis
 - Input
@@ -6465,7 +6284,6 @@ Random number or list element.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # can be any item from the list
 random_item: "{{ ['a','b','c'] | random }}"
@@ -6478,10 +6296,9 @@ random_item: "{{ ['a','b','c'] | random }}"
 
 ## ansible.builtin.urlsplit filter – get components from URL — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urlsplit_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urlsplit_filter.html
 
 **Contents:**
-
 - ansible.builtin.urlsplit filter – get components from URL
 - Synopsis
 - Input
@@ -6509,7 +6326,6 @@ If query is provided, a string or integer will be returned instead, depending on
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 parts: '{{ "http://user:[email protected]:9000/dir/index.html?query=term#fragment" | urlsplit }}'
 # =>
@@ -6539,10 +6355,9 @@ path: '{{ "http://user:[email protected]:9000/dir/index.html?query=term#fragmen
 
 ## ansible.builtin.int filter – Convert the value into an integer. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/int_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/int_filter.html
 
 **Contents:**
-
 - ansible.builtin.int filter – Convert the value into an integer.
 - Synopsis
   - Collection links
@@ -6553,16 +6368,15 @@ Convert the value into an integer.
 
 This is the Jinja builtin filter plugin ‘int’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.int>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.int
 
 ---
 
 ## Index of all Collection Environment Variables — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/environment_variables.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/environment_variables.html
 
 **Contents:**
-
 - Index of all Collection Environment Variables
 
 The following index documents all environment variables declared by plugins in collections. Environment variables used by the ansible-core configuration are documented in Ansible Configuration Settings.
@@ -6987,10 +6801,9 @@ Used by: ansible.builtin.junit callback plugin
 
 ## ansible.builtin.split filter – split a string into a list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/split_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/split_filter.html
 
 **Contents:**
-
 - ansible.builtin.split filter – split a string into a list
 - Synopsis
 - Input
@@ -7023,7 +6836,6 @@ List of substrings split from the original.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # listjojo => [ "jojo", "is", "a" ]
 listjojo: "{{ 'jojo is a' | split }}"
@@ -7036,10 +6848,9 @@ listjojocomma: "{{ 'jojo is, a' | split(',') }}"
 
 ## ansible.builtin.quote filter – shell quoting — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/quote_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/quote_filter.html
 
 **Contents:**
-
 - ansible.builtin.quote filter – shell quoting
 - Synopsis
 - Input
@@ -7061,7 +6872,6 @@ This is a passthrough to Python’s shlex.quote.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Run a shell command
   shell: echo {{ string_value | quote }}
@@ -7071,10 +6881,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.dnf module – Manages packages with the dnf package manager — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dnf_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dnf_module.html
 
 **Contents:**
-
 - ansible.builtin.dnf module – Manages packages with the dnf package manager
 - Synopsis
 - Requirements
@@ -7251,7 +7060,7 @@ Target OS/families that can be operated against
 
 When used with a loop: each package will be processed individually, it is much more efficient to pass the list directly to the name option.
 
-Group removal doesn’t work if the group was installed with Ansible because upstream dnf’s API doesn’t properly mark groups as installed, therefore upon removal the module is unable to detect that the group is installed <https://bugzilla.redhat.com/show_bug.cgi?id=1620324>.
+Group removal doesn’t work if the group was installed with Ansible because upstream dnf’s API doesn’t properly mark groups as installed, therefore upon removal the module is unable to detect that the group is installed https://bugzilla.redhat.com/show_bug.cgi?id=1620324.
 
 While use_backend=yum and the ability to call the action plugin as ansible.builtin.yum are provided for syntax compatibility, the YUM backend was removed in ansible-core 2.17 because the required libraries are not available for any supported version of Python. If you rely on this functionality, use an older version of Ansible.
 
@@ -7266,7 +7075,6 @@ Adam Miller (@maxamillion)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Install the latest version of Apache
   ansible.builtin.dnf:
@@ -7359,10 +7167,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.groupby filter – Group a sequence of objects by an attribute using Python’s :func:`itertools. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/groupby_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/groupby_filter.html
 
 **Contents:**
-
 - ansible.builtin.groupby filter – Group a sequence of objects by an attribute using Python’s :func:`itertools.
 - Synopsis
   - Collection links
@@ -7373,16 +7180,15 @@ Group a sequence of objects by an attribute using Python’s :func:`itertools.
 
 This is the Jinja builtin filter plugin ‘groupby’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.groupby>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.groupby
 
 ---
 
 ## ansible.builtin.slurp module – Slurps a file from remote nodes — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/slurp_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/slurp_module.html
 
 **Contents:**
-
 - ansible.builtin.slurp module – Slurps a file from remote nodes
 - Synopsis
 - Parameters
@@ -7427,7 +7233,6 @@ Michael DeHaan (@mpdehaan)
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 - name: Find out what the remote machine's mounts are
   ansible.builtin.slurp:
@@ -7454,10 +7259,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.escaped test – Check if the value is escaped. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/escaped_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/escaped_test.html
 
 **Contents:**
-
 - ansible.builtin.escaped test – Check if the value is escaped.
 - Synopsis
   - Collection links
@@ -7468,16 +7272,15 @@ Check if the value is escaped.
 
 This is the Jinja builtin test plugin ‘escaped’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.escaped>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.escaped
 
 ---
 
 ## ansible.builtin.vault_encrypted test – Is this an encrypted vault string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vault_encrypted_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vault_encrypted_test.html
 
 **Contents:**
-
 - ansible.builtin.vault_encrypted test – Is this an encrypted vault string
 - Synopsis
 - Input
@@ -7501,7 +7304,6 @@ Returns True if the input is a valid ansible vault, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 thisisfalse: '{{ "any string" is vault_encryped}}'
 thisistrue: '{{ "$ANSIBLE_VAULT;1.2;AES256;dev...." is vault_encrypted}}'
@@ -7511,10 +7313,9 @@ thisistrue: '{{ "$ANSIBLE_VAULT;1.2;AES256;dev...." is vault_encrypted}}'
 
 ## ansible.builtin.round filter – Round the number to a given precision. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/round_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/round_filter.html
 
 **Contents:**
-
 - ansible.builtin.round filter – Round the number to a given precision.
 - Synopsis
   - Collection links
@@ -7525,16 +7326,15 @@ Round the number to a given precision.
 
 This is the Jinja builtin filter plugin ‘round’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.round>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.round
 
 ---
 
 ## ansible.builtin.psrp connection – Run tasks over Microsoft PowerShell Remoting Protocol — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/psrp_connection.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/psrp_connection.html
 
 **Contents:**
-
 - ansible.builtin.psrp connection – Run tasks over Microsoft PowerShell Remoting Protocol
 - Synopsis
 - Requirements
@@ -7779,14 +7579,12 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 pipelining = false
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [connection]
 pipelining = false
@@ -7796,10 +7594,9 @@ pipelining = false
 
 ## ansible.builtin.list filter – Convert the value into a list. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/list_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/list_filter.html
 
 **Contents:**
-
 - ansible.builtin.list filter – Convert the value into a list.
 - Synopsis
   - Collection links
@@ -7810,16 +7607,15 @@ Convert the value into a list.
 
 This is the Jinja builtin filter plugin ‘list’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.list>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.list
 
 ---
 
 ## ansible.builtin.git module – Deploy software (or files) from git checkouts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/git_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/git_module.html
 
 **Contents:**
-
 - ansible.builtin.git module – Deploy software (or files) from git checkouts
 - Synopsis
 - Requirements
@@ -7956,7 +7752,6 @@ Contains True or False whether or not the remote URL was changed.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Git checkout
   ansible.builtin.git:
@@ -8020,10 +7815,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.fail module – Fail with custom message — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fail_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fail_module.html
 
 **Contents:**
-
 - ansible.builtin.fail module – Fail with custom message
 - Synopsis
 - Parameters
@@ -8084,7 +7878,6 @@ Dag Wieers (@dagwieers)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Example using fail and when together
   ansible.builtin.fail:
@@ -8096,10 +7889,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.mandatory filter – make a variable’s existence mandatory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mandatory_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mandatory_filter.html
 
 **Contents:**
-
 - ansible.builtin.mandatory filter – make a variable’s existence mandatory
 - Synopsis
 - Input
@@ -8125,7 +7917,6 @@ The input if defined, otherwise an error.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # results in a Filter Error
 {{ notdefined | mandatory }}
@@ -8138,10 +7929,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.replace filter – Return a copy of the value with all occurrences of a substring replaced with a new one. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/replace_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/replace_filter.html
 
 **Contents:**
-
 - ansible.builtin.replace filter – Return a copy of the value with all occurrences of a substring replaced with a new one.
 - Synopsis
   - Collection links
@@ -8152,16 +7942,15 @@ Return a copy of the value with all occurrences of a substring replaced with a n
 
 This is the Jinja builtin filter plugin ‘replace’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.replace>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.replace
 
 ---
 
 ## ansible.builtin.batch filter – A filter that batches items. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/batch_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/batch_filter.html
 
 **Contents:**
-
 - ansible.builtin.batch filter – A filter that batches items.
 - Synopsis
   - Collection links
@@ -8172,16 +7961,15 @@ A filter that batches items.
 
 This is the Jinja builtin filter plugin ‘batch’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.batch>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.batch
 
 ---
 
 ## ansible.builtin.pipe lookup – read output from a command — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pipe_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pipe_lookup.html
 
 **Contents:**
-
 - ansible.builtin.pipe lookup – read output from a command
 - Synopsis
 - Terms
@@ -8210,7 +7998,6 @@ Daniel Hokka Zakrisson
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: raw result of running date command
   ansible.builtin.debug:
@@ -8225,10 +8012,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.wait_for module – Waits for a condition before continuing — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wait_for_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wait_for_module.html
 
 **Contents:**
-
 - ansible.builtin.wait_for module – Waits for a condition before continuing
 - Synopsis
 - Parameters
@@ -8326,13 +8112,13 @@ Common return values are documented here, the following are the fields unique to
 
 The number of seconds that elapsed while waiting
 
-Dictionary containing all the named subgroups of the match, keyed by the subgroup name, as returned by <https://docs.python.org/3/library/re.html#re.MatchObject.groupdict>
+Dictionary containing all the named subgroups of the match, keyed by the subgroup name, as returned by https://docs.python.org/3/library/re.html#re.MatchObject.groupdict
 
 Sample: {"group": "match"}
 
 list / elements=string
 
-Tuple containing all the subgroups of the match as returned by <https://docs.python.org/3/library/re.html#re.MatchObject.groups>
+Tuple containing all the subgroups of the match as returned by https://docs.python.org/3/library/re.html#re.MatchObject.groups
 
 Sample: ["match 1", "match 2"]
 
@@ -8343,7 +8129,6 @@ Andrii Radyk (@AnderEnder)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Sleep for 300 seconds and continue with play
   ansible.builtin.wait_for:
@@ -8433,10 +8218,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.extract filter – extract a value based on an index or key — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/extract_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/extract_filter.html
 
 **Contents:**
-
 - ansible.builtin.extract filter – extract a value based on an index or key
 - Synopsis
 - Input
@@ -8472,7 +8256,6 @@ Resulting merge of supplied dictionaries.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # extracted => 'b', same as ['a', 'b', 'c'][1]
 extracted: "{{ 1 | extract(['a', 'b', 'c']) }}"
@@ -8488,10 +8271,9 @@ extracted_key_r: "{{ 0 | extract([{'a': 1, 'b': 2, 'c': 3}, {'x': 9, 'y': 10}], 
 
 ## ansible.builtin.validate_argument_spec module – Validate role argument specs. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/validate_argument_spec_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/validate_argument_spec_module.html
 
 **Contents:**
-
 - ansible.builtin.validate_argument_spec module – Validate role argument specs.
 - Synopsis
 - Parameters
@@ -8561,7 +8343,6 @@ Sample: {"argument_spec_name": "main", "name": "my_role", "path": "/home/user/ro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: verify vars needed for this task file are present when included
   ansible.builtin.validate_argument_spec:
@@ -8602,10 +8383,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.from_yaml_all filter – Convert a series of YAML documents into a variable structure — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/from_yaml_all_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/from_yaml_all_filter.html
 
 **Contents:**
-
 - ansible.builtin.from_yaml_all filter – Convert a series of YAML documents into a variable structure
 - Synopsis
 - Input
@@ -8633,7 +8413,6 @@ The variable resulting from deserializing the YAML documents.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # variable from string variable containing YAML documents
 {{ multidoc_yaml_string | from_yaml_all }}
@@ -8646,10 +8425,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.user module – Manage user accounts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/user_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/user_module.html
 
 **Contents:**
-
 - ansible.builtin.user module – Manage user accounts
 - Synopsis
 - Parameters
@@ -9006,7 +8784,6 @@ Stephen Fromm (@sfromm)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
   ansible.builtin.user:
@@ -9077,10 +8854,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.include_tasks module – Dynamically include a task list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/include_tasks_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/include_tasks_module.html
 
 **Contents:**
-
 - ansible.builtin.include_tasks module – Dynamically include a task list
 - Synopsis
 - Parameters
@@ -9155,7 +8931,6 @@ Ansible Core Team (@ansible)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - hosts: all
   tasks:
@@ -9201,17 +8976,16 @@ Example 1 (unknown):
 
 ## Migrating Roles to Roles in Collections on Galaxy — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/migrating_roles.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/migrating_roles.html
 
 **Contents:**
-
 - Migrating Roles to Roles in Collections on Galaxy
 - Comparing standalone roles to collection roles
 - Migrating a role to a collection
 - Migrating a role that contains plugins to a collection
   - Migrating other role plugins to a collection
     - Updating module_utils
-    - Importing from **init**.py
+    - Importing from __init__.py
   - Example: Migrating a standalone role with plugins to a collection
   - Example: Supporting standalone roles and migrated collection roles in a downstream RPM
 - Using ansible.legacy to access local custom modules from collections-based roles
@@ -9288,11 +9062,11 @@ Update documentation to use the FQCN. Plugins that use doc_fragments need to use
 
 Update relative imports work in collections to start with a period. For example, ./filename and ../asdfu/filestuff works but filename in same directory must be updated to ./filename.
 
-If you have a custom module_utils or import from **init**.py, you must also:
+If you have a custom module_utils or import from __init__.py, you must also:
 
 Change the Python namespace for custom module_utils to use the FQCN along with the ansible_collections convention. See Updating module_utils.
 
-Change how you import from **init**.py. See Importing from **init**.py.
+Change how you import from __init__.py. See Importing from __init__.py.
 
 If any of your custom modules use a custom module utility, once you migrate to a collection you cannot address the module utility in the top level ansible.module_utils Python namespace. Ansible does not merge content from collections into the Ansible internal Python namespace. Update any Python import statements that refer to custom module utilities when you migrate your custom content to collections. See module_utils in collections for more details.
 
@@ -9306,7 +9080,7 @@ In the Python example the module_utils is helper and the FQCN is ansible_example
 
 In the PowerShell example the module_utils is hyperv and the FQCN is ansible_example.community.plugins.module_utils.hyperv:
 
-Because of the way that the CPython interpreter does imports, combined with the way the Ansible plugin loader works, if your custom embedded module or plugin requires importing something from an **init**.py file, that also becomes part of your collection. You can either originate the content inside a standalone role or use the file name in the Python import statement. The following example is an **init**.py file that is part of a callback plugin found inside a collection named ansible_example.community.
+Because of the way that the CPython interpreter does imports, combined with the way the Ansible plugin loader works, if your custom embedded module or plugin requires importing something from an __init__.py file, that also becomes part of your collection. You can either originate the content inside a standalone role or use the file name in the Python import statement. The following example is an __init__.py file that is part of a callback plugin found inside a collection named ansible_example.community.
 
 In this example we have a standalone role called my-standalone-role.webapp to emulate a standalone role that contains dashes in the name (which is not valid in collections). This standalone role contains a custom module in the library/ directory called manage_webserver.
 
@@ -9341,7 +9115,6 @@ Some roles within a collection use local custom modules that are not part of the
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 role/
   ├── defaults
@@ -9358,7 +9131,6 @@ role/
 ```
 
 Example 2 (unknown):
-
 ```unknown
 mynamespace/
 └── mycollection/
@@ -9383,25 +9155,22 @@ mynamespace/
 ```
 
 Example 3 (unknown):
-
 ```unknown
 mynamespace.mycollection.role1
 ```
 
 Example 4 (unknown):
-
 ```unknown
-ansible-galaxy collection init mynamespace.mycollection
+$ ansible-galaxy collection init mynamespace.mycollection
 ```
 
 ---
 
 ## Testing collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_testing.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_testing.html
 
 **Contents:**
-
 - Testing collections
 - Testing tools
   - Sanity tests
@@ -9467,25 +9236,21 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible-test sanity --docker default -v
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-test units --docker default -v
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-test units --docker default -v --python 3.6
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible-test units --docker default -v --python 3.6 tests/unit/plugins/module_utils/foo/test_bar.py
 ```
@@ -9494,10 +9259,9 @@ ansible-test units --docker default -v --python 3.6 tests/unit/plugins/module_ut
 
 ## ansible.builtin.known_hosts module – Add or remove a host from the known_hosts file — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/known_hosts_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/known_hosts_module.html
 
 **Contents:**
-
 - ansible.builtin.known_hosts module – Add or remove a host from the known_hosts file
 - Synopsis
 - Parameters
@@ -9557,7 +9321,6 @@ Matthew Vernon (@mcv21)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Tell the host about our servers it might want to ssh to
   ansible.builtin.known_hosts:
@@ -9584,10 +9347,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.password_hash filter – convert input password into password_hash — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/password_hash_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/password_hash_filter.html
 
 **Contents:**
-
 - ansible.builtin.password_hash filter – convert input password into password_hash
 - Synopsis
 - Input
@@ -9622,7 +9384,6 @@ The resulting password hash.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # pwdhash => "$6$/bQCntzQ7VrgVcFa$VaMkmevkY1dqrx8neaenUDlVU.6L/.ojRbrnI4ID.yBHU6XON1cB422scCiXfUL5wRucMdLgJU0Fn38uoeBni/"
 pwdhash: "{{ 'testing' | password_hash }}"
@@ -9640,10 +9401,9 @@ wireguard_admin_password_hash: "{{ 'vagrant-libvirt' | password_hash(hashtype='b
 
 ## ansible.builtin.items filter – Return an iterator over the ``(key, value)`` items of a mapping. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/items_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/items_filter.html
 
 **Contents:**
-
 - ansible.builtin.items filter – Return an iterator over the ``(key, value)`` items of a mapping.
 - Synopsis
   - Collection links
@@ -9654,16 +9414,15 @@ Return an iterator over the ``(key, value)`` items of a mapping.
 
 This is the Jinja builtin filter plugin ‘items’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.items>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.items
 
 ---
 
 ## ansible.builtin.sum filter – Returns the sum of a sequence of numbers plus the value of parameter ‘start’. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sum_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sum_filter.html
 
 **Contents:**
-
 - ansible.builtin.sum filter – Returns the sum of a sequence of numbers plus the value of parameter ‘start’.
 - Synopsis
   - Collection links
@@ -9674,16 +9433,15 @@ Returns the sum of a sequence of numbers plus the value of parameter ‘start’
 
 This is the Jinja builtin filter plugin ‘sum’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.sum>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.sum
 
 ---
 
 ## ansible.builtin.contains test – does the list contain this element — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/contains_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/contains_test.html
 
 **Contents:**
-
 - ansible.builtin.contains test – does the list contain this element
 - Synopsis
 - Input
@@ -9710,7 +9468,6 @@ Returns True if the specified element is contained in the supplied sequence, Fal
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # simple expression
 {{ listofthings is contains('this') }}
@@ -9745,10 +9502,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.commonpath filter – gets the common path — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/commonpath_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/commonpath_filter.html
 
 **Contents:**
-
 - ansible.builtin.commonpath filter – gets the common path
 - Synopsis
 - Input
@@ -9775,7 +9531,6 @@ The longest common path from the given list of paths.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get the longest common path (for example - '/foo/bar') from the given list of paths
 # (for example - ['/foo/bar/foobar','/foo/bar'])
@@ -9786,10 +9541,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.equalto test – Same as a == b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/equalto_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/equalto_test.html
 
 **Contents:**
-
 - ansible.builtin.equalto test – Same as a == b.
 - Synopsis
   - Collection links
@@ -9798,16 +9552,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘equalto’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.equalto>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.equalto
 
 ---
 
 ## ansible.builtin.sort filter – Sort an iterable using Python’s :func:`sorted`. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sort_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sort_filter.html
 
 **Contents:**
-
 - ansible.builtin.sort filter – Sort an iterable using Python’s :func:`sorted`.
 - Synopsis
   - Collection links
@@ -9818,16 +9571,15 @@ Sort an iterable using Python’s :func:`sorted`.
 
 This is the Jinja builtin filter plugin ‘sort’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.sort>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.sort
 
 ---
 
 ## ansible.builtin.safe filter – Mark the value as safe which means that in an environment with automatic escaping enabled this variable will not be escaped. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/safe_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/safe_filter.html
 
 **Contents:**
-
 - ansible.builtin.safe filter – Mark the value as safe which means that in an environment with automatic escaping enabled this variable will not be escaped.
 - Synopsis
   - Collection links
@@ -9838,16 +9590,15 @@ Mark the value as safe which means that in an environment with automatic escapin
 
 This is the Jinja builtin filter plugin ‘safe’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.safe>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.safe
 
 ---
 
 ## ansible.builtin.iptables module – Modify iptables rules — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/iptables_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/iptables_module.html
 
 **Contents:**
-
 - ansible.builtin.iptables module – Modify iptables rules
 - Synopsis
 - Parameters
@@ -10124,7 +9875,6 @@ Sébastien DA ROCHA (@sebastiendarocha)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Block specific IP
   ansible.builtin.iptables:
@@ -10278,10 +10028,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.list lookup – simply returns what it is given. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/list_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/list_lookup.html
 
 **Contents:**
-
 - ansible.builtin.list lookup – simply returns what it is given.
 - Synopsis
 - Examples
@@ -10298,7 +10047,6 @@ basically the same as you fed in
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: unlike with_items you will get 3 items from this loop, the 2nd one being a list
   ansible.builtin.debug: var=item
@@ -10312,10 +10060,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.reverse filter – Reverse the object or return an iterator that iterates over it the other way round. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reverse_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reverse_filter.html
 
 **Contents:**
-
 - ansible.builtin.reverse filter – Reverse the object or return an iterator that iterates over it the other way round.
 - Synopsis
   - Collection links
@@ -10326,16 +10073,15 @@ Reverse the object or return an iterator that iterates over it the other way rou
 
 This is the Jinja builtin filter plugin ‘reverse’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.reverse>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.reverse
 
 ---
 
 ## ansible.builtin.reboot module – Reboot a machine — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reboot_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reboot_module.html
 
 **Contents:**
-
 - ansible.builtin.reboot module – Reboot a machine
 - Synopsis
 - Parameters
@@ -10438,7 +10184,6 @@ Sam Doran (@samdoran)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Unconditionally reboot the machine with all defaults
   ansible.builtin.reboot:
@@ -10466,10 +10211,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.expandvars filter – expand environment variables — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/expandvars_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/expandvars_filter.html
 
 **Contents:**
-
 - ansible.builtin.expandvars filter – expand environment variables
 - Synopsis
 - Input
@@ -10491,7 +10235,6 @@ The string with translated environment variable values.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get '/home/myuser/stuff.txt' from '$HOME/stuff.txt'
 {{ mypath | expandvars }}
@@ -10501,10 +10244,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.success test – check task success — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/success_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/success_test.html
 
 **Contents:**
-
 - ansible.builtin.success test – check task success
 - Synopsis
 - Input
@@ -10532,7 +10274,6 @@ Returns True if the task was successfully completed, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ taskresults is success }}
@@ -10542,10 +10283,9 @@ Example 1 (unknown):
 
 ## Verifying collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_verifying.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_verifying.html
 
 **Contents:**
-
 - Verifying collections
 - Verifying collections with ansible-galaxy
 - Verifying signed collections
@@ -10575,13 +10315,11 @@ When a collection is installed from a distribution server, the signatures provid
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible-galaxy collection verify my_namespace.my_collection
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-galaxy collection verify my_namespace.my_collection
 Collection my_namespace.my_collection contains modified content in the following files:
@@ -10591,7 +10329,6 @@ my_namespace.my_collection
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-galaxy collection verify my_namespace.my_collection -vvv
 ...
@@ -10602,7 +10339,6 @@ Successfully verified that checksums for 'my_namespace.my_collection:1.0.0' matc
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible-galaxy collection verify my_namespace.my_collection:1.0.0
 ```
@@ -10611,10 +10347,9 @@ ansible-galaxy collection verify my_namespace.my_collection:1.0.0
 
 ## ansible.builtin.ternary filter – Ternary operation filter — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ternary_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ternary_filter.html
 
 **Contents:**
-
 - ansible.builtin.ternary filter – Ternary operation filter
 - Synopsis
 - Input
@@ -10655,7 +10390,6 @@ The value indicated by the input.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # set first 10 volumes rw, rest as dp
 volume_mode: "{{ (item|int < 11)|ternary('rw', 'dp') }}"
@@ -10674,10 +10408,9 @@ vpc_subnet_id: "{{ (ec2_subnet_type == 'public') | ternary(ec2_vpc_public_subnet
 
 ## ansible.builtin.iterable test – Check if it’s possible to iterate over an object. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/iterable_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/iterable_test.html
 
 **Contents:**
-
 - ansible.builtin.iterable test – Check if it’s possible to iterate over an object.
 - Synopsis
   - Collection links
@@ -10688,16 +10421,15 @@ Check if it’s possible to iterate over an object.
 
 This is the Jinja builtin test plugin ‘iterable’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.iterable>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.iterable
 
 ---
 
 ## ansible.builtin.free strategy – Executes tasks without waiting for all hosts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/free_strategy.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/free_strategy.html
 
 **Contents:**
-
 - ansible.builtin.free strategy – Executes tasks without waiting for all hosts
 - Synopsis
   - Authors
@@ -10713,10 +10445,9 @@ With the free strategy, unlike the default linear strategy, a host that is slow 
 
 ## ansible.builtin.url test – is the string a valid URL — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/url_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/url_test.html
 
 **Contents:**
-
 - ansible.builtin.url test – is the string a valid URL
 - Synopsis
 - Input
@@ -10745,7 +10476,6 @@ Returns false if the string is not a URL, true otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # simple URL
 {{ 'http://example.com' is url }}
@@ -10761,10 +10491,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.script module – Runs a local script on a remote node after transferring it — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/script_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/script_module.html
 
 **Contents:**
-
 - ansible.builtin.script module – Runs a local script on a remote node after transferring it
 - Synopsis
 - Parameters
@@ -10838,7 +10567,6 @@ The official documentation on the ansible.windows.win_shell module.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Run a script with arguments (free form)
   ansible.builtin.script: /some/local/script.sh --some-argument 1234
@@ -10875,10 +10603,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.falsy test – Pythonic false — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/falsy_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/falsy_test.html
 
 **Contents:**
-
 - ansible.builtin.falsy test – Pythonic false
 - Synopsis
 - Input
@@ -10909,7 +10636,6 @@ Returns False if the condition is not “Python truthy”, True otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 thisisfalse: '{{ "any string" is falsy }}'
 thisistrue: '{{ "" is falsy }}'
@@ -10919,10 +10645,9 @@ thisistrue: '{{ "" is falsy }}'
 
 ## ansible.builtin.wordwrap filter – Wrap a string to the given width. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wordwrap_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/wordwrap_filter.html
 
 **Contents:**
-
 - ansible.builtin.wordwrap filter – Wrap a string to the given width.
 - Synopsis
   - Collection links
@@ -10933,16 +10658,15 @@ Wrap a string to the given width.
 
 This is the Jinja builtin filter plugin ‘wordwrap’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.wordwrap>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.wordwrap
 
 ---
 
 ## ansible.builtin.version test – compare version strings — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/version_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/version_test.html
 
 **Contents:**
-
 - ansible.builtin.version test – compare version strings
 - Synopsis
 - Input
@@ -10984,7 +10708,6 @@ Returns True or False depending on the outcome of the comparison.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: version test examples
   assert:
@@ -11011,10 +10734,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.to_uuid filter – namespaced UUID generator — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_uuid_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_uuid_filter.html
 
 **Contents:**
-
 - ansible.builtin.to_uuid filter – namespaced UUID generator
 - Synopsis
 - Input
@@ -11042,7 +10764,6 @@ Default: "361E6D51-FAEC-444A-9079-341386DA8E2E"
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To create a namespaced UUIDv5
 uuid: "{{ string | to_uuid(namespace='11111111-2222-3333-4444-555555555555') }}"
@@ -11056,10 +10777,9 @@ uuid: "{{ string | to_uuid }}"
 
 ## ansible.builtin.striptags filter – Strip SGML/XML tags and replace adjacent whitespace by one space. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/striptags_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/striptags_filter.html
 
 **Contents:**
-
 - ansible.builtin.striptags filter – Strip SGML/XML tags and replace adjacent whitespace by one space.
 - Synopsis
   - Collection links
@@ -11070,16 +10790,15 @@ Strip SGML/XML tags and replace adjacent whitespace by one space.
 
 This is the Jinja builtin filter plugin ‘striptags’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.striptags>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.striptags
 
 ---
 
 ## ansible.builtin.same_file test – compares two paths to see if they resolve to the same filesystem object — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/same_file_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/same_file_test.html
 
 **Contents:**
-
 - ansible.builtin.same_file test – compares two paths to see if they resolve to the same filesystem object
 - Synopsis
 - Input
@@ -11104,7 +10823,6 @@ Returns True if the paths correspond to the same location on the filesystem on t
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 amionelevelfromroot: "{{ '/etc/hosts' is same_file('../etc/hosts') }}"
 ```
@@ -11113,10 +10831,9 @@ amionelevelfromroot: "{{ '/etc/hosts' is same_file('../etc/hosts') }}"
 
 ## ansible.builtin.map filter – Applies a filter on a sequence of objects or looks up an attribute. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/map_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/map_filter.html
 
 **Contents:**
-
 - ansible.builtin.map filter – Applies a filter on a sequence of objects or looks up an attribute.
 - Synopsis
   - Collection links
@@ -11127,16 +10844,15 @@ Applies a filter on a sequence of objects or looks up an attribute.
 
 This is the Jinja builtin filter plugin ‘map’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.map>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.map
 
 ---
 
 ## ansible.builtin.group module – Add or remove groups — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/group_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/group_module.html
 
 **Contents:**
-
 - ansible.builtin.group module – Add or remove groups
 - Synopsis
 - Requirements
@@ -11229,7 +10945,6 @@ Stephen Fromm (@sfromm)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Ensure group "somegroup" exists
   ansible.builtin.group:
@@ -11247,10 +10962,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.win_splitdrive filter – Split a Windows path by the drive letter — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/win_splitdrive_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/win_splitdrive_filter.html
 
 **Contents:**
-
 - ansible.builtin.win_splitdrive filter – Split a Windows path by the drive letter
 - Synopsis
 - Input
@@ -11278,7 +10992,6 @@ In case of UNC path, first element is the hostname and share and the second the 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get the last name of a file Windows path, like ['C:', '\Users\asdf\foo.txt'] out of 'C:\Users\asdf\foo.txt'
 {{ mypath | win_splitdrive }}
@@ -11302,10 +11015,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.flatten filter – flatten lists within a list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/flatten_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/flatten_filter.html
 
 **Contents:**
-
 - ansible.builtin.flatten filter – flatten lists within a list
 - Synopsis
 - Input
@@ -11335,7 +11047,6 @@ list / elements=string
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # [1,2,3,4,5,6]
 flat: "{{ [1 , 2, [3, [4, 5]], 6] | flatten }}"
@@ -11348,10 +11059,9 @@ flatone: "{{ [1, 2, [3, [4, 5]], 6] | flatten(1) }}"
 
 ## ansible.builtin.lower test – Return true if the variable is lowercased. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lower_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lower_test.html
 
 **Contents:**
-
 - ansible.builtin.lower test – Return true if the variable is lowercased.
 - Synopsis
   - Collection links
@@ -11362,16 +11072,15 @@ Return true if the variable is lowercased.
 
 This is the Jinja builtin test plugin ‘lower’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.lower>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.lower
 
 ---
 
 ## ansible.builtin.forceescape filter – Enforce HTML escaping. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/forceescape_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/forceescape_filter.html
 
 **Contents:**
-
 - ansible.builtin.forceescape filter – Enforce HTML escaping.
 - Synopsis
   - Collection links
@@ -11382,16 +11091,15 @@ Enforce HTML escaping.
 
 This is the Jinja builtin filter plugin ‘forceescape’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.forceescape>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.forceescape
 
 ---
 
 ## ansible.builtin.local connection – execute on controller — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/local_connection.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/local_connection.html
 
 **Contents:**
-
 - ansible.builtin.local connection – execute on controller
 - Synopsis
 - Parameters
@@ -11440,14 +11148,12 @@ The remote user is ignored, the user with which the ansible CLI was executed is 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 pipelining = false
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [connection]
 pipelining = false
@@ -11457,10 +11163,9 @@ pipelining = false
 
 ## ansible.builtin.gt test – Same as a > b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/gt_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/gt_test.html
 
 **Contents:**
-
 - ansible.builtin.gt test – Same as a > b.
 - Synopsis
   - Collection links
@@ -11469,16 +11174,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘gt’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.gt>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.gt
 
 ---
 
 ## ansible.builtin.systemd_service module – Manage systemd units — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/systemd_service_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/systemd_service_module.html
 
 **Contents:**
-
 - ansible.builtin.systemd_service module – Manage systemd units
 - Synopsis
 - Requirements
@@ -11567,7 +11271,6 @@ Sample: {"ActiveEnterTimestamp": "Sun 2016-05-15 18:28:49 EDT", "ActiveEnterTime
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Make sure a service unit is running
   ansible.builtin.systemd_service:
@@ -11623,10 +11326,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.mapping test – Return true if the object is a mapping. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mapping_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mapping_test.html
 
 **Contents:**
-
 - ansible.builtin.mapping test – Return true if the object is a mapping.
 - Synopsis
   - Collection links
@@ -11637,16 +11339,15 @@ Return true if the object is a mapping.
 
 This is the Jinja builtin test plugin ‘mapping’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.mapping>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.mapping
 
 ---
 
 ## ansible.builtin.escape filter – Replace the characters ``&``, ``<``, ``>``, ``’``, and ``”`` in the string with HTML-safe sequences. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/escape_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/escape_filter.html
 
 **Contents:**
-
 - ansible.builtin.escape filter – Replace the characters ``&``, ``<``, ``>``, ``’``, and ``”`` in the string with HTML-safe sequences.
 - Synopsis
   - Collection links
@@ -11657,16 +11358,15 @@ Replace the characters ``&``, ``<``, ``>``, ``’``, and ``”`` in the string w
 
 This is the Jinja builtin filter plugin ‘escape’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.escape>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.escape
 
 ---
 
 ## ansible.builtin.indent filter – Return a copy of the string with each line indented by 4 spaces. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/indent_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/indent_filter.html
 
 **Contents:**
-
 - ansible.builtin.indent filter – Return a copy of the string with each line indented by 4 spaces.
 - Synopsis
   - Collection links
@@ -11677,16 +11377,15 @@ Return a copy of the string with each line indented by 4 spaces.
 
 This is the Jinja builtin filter plugin ‘indent’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.indent>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.indent
 
 ---
 
 ## ansible.builtin.link test – does the path reference existing symbolic link — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/link_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/link_test.html
 
 **Contents:**
-
 - ansible.builtin.link test – does the path reference existing symbolic link
 - Synopsis
 - Input
@@ -11708,7 +11407,6 @@ Returns True if the path corresponds to an existing symlink on the filesystem on
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ismyhostsalink: "{{ '/etc/hosts' is link}}"
 list_of_symlinks: "{{ list_of_paths | select('link') }}"
@@ -11718,10 +11416,9 @@ list_of_symlinks: "{{ list_of_paths | select('link') }}"
 
 ## ansible.builtin.debug strategy – Executes tasks in interactive debug session. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/debug_strategy.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/debug_strategy.html
 
 **Contents:**
-
 - ansible.builtin.debug strategy – Executes tasks in interactive debug session.
 - Synopsis
   - Authors
@@ -11735,10 +11432,9 @@ Task execution is ‘linear’ but controlled by an interactive debug session.
 
 ## ansible.builtin.changed test – did the task require changes — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/changed_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/changed_test.html
 
 **Contents:**
-
 - ansible.builtin.changed test – did the task require changes
 - Synopsis
 - Input
@@ -11764,7 +11460,6 @@ Returns True if the task was required changes, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ taskresults is changed }}
@@ -11774,10 +11469,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.fileglob filter – explode a path glob to matching files — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fileglob_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fileglob_filter.html
 
 **Contents:**
-
 - ansible.builtin.fileglob filter – explode a path glob to matching files
 - Synopsis
 - Input
@@ -11800,7 +11494,6 @@ List of files matched.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # found = ['/etc/hosts', '/etc/hasts']
 found: "{{ '/etc/h?sts' | fileglob }}"
@@ -11810,10 +11503,9 @@ found: "{{ '/etc/h?sts' | fileglob }}"
 
 ## ansible.builtin.even test – Return true if the variable is even. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/even_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/even_test.html
 
 **Contents:**
-
 - ansible.builtin.even test – Return true if the variable is even.
 - Synopsis
   - Collection links
@@ -11824,16 +11516,15 @@ Return true if the variable is even.
 
 This is the Jinja builtin test plugin ‘even’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.even>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.even
 
 ---
 
 ## Testing Ansible and Collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_running_locally.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_running_locally.html
 
 **Contents:**
-
 - Testing Ansible and Collections
 - Setup
   - Testing an Ansible Collection
@@ -12056,25 +11747,21 @@ To clear data between test runs, use the ansible-test coverage erase command.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 git clone https://github.com/ansible-collections/community.windows ~/dev/ansible_collections/community/windows
 ```
 
 Example 2 (unknown):
-
 ```unknown
 git clone https://github.com/ansible-collections/ansible.windows ~/dev/ansible_collections/ansible/windows
 ```
 
 Example 3 (unknown):
-
 ```unknown
 cd ~/dev/ansible_collections/community/windows
 ```
 
 Example 4 (unknown):
-
 ```unknown
 git clone https://github.com/ansible/ansible ~/dev/ansible
 ```
@@ -12083,10 +11770,9 @@ git clone https://github.com/ansible/ansible ~/dev/ansible
 
 ## ansible.builtin.shuffle filter – randomize a list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/shuffle_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/shuffle_filter.html
 
 **Contents:**
-
 - ansible.builtin.shuffle filter – randomize a list
 - Synopsis
 - Input
@@ -12114,7 +11800,6 @@ Random number or list element.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 randomized_list: "{{ ['a','b','c'] | shuffle}}"
 per_host_repeatable: "{{ ['a','b','c'] | shuffle(seed=inventory_hostname) }}"
@@ -12124,10 +11809,9 @@ per_host_repeatable: "{{ ['a','b','c'] | shuffle(seed=inventory_hostname) }}"
 
 ## ansible.builtin.blockinfile module – Insert/update/remove a text block surrounded by marker lines — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/blockinfile_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/blockinfile_module.html
 
 **Contents:**
-
 - ansible.builtin.blockinfile module – Insert/update/remove a text block surrounded by marker lines
 - Synopsis
 - Parameters
@@ -12292,7 +11976,6 @@ Yaegashi Takeshi (@yaegashi)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # Before Ansible 2.3, option 'dest' or 'name' was used instead of 'path'
 - name: Insert/Update "Match User" configuration block in /etc/ssh/sshd_config prepending and appending a new line
@@ -12358,10 +12041,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.greaterthan test – Same as a > b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/greaterthan_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/greaterthan_test.html
 
 **Contents:**
-
 - ansible.builtin.greaterthan test – Same as a > b.
 - Synopsis
   - Collection links
@@ -12370,16 +12052,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘greaterthan’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.greaterthan>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.greaterthan
 
 ---
 
 ## ansible.builtin.replace module – Replace all instances of a particular string in a file using a back-referenced regular expression — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/replace_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/replace_module.html
 
 **Contents:**
-
 - ansible.builtin.replace module – Replace all instances of a particular string in a file using a back-referenced regular expression
 - Synopsis
 - Parameters
@@ -12399,7 +12080,7 @@ If specified, only content after this match will be replaced/removed.
 
 Can be used in combination with before.
 
-Uses Python regular expressions; see <https://docs.python.org/3/library/re.html>.
+Uses Python regular expressions; see https://docs.python.org/3/library/re.html.
 
 Uses DOTALL, which means the . special character can match newlines.
 
@@ -12419,7 +12100,7 @@ If specified, only content before this match will be replaced/removed.
 
 Can be used in combination with after.
 
-Uses Python regular expressions; see <https://docs.python.org/3/library/re.html>.
+Uses Python regular expressions; see https://docs.python.org/3/library/re.html.
 
 Uses DOTALL, which means the . special character can match newlines.
 
@@ -12457,7 +12138,7 @@ Before Ansible 2.3 this option was only usable as dest, destfile and name.
 
 The regular expression to look for in the contents of the file.
 
-Uses Python regular expressions; see <https://docs.python.org/3/library/re.html>.
+Uses Python regular expressions; see https://docs.python.org/3/library/re.html.
 
 Uses MULTILINE mode, which means ^ and $ match the beginning and end of the file, as well as the beginning and end respectively of each line of the file.
 
@@ -12523,7 +12204,7 @@ Can automatically decrypt Ansible vaulted files
 
 As of Ansible 2.3, the dest option has been changed to path as default, but dest still works as well.
 
-As of Ansible 2.7.10, the combined use of before and after works properly. If you were relying on the previous incorrect behavior, you may be need to adjust your tasks. See <https://github.com/ansible/ansible/issues/31354> for details.
+As of Ansible 2.7.10, the combined use of before and after works properly. If you were relying on the previous incorrect behavior, you may be need to adjust your tasks. See https://github.com/ansible/ansible/issues/31354 for details.
 
 Option follow has been removed in Ansible 2.5, because this module modifies the contents of the file so follow=no does not make sense.
 
@@ -12532,7 +12213,6 @@ Evan Kaufman (@EvanK)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Replace old hostname with new hostname (requires Ansible >= 2.4)
   ansible.builtin.replace:
@@ -12606,10 +12286,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.defined test – Return true if the variable is defined. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/defined_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/defined_test.html
 
 **Contents:**
-
 - ansible.builtin.defined test – Return true if the variable is defined.
 - Synopsis
   - Collection links
@@ -12620,16 +12299,15 @@ Return true if the variable is defined.
 
 This is the Jinja builtin test plugin ‘defined’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.defined>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.defined
 
 ---
 
 ## ansible.builtin.first filter – Return the first item of a sequence. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/first_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/first_filter.html
 
 **Contents:**
-
 - ansible.builtin.first filter – Return the first item of a sequence.
 - Synopsis
   - Collection links
@@ -12640,16 +12318,15 @@ Return the first item of a sequence.
 
 This is the Jinja builtin filter plugin ‘first’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.first>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.first
 
 ---
 
 ## ansible.builtin.format filter – Apply the given values to a `printf-style`_ format string, like ``string % values``. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/format_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/format_filter.html
 
 **Contents:**
-
 - ansible.builtin.format filter – Apply the given values to a `printf-style`_ format string, like ``string % values``.
 - Synopsis
   - Collection links
@@ -12660,16 +12337,15 @@ Apply the given values to a `printf-style`_ format string, like ``string % value
 
 This is the Jinja builtin filter plugin ‘format’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.format>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.format
 
 ---
 
 ## ansible.builtin.getent module – A wrapper to the unix getent utility — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/getent_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/getent_module.html
 
 **Contents:**
-
 - ansible.builtin.getent module – A wrapper to the unix getent utility
 - Synopsis
 - Parameters
@@ -12719,7 +12395,6 @@ Starting at 2.11 it now returns multiple duplicate entries, previously it only r
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Get root user info
   ansible.builtin.getent:
@@ -12762,10 +12437,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.union filter – union of lists — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/union_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/union_filter.html
 
 **Contents:**
-
 - ansible.builtin.union filter – union of lists
 - Synopsis
 - Input
@@ -12805,7 +12479,6 @@ A unique list of all the elements from both lists.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # return the unique elements of list1 added to list2
 # list1: [1, 2, 5, 1, 3, 4, 10]
@@ -12818,10 +12491,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.float filter – Convert the value into a floating point number. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/float_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/float_filter.html
 
 **Contents:**
-
 - ansible.builtin.float filter – Convert the value into a floating point number.
 - Synopsis
   - Collection links
@@ -12832,16 +12504,15 @@ Convert the value into a floating point number.
 
 This is the Jinja builtin filter plugin ‘float’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.float>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.float
 
 ---
 
 ## ansible.builtin.slice filter – Slice an iterator and return a list of lists containing those items. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/slice_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/slice_filter.html
 
 **Contents:**
-
 - ansible.builtin.slice filter – Slice an iterator and return a list of lists containing those items.
 - Synopsis
   - Collection links
@@ -12852,16 +12523,15 @@ Slice an iterator and return a list of lists containing those items.
 
 This is the Jinja builtin filter plugin ‘slice’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.slice>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.slice
 
 ---
 
 ## ansible.builtin.host_pinned strategy – Executes tasks on each host without interruption — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/host_pinned_strategy.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/host_pinned_strategy.html
 
 **Contents:**
-
 - ansible.builtin.host_pinned strategy – Executes tasks on each host without interruption
 - Synopsis
   - Authors
@@ -12875,10 +12545,9 @@ Task execution is as fast as possible per host in batch as defined by serial (de
 
 ## ansible.builtin.linear strategy – Executes tasks in a linear fashion — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/linear_strategy.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/linear_strategy.html
 
 **Contents:**
-
 - ansible.builtin.linear strategy – Executes tasks in a linear fashion
 - Synopsis
 - Notes
@@ -12895,10 +12564,9 @@ This was the default Ansible behaviour before ‘strategy plugins’ were introd
 
 ## Migrating Ansible content to a different collection — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_migrating.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_migrating.html
 
 **Contents:**
-
 - Migrating Ansible content to a different collection
 - Migrating content
   - Adding the content to the new collection
@@ -13024,7 +12692,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 $modules/monitoring/grafana/grafana_plugin.py:
     migrated_to: community.grafana
@@ -13046,10 +12713,9 @@ $plugins/doc_fragments/grafana.py:
 
 ## ansible.builtin.varnames lookup – Lookup matching variable names — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/varnames_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/varnames_lookup.html
 
 **Contents:**
-
 - ansible.builtin.varnames lookup – Lookup matching variable names
 - Synopsis
 - Terms
@@ -13074,7 +12740,6 @@ List of the variable names requested.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: List variables that start with qz_
   ansible.builtin.debug: msg="{{ lookup('ansible.builtin.varnames', '^qz_.+') }}"
@@ -13101,10 +12766,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.md5 filter – MD5 hash of input data — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/md5_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/md5_filter.html
 
 **Contents:**
-
 - ansible.builtin.md5 filter – MD5 hash of input data
 - Synopsis
 - Input
@@ -13128,7 +12792,6 @@ The MD5 hash of the input.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # md5hash => "ae2b1fca515949e5d54fb22b8ed95575"
 md5hash: "{{ 'testing' | md5 }}"
@@ -13138,10 +12801,9 @@ md5hash: "{{ 'testing' | md5 }}"
 
 ## ansible.builtin.meta module – Execute Ansible ‘actions’ — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/meta_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/meta_module.html
 
 **Contents:**
-
 - ansible.builtin.meta module – Execute Ansible ‘actions’
 - Synopsis
 - Parameters
@@ -13237,7 +12899,6 @@ Fail with custom message.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # Example showing flushing handlers on demand, not at end of play
 - ansible.builtin.template:
@@ -13290,10 +12951,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.set_fact module – Set host variable(s) and fact(s). — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/set_fact_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/set_fact_module.html
 
 **Contents:**
-
 - ansible.builtin.set_fact module – Set host variable(s) and fact(s).
 - Synopsis
 - Parameters
@@ -13318,7 +12978,7 @@ This module has a corresponding action plugin.
 
 This boolean converts the variable into an actual ‘fact’ which will also be added to the fact cache. It does not enable fact caching across runs, it just means it will work with it if already enabled.
 
-Normally this module creates ‘host level variables’ and has much higher precedence, this option changes the nature and precedence (by 7 steps) of the variable created. <https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable>
+Normally this module creates ‘host level variables’ and has much higher precedence, this option changes the nature and precedence (by 7 steps) of the variable created. https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable
 
 This actually creates 2 copies of the variable, a normal ‘set_fact’ host variable with high precedence and a lower ‘ansible_fact’ one that is available for persistence via the facts cache plugin. This creates a possibly confusing interaction with meta: clear_facts as it will remove the ‘ansible_fact’ but not the host variable.
 
@@ -13383,7 +13043,6 @@ Dag Wieers (@dagwieers)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Setting host facts using key=value pairs, this format can only create strings or booleans
   ansible.builtin.set_fact: one_fact="something" other_fact="{{ local_var }}"
@@ -13427,10 +13086,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.title filter – Return a titlecased version of the value. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/title_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/title_filter.html
 
 **Contents:**
-
 - ansible.builtin.title filter – Return a titlecased version of the value.
 - Synopsis
   - Collection links
@@ -13441,16 +13099,15 @@ Return a titlecased version of the value.
 
 This is the Jinja builtin filter plugin ‘title’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.title>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.title
 
 ---
 
 ## ansible.builtin.abs filter – Return the absolute value of the argument. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/abs_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/abs_filter.html
 
 **Contents:**
-
 - ansible.builtin.abs filter – Return the absolute value of the argument.
 - Synopsis
   - Collection links
@@ -13461,16 +13118,15 @@ Return the absolute value of the argument.
 
 This is the Jinja builtin filter plugin ‘abs’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.abs>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.abs
 
 ---
 
 ## Generating changelogs and porting guide entries in a collection — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_changelogs.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_changelogs.html
 
 **Contents:**
-
 - Generating changelogs and porting guide entries in a collection
 - Understanding antsibull-changelog
   - Generating changelogs
@@ -13519,7 +13175,7 @@ Use the antsibull-changelog tool.
 
 If are not using this tool, include the properly formatted changelog.yaml file into your collection. See the changelog.yaml format for details.
 
-Add a link to own changelogs or release notes in any format by opening an issue at <https://github.com/ansible-community/ansible-build-data/> with the HTML link to that information.
+Add a link to own changelogs or release notes in any format by opening an issue at https://github.com/ansible-community/ansible-build-data/ with the HTML link to that information.
 
 For the first two options, Ansible pulls the changelog details from Galaxy so your changelogs must be included in the collection version on Galaxy that is included in the upcoming Ansible release.
 
@@ -13535,10 +13191,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## ansible.builtin.package module – Generic OS package manager — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/package_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/package_module.html
 
 **Contents:**
-
 - ansible.builtin.package module – Generic OS package manager
 - Synopsis
 - Requirements
@@ -13608,7 +13263,6 @@ While ansible.builtin.package abstracts package managers to ease dealing with mu
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Install ntpdate
   ansible.builtin.package:
@@ -13639,10 +13293,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.sameas test – Check if an object points to the same memory address than another object. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sameas_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sameas_test.html
 
 **Contents:**
-
 - ansible.builtin.sameas test – Check if an object points to the same memory address than another object.
 - Synopsis
   - Collection links
@@ -13653,16 +13306,15 @@ Check if an object points to the same memory address than another object.
 
 This is the Jinja builtin test plugin ‘sameas’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.sameas>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.sameas
 
 ---
 
 ## ansible.builtin.tojson filter – Serialize an object to a string of JSON, and mark it safe to render in HTML. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/tojson_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/tojson_filter.html
 
 **Contents:**
-
 - ansible.builtin.tojson filter – Serialize an object to a string of JSON, and mark it safe to render in HTML.
 - Synopsis
   - Collection links
@@ -13673,16 +13325,15 @@ Serialize an object to a string of JSON, and mark it safe to render in HTML.
 
 This is the Jinja builtin filter plugin ‘tojson’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.tojson>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.tojson
 
 ---
 
 ## ansible.builtin.pprint filter – Pretty print a variable. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pprint_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pprint_filter.html
 
 **Contents:**
-
 - ansible.builtin.pprint filter – Pretty print a variable.
 - Synopsis
   - Collection links
@@ -13693,16 +13344,15 @@ Pretty print a variable.
 
 This is the Jinja builtin filter plugin ‘pprint’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.pprint>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.pprint
 
 ---
 
 ## ansible.builtin.number test – Return true if the variable is a number. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/number_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/number_test.html
 
 **Contents:**
-
 - ansible.builtin.number test – Return true if the variable is a number.
 - Synopsis
   - Collection links
@@ -13713,16 +13363,15 @@ Return true if the variable is a number.
 
 This is the Jinja builtin test plugin ‘number’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.number>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.number
 
 ---
 
 ## ansible.builtin.search test – Does string match a regular expression — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/search_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/search_test.html
 
 **Contents:**
-
 - ansible.builtin.search test – Does string match a regular expression
 - Synopsis
 - Input
@@ -13753,7 +13402,6 @@ Returns True if there is a match, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 url: "https://example.com/users/foo/resources/bar"
 foundmatch: url is search("https://example.com/users/.*/resources")
@@ -13764,10 +13412,9 @@ alsomatch: url is search("users/.*/resources")
 
 ## ansible.builtin.dirname filter – get a path’s directory name — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dirname_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dirname_filter.html
 
 **Contents:**
-
 - ansible.builtin.dirname filter – get a path’s directory name
 - Synopsis
 - Input
@@ -13793,7 +13440,6 @@ The directory portion of the original path.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get the dir name of a file path, like '/etc/asdf' out of '/etc/asdf/foo.txt'.
 {{ mypath | dirname }}
@@ -13803,10 +13449,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.link_exists test – does the path exist, no follow — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/link_exists_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/link_exists_test.html
 
 **Contents:**
-
 - ansible.builtin.link_exists test – does the path exist, no follow
 - Synopsis
 - Input
@@ -13828,7 +13473,6 @@ Returns True if the path corresponds to an existing filesystem object on the con
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ismyhostsalink: "{{ '/etc/hosts' is link_exists}}"
 list_of_symlinks: "{{ list_of_paths | select('link_exists') }}"
@@ -13838,10 +13482,9 @@ list_of_symlinks: "{{ list_of_paths | select('link_exists') }}"
 
 ## ansible.builtin.none test – Return true if the variable is none. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/none_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/none_test.html
 
 **Contents:**
-
 - ansible.builtin.none test – Return true if the variable is none.
 - Synopsis
   - Collection links
@@ -13852,16 +13495,15 @@ Return true if the variable is none.
 
 This is the Jinja builtin test plugin ‘none’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.none>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.none
 
 ---
 
 ## ansible.builtin.string test – Return true if the object is a string. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/string_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/string_test.html
 
 **Contents:**
-
 - ansible.builtin.string test – Return true if the object is a string.
 - Synopsis
   - Collection links
@@ -13872,16 +13514,15 @@ Return true if the object is a string.
 
 This is the Jinja builtin test plugin ‘string’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.string>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.string
 
 ---
 
 ## ansible.builtin.unique filter – set of unique items of a list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unique_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unique_filter.html
 
 **Contents:**
-
 - ansible.builtin.unique filter – set of unique items of a list
 - Synopsis
 - Input
@@ -13919,7 +13560,6 @@ A list with unique elements, also known as a set.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # return only the unique elements of list1
 # list1: [1, 2, 5, 1, 3, 4, 10]
@@ -13952,10 +13592,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.items2dict filter – Consolidate a list of itemized dictionaries into a dictionary — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/items2dict_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/items2dict_filter.html
 
 **Contents:**
-
 - ansible.builtin.items2dict filter – Consolidate a list of itemized dictionaries into a dictionary
 - Synopsis
 - Input
@@ -13993,7 +13632,6 @@ Dictionary with the consolidated key/values.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # mydict =>  { "hi": "bye", "ciao": "ciao" }
 mydict: {{ [{'key': 'hi', 'value': 'bye'}, {'key': 'ciao', 'value': 'ciao'} ]| items2dict}}
@@ -14014,10 +13652,9 @@ vars:
 
 ## ansible.builtin.xmlattr filter – Create an SGML/XML attribute string based on the items in a dict. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/xmlattr_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/xmlattr_filter.html
 
 **Contents:**
-
 - ansible.builtin.xmlattr filter – Create an SGML/XML attribute string based on the items in a dict.
 - Synopsis
   - Collection links
@@ -14028,16 +13665,15 @@ Create an SGML/XML attribute string based on the items in a dict.
 
 This is the Jinja builtin filter plugin ‘xmlattr’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.xmlattr>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.xmlattr
 
 ---
 
 ## ansible.builtin.symmetric_difference filter – different items from two lists — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/symmetric_difference_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/symmetric_difference_filter.html
 
 **Contents:**
-
 - ansible.builtin.symmetric_difference filter – different items from two lists
 - Synopsis
 - Input
@@ -14075,7 +13711,6 @@ A unique list of the elements from two lists that are unique to each one.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # return the elements of list1 not in list2 and the elements in list2 not in list1
 # list1: [1, 2, 5, 1, 3, 4, 10]
@@ -14088,10 +13723,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.all test – are all conditions in a list true — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/all_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/all_test.html
 
 **Contents:**
-
 - ansible.builtin.all test – are all conditions in a list true
 - Synopsis
 - Input
@@ -14117,7 +13751,6 @@ Returns True if all elements of the list were True, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 varexpression: "{{ 3 == 3 }}"
 # are all statements true?
@@ -14128,10 +13761,9 @@ varexpression: "{{ 3 == 3 }}"
 
 ## Using shared resources in collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_shared.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_shared.html
 
 **Contents:**
-
 - Using shared resources in collections
 - Using documentation fragments in collections
 - Leveraging optional module utilities in collections
@@ -14180,7 +13812,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 extends_documentation_fragment:
   - kubernetes.core.k8s_name_options
@@ -14190,13 +13821,11 @@ extends_documentation_fragment:
 ```
 
 Example 2 (python):
-
 ```python
 from ansible.module_utils.common.respawn import respawn_module
 ```
 
 Example 3 (python):
-
 ```python
 try:
     from ansible.module_utils.common.respawn import respawn_module
@@ -14211,7 +13840,6 @@ if needs_respawn:
 ```
 
 Example 4 (unknown):
-
 ```unknown
 dependencies: {'[email protected]:organization/repo_name.git': 'devel'}
 ```
@@ -14220,10 +13848,9 @@ dependencies: {'[email protected]:organization/repo_name.git': 'devel'}
 
 ## ansible.builtin.hostname module – Manage hostname — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/hostname_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/hostname_module.html
 
 **Contents:**
-
 - ansible.builtin.hostname module – Manage hostname
 - Synopsis
 - Requirements
@@ -14269,7 +13896,6 @@ Hideki Saito (@saito-hideki)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Set a hostname
   ansible.builtin.hostname:
@@ -14285,10 +13911,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.type_debug filter – show input data type — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/type_debug_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/type_debug_filter.html
 
 **Contents:**
-
 - ansible.builtin.type_debug filter – show input data type
 - Synopsis
 - Input
@@ -14312,7 +13937,6 @@ Adrian Likins (@alikins)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # get type of 'myvar'
 {{ myvar | type_debug }}
@@ -14322,10 +13946,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.directory test – does the path resolve to an existing directory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/directory_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/directory_test.html
 
 **Contents:**
-
 - ansible.builtin.directory test – does the path resolve to an existing directory
 - Synopsis
 - Input
@@ -14345,7 +13968,6 @@ Returns True if the path corresponds to an existing directory on the filesystem 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 vars:
   my_etc_hosts_not_a_dir: "{{ '/etc/hosts' is directory}}"
@@ -14356,10 +13978,9 @@ vars:
 
 ## ansible.builtin.config lookup – Display the ‘resolved’ Ansible option values. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/config_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/config_lookup.html
 
 **Contents:**
-
 - ansible.builtin.config lookup – Display the ‘resolved’ Ansible option values.
 - Synopsis
 - Terms
@@ -14413,7 +14034,6 @@ Optionally, a list of 2 element lists (value, origin) if show_origin is true
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Show configured default become user
   ansible.builtin.debug: msg="{{ lookup('ansible.builtin.config', 'DEFAULT_BECOME_USER')}}"
@@ -14447,10 +14067,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.cmd shell – Windows Command Prompt — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/cmd_shell.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/cmd_shell.html
 
 **Contents:**
-
 - ansible.builtin.cmd shell – Windows Command Prompt
 - Synopsis
 - Parameters
@@ -14481,14 +14100,12 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [powershell]
 async_dir = %USERPROFILE%\.ansible_async
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [powershell]
 remote_tmp = %TEMP%
@@ -14498,10 +14115,9 @@ remote_tmp = %TEMP%
 
 ## ansible.builtin.unreachable test – Did task end due to the host was unreachable — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unreachable_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unreachable_test.html
 
 **Contents:**
-
 - ansible.builtin.unreachable test – Did task end due to the host was unreachable
 - Synopsis
 - Input
@@ -14527,7 +14143,6 @@ Returns True if the task flagged the host as unreachable, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ taskresults is unreachable }}
@@ -14537,10 +14152,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.truthy test – Pythonic true — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/truthy_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/truthy_test.html
 
 **Contents:**
-
 - ansible.builtin.truthy test – Pythonic true
 - Synopsis
 - Input
@@ -14571,7 +14185,6 @@ Returns True if the condition is not “Python truthy”, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 thisistrue: '{{ "any string" is truthy }}'
 thisisfalse: '{{ "" is truthy }}'
@@ -14581,10 +14194,9 @@ thisisfalse: '{{ "" is truthy }}'
 
 ## ansible.builtin.rejectattr filter – Filters a sequence of objects by applying a test to the specified attribute of each object, and rejecting the objects with the test succeeding. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/rejectattr_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/rejectattr_filter.html
 
 **Contents:**
-
 - ansible.builtin.rejectattr filter – Filters a sequence of objects by applying a test to the specified attribute of each object, and rejecting the objects with the test succeeding.
 - Synopsis
   - Collection links
@@ -14595,16 +14207,15 @@ Filters a sequence of objects by applying a test to the specified attribute of e
 
 This is the Jinja builtin filter plugin ‘rejectattr’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.rejectattr>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.rejectattr
 
 ---
 
 ## ansible.builtin.subversion module – Deploys a subversion repository — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subversion_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subversion_module.html
 
 **Contents:**
-
 - ansible.builtin.subversion module – Deploys a subversion repository
 - Synopsis
 - Requirements
@@ -14674,7 +14285,6 @@ Dane Summers (@dsummersl)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Checkout subversion repository to specified folder
   ansible.builtin.subversion:
@@ -14699,10 +14309,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.in test – Check if value is in seq. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/in_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/in_test.html
 
 **Contents:**
-
 - ansible.builtin.in test – Check if value is in seq.
 - Synopsis
   - Collection links
@@ -14713,16 +14322,15 @@ Check if value is in seq.
 
 This is the Jinja builtin test plugin ‘in’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.in>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.in
 
 ---
 
 ## ansible.builtin.urlize filter – Convert URLs in text into clickable links. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urlize_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urlize_filter.html
 
 **Contents:**
-
 - ansible.builtin.urlize filter – Convert URLs in text into clickable links.
 - Synopsis
   - Collection links
@@ -14733,16 +14341,15 @@ Convert URLs in text into clickable links.
 
 This is the Jinja builtin filter plugin ‘urlize’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.urlize>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.urlize
 
 ---
 
 ## Collections index — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_index.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_index.html
 
 **Contents:**
-
 - Collections index
 
 You can find an index of collections at Collection Index.
@@ -14751,10 +14358,9 @@ You can find an index of collections at Collection Index.
 
 ## ansible.builtin.su become – Substitute User — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/su_become.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/su_become.html
 
 **Contents:**
-
 - ansible.builtin.su become – Substitute User
 - Synopsis
 - Parameters
@@ -14824,28 +14430,24 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [privilege_escalation]
 become_exe = su
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [su_become_plugin]
 executable = su
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [privilege_escalation]
 become_flags = ""
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [su_become_plugin]
 flags = ""
@@ -14855,10 +14457,9 @@ flags = ""
 
 ## ansible.builtin.expect module – Executes a command and responds to prompts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/expect_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/expect_module.html
 
 **Contents:**
-
 - ansible.builtin.expect module – Executes a command and responds to prompts
 - Synopsis
 - Requirements
@@ -14892,7 +14493,7 @@ dictionary / required
 
 Mapping of prompt regular expressions and corresponding answer(s).
 
-Each key in responses is a Python regex <https://docs.python.org/3/library/re.html#regular-expression-syntax>.
+Each key in responses is a Python regex https://docs.python.org/3/library/re.html#regular-expression-syntax.
 
 The value of each key is a string or list of strings. If the value is a string and the prompt is encountered multiple times, the answer will be repeated. Provide the value as a list to give different answers for successive matches.
 
@@ -14921,7 +14522,6 @@ Execute shell commands on targets.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Case insensitive password string match
   ansible.builtin.expect:
@@ -14959,10 +14559,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.debug module – Print statements during execution — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/debug_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/debug_module.html
 
 **Contents:**
-
 - ansible.builtin.debug module – Print statements during execution
 - Synopsis
 - Parameters
@@ -15027,7 +14626,6 @@ Dag Wieers (@dagwieers)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Print the gateway for each host when defined
   ansible.builtin.debug:
@@ -15059,10 +14657,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.permutations filter – permutations from the elements of a list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/permutations_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/permutations_filter.html
 
 **Contents:**
-
 - ansible.builtin.permutations filter – permutations from the elements of a list
 - Synopsis
 - Input
@@ -15096,7 +14693,6 @@ List of permutations lists resulting from the supplied elements and list size.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # ptrs_of_two => [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 2, 1 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 3, 1 ], [ 3, 2 ], [ 3, 4 ], [ 3, 5 ], [ 4, 1 ], [ 4, 2 ], [ 4, 3 ], [ 4, 5 ], [ 5, 1 ], [ 5, 2 ], [ 5, 3 ], [ 5, 4 ] ]
 prts_of_two:  "{{ [1,2,3,4,5] | permutations(2) }}"
@@ -15106,10 +14702,9 @@ prts_of_two:  "{{ [1,2,3,4,5] | permutations(2) }}"
 
 ## ansible.builtin.uri module – Interacts with webservices — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/uri_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/uri_module.html
 
 **Contents:**
-
 - ansible.builtin.uri module – Interacts with webservices
 - Synopsis
 - Parameters
@@ -15389,14 +14984,13 @@ The HTTP status code from the request.
 
 The actual URL used for the request.
 
-Sample: "<https://www.ansible.com/>"
+Sample: "https://www.ansible.com/"
 
 Romeo Theriault (@romeotheriault)
 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Check that you can connect (GET) to a page and it returns a status 200
   ansible.builtin.uri:
@@ -15540,10 +15134,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.memory cache – RAM backed, non persistent — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/memory_cache.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/memory_cache.html
 
 **Contents:**
-
 - ansible.builtin.memory cache – RAM backed, non persistent
 - Synopsis
   - Authors
@@ -15563,10 +15156,9 @@ core team (@ansible-core)
 
 ## ansible.builtin.dictsort filter – Sort a dict and yield. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dictsort_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dictsort_filter.html
 
 **Contents:**
-
 - ansible.builtin.dictsort filter – Sort a dict and yield.
 - Synopsis
   - Collection links
@@ -15577,16 +15169,15 @@ Sort a dict and yield.
 
 This is the Jinja builtin filter plugin ‘dictsort’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.dictsort>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.dictsort
 
 ---
 
 ## ansible.builtin.csvfile lookup – read data from a TSV or CSV file — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/csvfile_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/csvfile_lookup.html
 
 **Contents:**
-
 - ansible.builtin.csvfile lookup – read data from a TSV or CSV file
 - Synopsis
 - Keyword parameters
@@ -15638,7 +15229,6 @@ Jan-Piet Mens (@jpmens) <jpmens(at)gmail.com>
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name:  Match 'Li' on the first column, return the second column (0 based index)
   ansible.builtin.debug: msg="The atomic number of Lithium is {{ lookup('ansible.builtin.csvfile', 'Li file=elements.csv delimiter=,') }}"
@@ -15692,10 +15282,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.match test – Does string match regular expression from the start — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/match_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/match_test.html
 
 **Contents:**
-
 - ansible.builtin.match test – Does string match regular expression from the start
 - Synopsis
 - Input
@@ -15724,7 +15313,6 @@ Returns True if there is a match, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 url: "https://example.com/users/foo/resources/bar"
 foundmatch: url is match("https://example.com/users/.*/resources")
@@ -15735,10 +15323,9 @@ nomatch: url is match("/users/.*/resources")
 
 ## ansible.builtin.divisibleby test – Check if a variable is divisible by a number. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/divisibleby_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/divisibleby_test.html
 
 **Contents:**
-
 - ansible.builtin.divisibleby test – Check if a variable is divisible by a number.
 - Synopsis
   - Collection links
@@ -15749,16 +15336,15 @@ Check if a variable is divisible by a number.
 
 This is the Jinja builtin test plugin ‘divisibleby’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.divisibleby>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.divisibleby
 
 ---
 
 ## ansible.builtin.win_dirname filter – Get a Windows path’s directory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/win_dirname_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/win_dirname_filter.html
 
 **Contents:**
-
 - ansible.builtin.win_dirname filter – Get a Windows path’s directory
 - Synopsis
 - Input
@@ -15783,7 +15369,6 @@ The directory from the Windows path provided.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get the last name of a file Windows path, like 'C:\users\asdf' out of 'C:\Users\asdf\foo.txt'
 {{ mypath | win_dirname }}
@@ -15797,10 +15382,9 @@ filename: "{{ mypath | win_dirname }}"
 
 ## ansible.builtin.fileglob lookup – list files matching a pattern — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fileglob_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fileglob_lookup.html
 
 **Contents:**
-
 - ansible.builtin.fileglob lookup – list files matching a pattern
 - Synopsis
 - Terms
@@ -15830,7 +15414,6 @@ Search paths used for relative files.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Display paths of all .txt files in dir
   ansible.builtin.debug: msg={{ lookup('ansible.builtin.fileglob', '/my/path/*.txt') }}
@@ -15849,10 +15432,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.unvault lookup – read vaulted file(s) contents — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unvault_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unvault_lookup.html
 
 **Contents:**
-
 - ansible.builtin.unvault lookup – read vaulted file(s) contents
 - Synopsis
 - Terms
@@ -15880,7 +15462,6 @@ content of file(s) as bytes
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - ansible.builtin.debug: msg="the value of foo.txt is {{ lookup('ansible.builtin.unvault', '/etc/foo.txt') | string | trim }}"
 ```
@@ -15889,10 +15470,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.expanduser filter – Returns a path with ~ translation. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/expanduser_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/expanduser_filter.html
 
 **Contents:**
-
 - ansible.builtin.expanduser filter – Returns a path with ~ translation.
 - Synopsis
 - Input
@@ -15912,7 +15492,6 @@ A string that contains a path.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get '/home/myuser/stuff.txt' from '~/stuff.txt'.
 {{ mypath | expanduser }}
@@ -15922,10 +15501,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.password lookup – retrieve or generate a random password, stored in a file — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/password_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/password_lookup.html
 
 **Contents:**
-
 - ansible.builtin.password lookup – retrieve or generate a random password, stored in a file
 - Synopsis
 - Terms
@@ -15982,7 +15560,7 @@ added in ansible-core 2.12
 
 Specify version of Bcrypt algorithm to be used while using encrypt as bcrypt.
 
-The parameter is only available for bcrypt - <https://passlib.readthedocs.io/en/stable/lib/passlib.hash.bcrypt.html#passlib.hash.bcrypt>.
+The parameter is only available for bcrypt - https://passlib.readthedocs.io/en/stable/lib/passlib.hash.bcrypt.html#passlib.hash.bcrypt.
 
 Other hash types will simply ignore this parameter.
 
@@ -16013,7 +15591,6 @@ Daniel Hokka Zakrisson
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: create a mysql user with a random password
   community.mysql.mysql_user:
@@ -16052,10 +15629,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.to_json filter – Convert variable to JSON string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_json_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/to_json_filter.html
 
 **Contents:**
-
 - ansible.builtin.to_json filter – Convert variable to JSON string
 - Synopsis
 - Input
@@ -16113,7 +15689,6 @@ The JSON serialized string representing the variable structure inputted.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # dump variable in a template to create a JSON document
 {{ docker_config | to_json }}
@@ -16126,10 +15701,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.urn test – is the string a valid URN — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urn_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urn_test.html
 
 **Contents:**
-
 - ansible.builtin.urn test – is the string a valid URN
 - Synopsis
 - Input
@@ -16151,7 +15725,6 @@ Returns true if the string is a URN and false if it is not.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # ISBN in URN format
 {{ 'urn:isbn:9780302376463' is urn }}
@@ -16163,10 +15736,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.async_status module – Obtain status of asynchronous task — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/async_status_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/async_status_module.html
 
 **Contents:**
-
 - ansible.builtin.async_status module – Obtain status of asynchronous task
 - Synopsis
 - Parameters
@@ -16237,7 +15809,6 @@ Any output returned by async_wrapper
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ---
 - name: Asynchronous dnf task
@@ -16266,10 +15837,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.callable test – Return whether the object is callable. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/callable_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/callable_test.html
 
 **Contents:**
-
 - ansible.builtin.callable test – Return whether the object is callable.
 - Synopsis
   - Collection links
@@ -16280,16 +15850,15 @@ Return whether the object is callable.
 
 This is the Jinja builtin test plugin ‘callable’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.callable>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.callable
 
 ---
 
 ## ansible.builtin.group_by module – Create Ansible groups based on facts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/group_by_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/group_by_module.html
 
 **Contents:**
-
 - ansible.builtin.group_by module – Create Ansible groups based on facts
 - Synopsis
 - Parameters
@@ -16361,7 +15930,6 @@ Jeroen Hoekx (@jhoekx)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Create groups based on the machine architecture
   ansible.builtin.group_by:
@@ -16386,10 +15954,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.capitalize filter – Capitalize a value. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/capitalize_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/capitalize_filter.html
 
 **Contents:**
-
 - ansible.builtin.capitalize filter – Capitalize a value.
 - Synopsis
   - Collection links
@@ -16398,16 +15965,15 @@ This filter plugin is part of ansible-core and included in all Ansible installat
 
 This is the Jinja builtin filter plugin ‘capitalize’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.capitalize>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.capitalize
 
 ---
 
 ## ansible.builtin.integer test – Return true if the object is an integer. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/integer_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/integer_test.html
 
 **Contents:**
-
 - ansible.builtin.integer test – Return true if the object is an integer.
 - Synopsis
   - Collection links
@@ -16418,16 +15984,15 @@ Return true if the object is an integer.
 
 This is the Jinja builtin test plugin ‘integer’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.integer>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.integer
 
 ---
 
 ## ansible.builtin.trim filter – Strip leading and trailing characters, by default whitespace. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/trim_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/trim_filter.html
 
 **Contents:**
-
 - ansible.builtin.trim filter – Strip leading and trailing characters, by default whitespace.
 - Synopsis
   - Collection links
@@ -16438,16 +16003,15 @@ Strip leading and trailing characters, by default whitespace.
 
 This is the Jinja builtin filter plugin ‘trim’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.trim>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.trim
 
 ---
 
 ## ansible.builtin.assert module – Asserts given expressions are true — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/assert_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/assert_module.html
 
 **Contents:**
-
 - ansible.builtin.assert module – Asserts given expressions are true
 - Synopsis
 - Parameters
@@ -16510,7 +16074,6 @@ Execute Ansible ‘actions’.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: A single condition can be supplied as string instead of list
   ansible.builtin.assert:
@@ -16551,10 +16114,9 @@ Example 1 (unknown):
 
 ## Downloading collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_downloading.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_downloading.html
 
 **Contents:**
-
 - Downloading collections
 
 To download a collection and its dependencies for an offline install, run ansible-galaxy collection download. This downloads the collections specified and their dependencies to the specified folder and creates a requirements.yml file which can be used to install those collections on a host without access to a Galaxy server. All the collections are downloaded by default to the ./collections folder.
@@ -16580,25 +16142,21 @@ Once you have downloaded the collections, the folder contains the collections sp
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible-galaxy collection download my_namespace.my_collection
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-galaxy collection download my_namespace.my_collection:1.0.0
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-galaxy collection download -r requirements.yml
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible-galaxy collection download /path/to/collection
 
@@ -16609,10 +16167,9 @@ ansible-galaxy collection download git+file:///path/to/collection/.git
 
 ## ansible.builtin.test test – Check if a test exists by name. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/test_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/test_test.html
 
 **Contents:**
-
 - ansible.builtin.test test – Check if a test exists by name.
 - Synopsis
   - Collection links
@@ -16623,16 +16180,15 @@ Check if a test exists by name.
 
 This is the Jinja builtin test plugin ‘test’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.test>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.test
 
 ---
 
 ## ansible.builtin.ge test – Same as a >= b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ge_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ge_test.html
 
 **Contents:**
-
 - ansible.builtin.ge test – Same as a >= b.
 - Synopsis
   - Collection links
@@ -16641,16 +16197,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘ge’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.ge>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.ge
 
 ---
 
 ## ansible.builtin.items lookup – list of items — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/items_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/items_lookup.html
 
 **Contents:**
-
 - ansible.builtin.items lookup – list of items
 - Synopsis
 - Terms
@@ -16675,7 +16230,6 @@ list / elements=string
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: "loop through list"
   ansible.builtin.debug:
@@ -16714,10 +16268,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.max filter – Return the largest item from the sequence. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/max_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/max_filter.html
 
 **Contents:**
-
 - ansible.builtin.max filter – Return the largest item from the sequence.
 - Synopsis
   - Collection links
@@ -16728,16 +16281,15 @@ Return the largest item from the sequence.
 
 This is the Jinja builtin filter plugin ‘max’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.max>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.max
 
 ---
 
 ## ansible.builtin.regex test – Does string match regular expression from the start — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_test.html
 
 **Contents:**
-
 - ansible.builtin.regex test – Does string match regular expression from the start
 - Synopsis
 - Input
@@ -16768,7 +16320,6 @@ Returns True if there is a match, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 url: "https://example.com/users/foo/resources/bar"
 foundmatch: url is regex("example\.com/\w+/foo")
@@ -16778,10 +16329,9 @@ foundmatch: url is regex("example\.com/\w+/foo")
 
 ## ansible.builtin.upper test – Return true if the variable is uppercased. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/upper_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/upper_test.html
 
 **Contents:**
-
 - ansible.builtin.upper test – Return true if the variable is uppercased.
 - Synopsis
   - Collection links
@@ -16792,16 +16342,15 @@ Return true if the variable is uppercased.
 
 This is the Jinja builtin test plugin ‘upper’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.upper>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.upper
 
 ---
 
 ## ansible.builtin.false test – Return true if the object is False. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/false_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/false_test.html
 
 **Contents:**
-
 - ansible.builtin.false test – Return true if the object is False.
 - Synopsis
   - Collection links
@@ -16812,16 +16361,15 @@ Return true if the object is False.
 
 This is the Jinja builtin test plugin ‘false’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.false>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.false
 
 ---
 
 ## ansible.builtin.dict lookup – returns key/value pair items from dictionaries — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dict_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dict_lookup.html
 
 **Contents:**
-
 - ansible.builtin.dict lookup – returns key/value pair items from dictionaries
 - Synopsis
 - Terms
@@ -16842,7 +16390,6 @@ list of composed dictionaries with key and value
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 vars:
   users:
@@ -16875,10 +16422,9 @@ tasks:
 
 ## ansible.builtin.uri test – is the string a valid URI — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/uri_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/uri_test.html
 
 **Contents:**
-
 - ansible.builtin.uri test – is the string a valid URI
 - Synopsis
 - Input
@@ -16907,7 +16453,6 @@ Returns false if the string is not a URI or the schema extracted does not match 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # URLs are URIs
 {{ 'http://example.com' is uri }}
@@ -16923,10 +16468,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.pip module – Manages Python library dependencies — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pip_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pip_module.html
 
 **Contents:**
-
 - ansible.builtin.pip module – Manages Python library dependencies
 - Synopsis
 - Requirements
@@ -17004,7 +16548,7 @@ Target OS/families that can be operated against
 
 Python installations marked externally-managed (as defined by PEP668) cannot be updated by pip versions >= 23.0.1 without the use of a virtual environment or setting the break_system_packages option.
 
-The virtualenv (<http://www.virtualenv.org/>) must be installed on the remote host if the virtualenv parameter is specified and the virtualenv needs to be created.
+The virtualenv (http://www.virtualenv.org/) must be installed on the remote host if the virtualenv parameter is specified and the virtualenv needs to be created.
 
 Although it executes using the Ansible Python interpreter, the pip module shells out to run the actual pip command, so it can use any pip version you specify with executable. By default, it uses the pip version for the Ansible Python interpreter.
 
@@ -17043,7 +16587,6 @@ Matt Wright (@mattupstate)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Install bottle python package
   ansible.builtin.pip:
@@ -17165,10 +16708,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.hash filter – hash of input data — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/hash_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/hash_filter.html
 
 **Contents:**
-
 - ansible.builtin.hash filter – hash of input data
 - Synopsis
 - Input
@@ -17194,7 +16736,6 @@ The checksum of the input, as configured in hashtype.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # sha1_hash => "109f4b3c50d7b0df729d299bc6f8e9ef9066971f"
 sha1_hash: {{ 'test2' | hash('sha1') }}
@@ -17206,10 +16747,9 @@ md5: {{ 'test2' | hash('md5') }}
 
 ## ansible.builtin.reachable test – Task did not end due to unreachable host — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reachable_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/reachable_test.html
 
 **Contents:**
-
 - ansible.builtin.reachable test – Task did not end due to unreachable host
 - Synopsis
 - Input
@@ -17235,7 +16775,6 @@ Returns True if the task did not flag the host as unreachable, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ taskresults is reachable }}
@@ -17245,10 +16784,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.sequence test – Return true if the variable is a sequence. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sequence_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sequence_test.html
 
 **Contents:**
-
 - ansible.builtin.sequence test – Return true if the variable is a sequence.
 - Synopsis
   - Collection links
@@ -17259,16 +16797,15 @@ Return true if the variable is a sequence.
 
 This is the Jinja builtin test plugin ‘sequence’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.sequence>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.sequence
 
 ---
 
 ## ansible.builtin.unarchive module – Unpacks an archive after (optionally) copying it from the local machine — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unarchive_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/unarchive_module.html
 
 **Contents:**
-
 - ansible.builtin.unarchive module – Unpacks an archive after (optionally) copying it from the local machine
 - Synopsis
 - Parameters
@@ -17495,7 +17032,6 @@ Numerical ID of the user that owns the destination directory.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Extract foo.tgz into /var/lib/foo
   ansible.builtin.unarchive:
@@ -17527,10 +17063,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.checksum filter – checksum of input data — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/checksum_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/checksum_filter.html
 
 **Contents:**
-
 - ansible.builtin.checksum filter – checksum of input data
 - Synopsis
 - Input
@@ -17549,7 +17084,6 @@ The checksum (SHA-1) of the input.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # csum => "109f4b3c50d7b0df729d299bc6f8e9ef9066971f"
 csum: "{{ 'test2' | checksum }}"
@@ -17559,10 +17093,9 @@ csum: "{{ 'test2' | checksum }}"
 
 ## ansible.builtin.skipped test – Was task skipped — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/skipped_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/skipped_test.html
 
 **Contents:**
-
 - ansible.builtin.skipped test – Was task skipped
 - Synopsis
 - Input
@@ -17588,7 +17121,6 @@ Returns True if the task was skipped, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ taskresults is skipped }}
@@ -17598,10 +17130,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.urlencode filter – Quote data for use in a URL path or query using UTF-8. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urlencode_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/urlencode_filter.html
 
 **Contents:**
-
 - ansible.builtin.urlencode filter – Quote data for use in a URL path or query using UTF-8.
 - Synopsis
   - Collection links
@@ -17612,16 +17143,15 @@ Quote data for use in a URL path or query using UTF-8.
 
 This is the Jinja builtin filter plugin ‘urlencode’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.urlencode>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.urlencode
 
 ---
 
 ## ansible.builtin.fetch module – Fetch files from remote nodes — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fetch_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/fetch_module.html
 
 **Contents:**
-
 - ansible.builtin.fetch module – Fetch files from remote nodes
 - Synopsis
 - Parameters
@@ -17705,7 +17235,6 @@ Slurps a file from remote nodes.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Store file into /tmp/fetched/host.example.com/tmp/somefile
   ansible.builtin.fetch:
@@ -17735,10 +17264,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.combinations filter – combinations from the elements of a list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/combinations_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/combinations_filter.html
 
 **Contents:**
-
 - ansible.builtin.combinations filter – combinations from the elements of a list
 - Synopsis
 - Input
@@ -17768,7 +17296,6 @@ List of combination sets resulting from the supplied elements and set size.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # combos_of_two => [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 3, 4 ], [ 3, 5 ], [ 4, 5 ] ]
 combos_of_two: "{{ [1,2,3,4,5] | combinations(2) }}"
@@ -17778,10 +17305,9 @@ combos_of_two: "{{ [1,2,3,4,5] | combinations(2) }}"
 
 ## ansible.builtin.regex_findall filter – extract all regex matches from string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_findall_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_findall_filter.html
 
 **Contents:**
-
 - ansible.builtin.regex_findall filter – extract all regex matches from string
 - Synopsis
 - Input
@@ -17821,7 +17347,6 @@ List of matched strings.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # all_pirates => ['CAR', 'tar', 'bar']
 all_pirates: "{{ 'CAR\ntar\nfoo\nbar\n' | regex_findall('^.ar$', multiline=True, ignorecase=True) }}"
@@ -17840,10 +17365,9 @@ get_ips: "{{ 'Some DNS servers are 8.8.8.8 and 8.8.4.4' | regex_findall('\\b(?:[
 
 ## ansible.builtin.default callback – default Ansible screen output — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/default_callback.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/default_callback.html
 
 **Contents:**
-
 - ansible.builtin.default callback – default Ansible screen output
 - Callback plugin
 - Synopsis
@@ -17926,28 +17450,24 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 check_mode_markers = false
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [defaults]
 display_failed_stderr = false
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [defaults]
 display_ok_hosts = true
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [defaults]
 display_skipped_hosts = true
@@ -17957,10 +17477,9 @@ display_skipped_hosts = true
 
 ## ansible.builtin.lower filter – Convert a value to lowercase. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lower_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lower_filter.html
 
 **Contents:**
-
 - ansible.builtin.lower filter – Convert a value to lowercase.
 - Synopsis
   - Collection links
@@ -17971,16 +17490,15 @@ Convert a value to lowercase.
 
 This is the Jinja builtin filter plugin ‘lower’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.lower>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.lower
 
 ---
 
 ## ansible.builtin.vars lookup – Lookup templated value of variables — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vars_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vars_lookup.html
 
 **Contents:**
-
 - ansible.builtin.vars lookup – Lookup templated value of variables
 - Synopsis
 - Terms
@@ -18013,7 +17531,6 @@ value of the variables requested.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Show value of 'variablename'
   ansible.builtin.debug: msg="{{ lookup('ansible.builtin.vars', 'variabl' + myvar) }}"
@@ -18060,10 +17577,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.eq test – Same as a == b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/eq_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/eq_test.html
 
 **Contents:**
-
 - ansible.builtin.eq test – Same as a == b.
 - Synopsis
   - Collection links
@@ -18072,16 +17588,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘eq’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.eq>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.eq
 
 ---
 
 ## ansible.builtin.from_yaml filter – Convert YAML string into variable structure — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/from_yaml_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/from_yaml_filter.html
 
 **Contents:**
-
 - ansible.builtin.from_yaml filter – Convert YAML string into variable structure
 - Synopsis
 - Input
@@ -18105,7 +17620,6 @@ The variable resulting from deserializing the YAML document.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # variable from string variable containing a YAML document
 {{ github_workflow | from_yaml }}
@@ -18118,10 +17632,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.template module – Template a file out to a target host — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/template_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/template_module.html
 
 **Contents:**
-
 - ansible.builtin.template module – Template a file out to a target host
 - Synopsis
 - Parameters
@@ -18350,7 +17863,6 @@ Numeric id representing the file owner
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Template a file to /etc/file.conf
   ansible.builtin.template:
@@ -18403,10 +17915,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.normpath filter – Normalize a pathname — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/normpath_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/normpath_filter.html
 
 **Contents:**
-
 - ansible.builtin.normpath filter – Normalize a pathname
 - Synopsis
 - Input
@@ -18431,7 +17942,6 @@ The normalized path from the path given.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # To get a normalized path (for example - '/foo/bar') from the path (for example - '/foo//bar')
 {{ path | normpath }}
@@ -18441,10 +17951,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.regex_search filter – extract regex match from string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_search_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/regex_search_filter.html
 
 **Contents:**
-
 - ansible.builtin.regex_search filter – extract regex match from string
 - Synopsis
 - Input
@@ -18486,7 +17995,6 @@ Matched string or None if no match.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # db => 'database42'
 db: "{{ 'server1/database42' | regex_search('database[0-9]+') }}"
@@ -18515,10 +18023,9 @@ db: "{{ '21/42' | regex_search('(?P<dividend>[0-9]+)/(?P<divisor>[0-9]+)', '\\g<
 
 ## ansible.builtin.exists test – does the path exist, follow symlinks — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/exists_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/exists_test.html
 
 **Contents:**
-
 - ansible.builtin.exists test – does the path exist, follow symlinks
 - Synopsis
 - Input
@@ -18540,7 +18047,6 @@ Returns True if the path corresponds to an existing filesystem object on the con
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 vars:
   my_etc_hosts_exists: "{{ '/etc/hosts' is exists }}"
@@ -18551,10 +18057,9 @@ vars:
 
 ## ansible.builtin.lineinfile module – Manage lines in text files — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lineinfile_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lineinfile_module.html
 
 **Contents:**
-
 - ansible.builtin.lineinfile module – Manage lines in text files
 - Synopsis
 - Parameters
@@ -18677,7 +18182,7 @@ If the regular expression is not matched, the line will be added to the file in 
 
 When modifying a line the regexp should typically match both the initial state of the line as well as its state after replacement by line to ensure idempotence.
 
-Uses Python regular expressions. See <https://docs.python.org/3/library/re.html>.
+Uses Python regular expressions. See https://docs.python.org/3/library/re.html.
 
 added in ansible-core 2.11
 
@@ -18762,7 +18267,6 @@ Jose Angel Munoz (@imjoseangel)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # NOTE: Before 2.3, option 'dest', 'destfile' or 'name' was used instead of 'path'
 - name: Ensure SELinux is set to enforcing mode
@@ -18852,10 +18356,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.sh shell – POSIX shell (/bin/sh) — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sh_shell.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sh_shell.html
 
 **Contents:**
-
 - ansible.builtin.sh shell – POSIX shell (/bin/sh)
 - Synopsis
 - Parameters
@@ -18932,28 +18435,24 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 admin_users = root, toor
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [defaults]
 async_dir = ~/.ansible_async
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [defaults]
 common_remote_group = VALUE
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [defaults]
 remote_tmp = ~/.ansible/tmp
@@ -18963,10 +18462,9 @@ remote_tmp = ~/.ansible/tmp
 
 ## ansible.builtin.ping module – Try to connect to host, verify a usable python and return pong on success — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ping_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ping_module.html
 
 **Contents:**
-
 - ansible.builtin.ping module – Try to connect to host, verify a usable python and return pong on success
 - Synopsis
 - Parameters
@@ -19008,7 +18506,6 @@ Value provided with the data parameter.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # Test we can logon to 'webservers' and execute python with json lib.
 # ansible webservers -m ansible.builtin.ping
@@ -19025,10 +18522,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.sysvinit module – Manage SysV services. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sysvinit_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/sysvinit_module.html
 
 **Contents:**
-
 - ansible.builtin.sysvinit module – Manage SysV services.
 - Synopsis
 - Requirements
@@ -19093,7 +18589,6 @@ Sample: {"enabled": {"changed": true, "rc": 0, "stderr": "", "stdout": ""}, "sto
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Make sure apache2 is started
   ansible.builtin.sysvinit:
@@ -19121,10 +18616,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.rekey_on_member filter – Rekey a list of dicts into a dict using a member — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/rekey_on_member_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/rekey_on_member_filter.html
 
 **Contents:**
-
 - ansible.builtin.rekey_on_member filter – Rekey a list of dicts into a dict using a member
 - Synopsis
 - Input
@@ -19160,7 +18654,6 @@ The resulting dictionary.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # mydict => {'eigrp': {'state': 'enabled', 'proto': 'eigrp'}, 'ospf': {'state': 'enabled', 'proto': 'ospf'}}
  mydict: '{{ [{"proto": "eigrp", "state": "enabled"}, {"proto": "ospf", "state": "enabled"}] | rekey_on_member("proto") }}'
@@ -19170,10 +18663,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.env lookup – Read the value of environment variables — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/env_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/env_lookup.html
 
 **Contents:**
-
 - ansible.builtin.env lookup – Read the value of environment variables
 - Synopsis
 - Terms
@@ -19209,7 +18701,6 @@ Jan-Piet Mens (@jpmens) <jpmens(at)gmail.com>
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Basic usage
   ansible.builtin.debug:
@@ -19232,10 +18723,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.apt_key module – Add or remove an apt key — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/apt_key_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/apt_key_module.html
 
 **Contents:**
-
 - ansible.builtin.apt_key module – Add or remove an apt key
 - Synopsis
 - Requirements
@@ -19328,7 +18818,6 @@ Jayson Vantuyl (@jvantuyl)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: One way to avoid apt_key once it is removed from your distro, armored keys should use .asc extension, binary should use .gpg
   block:
@@ -19387,10 +18876,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.selectattr filter – Filters a sequence of objects by applying a test to the specified attribute of each object, and only selecting the objects with the test succeeding. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/selectattr_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/selectattr_filter.html
 
 **Contents:**
-
 - ansible.builtin.selectattr filter – Filters a sequence of objects by applying a test to the specified attribute of each object, and only selecting the objects with the test succeeding.
 - Synopsis
   - Collection links
@@ -19401,16 +18889,15 @@ Filters a sequence of objects by applying a test to the specified attribute of e
 
 This is the Jinja builtin filter plugin ‘selectattr’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.selectattr>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.selectattr
 
 ---
 
 ## ansible.builtin.d filter – If the value is undefined it will return the passed default value, otherwise the value of the variable. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/d_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/d_filter.html
 
 **Contents:**
-
 - ansible.builtin.d filter – If the value is undefined it will return the passed default value, otherwise the value of the variable.
 - Synopsis
   - Collection links
@@ -19421,16 +18908,15 @@ If the value is undefined it will return the passed default value, otherwise the
 
 This is the Jinja builtin filter plugin ‘d’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.d>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.d
 
 ---
 
 ## ansible.builtin.comment filter – comment out a string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/comment_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/comment_filter.html
 
 **Contents:**
-
 - ansible.builtin.comment filter – comment out a string
 - Synopsis
 - Input
@@ -19478,7 +18964,6 @@ The ‘commented out’ string.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # commented =>  #
 #               # Plain style (default)
@@ -19493,10 +18978,9 @@ verycustom: "{{ "Custom style" | comment('plain', prefix='#######\n#', postfix='
 
 ## ansible.builtin.select filter – Filters a sequence of objects by applying a test to each object, and only selecting the objects with the test succeeding. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/select_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/select_filter.html
 
 **Contents:**
-
 - ansible.builtin.select filter – Filters a sequence of objects by applying a test to each object, and only selecting the objects with the test succeeding.
 - Synopsis
   - Collection links
@@ -19507,16 +18991,15 @@ Filters a sequence of objects by applying a test to each object, and only select
 
 This is the Jinja builtin filter plugin ‘select’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.select>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.select
 
 ---
 
 ## ansible.builtin.vaulted_file test – Is this file an encrypted vault — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vaulted_file_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/vaulted_file_test.html
 
 **Contents:**
-
 - ansible.builtin.vaulted_file test – Is this file an encrypted vault
 - Synopsis
 - Input
@@ -19540,7 +19023,6 @@ Returns True if the path is a valid ansible vault, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 thisisfalse: '{{ "/etc/hosts" is vaulted_file}}'
 thisistrue: '{{ "/path/to/vaulted/file" is vaulted_file}}'
@@ -19550,10 +19032,9 @@ thisistrue: '{{ "/path/to/vaulted/file" is vaulted_file}}'
 
 ## ansible.builtin.dnf5 module – Manages packages with the dnf5 package manager — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dnf5_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dnf5_module.html
 
 **Contents:**
-
 - ansible.builtin.dnf5 module – Manages packages with the dnf5 package manager
 - Synopsis
 - Requirements
@@ -19746,7 +19227,6 @@ Sample: ["Installed: lsof-4.94.0-4.fc37.x86_64"]
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Install the latest version of Apache
   ansible.builtin.dnf5:
@@ -19824,10 +19304,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.bool filter – coerce some well-known truthy/falsy values to a boolean — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/bool_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/bool_filter.html
 
 **Contents:**
-
 - ansible.builtin.bool filter – coerce some well-known truthy/falsy values to a boolean
 - Synopsis
 - Input
@@ -19858,7 +19337,6 @@ The boolean result of coercing the input expression to a True or False value.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # in vars
 vars:
@@ -19874,10 +19352,9 @@ when: some_string_value | bool
 
 ## ansible.builtin.from_json filter – Convert JSON string into variable structure — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/from_json_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/from_json_filter.html
 
 **Contents:**
-
 - ansible.builtin.from_json filter – Convert JSON string into variable structure
 - Synopsis
 - Input
@@ -19901,7 +19378,6 @@ The variable resulting from deserialization of the JSON document.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # variable from string variable containing a JSON document
 {{ docker_config | from_json }}
@@ -19914,10 +19390,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.indexed_items lookup – rewrites lists to return ‘indexed items’ — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/indexed_items_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/indexed_items_lookup.html
 
 **Contents:**
-
 - ansible.builtin.indexed_items lookup – rewrites lists to return ‘indexed items’
 - Synopsis
 - Terms
@@ -19937,7 +19412,6 @@ list with each item.0 giving you the position and item.1 the value
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: indexed loop demo
   ansible.builtin.debug:
@@ -19950,10 +19424,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.import_tasks module – Import a task list — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/import_tasks_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/import_tasks_module.html
 
 **Contents:**
-
 - ansible.builtin.import_tasks module – Import a task list
 - Synopsis
 - Parameters
@@ -20035,7 +19508,6 @@ Ansible Core Team (@ansible)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - hosts: all
   tasks:
@@ -20063,10 +19535,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.yum_repository module – Add or remove YUM repositories — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/yum_repository_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/yum_repository_module.html
 
 **Contents:**
-
 - ansible.builtin.yum_repository module – Add or remove YUM repositories
 - Synopsis
 - Parameters
@@ -20273,7 +19744,7 @@ Protect packages from updates from other repositories.
 
 This parameter is deprecated as it has no effect with dnf as an underlying package manager and will be removed in ansible-core 2.22.
 
-URL to the proxy server that yum should use. Set to *none* to disable the global proxy setting.
+URL to the proxy server that yum should use. Set to _none_ to disable the global proxy setting.
 
 Password for this proxy.
 
@@ -20380,7 +19851,6 @@ state of the target, after execution
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Add repository
   ansible.builtin.yum_repository:
@@ -20427,10 +19897,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.log filter – log of (math operation) — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/log_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/log_filter.html
 
 **Contents:**
-
 - ansible.builtin.log filter – log of (math operation)
 - Synopsis
 - Input
@@ -20463,7 +19932,6 @@ This is a passthrough to Python’s math.log.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # 1.2920296742201791
 eightlogfive: "{{ 8 | log(5) }}"
@@ -20476,10 +19944,9 @@ eightlog10: "{{ 8 | log() }}"
 
 ## ansible.builtin.combine filter – combine two dictionaries — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/combine_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/combine_filter.html
 
 **Contents:**
-
 - ansible.builtin.combine filter – combine two dictionaries
 - Synopsis
 - Input
@@ -20533,7 +20000,6 @@ Resulting merge of supplied dictionaries.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # ab => {'a':1, 'b':3, 'c': 4}
 ab: {{ {'a':1, 'b':2} | ansible.builtin.combine({'b':3, 'c':4}) }}
@@ -20550,10 +20016,9 @@ final: "{{ defaults | ansible.builtin.combine(customization, recursive=true) }}"
 
 ## ansible.builtin.shell module – Execute shell commands on targets — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/shell_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/shell_module.html
 
 **Contents:**
-
 - ansible.builtin.shell module – Execute shell commands on targets
 - Synopsis
 - Parameters
@@ -20670,7 +20135,6 @@ Sample: ["u'Clustering node rabbit@slave1 with rabbit@master \u2026'"]
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Execute the command in remote shell; stdout goes to the specified file on the remote
   ansible.builtin.shell: somescript.sh >> somelog.txt
@@ -20726,10 +20190,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.zip_longest filter – combine list elements, with filler — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/zip_longest_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/zip_longest_filter.html
 
 **Contents:**
-
 - ansible.builtin.zip_longest filter – combine list elements, with filler
 - Synopsis
 - Input
@@ -20767,7 +20230,6 @@ List of lists made of elements matching the positions of the input lists.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # X_fill => [[1, "a", 21], [2, "b", 22], [3, "c", 23], ["X", "d", "X"], ["X", "e", "X"], ["X", "f", "X"]]
 X_fill: "{{ [1,2,3] | zip_longest(['a','b','c','d','e','f'], [21, 22, 23], fillvalue='X') }}"
@@ -20777,10 +20239,9 @@ X_fill: "{{ [1,2,3] | zip_longest(['a','b','c','d','e','f'], [21, 22, 23], fillv
 
 ## ansible.builtin.mount_facts module – Retrieve mount information. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mount_facts_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/mount_facts_module.html
 
 **Contents:**
-
 - ansible.builtin.mount_facts module – Retrieve mount information.
 - Synopsis
 - Parameters
@@ -20852,7 +20313,6 @@ Sloane Hertel (@s-hertel)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Get non-local devices
   mount_facts:
@@ -20892,10 +20352,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.join filter – Return a string which is the concatenation of the strings in the sequence. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/join_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/join_filter.html
 
 **Contents:**
-
 - ansible.builtin.join filter – Return a string which is the concatenation of the strings in the sequence.
 - Synopsis
   - Collection links
@@ -20906,16 +20365,15 @@ Return a string which is the concatenation of the strings in the sequence.
 
 This is the Jinja builtin filter plugin ‘join’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.join>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.join
 
 ---
 
 ## ansible.builtin.host_group_vars vars – In charge of loading group_vars and host_vars — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/host_group_vars_vars.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/host_group_vars_vars.html
 
 **Contents:**
-
 - ansible.builtin.host_group_vars vars – In charge of loading group_vars and host_vars
 - Synopsis
 - Requirements
@@ -20967,14 +20425,12 @@ Configuration entries listed above for each entry type (Ansible variable, enviro
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 yaml_valid_extensions = .yml, .yaml, .json
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [vars_host_group_vars]
 stage = VALUE
@@ -20984,10 +20440,9 @@ stage = VALUE
 
 ## ansible.builtin.file lookup – read file contents — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/file_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/file_lookup.html
 
 **Contents:**
-
 - ansible.builtin.file lookup – read file contents
 - Synopsis
 - Terms
@@ -21024,7 +20479,6 @@ Daniel Hokka Zakrisson
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - ansible.builtin.debug:
     msg: "the value of foo.txt is {{ lookup('ansible.builtin.file', '/etc/foo.txt') }}"
@@ -21041,10 +20495,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.started test – Was async task started — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/started_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/started_test.html
 
 **Contents:**
-
 - ansible.builtin.started test – Was async task started
 - Synopsis
 - Input
@@ -21070,7 +20523,6 @@ Returns True if the task has started, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ (asynctaskpoll is started}}
@@ -21080,10 +20532,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.lines lookup – read lines from command — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lines_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lines_lookup.html
 
 **Contents:**
-
 - ansible.builtin.lines lookup – read lines from command
 - Synopsis
 - Terms
@@ -21114,7 +20565,6 @@ Daniel Hokka Zakrisson
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: We could read the file directly, but this shows output from command
   ansible.builtin.debug: msg="{{ item }} is an output line from running cat on /etc/motd"
@@ -21134,10 +20584,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.command module – Execute commands on targets — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/command_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/command_module.html
 
 **Contents:**
-
 - ansible.builtin.command module – Execute commands on targets
 - Synopsis
 - Parameters
@@ -21278,7 +20727,6 @@ Sample: ["u'Clustering node rabbit@slave1 with rabbit@master \u2026'"]
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Return motd to registered var
   ansible.builtin.command: cat /etc/motd
@@ -21339,10 +20787,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.assemble module – Assemble configuration files from fragments — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/assemble_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/assemble_module.html
 
 **Contents:**
-
 - ansible.builtin.assemble module – Assemble configuration files from fragments
 - Synopsis
 - Parameters
@@ -21485,7 +20932,6 @@ Stephen Fromm (@sfromm)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Assemble from fragments from a directory
   ansible.builtin.assemble:
@@ -21509,10 +20955,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.file test – does the path resolve to an existing file — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/file_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/file_test.html
 
 **Contents:**
-
 - ansible.builtin.file test – does the path resolve to an existing file
 - Synopsis
 - Input
@@ -21532,7 +20977,6 @@ Returns True if the path corresponds to an existing file on the filesystem on th
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 vars:
   my_etc_hosts_is_a_file: "{{ '/etc/hosts' is file }}"
@@ -21543,10 +20987,9 @@ vars:
 
 ## ansible.builtin.get_url module – Downloads files from HTTP, HTTPS, or FTP to node — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/get_url_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/get_url_module.html
 
 **Contents:**
-
 - ansible.builtin.get_url module – Downloads files from HTTP, HTTPS, or FTP to node
 - Synopsis
 - Parameters
@@ -21580,7 +21023,7 @@ The = operator is assumed as default, otherwise + or - operators need to be incl
 
 Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly.
 
-If a checksum is passed to this parameter, the digest of the destination file will be calculated after it is downloaded to ensure its integrity and verify that the transfer completed successfully. Format: <algorithm>:<checksum|url>, for example checksum="sha256:D98291AC[...]B6DC7B97", checksum="sha256:<http://example.com/path/sha256sum.txt>".
+If a checksum is passed to this parameter, the digest of the destination file will be calculated after it is downloaded to ensure its integrity and verify that the transfer completed successfully. Format: <algorithm>:<checksum|url>, for example checksum="sha256:D98291AC[...]B6DC7B97", checksum="sha256:http://example.com/path/sha256sum.txt".
 
 If you worry about portability, only the sha1 algorithm is available on all platforms and python versions.
 
@@ -21694,7 +21137,7 @@ When run on Ansible 2.5 or greater, path defaults to ansible’s remote_tmp sett
 
 When run on Ansible prior to 2.5, it defaults to TMPDIR, TEMP or TMP env variables or a platform specific value.
 
-<https://docs.python.org/3/library/tempfile.html#tempfile.tempdir>.
+https://docs.python.org/3/library/tempfile.html#tempfile.tempdir.
 
 list / elements=string
 
@@ -21810,14 +21253,13 @@ owner id of the file, after execution
 
 the actual URL used for the request
 
-Sample: "<https://www.ansible.com/>"
+Sample: "https://www.ansible.com/"
 
 Jan-Piet Mens (@jpmens)
 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Download foo.conf
   ansible.builtin.get_url:
@@ -21875,10 +21317,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.upper filter – Convert a value to uppercase. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/upper_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/upper_filter.html
 
 **Contents:**
-
 - ansible.builtin.upper filter – Convert a value to uppercase.
 - Synopsis
   - Collection links
@@ -21889,16 +21330,15 @@ Convert a value to uppercase.
 
 This is the Jinja builtin filter plugin ‘upper’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.upper>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.upper
 
 ---
 
 ## ansible.builtin.deb822_repository module – Add and remove deb822 formatted repositories — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/deb822_repository_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/deb822_repository_module.html
 
 **Contents:**
-
 - ansible.builtin.deb822_repository module – Add and remove deb822 formatted repositories
 - Synopsis
 - Requirements
@@ -21995,14 +21435,13 @@ Sample: "/etc/apt/keyrings/debian.gpg"
 
 A source string for the repository
 
-Sample: "X-Repolib-Name: debian\nTypes: deb\nURIs: <https://deb.debian.org\nSuites>: stable\nComponents: main contrib non-free\nSigned-By:\n -----BEGIN PGP PUBLIC KEY BLOCK-----\n .\n mDMEYCQjIxYJKwYBBAHaRw8BAQdAD/P5Nvvnvk66SxBBHDbhRml9ORg1WV5CvzKY\n CuMfoIS0BmFiY2RlZoiQBBMWCgA4FiEErCIG1VhKWMWo2yfAREZd5NfO31cFAmAk\n IyMCGyMFCwkIBwMFFQoJCAsFFgIDAQACHgECF4AACgkQREZd5NfO31fbOwD6ArzS\n dM0Dkd5h2Ujy1b6KcAaVW9FOa5UNfJ9FFBtjLQEBAJ7UyWD3dZzhvlaAwunsk7DG\n 3bHcln8DMpIJVXht78sL\n =IE0r\n -----END PGP PUBLIC KEY BLOCK-----\n"
+Sample: "X-Repolib-Name: debian\nTypes: deb\nURIs: https://deb.debian.org\nSuites: stable\nComponents: main contrib non-free\nSigned-By:\n -----BEGIN PGP PUBLIC KEY BLOCK-----\n .\n mDMEYCQjIxYJKwYBBAHaRw8BAQdAD/P5Nvvnvk66SxBBHDbhRml9ORg1WV5CvzKY\n CuMfoIS0BmFiY2RlZoiQBBMWCgA4FiEErCIG1VhKWMWo2yfAREZd5NfO31cFAmAk\n IyMCGyMFCwkIBwMFFQoJCAsFFgIDAQACHgECF4AACgkQREZd5NfO31fbOwD6ArzS\n dM0Dkd5h2Ujy1b6KcAaVW9FOa5UNfJ9FFBtjLQEBAJ7UyWD3dZzhvlaAwunsk7DG\n 3bHcln8DMpIJVXht78sL\n =IE0r\n -----END PGP PUBLIC KEY BLOCK-----\n"
 
 Ansible Core Team (@ansible)
 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Add debian repo
   deb822_repository:
@@ -22051,10 +21490,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.string filter – Convert an object to a string if it isn’t already. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/string_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/string_filter.html
 
 **Contents:**
-
 - ansible.builtin.string filter – Convert an object to a string if it isn’t already.
 - Synopsis
   - Collection links
@@ -22065,16 +21503,15 @@ Convert an object to a string if it isn’t already.
 
 This is the Jinja builtin filter plugin ‘string’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.string>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.string
 
 ---
 
 ## ansible.builtin.cron module – Manage cron.d and crontab entries — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/cron_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/cron_module.html
 
 **Contents:**
-
 - ansible.builtin.cron module – Manage cron.d and crontab entries
 - Synopsis
 - Requirements
@@ -22111,7 +21548,7 @@ Using this parameter requires you to specify the user as well, unless state=abse
 
 Either this parameter or name is required.
 
-Day of the month the job should run (1-31, *,*/2, and so on).
+Day of the month the job should run (1-31, *, */2, and so on).
 
 Cannot be combined with special_time.
 
@@ -22125,7 +21562,7 @@ New variables are added on top of crontab.
 
 name and value parameters are the name and the value of environment variable.
 
-Hour when the job should run (0-23, *,*/2, and so on).
+Hour when the job should run (0-23, *, */2, and so on).
 
 Cannot be combined with special_time.
 
@@ -22143,11 +21580,11 @@ The command should not contain line breaks.
 
 Required if state=present.
 
-Minute when the job should run (0-59, *,*/2, and so on).
+Minute when the job should run (0-59, *, */2, and so on).
 
 Cannot be combined with special_time.
 
-Month of the year the job should run (JAN-DEC or 1-12, *,*/2, and so on).
+Month of the year the job should run (JAN-DEC or 1-12, *, */2, and so on).
 
 Cannot be combined with special_time.
 
@@ -22192,7 +21629,6 @@ Luca Berruti (@lberruti)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Ensure a job that runs at 2 and 5 exists. Creates an entry like "0 5,2 * * ls -alh > /dev/null"
   ansible.builtin.cron:
@@ -22252,10 +21688,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.failed test – did the task fail — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/failed_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/failed_test.html
 
 **Contents:**
-
 - ansible.builtin.failed test – did the task fail
 - Synopsis
 - Input
@@ -22283,7 +21718,6 @@ Returns True if the task was failed, False otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # test 'status' to know how to respond
 {{ taskresults is failed }}
@@ -22293,10 +21727,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.strftime filter – date formatting — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/strftime_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/strftime_filter.html
 
 **Contents:**
-
 - ansible.builtin.strftime filter – date formatting
 - Synopsis
 - Input
@@ -22326,14 +21759,13 @@ added in ansible-core 2.14
 
 Whether time supplied is in UTC.
 
-This is a passthrough to Python’s stftime, for a complete set of formatting options go to <https://strftime.org/>.
+This is a passthrough to Python’s stftime, for a complete set of formatting options go to https://strftime.org/.
 
 A formatted date/time string.
 
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # for a complete set of features go to  https://strftime.org/
 
@@ -22358,10 +21790,9 @@ Example 1 (javascript):
 
 ## ansible.builtin.lessthan test – Same as a < b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lessthan_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lessthan_test.html
 
 **Contents:**
-
 - ansible.builtin.lessthan test – Same as a < b.
 - Synopsis
   - Collection links
@@ -22370,16 +21801,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘lessthan’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.lessthan>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.lessthan
 
 ---
 
 ## ansible.builtin.ssh connection – connect via SSH client binary — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ssh_connection.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ssh_connection.html
 
 **Contents:**
-
 - ansible.builtin.ssh connection – connect via SSH client binary
 - Synopsis
 - Parameters
@@ -22682,28 +22112,24 @@ The ssh CLI tool uses return code 255 as a ‘connection error’, this can conf
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [ssh_connection]
 control_path = VALUE
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [ssh_connection]
 control_path_dir = ~/.ansible/cp
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [defaults]
 host_key_checking = true
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [ssh_connection]
 host_key_checking = true
@@ -22713,10 +22139,9 @@ host_key_checking = true
 
 ## ansible.builtin.pow filter – power of (math operation) — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pow_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/pow_filter.html
 
 **Contents:**
-
 - ansible.builtin.pow filter – power of (math operation)
 - Synopsis
 - Input
@@ -22743,7 +22168,6 @@ This is a passthrough to Python’s math.pow.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # => 32768
 eight_power_five: "{{ 8 | pow(5) }}"
@@ -22759,10 +22183,9 @@ cube_me: "{{ me | pow(3) }}"
 
 ## ansible.builtin.truncate filter – Return a truncated copy of the string. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/truncate_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/truncate_filter.html
 
 **Contents:**
-
 - ansible.builtin.truncate filter – Return a truncated copy of the string.
 - Synopsis
   - Collection links
@@ -22773,16 +22196,15 @@ Return a truncated copy of the string.
 
 This is the Jinja builtin filter plugin ‘truncate’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.truncate>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.truncate
 
 ---
 
 ## ansible.builtin.dpkg_selections module – Dpkg package selection selections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dpkg_selections_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/dpkg_selections_module.html
 
 **Contents:**
-
 - ansible.builtin.dpkg_selections module – Dpkg package selection selections
 - Synopsis
 - Parameters
@@ -22811,7 +22233,6 @@ Brian Brazil (@brian-brazil)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Prevent python from being upgraded
   ansible.builtin.dpkg_selections:
@@ -22828,10 +22249,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.min filter – Return the smallest item from the sequence. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/min_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/min_filter.html
 
 **Contents:**
-
 - ansible.builtin.min filter – Return the smallest item from the sequence.
 - Synopsis
   - Collection links
@@ -22842,16 +22262,15 @@ Return the smallest item from the sequence.
 
 This is the Jinja builtin filter plugin ‘min’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.min>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.min
 
 ---
 
 ## ansible.builtin.file module – Manage files and file properties — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/file_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/file_module.html
 
 **Contents:**
-
 - ansible.builtin.file module – Manage files and file properties
 - Synopsis
 - Parameters
@@ -23033,7 +22452,6 @@ Sample: "/path/to/file.txt"
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Change file ownership, group and permissions
   ansible.builtin.file:
@@ -23128,10 +22546,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.nan test – is this not a number (NaN) — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/nan_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/nan_test.html
 
 **Contents:**
-
 - ansible.builtin.nan test – is this not a number (NaN)
 - Synopsis
 - Input
@@ -23155,7 +22572,6 @@ Returns True if the input is NaN, False if otherwise.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 isnan: "{{ '42' is nan }}"
 ```
@@ -23164,10 +22580,9 @@ isnan: "{{ '42' is nan }}"
 
 ## ansible.builtin.url lookup – return contents from URL — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/url_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/url_lookup.html
 
 **Contents:**
-
 - ansible.builtin.url lookup – return contents from URL
 - Synopsis
 - Terms
@@ -23323,28 +22738,24 @@ list of list of lines or content of url(s)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [url_lookup]
 ca_path = VALUE
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [url_lookup]
 ciphers = VALUE
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [url_lookup]
 follow_redirects = urllib2
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [url_lookup]
 force = false
@@ -23354,10 +22765,9 @@ force = false
 
 ## ansible.builtin.subelements filter – returns a product of a list and its elements — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subelements_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/subelements_filter.html
 
 **Contents:**
-
 - ansible.builtin.subelements filter – returns a product of a list and its elements
 - Synopsis
 - Input
@@ -23387,7 +22797,6 @@ List made of original list and product of the subelement list.
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 # data
 users:
@@ -23404,10 +22813,9 @@ users_w_groups: {{ users | subelements('groups', skip_missing=True) }}
 
 ## Listing collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_listing.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections_guide/collections_listing.html
 
 **Contents:**
-
 - Listing collections
 
 To list installed collections, run ansible-galaxy collection list. This shows all of the installed collections found in the configured collections search paths. It will also show collections under development that contain a galaxy.yml file instead of a MANIFEST.json. The path where the collections are located is displayed as well as version information. If no version information is available, a * is displayed for the version number.
@@ -23421,7 +22829,6 @@ To search other paths for collections, use the -p option. Specify multiple searc
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # /home/astark/.ansible/collections/ansible_collections
 Collection                 Version
@@ -23440,7 +22847,6 @@ sensu.sensu_go    1.3.0
 ```
 
 Example 2 (unknown):
-
 ```unknown
 > ansible-galaxy collection list fortinet.fortios
 
@@ -23456,7 +22862,6 @@ fortinet.fortios 1.0.6
 ```
 
 Example 3 (unknown):
-
 ```unknown
 > ansible-galaxy collection list -p '/opt/ansible/collections:/etc/ansible/collections'
 
@@ -23491,10 +22896,9 @@ sensu.sensu_go    1.3.0
 
 ## Creating collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_creating.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_creating.html
 
 **Contents:**
-
 - Creating collections
 - Naming your collection
 - Creating a new collection
@@ -23596,13 +23000,11 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible_collections#> ansible-galaxy collection init my_namespace.my_collection
 ```
 
 Example 2 (unknown):
-
 ```unknown
 namespace: {{ namespace }}
 name: {{ collection_name }}
@@ -23611,7 +23013,6 @@ dependencies: {{ dependencies | default({}, true) }}
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible_collections#> ansible-galaxy collection init --collection-skeleton /path/to/my/namespace/skeleton --extra-vars "@my_vars_file.json" my_namespace.my_collection
 ```
@@ -23620,10 +23021,9 @@ ansible_collections#> ansible-galaxy collection init --collection-skeleton /path
 
 ## ansible.builtin.last filter – Return the last item of a sequence. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/last_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/last_filter.html
 
 **Contents:**
-
 - ansible.builtin.last filter – Return the last item of a sequence.
 - Synopsis
   - Collection links
@@ -23634,16 +23034,15 @@ Return the last item of a sequence.
 
 This is the Jinja builtin filter plugin ‘last’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.last>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.last
 
 ---
 
 ## ansible.builtin.lt test – Same as a < b. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lt_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/lt_test.html
 
 **Contents:**
-
 - ansible.builtin.lt test – Same as a < b.
 - Synopsis
   - Collection links
@@ -23652,16 +23051,15 @@ This test plugin is part of ansible-core and included in all Ansible installatio
 
 This is the Jinja builtin test plugin ‘lt’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.lt>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-tests.lt
 
 ---
 
 ## ansible.builtin.service module – Manage services — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/service_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/service_module.html
 
 **Contents:**
-
 - ansible.builtin.service module – Manage services
 - Synopsis
 - Parameters
@@ -23757,7 +23155,6 @@ The official documentation on the ansible.windows.win_service module.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Start service httpd, if not started
   ansible.builtin.service:
@@ -23801,10 +23198,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.attr filter – Get an attribute of an object. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/attr_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/attr_filter.html
 
 **Contents:**
-
 - ansible.builtin.attr filter – Get an attribute of an object.
 - Synopsis
   - Collection links
@@ -23815,16 +23211,15 @@ Get an attribute of an object.
 
 This is the Jinja builtin filter plugin ‘attr’.
 
-See: <https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.attr>
+See: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.attr
 
 ---
 
 ## ansible.builtin.apt module – Manages apt-packages — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/apt_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/apt_module.html
 
 **Contents:**
-
 - ansible.builtin.apt module – Manages apt-packages
 - Synopsis
 - Requirements
@@ -23944,7 +23339,7 @@ aliases: package, pkg
 
 list / elements=string
 
-A list of package names, like foo, or package specifier with version, like foo=1.0 or foo>=1.0. Name wildcards (fnmatch) like apt*and version wildcards like foo=1.0* are also supported.
+A list of package names, like foo, or package specifier with version, like foo=1.0 or foo>=1.0. Name wildcards (fnmatch) like apt* and version wildcards like foo=1.0* are also supported.
 
 Do not use single or double quotes around the version when referring to the package name with a specific version, such as foo=1.0 or foo>=1.0.
 
@@ -24037,7 +23432,6 @@ Matthew Williams (@mgwilliams)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Install apache httpd (state=present is optional)
   ansible.builtin.apt:

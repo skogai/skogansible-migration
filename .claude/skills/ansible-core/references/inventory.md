@@ -6,10 +6,9 @@
 
 ## ansible.builtin.ini inventory – Uses an Ansible INI file as inventory source. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ini_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/ini_inventory.html
 
 **Contents:**
-
 - ansible.builtin.ini inventory – Uses an Ansible INI file as inventory source.
 - Synopsis
 - Notes
@@ -32,7 +31,7 @@ Anything found outside a section is considered an ‘ungrouped’ host.
 
 Values passed in the INI format using the key=value syntax are interpreted differently depending on where they are declared within your inventory.
 
-When declared inline with the host, INI values are processed by Python’s ast.literal_eval function (<https://docs.python.org/3/library/ast.html#ast.literal_eval>) and interpreted as Python literal structures (strings, numbers, tuples, lists, dicts, booleans, None). If you want a number to be treated as a string, you must quote it. Host lines accept multiple key=value parameters per line. Therefore they need a way to indicate that a space is part of a value rather than a separator.
+When declared inline with the host, INI values are processed by Python’s ast.literal_eval function (https://docs.python.org/3/library/ast.html#ast.literal_eval) and interpreted as Python literal structures (strings, numbers, tuples, lists, dicts, booleans, None). If you want a number to be treated as a string, you must quote it. Host lines accept multiple key=value parameters per line. Therefore they need a way to indicate that a space is part of a value rather than a separator.
 
 When declared in a :vars section, INI values are interpreted as strings. For example var=FALSE would create a string equal to FALSE. Unlike host lines, :vars sections accept only a single entry per line, so everything after the = must be the value for the entry.
 
@@ -47,7 +46,6 @@ Consider switching to YAML format for inventory sources to avoid confusion on th
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # fmt: ini
 # Example 1
@@ -96,10 +94,9 @@ host4 # same host as above, but member of 2 groups, will inherit vars from both
 
 ## Patterns: targeting hosts and groups — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/inventory_guide/intro_patterns.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/inventory_guide/intro_patterns.html
 
 **Contents:**
-
 - Patterns: targeting hosts and groups
 - Using patterns
 - Common patterns
@@ -220,26 +217,22 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible <pattern> -m <module_name> -a "<module options>"
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible webservers -m service -a "name=httpd state=restarted"
 ```
 
 Example 3 (unknown):
-
 ```unknown
 - name: <play_name>
   hosts: <pattern>
 ```
 
 Example 4 (unknown):
-
 ```unknown
 - name: restart webservers
   hosts: webservers
@@ -249,10 +242,9 @@ Example 4 (unknown):
 
 ## ansible.builtin.add_host module – Add a host (and alternatively a group) to the ansible-playbook in-memory inventory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/add_host_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/add_host_module.html
 
 **Contents:**
-
 - ansible.builtin.add_host module – Add a host (and alternatively a group) to the ansible-playbook in-memory inventory
 - Synopsis
 - Parameters
@@ -334,7 +326,6 @@ Seth Vidal (@skvidal)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: Add host to group 'just_created' with variable foo=42
   ansible.builtin.add_host:
@@ -381,10 +372,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.constructed inventory – Uses Jinja2 to construct vars and groups based on existing inventory. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/constructed_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/constructed_inventory.html
 
 **Contents:**
-
 - ansible.builtin.constructed inventory – Uses Jinja2 to construct vars and groups based on existing inventory.
 - Synopsis
 - Parameters
@@ -479,14 +469,12 @@ Runtime ‘magic variables’ are not available during inventory construction. F
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [inventory_plugins]
 use_extra_vars = false
 ```
 
 Example 2 (unknown):
-
 ```unknown
 # inventory.config file in YAML format
 plugin: ansible.builtin.constructed
@@ -535,10 +523,9 @@ keyed_groups:
 
 ## ansible.builtin.advanced_host_list inventory – Parses a ‘host list’ with ranges — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/advanced_host_list_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/advanced_host_list_inventory.html
 
 **Contents:**
-
 - ansible.builtin.advanced_host_list inventory – Parses a ‘host list’ with ranges
 - Synopsis
 - Examples
@@ -553,7 +540,6 @@ This plugin only applies to inventory sources that are not paths and contain at 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # simple range
 # ansible -i 'host[1:10],' -m ping
@@ -566,10 +552,9 @@ Example 1 (unknown):
 
 ## How to build your inventory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/inventory_guide/intro_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/inventory_guide/intro_inventory.html
 
 **Contents:**
-
 - How to build your inventory
 - Inventory basics: formats, hosts, and groups
   - Default groups
@@ -882,7 +867,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 mail.example.com
 
@@ -897,7 +881,6 @@ three.example.com
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ungrouped:
   hosts:
@@ -914,7 +897,6 @@ dbservers:
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ungrouped:
   hosts:
@@ -949,7 +931,6 @@ test:
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ungrouped:
   hosts:
@@ -984,10 +965,9 @@ test:
 
 ## ansible.builtin.inventory_hostnames lookup – list of inventory hosts matching a host pattern — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/inventory_hostnames_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/inventory_hostnames_lookup.html
 
 **Contents:**
-
 - ansible.builtin.inventory_hostnames lookup – list of inventory hosts matching a host pattern
 - Synopsis
 - Notes
@@ -1009,7 +989,6 @@ list of hostnames that matched the host pattern in inventory
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: show all the hosts matching the pattern, i.e. all but the group www
   ansible.builtin.debug:
@@ -1022,10 +1001,9 @@ Example 1 (unknown):
 
 ## Developing dynamic inventory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_inventory.html
 
 **Contents:**
-
 - Developing dynamic inventory
 - Inventory sources
 - Inventory plugins
@@ -1123,7 +1101,7 @@ To see other inventory object methods, see the source code here: lib/ansible/inv
 
 To cache the inventory, extend the inventory plugin documentation with the inventory_cache documentation fragment and use the Cacheable base class.
 
-Next, load the cache plugin specified by the user to read from and update the cache. If your inventory plugin uses YAML-based configuration files and the _read_config_data method, the cache plugin is loaded within that method. If your inventory plugin does not use_read_config_data, you must load the cache explicitly with load_cache_plugin.
+Next, load the cache plugin specified by the user to read from and update the cache. If your inventory plugin uses YAML-based configuration files and the _read_config_data method, the cache plugin is loaded within that method. If your inventory plugin does not use _read_config_data, you must load the cache explicitly with load_cache_plugin.
 
 Before using the cache plugin, you must retrieve a unique cache key by using the get_cache_key method. This task needs to be done by all inventory modules using the cache, so that you don’t use/overwrite other parts of the cache.
 
@@ -1141,17 +1119,17 @@ Inventory plugins can create host variables and groups from Jinja2 expressions a
 
 There are three main options in the constructed documentation fragment:
 
-compose creates variables using Jinja2 expressions. This is implemented by calling the _set_composite_vars method. keyed_groups creates groups of hosts based on variable values. This is implemented by calling the _add_host_to_keyed_groups method. groups creates groups based on Jinja2 conditionals. This is implemented by calling the_add_host_to_composed_groups method.
+compose creates variables using Jinja2 expressions. This is implemented by calling the _set_composite_vars method. keyed_groups creates groups of hosts based on variable values. This is implemented by calling the _add_host_to_keyed_groups method. groups creates groups based on Jinja2 conditionals. This is implemented by calling the _add_host_to_composed_groups method.
 
 Each method should be called for every host added to inventory. Three positional arguments are required: the constructed option, a dictionary of variables, and a host name. Calling the method _set_composite_vars first will allow keyed_groups and groups to use the composed variables.
 
 By default, undefined variables are ignored. This is permitted by default for compose so you can make the variable definitions depend on variables that will be populated later in a play from other sources. For groups, it allows using variables that are not always present without having to use the default filter. To support configuring undefined variables to be an error, pass the constructed option strict to each of the methods as a keyword argument.
 
-keyed_groups and groups use any variables already associated with the host (for example, from an earlier inventory source)._add_host_to_keyed_groups and add_host_to_composed_groups can turn this off by passing the keyword argument fetch_hostvars.
+keyed_groups and groups use any variables already associated with the host (for example, from an earlier inventory source). _add_host_to_keyed_groups and add_host_to_composed_groups can turn this off by passing the keyword argument fetch_hostvars.
 
 Here is an example using all three methods:
 
-By default, group names created with _add_host_to_composed_groups() and_add_host_to_keyed_groups() are valid Python identifiers. Invalid characters are replaced with an underscore _. A plugin can change the sanitization used for the constructed features by setting self._sanitize_group_name to a new function. The core engine also does sanitization, so if the custom function is less strict it should be used in conjunction with the configuration setting TRANSFORM_INVALID_GROUP_CHARS.
+By default, group names created with _add_host_to_composed_groups() and _add_host_to_keyed_groups() are valid Python identifiers. Invalid characters are replaced with an underscore _. A plugin can change the sanitization used for the constructed features by setting self._sanitize_group_name to a new function. The core engine also does sanitization, so if the custom function is less strict it should be used in conjunction with the configuration setting TRANSFORM_INVALID_GROUP_CHARS.
 
 To simplify development, most plugins use a standard YAML-based configuration file as the inventory source. The file has only one required field plugin, which should contain the name of the plugin that is expected to consume the file. Depending on other common features used, you might need other fields, and you can add custom options in each plugin as required. For example, if you use the integrated caching, cache_plugin, cache_timeout and other cache-related fields could be present.
 
@@ -1175,7 +1153,7 @@ To avoid this inefficiency, if the inventory script returns a top-level element 
 
 The data to be added to the top-level JSON object looks like this:
 
-To satisfy the requirements of using _meta, to prevent ansible from calling your inventory with --host you must at least populate_meta with an empty hostvars object. For example:
+To satisfy the requirements of using _meta, to prevent ansible from calling your inventory with --host you must at least populate _meta with an empty hostvars object. For example:
 
 If you intend to replace an existing static inventory file with an inventory script, it must return a JSON object which contains an ‘all’ group that includes every host in the inventory as a member and every group in the inventory as a child. It should also include an ‘ungrouped’ group which contains all hosts which are not members of any other group. A skeleton example of this JSON object is:
 
@@ -1194,7 +1172,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (python):
-
 ```python
 from ansible.plugins.inventory import BaseInventoryPlugin
 
@@ -1204,7 +1181,6 @@ class InventoryModule(BaseInventoryPlugin):
 ```
 
 Example 2 (python):
-
 ```python
 from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, Cacheable
 
@@ -1214,7 +1190,6 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 ```
 
 Example 3 (python):
-
 ```python
 def verify_file(self, path):
     ''' return true/false if this is possibly a valid file for this plugin to consume '''
@@ -1227,7 +1202,6 @@ def verify_file(self, path):
 ```
 
 Example 4 (python):
-
 ```python
 def verify_file(self, path):
     ''' don't call base class as we don't expect a path, but a host list '''
@@ -1244,10 +1218,9 @@ def verify_file(self, path):
 
 ## ansible-inventory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-inventory.html
 
 **Contents:**
-
 - ansible-inventory
 - Synopsis
 - Description
@@ -1326,7 +1299,6 @@ ansible(1), ansible-config(1), ansible-console(1), ansible-doc(1), ansible-galax
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 usage: ansible-inventory [-h] [--version] [-v] [-i INVENTORY] [-l SUBSET]
                       [--flush-cache] [--vault-id VAULT_IDS]
@@ -1341,10 +1313,9 @@ usage: ansible-inventory [-h] [--version] [-v] [-i INVENTORY] [-l SUBSET]
 
 ## Inventory plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/inventory.html
 
 **Contents:**
-
 - Inventory plugins
 - Enabling inventory plugins
 - Using inventory plugins
@@ -1372,7 +1343,7 @@ To start using an inventory plugin with a YAML configuration source, create a fi
 
 Inventory plugins have required name patterns to which they must conform, for example:
 
-An inventory that includes the kubevirt.core.kubevirt inventory plugin must use the *.kubevirt.yml filename pattern. An inventory that includes the servicenow.servicenow.now inventory plugin must use the*.servicenow.yml filename pattern.
+An inventory that includes the kubevirt.core.kubevirt inventory plugin must use the *.kubevirt.yml filename pattern. An inventory that includes the servicenow.servicenow.now inventory plugin must use the *.servicenow.yml filename pattern.
 
 Each plugin should document any naming restrictions. In addition, the YAML config file must end with the extension yml or yaml to be enabled by default with the auto plugin (otherwise, see the section above on enabling plugins).
 
@@ -1401,28 +1372,24 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [inventory]
 enable_plugins = host_list, script, auto, yaml, ini, toml
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [inventory]
 enable_plugins = host_list, script, auto, yaml, ini, toml, namespace.collection_name.inventory_plugin_name
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [inventory]
 enable_plugins = host_list, script, auto, yaml, ini, toml, my_plugin
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible hostname -i inventory_source -m ansible.builtin.ping
 ```
@@ -1431,10 +1398,9 @@ ansible hostname -i inventory_source -m ansible.builtin.ping
 
 ## ansible.builtin.yaml inventory – Uses a specific YAML file as an inventory source. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/yaml_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/yaml_inventory.html
 
 **Contents:**
-
 - ansible.builtin.yaml inventory – Uses a specific YAML file as an inventory source.
 - Synopsis
 - Parameters
@@ -1473,21 +1439,18 @@ Enabled in configuration by default.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 yaml_valid_extensions = .yaml, .yml, .json
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [inventory_plugin_yaml]
 yaml_valid_extensions = .yaml, .yml, .json
 ```
 
 Example 3 (unknown):
-
 ```unknown
 all: # keys must be unique, i.e. only one 'hosts' per group
     hosts:
@@ -1525,10 +1488,9 @@ all: # keys must be unique, i.e. only one 'hosts' per group
 
 ## Working with dynamic inventory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/inventory_guide/intro_dynamic_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/inventory_guide/intro_dynamic_inventory.html
 
 **Contents:**
-
 - Working with dynamic inventory
 - Inventory script example: Cobbler
 - Other inventory scripts
@@ -1600,7 +1562,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [cobbler]
 
@@ -1622,7 +1583,6 @@ cache_max_age = 900
 ```
 
 Example 2 (unknown):
-
 ```unknown
 cobbler profile add --name=webserver --distro=CentOS6-x86_64
 cobbler profile edit --name=webserver --mgmt-classes="webserver" --ksmeta="a=2 b=3"
@@ -1631,14 +1591,12 @@ cobbler system edit --name=bar --dns-name="bar.example.com" --mgmt-classes="atla
 ```
 
 Example 3 (unknown):
-
 ```unknown
 # file: /srv/motd.j2
 Welcome, I am templated with a value of a={{ a }}, b={{ b }}, and c={{ c }}
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible webserver -m setup
 ansible webserver -m template -a "src=/tmp/motd.j2 dest=/etc/motd"
@@ -1648,10 +1606,9 @@ ansible webserver -m template -a "src=/tmp/motd.j2 dest=/etc/motd"
 
 ## ansible.builtin.auto inventory – Loads and executes an inventory plugin specified in a YAML config — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/auto_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/auto_inventory.html
 
 **Contents:**
-
 - ansible.builtin.auto inventory – Loads and executes an inventory plugin specified in a YAML config
 - Synopsis
 - Examples
@@ -1669,7 +1626,6 @@ Matt Davis (@nitzmahone)
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # This plugin is not intended for direct use; it is a fallback mechanism for automatic enabling of
 # all installed inventory plugins.
@@ -1679,10 +1635,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.host_list inventory – Parses a ‘host list’ string — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/host_list_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/host_list_inventory.html
 
 **Contents:**
-
 - ansible.builtin.host_list inventory – Parses a ‘host list’ string
 - Synopsis
 - Examples
@@ -1697,7 +1652,6 @@ This plugin only applies to inventory strings that are not paths and contain a c
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # define 2 hosts in command line
 # ansible -i '10.10.2.6, 10.10.2.4' -m ping all
@@ -1713,10 +1667,9 @@ Example 1 (unknown):
 
 ## ansible.builtin.generator inventory – Uses Jinja2 to construct hosts and groups from patterns — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/generator_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/generator_inventory.html
 
 **Contents:**
-
 - ansible.builtin.generator inventory – Uses Jinja2 to construct hosts and groups from patterns
 - Synopsis
 - Parameters
@@ -1748,7 +1701,6 @@ token that ensures this is a source file for the ‘generator’ plugin.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # inventory.config file in YAML format
 # remember to enable this inventory plugin in the ansible.cfg before using
@@ -1789,10 +1741,9 @@ layers:
 
 ## ansible.builtin.toml inventory – Uses a specific TOML file as an inventory source. — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/toml_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/toml_inventory.html
 
 **Contents:**
-
 - ansible.builtin.toml inventory – Uses a specific TOML file as an inventory source.
 - Synopsis
 - Examples
@@ -1807,7 +1758,6 @@ File MUST have a valid ‘.toml’ file extension
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 # fmt: toml
 # Example 1
@@ -1884,10 +1834,9 @@ host4 = {}
 
 ## ansible.builtin.script inventory – Executes an inventory script that returns JSON — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/script_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/ansible/builtin/script_inventory.html
 
 **Contents:**
-
 - ansible.builtin.script inventory – Executes an inventory script that returns JSON
 - Synopsis
 - Parameters
@@ -1913,21 +1862,19 @@ The plugin does not cache results because external inventory scripts are respons
 
 To write your own inventory script see (Developing dynamic inventory from the documentation site.
 
-To find the scripts that used to be part of the code release, go to <https://github.com/ansible-community/contrib-scripts/>.
+To find the scripts that used to be part of the code release, go to https://github.com/ansible-community/contrib-scripts/.
 
 Since 2.19 using a directory as an inventory source will no longer ignore .ini files by default, but you can still update the configuration to do so.
 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [inventory_plugin_script]
 always_show_stderr = true
 ```
 
 Example 2 (python):
-
 ```python
 # fmt: code
 
@@ -2051,10 +1998,9 @@ Example 2 (python):
 
 ## Connection methods and details — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/inventory_guide/connection_details.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/inventory_guide/connection_details.html
 
 **Contents:**
-
 - Connection methods and details
 - ControlPersist and paramiko
 - Setting a remote user
@@ -2106,7 +2052,6 @@ Ansible can use a variety of connection methods beyond SSH. You can select any c
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ---
 - name: update webservers
@@ -2120,14 +2065,12 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
-
 ```unknown
 other1.example.com     ansible_connection=ssh        ansible_user=myuser
 other2.example.com     ansible_connection=ssh        ansible_user=myotheruser
 ```
 
 Example 3 (unknown):
-
 ```unknown
 cloud:
   hosts:
@@ -2138,20 +2081,18 @@ cloud:
 ```
 
 Example 4 (unknown):
-
 ```unknown
-ssh-agent bash
-ssh-add ~/.ssh/id_rsa
+$ ssh-agent bash
+$ ssh-add ~/.ssh/id_rsa
 ```
 
 ---
 
 ## Index of all Inventory Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_inventory.html
 
 **Contents:**
-
 - Index of all Inventory Plugins
 - ansible.builtin
 

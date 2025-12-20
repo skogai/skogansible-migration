@@ -6,10 +6,9 @@
 
 ## Index of all Shell Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_shell.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_shell.html
 
 **Contents:**
-
 - Index of all Shell Plugins
 - ansible.builtin
 
@@ -23,10 +22,9 @@ ansible.builtin.sh – POSIX shell (/bin/sh)
 
 ## Developing plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_plugins.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_plugins.html
 
 **Contents:**
-
 - Developing plugins
 - Writing plugins in Python
 - Raising errors
@@ -126,15 +124,15 @@ Import cache plugins using the cache_loader so you can use self.set_options() an
 
 There are two base classes for cache plugins, BaseCacheModule for database-backed caches, and BaseCacheFileModule for file-backed caches.
 
-To create a cache plugin, start by creating a new CacheModule class with the appropriate base class. If you’re creating a plugin using an **init** method you should initialize the base class with any provided args and kwargs to be compatible with inventory plugin cache options. The base class calls self.set_options(direct=kwargs). After the base class **init** method is called self.get_option(<option_name>) should be used to access cache options.
+To create a cache plugin, start by creating a new CacheModule class with the appropriate base class. If you’re creating a plugin using an __init__ method you should initialize the base class with any provided args and kwargs to be compatible with inventory plugin cache options. The base class calls self.set_options(direct=kwargs). After the base class __init__ method is called self.get_option(<option_name>) should be used to access cache options.
 
-New cache plugins should take the options _uri,_prefix, and _timeout to be consistent with existing cache plugins.
+New cache plugins should take the options _uri, _prefix, and _timeout to be consistent with existing cache plugins.
 
 If you use the BaseCacheModule, you must implement the methods get, contains, keys, set, delete, flush, and copy. The contains method should return a boolean that indicates if the key exists and has not expired. Unlike file-based caches, the get method does not raise a KeyError if the cache has expired.
 
-If you use the BaseFileCacheModule, you must implement _load and_dump methods that will be called from the base class methods get and set.
+If you use the BaseFileCacheModule, you must implement _load and _dump methods that will be called from the base class methods get and set.
 
-If your cache plugin stores JSON, use AnsibleJSONEncoder in the _dump or set method and AnsibleJSONDecoder in the_load or get method.
+If your cache plugin stores JSON, use AnsibleJSONEncoder in the _dump or set method and AnsibleJSONDecoder in the _load or get method.
 
 For example cache plugins, see the source code for the cache plugins included with Ansible Core.
 
@@ -142,7 +140,7 @@ Callback plugins add new behaviors to Ansible when responding to events. By defa
 
 To create a callback plugin, create a new class with the Base(Callbacks) class as the parent:
 
-From there, override the specific methods from the CallbackBase that you want to provide a callback for. For plugins intended for use with Ansible version 2.0 and later, you should only override methods that start with v2. For a complete list of methods that you can override, please see **init**.py in the lib/ansible/plugins/callback directory.
+From there, override the specific methods from the CallbackBase that you want to provide a callback for. For plugins intended for use with Ansible version 2.0 and later, you should only override methods that start with v2. For a complete list of methods that you can override, please see __init__.py in the lib/ansible/plugins/callback directory.
 
 The following is a modified example of how Ansible’s timer plugin is implemented, but with an extra option so you can see how configuration works in Ansible version 2.4 and later:
 
@@ -239,7 +237,6 @@ Alternate YAML files as documentation
 **Examples:**
 
 Example 1 (python):
-
 ```python
 from ansible.module_utils.common.text.converters import to_native
 
@@ -250,14 +247,12 @@ except Exception as e:
 ```
 
 Example 2 (python):
-
 ```python
 from ansible.module_utils.common.text.converters import to_text
 result_string = to_text(result_string)
 ```
 
 Example 3 (unknown):
-
 ```unknown
 options:
   option_name:
@@ -278,7 +273,6 @@ options:
 ```
 
 Example 4 (python):
-
 ```python
 from ansible.plugins.action import ActionBase
 
@@ -290,10 +284,9 @@ class ActionModule(ActionBase):
 
 ## Debugging modules — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/debugging.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/debugging.html
 
 **Contents:**
-
 - Debugging modules
 - Detailed debugging steps
 - Simple debugging
@@ -339,7 +332,6 @@ Since print() statements do not work inside modules, raising an exception is a g
 **Examples:**
 
 Example 1 (javascript):
-
 ```javascript
 $ ANSIBLE_KEEP_REMOTE_FILES=1 ansible localhost -m ping -a 'data=debugging_session' -vvv
 <127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: badger
@@ -359,14 +351,12 @@ localhost | SUCCESS => {
 ```
 
 Example 2 (unknown):
-
 ```unknown
-ssh remotehost  # only if not debugging against localhost
-cd /home/badger/.ansible/tmp/ansible-tmp-1461434734.35-235318071810595
+$ ssh remotehost  # only if not debugging against localhost
+$ cd /home/badger/.ansible/tmp/ansible-tmp-1461434734.35-235318071810595
 ```
 
 Example 3 (unknown):
-
 ```unknown
 $ python AnsiballZ_ping.py explode
 Module expanded into:
@@ -374,7 +364,6 @@ Module expanded into:
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ├── AnsiballZ_ping.py
 └── debug_dir
@@ -400,10 +389,9 @@ Example 4 (unknown):
 
 ## Conventions, tips, and pitfalls — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_best_practices.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_best_practices.html
 
 **Contents:**
-
 - Conventions, tips, and pitfalls
 - Scoping your module(s)
 - Designing module interfaces
@@ -439,7 +427,7 @@ Especially if you want to contribute your module(s) to an existing Ansible Colle
 
 Each module should have a concise and well-defined functionality. Basically, follow the UNIX philosophy of doing one thing well.
 
-Do not add get, list or info state options to an existing module - create a new _info or_facts module.
+Do not add get, list or info state options to an existing module - create a new _info or _facts module.
 
 Modules should not require that a user know all the underlying options of an API/tool to be used. For example, if the legal values for a required module option cannot be documented, the module does not belong in Ansible Core.
 
@@ -559,7 +547,7 @@ Normalize options with other modules - if Ansible and the API your module connec
 
 Return facts from *_facts modules in the ansible_facts field of the result dictionary so other modules can access them.
 
-Implement check_mode in all *_info and*_facts modules. Playbooks which conditionalize based on fact information will only conditionalize correctly in check_mode if the facts are returned in check_mode. Usually you can add supports_check_mode=True when instantiating AnsibleModule.
+Implement check_mode in all *_info and *_facts modules. Playbooks which conditionalize based on fact information will only conditionalize correctly in check_mode if the facts are returned in check_mode. Usually you can add supports_check_mode=True when instantiating AnsibleModule.
 
 Use module-specific environment variables. For example, if you use the helpers in module_utils.api for basic authentication with module_utils.urls.fetch_url() and you fall back on environment variables for default values, use a module-specific environment variable like API_<MODULENAME>_USERNAME to avoid conflicts between modules.
 
@@ -594,14 +582,12 @@ Sensitive values marked with no_log=True will automatically have that value stri
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 if __name__ == '__main__':
     main()
 ```
 
 Example 2 (python):
-
 ```python
 import traceback
 
@@ -617,7 +603,6 @@ except:
 ```
 
 Example 3 (unknown):
-
 ```unknown
 if not HAS_LIB:
     module.fail_json(msg=missing_required_lib("foo"),
@@ -628,10 +613,9 @@ if not HAS_LIB:
 
 ## Become plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/become.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/become.html
 
 **Contents:**
-
 - Become plugins
 - Enabling Become Plugins
 - Using Become Plugins
@@ -659,10 +643,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Modules and plugins index — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/modules_plugins_index.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/modules_plugins_index.html
 
 **Contents:**
-
 - Modules and plugins index
 
 You can find an index of modules and plugins at Indexes of all modules and plugins.
@@ -671,10 +654,9 @@ You can find an index of modules and plugins at Indexes of all modules and plugi
 
 ## Action plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/action.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/action.html
 
 **Contents:**
-
 - Action plugins
 - Enabling action plugins
 - Using action plugins
@@ -700,10 +682,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Strategy plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/strategy.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/strategy.html
 
 **Contents:**
-
 - Strategy plugins
 - Enabling strategy plugins
 - Using strategy plugins
@@ -732,20 +713,17 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 export ANSIBLE_STRATEGY=free
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [defaults]
 strategy=linear
 ```
 
 Example 3 (unknown):
-
 ```unknown
 - hosts: all
   strategy: debug
@@ -770,10 +748,9 @@ Example 3 (unknown):
 
 ## Should you develop a module? — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules.html
 
 **Contents:**
-
 - Should you develop a module?
 
 Developing Ansible modules is easy, but often it is not necessary. Before you start writing a new module, ask:
@@ -828,10 +805,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Index of all Stdout Callback Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/callback_index_stdout.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/callback_index_stdout.html
 
 **Contents:**
-
 - Index of all Stdout Callback Plugins
 - ansible.builtin
 
@@ -847,10 +823,9 @@ ansible.builtin.oneline – oneline Ansible screen output
 
 ## Ansible markup — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/ansible_markup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/ansible_markup.html
 
 **Contents:**
-
 - Ansible markup
 - Semantic markup within module documentation
   - Rules for using O() and RV()
@@ -905,9 +880,9 @@ Refer to the R(kubernetes.core collection, plugins_in_kubernetes.core) for infor
 
 The C(win_*) modules (spread across several collections) allow you to manage various aspects of windows hosts.
 
-L() for links with a heading. For example: See L(Ansible Automation Platform,<https://www.ansible.com/products/automation-platform>). As of Ansible 2.10, do not use L() for relative links between Ansible documentation and collection documentation.
+L() for links with a heading. For example: See L(Ansible Automation Platform,https://www.ansible.com/products/automation-platform). As of Ansible 2.10, do not use L() for relative links between Ansible documentation and collection documentation.
 
-U() for URLs. For example: See U(<https://www.ansible.com/products/automation-platform>) for an overview.
+U() for URLs. For example: See U(https://www.ansible.com/products/automation-platform) for an overview.
 
 M() for module names. For example: See also M(ansible.builtin.yum) or M(community.general.apt_rpm).
 
@@ -937,10 +912,9 @@ Note that C(), B(), and I() do not allow escaping, and thus cannot contain the v
 
 ## Module maintenance and support — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/modules_support.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/modules_support.html
 
 **Contents:**
-
 - Module maintenance and support
 - Maintenance
 - Issue Reporting
@@ -1002,10 +976,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Netconf plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/netconf.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/netconf.html
 
 **Contents:**
-
 - Netconf plugins
 - Adding netconf plugins
 - Using netconf plugins
@@ -1039,10 +1012,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Index of all Vars Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_vars.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_vars.html
 
 **Contents:**
-
 - Index of all Vars Plugins
 - ansible.builtin
 
@@ -1052,10 +1024,9 @@ ansible.builtin.host_group_vars – In charge of loading group_vars and host_var
 
 ## Index of all Connection Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_connection.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_connection.html
 
 **Contents:**
-
 - Index of all Connection Plugins
 - ansible.builtin
 
@@ -1073,10 +1044,9 @@ ansible.builtin.winrm – Run tasks over Microsoft’s WinRM
 
 ## Module utilities — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/module_util.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/module_util.html
 
 **Contents:**
-
 - Module utilities
 - Enabling module utilities
 - Using module utilities
@@ -1101,10 +1071,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Index of all Modules — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_module.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_module.html
 
 **Contents:**
-
 - Index of all Modules
 - ansible.builtin
 
@@ -1252,10 +1221,9 @@ ansible.builtin.yum_repository – Add or remove YUM repositories
 
 ## Shell plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/shell.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/shell.html
 
 **Contents:**
-
 - Shell plugins
 - Enabling shell plugins
 - Using shell plugins
@@ -1281,10 +1249,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Windows module development walkthrough — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_general_windows.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_general_windows.html
 
 **Contents:**
-
 - Windows module development walkthrough
 - Windows environment setup
 - Create a Windows server in a VM
@@ -1368,7 +1335,7 @@ A domain with the DNS name domain.local
 
 A local administrator account on each host with the username vagrant and password vagrant
 
-A domain admin account <vagrant-domain@domain.local> with the password VagrantPass1
+A domain admin account vagrant-domain@domain.local with the password VagrantPass1
 
 The domain name and accounts can be modified by changing the variables domain_* in the inventory.yml file if it is required. The inventory file can also be modified to provision more or less servers by changing the hosts that are defined under the domain_children key. The host variable ansible_host is the private IP that will be assigned to the VirtualBox host only network adapter while vagrant_box is the box that will be used to create the VM.
 
@@ -1398,7 +1365,7 @@ Try and catch specific exceptions when using try/catch statements
 
 Avoid using PSCustomObjects unless necessary
 
-Look for common functions in ./lib/ansible/module_utils/powershell/ and use the code there instead of duplicating work. These can be imported by adding the line #Requires -Module *where* is the file name to import, and will be automatically included with the module code sent to the Windows target when run through Ansible
+Look for common functions in ./lib/ansible/module_utils/powershell/ and use the code there instead of duplicating work. These can be imported by adding the line #Requires -Module * where * is the file name to import, and will be automatically included with the module code sent to the Windows target when run through Ansible
 
 As well as PowerShell module utils, C# module utils are stored in ./lib/ansible/module_utils/csharp/ and are automatically imported in a module execution if the line #AnsibleRequires -CSharpUtil * is present
 
@@ -1518,17 +1485,17 @@ PowerShell modules support a small subset of the #Requires options built into Po
 
 These are the checks that can be used within Ansible modules:
 
-# Requires -Module Ansible.ModuleUtils.<module_util>: Added in Ansible 2.4, specifies a module_util to load in for the module execution
+#Requires -Module Ansible.ModuleUtils.<module_util>: Added in Ansible 2.4, specifies a module_util to load in for the module execution.
 
-# Requires -Version x.y: Added in Ansible 2.5, specifies the version of PowerShell that is required by the module. The module will fail if this requirement is not met
+#Requires -Version x.y: Added in Ansible 2.5, specifies the version of PowerShell that is required by the module. The module will fail if this requirement is not met.
 
-# AnsibleRequires -PowerShell <module_util>: Added in Ansible 2.8, like #Requires -Module, this specifies a module_util to load in for module execution
+#AnsibleRequires -PowerShell <module_util>: Added in Ansible 2.8, like #Requires -Module, this specifies a module_util to load in for module execution.
 
-# AnsibleRequires -CSharpUtil <module_util>: Added in Ansible 2.8, specifies a C# module_util to load in for the module execution
+#AnsibleRequires -CSharpUtil <module_util>: Added in Ansible 2.8, specifies a C# module_util to load in for the module execution.
 
-# AnsibleRequires -OSVersion x.y: Added in Ansible 2.5, specifies the OS build version that is required by the module and will fail if this requirement is not met. The actual OS version is derived from [Environment]::OSVersion.Version
+#AnsibleRequires -OSVersion x.y: Added in Ansible 2.5, specifies the OS build version that is required by the module and will fail if this requirement is not met. The actual OS version is derived from [Environment]::OSVersion.Version.
 
-# AnsibleRequires -Become: Added in Ansible 2.5, forces the exec runner to run the module with become, which is primarily used to bypass WinRM restrictions. If ansible_become_user is not specified then the SYSTEM account is used instead
+#AnsibleRequires -Become: Added in Ansible 2.5, forces the exec runner to run the module with become, which is primarily used to bypass WinRM restrictions. If ansible_become_user is not specified then the SYSTEM account is used instead.
 
 The #AnsibleRequires -PowerShell and #AnsibleRequires -CSharpUtil support further features such as:
 
@@ -1683,14 +1650,12 @@ Join the Ansible Forum and use the windows tag for discussions about Ansible dev
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 vagrant init jborean93/WindowsServer2016
 vagrant up
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [windows]
 WindowsServer  ansible_host=127.0.0.1
@@ -1705,7 +1670,6 @@ ansible_winrm_server_cert_validation=ignore
 ```
 
 Example 3 (unknown):
-
 ```unknown
 git clone https://github.com/jborean93/ansible-windows.git
 cd vagrant
@@ -1713,7 +1677,6 @@ vagrant up
 ```
 
 Example 4 (unknown):
-
 ```unknown
 $spec = @{
     uint64_type = @{ type = [Func[[Object], [UInt64]]]{ [System.UInt64]::Parse($args[0]) } }
@@ -1725,10 +1688,9 @@ $uint64_type = $module.Params.uint64_type
 
 ## Contributing your module to an existing Ansible collection — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_checklist.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_checklist.html
 
 **Contents:**
-
 - Contributing your module to an existing Ansible collection
 - Contributing modules: objective requirements
 - Contributing to Ansible: subjective requirements
@@ -1766,7 +1728,7 @@ ensure your code is readable
 
 if a module is named <something>_facts, it should be because its main purpose is returning ansible_facts. Do not name modules that do not do this with _facts. Only use ansible_facts for information that is specific to the host machine, for example network interfaces and their configuration, which operating system and which programs are installed.
 
-Modules that query/return general information (and not ansible_facts) should be named_info. General information is non-host specific information, for example information on online/cloud services (you can access different accounts for the same online service from the same host), or information on VMs and containers accessible from the machine.
+Modules that query/return general information (and not ansible_facts) should be named _info. General information is non-host specific information, for example information on online/cloud services (you can access different accounts for the same online service from the same host), or information on VMs and containers accessible from the machine.
 
 Additional requirements may apply for certain collections. Review the individual collection repositories for more information.
 
@@ -1782,10 +1744,9 @@ Windows development checklist.
 
 ## Cache plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/cache.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/cache.html
 
 **Contents:**
-
 - Cache plugins
 - Enabling fact cache plugins
 - Enabling inventory cache plugins
@@ -1839,27 +1800,23 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 export ANSIBLE_CACHE_PLUGIN=jsonfile
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [defaults]
 fact_caching=redis
 ```
 
 Example 3 (unknown):
-
 ```unknown
 [defaults]
 fact_caching = namespace.collection_name.cache_plugin_name
 ```
 
 Example 4 (unknown):
-
 ```unknown
 export ANSIBLE_INVENTORY_CACHE=True
 ```
@@ -1868,10 +1825,9 @@ export ANSIBLE_INVENTORY_CACHE=True
 
 ## Index of all Callback Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_callback.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_callback.html
 
 **Contents:**
-
 - Index of all Callback Plugins
 - ansible.builtin
 
@@ -1891,10 +1847,9 @@ ansible.builtin.tree – Save host events to files
 
 ## Rejecting modules — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/plugin_filtering_config.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/plugin_filtering_config.html
 
 **Contents:**
-
 - Rejecting modules
 
 If you want to avoid using certain modules, you can add them to a reject list to prevent Ansible from loading them. To reject plugins, create a yaml configuration file. The default location for this file is /etc/ansible/plugin_filters.yml. You can select a different path for the reject list using the PLUGIN_FILTERS_CFG setting in the defaults section of your ansible.cfg. Here is an example reject list:
@@ -1910,7 +1865,6 @@ The stat module is required for Ansible to run. Do not add this module to your r
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ---
 filter_version: '1.0'
@@ -1925,10 +1879,9 @@ module_rejectlist:
 
 ## Module format and documentation — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_documenting.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_documenting.html
 
 **Contents:**
-
 - Module format and documentation
 - Non-Python modules documentation
 - Python shebang & UTF-8 coding
@@ -2267,7 +2220,6 @@ To test documentation in collections, please see Build a docsite with antsibull-
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
@@ -2277,13 +2229,11 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
-
 ```unknown
 # Copyright: Contributors to the Ansible project
 ```
 
 Example 3 (unknown):
-
 ```unknown
 seealso:
 
@@ -2318,7 +2268,6 @@ seealso:
 ```
 
 Example 4 (unknown):
-
 ```unknown
 class ModuleDocFragment(object):
     # Standard documentation
@@ -2338,10 +2287,9 @@ class ModuleDocFragment(object):
 
 ## Docs fragments — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/docs_fragment.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/docs_fragment.html
 
 **Contents:**
-
 - Docs fragments
 - Enabling docs fragments
 - Using docs fragments
@@ -2364,10 +2312,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Vars plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/vars.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/vars.html
 
 **Contents:**
-
 - Vars plugins
 - Enabling vars plugins
 - Using vars plugins
@@ -2402,14 +2349,12 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [defaults]
 vars_plugins_enabled = host_group_vars,namespace.collection_name.vars_plugin_name
 ```
 
 Example 2 (unknown):
-
 ```unknown
 [vars_host_group_vars]
 stage = inventory
@@ -2419,10 +2364,9 @@ stage = inventory
 
 ## Creating a new collection — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_in_groups.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_in_groups.html
 
 **Contents:**
-
 - Creating a new collection
 - Before you start coding
 - Naming conventions
@@ -2485,7 +2429,7 @@ Ansible has a thriving and knowledgeable community of module developers that is 
 
 Your collection should include the following files to be usable:
 
-an **init**.py file - An empty file to initialize namespace and allow Python to import the files. Required
+an __init__.py file - An empty file to initialize namespace and allow Python to import the files. Required
 
 at least one plugin, for example, /plugins/modules/$your_first_module.py. Required
 
@@ -2507,10 +2451,9 @@ How to create a Pull Request (PR)
 
 ## Callback plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/callback.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/callback.html
 
 **Contents:**
-
 - Callback plugins
 - Example callback plugins
 - Enabling callback plugins
@@ -2566,25 +2509,21 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 #callbacks_enabled = timer, mail, profile_roles, collection_namespace.collection_name.custom_callback
 ```
 
 Example 2 (unknown):
-
 ```unknown
 stdout_callback = dense
 ```
 
 Example 3 (unknown):
-
 ```unknown
 stdout_callback = mycallback
 ```
 
 Example 4 (unknown):
-
 ```unknown
 [defaults]
 bin_ansible_callbacks=True
@@ -2594,10 +2533,9 @@ bin_ansible_callbacks=True
 
 ## Index of all Lookup Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_lookup.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_lookup.html
 
 **Contents:**
-
 - Index of all Lookup Plugins
 - ansible.builtin
 
@@ -2655,10 +2593,9 @@ ansible.builtin.vars – Lookup templated value of variables
 
 ## The Ansible Development Cycle — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/development_process.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/development_process.html
 
 **Contents:**
-
 - The Ansible Development Cycle
 - Macro development: ansible-core roadmaps, releases, and projects
 - Micro development: the lifecycle of a PR
@@ -2785,9 +2722,9 @@ These instructions assume that:
 
 stable-2.19 is the targeted release branch for the backport
 
-<https://github.com/ansible/ansible.git> is configured as a git remote named upstream. If you do not use a git remote named upstream, adjust the instructions accordingly.
+https://github.com/ansible/ansible.git is configured as a git remote named upstream. If you do not use a git remote named upstream, adjust the instructions accordingly.
 
-<https://github.com/><yourgithubaccount>/ansible.git is configured as a git remote named origin. If you do not use a git remote named origin, adjust the instructions accordingly.
+https://github.com/<yourgithubaccount>/ansible.git is configured as a git remote named origin. If you do not use a git remote named origin, adjust the instructions accordingly.
 
 Prepare your devel, stable, and feature branches:
 
@@ -2808,28 +2745,24 @@ If you prefer, you can use CPython’s cherry-picker tool (pip install --user 'c
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 breaking_changes:
   - ansible-test - automatic installation of requirements for cloud test plugins no longer occurs. The affected test plugins are ``aws``, ``azure``, ``cs``, ``hcloud``, ``nios``, ``opennebula``, ``openshift`` and ``vcenter``. Collections should instead use one of the supported integration test requirements files, such as the ``tests/integration/requirements.txt`` file (https://github.com/ansible/ansible/pull/75605).
 ```
 
 Example 2 (unknown):
-
 ```unknown
 major_changes:
   - ansible-test - all cloud plugins which use containers can now be used with all POSIX and Windows hosts. Previously the plugins did not work with Windows at all, and support for hosts created with the ``--remote`` option was inconsistent (https://github.com/ansible/ansible/pull/74216).
 ```
 
 Example 3 (unknown):
-
 ```unknown
 minor_changes:
   - lineinfile - add warning when using an empty regexp (https://github.com/ansible/ansible/issues/29443).
 ```
 
 Example 4 (unknown):
-
 ```unknown
 deprecated_features:
   - include action - is deprecated in favor of ``include_tasks``, ``import_tasks`` and ``import_playbook`` (https://github.com/ansible/ansible/pull/71262).
@@ -2839,10 +2772,9 @@ deprecated_features:
 
 ## Index of all Aggregate Callback Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/callback_index_aggregate.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/callback_index_aggregate.html
 
 **Contents:**
-
 - Index of all Aggregate Callback Plugins
 - ansible.builtin
 
@@ -2854,10 +2786,9 @@ ansible.builtin.junit – write playbook output to a JUnit file.
 
 ## Httpapi plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/httpapi.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/httpapi.html
 
 **Contents:**
-
 - Httpapi plugins
 - Adding httpapi plugins
 - Using httpapi plugins
@@ -2896,7 +2827,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - hosts: leaf01
   connection: httpapi
@@ -2918,10 +2848,9 @@ Example 1 (unknown):
 
 ## Filter plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/filter.html
 
 **Contents:**
-
 - Filter plugins
 - Enabling filter plugins
 - Using filter plugins
@@ -2948,14 +2877,12 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 vars:
    yaml_string: "{{ some_variable|to_yaml }}"
 ```
 
 Example 2 (unknown):
-
 ```unknown
 passing_positional: "{{ (x == 32) | ternary('x is 32', 'x is not 32') }}"
 passing_extra_named_parameters: "{{ some_variable | to_yaml(indent=8, width=1337) }}"
@@ -2966,10 +2893,9 @@ passing_both: "{{ some_variable | ternary('true value', 'false value', none_val=
 
 ## Developing modules — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_general.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_modules_general.html
 
 **Contents:**
-
 - Developing modules
 - Preparing an environment for developing Ansible modules
 - Creating a standalone module
@@ -3031,13 +2957,13 @@ Paste the content below into your new module file. It includes the required Ansi
 
 Modify and extend the code to do what you want your new module to do. See the programming tips and Python 3 compatibility pages for pointers on writing clean and concise module code.
 
-Ansible gathers information about the target machines using facts modules, and gathers information on other objects or files using info modules. If you find yourself trying to add state: info or state: list to an existing module, that is often a sign that a new dedicated _facts or_info module is needed.
+Ansible gathers information about the target machines using facts modules, and gathers information on other objects or files using info modules. If you find yourself trying to add state: info or state: list to an existing module, that is often a sign that a new dedicated _facts or _info module is needed.
 
-In Ansible 2.8 and onwards, we have two type of information modules, they are *_info and*_facts.
+In Ansible 2.8 and onwards, we have two type of information modules, they are *_info and *_facts.
 
 If a module is named <something>_facts, it should be because its main purpose is returning ansible_facts. Do not name modules that do not do this with _facts. Only use ansible_facts for information that is specific to the host machine, for example network interfaces and their configuration, which operating system and which programs are installed.
 
-Modules that query/return general information (and not ansible_facts) should be named_info. General information is non-host specific information, for example information on online/cloud services (you can access different accounts for the same online service from the same host), or information on VMs and containers accessible from the machine, or information on individual files or programs.
+Modules that query/return general information (and not ansible_facts) should be named _info. General information is non-host specific information, for example information on online/cloud services (you can access different accounts for the same online service from the same host), or information on VMs and containers accessible from the machine, or information on individual files or programs.
 
 Info and facts modules, are just like any other Ansible Module, with a few minor requirements:
 
@@ -3098,7 +3024,6 @@ Thank you to Thomas Stringer (@trstringer) for contributing source material for 
 **Examples:**
 
 Example 1 (python):
-
 ```python
 #!/usr/bin/python
 
@@ -3237,19 +3162,16 @@ if __name__ == '__main__':
 ```
 
 Example 2 (unknown):
-
 ```unknown
 module.exit_json(changed=False, ansible_facts=dict(my_new_fact=value_of_fact))
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ANSIBLE_LIBRARY=./library ansible -m my_test -a 'name=hello new=true' remotehost
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ANSIBLE_LIBRARY=./library ansible -m my_test -a 'name=hello new=true' localhost
 ```
@@ -3258,10 +3180,9 @@ ANSIBLE_LIBRARY=./library ansible -m my_test -a 'name=hello new=true' localhost
 
 ## Index of all Become Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_become.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_become.html
 
 **Contents:**
-
 - Index of all Become Plugins
 - ansible.builtin
 
@@ -3275,10 +3196,9 @@ ansible.builtin.sudo – Substitute User DO
 
 ## Adding modules and plugins locally — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_locally.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_locally.html
 
 **Contents:**
-
 - Adding modules and plugins locally
 - Modules and plugins: what is the difference?
 - Adding modules and plugins in collections
@@ -3380,7 +3300,7 @@ Add your local plugin to one of the default configured locations. See configurat
 
 the relevant ANSIBLE_plugin_type_PLUGINS environment variable - for example, $ANSIBLE_INVENTORY_PLUGINS or $ANSIBLE_VARS_PLUGINS
 
-the relevant plugin_type_PATH configuration setting, most of which begin with DEFAULT_- for example, DEFAULT_CALLBACK_PLUGIN_PATH or DEFAULT_FILTER_PLUGIN_PATH or BECOME_PLUGIN_PATH
+the relevant plugin_type_PATH configuration setting, most of which begin with DEFAULT_ - for example, DEFAULT_CALLBACK_PLUGIN_PATH or DEFAULT_FILTER_PLUGIN_PATH or BECOME_PLUGIN_PATH
 
 To view your current configuration settings for non-module plugins:
 
@@ -3394,9 +3314,9 @@ The ansible-doc command works for most plugin types, but not for action, filter,
 
 Ansible automatically loads all plugins from certain directories adjacent to your playbook or role, loading each type of plugin separately from a directory named for the type of plugin. Standalone plugins in these locations are available only to the specific playbook, playbooks, or role in the parent directory.
 
-To use a standalone plugin only in a selected playbook or playbooks, store the plugin in a subdirectory for the correct plugin_type (for example, callback_plugins or inventory_plugins) in the directory that contains the playbooks. These directories must use the_plugins suffix. For a full list of plugin types, see Working with plugins.
+To use a standalone plugin only in a selected playbook or playbooks, store the plugin in a subdirectory for the correct plugin_type (for example, callback_plugins or inventory_plugins) in the directory that contains the playbooks. These directories must use the _plugins suffix. For a full list of plugin types, see Working with plugins.
 
-To use a standalone plugin only in a single role, store the plugin in a subdirectory for the correct plugin_type (for example, cache_plugins or strategy_plugins) within that role. When shipped as part of a role, the plugin is available as soon as the role is executed. These directories must use the_plugins suffix. For a full list of plugin types, see Working with plugins.
+To use a standalone plugin only in a single role, store the plugin in a subdirectory for the correct plugin_type (for example, cache_plugins or strategy_plugins) within that role. When shipped as part of a role, the plugin is available as soon as the role is executed. These directories must use the _plugins suffix. For a full list of plugin types, see Working with plugins.
 
 Roles contained in collections cannot contain any plugins. All plugins in a collection must live in the collection plugins directory tree. All plugins in that tree are accessible to all roles in the collection. If you are developing new plugins, we recommend distributing them in collections, not in roles.
 
@@ -3407,13 +3327,11 @@ If you need to override one of the ansible.builtin modules and are using FQCN, y
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible-config dump |grep DEFAULT_MODULE_PATH
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-config dump |grep plugin_type_PATH
 ```
@@ -3422,10 +3340,9 @@ ansible-config dump |grep plugin_type_PATH
 
 ## Documenting collections — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_documenting.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_collections_documenting.html
 
 **Contents:**
-
 - Documenting collections
 - Documenting modules and plugins
 - Documenting roles
@@ -3456,10 +3373,9 @@ If you want to add additional documentation to your collection next to the plugi
 
 ## Ansible-base 2.10 Porting Guide — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_base_2.10.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/porting_guides/porting_guide_base_2.10.html
 
 **Contents:**
-
 - Ansible-base 2.10 Porting Guide
 - Playbook
 - Command Line
@@ -3529,10 +3445,9 @@ Action plugins that call modules should pass explicit, fully-qualified module na
 
 ## Cliconf plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/cliconf.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/cliconf.html
 
 **Contents:**
-
 - Cliconf plugins
 - Adding cliconf plugins
 - Using cliconf plugins
@@ -3566,10 +3481,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Unit Testing Ansible Modules — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_units_modules.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_units_modules.html
 
 **Contents:**
-
 - Unit Testing Ansible Modules
 - Introduction
 - What Are Unit Tests?
@@ -3659,7 +3573,7 @@ Package managers are often far more efficient when installing multiple packages 
 
 Another related use is in the situation where an API has versions which behave differently. A programmer working on a new version may change the module to work with the new API version and unintentionally break the old version. A test case which checks that the call happens properly for the old version can help avoid the problem. In this situation it is very important to include version numbering in the test case name (see Naming unit tests below).
 
-By building a requirement for a particular part of the code and then coding to that requirement, unit tests *can* sometimes improve the code and help future developers understand that code.
+By building a requirement for a particular part of the code and then coding to that requirement, unit tests _can_ sometimes improve the code and help future developers understand that code.
 
 Unit tests that test internal implementation details of code, on the other hand, almost always do more harm than good. Testing that your packages to install are stored in a list would slow down and confuse a future developer who might need to change that list into a dictionary for efficiency. This problem can be reduced somewhat with clear test naming so that the future developer immediately knows to delete the test case, but it is often better to simply leave out the test case altogether and test for a real valuable feature of the code, such as installing all of the packages supplied as arguments to the module.
 
@@ -3669,7 +3583,7 @@ Unit tests should have logical names. If a developer working on the module being
 
 As an example, test_v2_state_present_should_call_create_server_with_name() would be a good name, test_create_server() would not be.
 
-Mock objects (from <https://docs.python.org/3/library/unittest.mock.html>) can be very useful in building unit tests for special / difficult cases, but they can also lead to complex and confusing coding situations. One good use for mocks would be in simulating an API. As for ‘six’, the ‘mock’ python package is bundled with Ansible (use import units.compat.mock).
+Mock objects (from https://docs.python.org/3/library/unittest.mock.html) can be very useful in building unit tests for special / difficult cases, but they can also lead to complex and confusing coding situations. One good use for mocks would be in simulating an API. As for ‘six’, the ‘mock’ python package is bundled with Ansible (use import units.compat.mock).
 
 Functions like module.fail_json() are normally expected to terminate execution. When you run with a mock module object this doesn’t happen since the mock always returns another mock from a function call. You can set up the mock to raise an exception as shown above, or you can assert that these functions have not been called in each test. For example:
 
@@ -3729,7 +3643,7 @@ Note that the argument_spec dictionary is visible in a module variable. This has
 
 The same restructuring technique can be valuable for testing other functionality, such as the part of the module which queries the object that the module configures.
 
-If you use the mock library from the Python 2.6 standard library, a number of the assert functions are missing but will return as if successful. This means that test cases should take great care not use functions marked as *new* in the Python 3 documentation, since the tests will likely always succeed even if the code is broken when run on older versions of Python.
+If you use the mock library from the Python 2.6 standard library, a number of the assert functions are missing but will return as if successful. This means that test cases should take great care not use functions marked as _new_ in the Python 3 documentation, since the tests will likely always succeed even if the code is broken when run on older versions of Python.
 
 A helpful development approach to this should be to ensure that all of the tests have been run under Python 2.6 and that each assertion in the test cases has been checked to work by breaking the code in Ansible to trigger that failure.
 
@@ -3762,7 +3676,6 @@ An response pointing to how to maintain the value of unit tests
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 module = MagicMock()
 function_to_test(module, argument)
@@ -3770,7 +3683,6 @@ module.fail_json.assert_not_called()
 ```
 
 Example 2 (unknown):
-
 ```unknown
 class AnsibleExitJson(Exception):
     """Exception class to be raised by module.exit_json and caught by the test case"""
@@ -3786,7 +3698,6 @@ assert results["changed"] == True
 ```
 
 Example 3 (python):
-
 ```python
 def simple_instance_list(status, pending):
     return {u'DBInstances': [{u'DBInstanceArn': 'arn:aws:rds:us-east-1:1234567890:db:fakedb',
@@ -3796,7 +3707,6 @@ def simple_instance_list(status, pending):
 ```
 
 Example 4 (unknown):
-
 ```unknown
 rds_client_double = MagicMock()
 rds_client_double.describe_db_instances.side_effect = [
@@ -3816,10 +3726,9 @@ rds_client_double.describe_db_instances.side_effect = [
 
 ## Index of all deprecated plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/deprecations.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/deprecations.html
 
 **Contents:**
-
 - Index of all deprecated plugins
 
 No plugins have been deprecated.
@@ -3828,10 +3737,9 @@ No plugins have been deprecated.
 
 ## Working with plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/plugins.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/plugins.html
 
 **Contents:**
-
 - Working with plugins
 
 Plugins are pieces of code that augment Ansible’s core functionality. Ansible uses a plugin architecture to enable a rich, flexible and expandable feature set.
@@ -3852,10 +3760,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## ansible-doc — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/cli/ansible-doc.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/cli/ansible-doc.html
 
 **Contents:**
-
 - ansible-doc
 - Synopsis
 - Description
@@ -3921,7 +3828,6 @@ ansible(1), ansible-config(1), ansible-console(1), ansible-galaxy(1), ansible-in
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 usage: ansible-doc [-h] [--version] [-v] [-M MODULE_PATH]
                 [--playbook-dir BASEDIR]
@@ -3936,10 +3842,9 @@ usage: ansible-doc [-h] [--version] [-v] [-M MODULE_PATH]
 
 ## Index of all Filter Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_filter.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_filter.html
 
 **Contents:**
-
 - Index of all Filter Plugins
 - ansible.builtin
 
@@ -4191,10 +4096,9 @@ ansible.builtin.zip_longest – combine list elements, with filler
 
 ## Index of all Notification Callback Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/callback_index_notification.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/callback_index_notification.html
 
 **Contents:**
-
 - Index of all Notification Callback Plugins
 - ansible.builtin
 
@@ -4206,10 +4110,9 @@ ansible.builtin.tree – Save host events to files
 
 ## Adjacent YAML documentation files — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/sidecar.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/sidecar.html
 
 **Contents:**
-
 - Adjacent YAML documentation files
 - YAML documentation for plugins
 - YAML format
@@ -4252,7 +4155,6 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 DOCUMENTATION = r'''
   description: something
@@ -4280,7 +4182,6 @@ EXAMPLES = r'''
 ```
 
 Example 2 (unknown):
-
 ```unknown
 DOCUMENTATION:
   description: something
@@ -4308,20 +4209,18 @@ EXAMPLES: # TODO: write examples
 
 ## Indexes of all modules and plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/all_plugins.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/all_plugins.html
 
 **Contents:**
-
 - Indexes of all modules and plugins
 
 ---
 
 ## Index of all Test Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_test.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_test.html
 
 **Contents:**
-
 - Index of all Test Plugins
 - ansible.builtin
 
@@ -4463,10 +4362,9 @@ ansible.builtin.version – compare version strings
 
 ## The lifecycle of an Ansible module or plugin — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/module_lifecycle.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/module_lifecycle.html
 
 **Contents:**
-
 - The lifecycle of an Ansible module or plugin
 - Deprecating modules and plugins in the Ansible main repository
 - Deprecating modules and plugins in a collection
@@ -4547,7 +4445,6 @@ Instead of removal_version, you can also use removal_date with an ISO 8601 forma
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 plugin_routing:
     modules:
@@ -4558,7 +4455,6 @@ plugin_routing:
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ln -s stat.py _fileinfo.py
 ansible -m stat -a "path=/tmp" localhost
@@ -4566,7 +4462,6 @@ ansible -m fileinfo -a "path=/tmp" localhost
 ```
 
 Example 3 (unknown):
-
 ```unknown
 plugin_routing:
     modules:
@@ -4575,7 +4470,6 @@ plugin_routing:
 ```
 
 Example 4 (unknown):
-
 ```unknown
 plugin_routing:
     modules:
@@ -4590,10 +4484,9 @@ plugin_routing:
 
 ## Index of all Strategy Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_strategy.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_strategy.html
 
 **Contents:**
-
 - Index of all Strategy Plugins
 - ansible.builtin
 
@@ -4609,10 +4502,9 @@ ansible.builtin.linear – Executes tasks in a linear fashion
 
 ## Index of all Cache Plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/collections/index_cache.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/collections/index_cache.html
 
 **Contents:**
-
 - Index of all Cache Plugins
 - ansible.builtin
 
@@ -4624,10 +4516,9 @@ ansible.builtin.memory – RAM backed, non persistent
 
 ## Terminal plugins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/plugins/terminal.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/plugins/terminal.html
 
 **Contents:**
-
 - Terminal plugins
 - Adding terminal plugins
 - Using terminal plugins

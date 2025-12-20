@@ -6,10 +6,9 @@
 
 ## Start automating with Ansible — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/getting_started/get_started_ansible.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/getting_started/get_started_ansible.html
 
 **Contents:**
-
 - Start automating with Ansible
 
 Get started with Ansible by creating an automation project, building an inventory, and creating a “Hello World” playbook.
@@ -31,13 +30,11 @@ Questions? Help? Ideas? Ask the community
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 pip install ansible
 ```
 
 Example 2 (unknown):
-
 ```unknown
 mkdir ansible_quickstart && cd ansible_quickstart
 ```
@@ -46,10 +43,9 @@ mkdir ansible_quickstart && cd ansible_quickstart
 
 ## Creating a playbook — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/getting_started/get_started_playbook.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/getting_started/get_started_playbook.html
 
 **Contents:**
-
 - Creating a playbook
 
 Playbooks are automation blueprints, in YAML format, that Ansible uses to deploy and configure managed nodes.
@@ -91,7 +87,6 @@ Learn more about the gather_facts keyword in playbooks.
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 - name: My first play
   hosts: myhosts
@@ -105,13 +100,11 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-playbook -i inventory.ini playbook.yaml
 ```
 
 Example 3 (javascript):
-
 ```javascript
 PLAY [My first play] ****************************************************************************
 
@@ -146,10 +139,9 @@ PLAY RECAP *********************************************************************
 
 ## Building an inventory — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/getting_started/get_started_inventory.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/getting_started/get_started_inventory.html
 
 **Contents:**
-
 - Building an inventory
 - Inventories in INI or YAML format
 - Tips for building inventories
@@ -209,7 +201,6 @@ Find out how to encrypt sensitive content in your inventory such as passwords an
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [myhosts]
 192.0.2.50
@@ -218,19 +209,16 @@ Example 1 (unknown):
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-inventory -i inventory.ini --list
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible myhosts -m ping -i inventory.ini
 ```
 
 Example 4 (javascript):
-
 ```javascript
 192.0.2.50 | SUCCESS => {
     "ansible_facts": {
@@ -259,10 +247,9 @@ Example 4 (javascript):
 
 ## Introduction to modules — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/modules_intro.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/module_plugin_guide/modules_intro.html
 
 **Contents:**
-
 - Introduction to modules
 - Boolean variables
 
@@ -303,7 +290,6 @@ All modules and plugins available
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible webservers -m service -a "name=httpd state=started"
 ansible webservers -m ping
@@ -311,14 +297,12 @@ ansible webservers -m command -a "/sbin/reboot -t now"
 ```
 
 Example 2 (unknown):
-
 ```unknown
 - name: reboot the servers
   command: /sbin/reboot -t now
 ```
 
 Example 3 (unknown):
-
 ```unknown
 - name: restart webserver
   service:
@@ -327,7 +311,6 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible-doc yum
 ```
@@ -336,10 +319,9 @@ ansible-doc yum
 
 ## Ansible concepts — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/getting_started/basic_concepts.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/getting_started/basic_concepts.html
 
 **Contents:**
-
 - Ansible concepts
 - Control node
 - Managed nodes
@@ -399,10 +381,9 @@ Collection resources can be used independently and discretely from each other.
 
 ## Introduction to Ansible — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/getting_started/introduction.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/getting_started/introduction.html
 
 **Contents:**
-
 - Introduction to Ansible
 
 Ansible provides open-source automation that reduces complexity and runs everywhere. Using Ansible lets you automate virtually any task. Here are some common use cases for Ansible:
@@ -433,10 +414,9 @@ Ready to start using Ansible? Get up and running in a few easy steps.
 
 ## Introduction to ad hoc commands — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/command_guide/intro_adhoc.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/command_guide/intro_adhoc.html
 
 **Contents:**
-
 - Introduction to ad hoc commands
 - Why use ad hoc commands?
 - Use cases for ad hoc tasks
@@ -535,37 +515,32 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
-ansible [pattern] -m [module] -a "[module options]"
+$ ansible [pattern] -m [module] -a "[module options]"
 ```
 
 Example 2 (unknown):
-
 ```unknown
-ansible atlanta -a "/sbin/reboot"
+$ ansible atlanta -a "/sbin/reboot"
 ```
 
 Example 3 (unknown):
-
 ```unknown
-ansible atlanta -a "/sbin/reboot" -f 10
+$ ansible atlanta -a "/sbin/reboot" -f 10
 ```
 
 Example 4 (unknown):
-
 ```unknown
-ansible atlanta -a "/sbin/reboot" -f 10 -u username
+$ ansible atlanta -a "/sbin/reboot" -f 10 -u username
 ```
 
 ---
 
 ## Ansible architecture — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/overview_architecture.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/overview_architecture.html
 
 **Contents:**
-
 - Ansible architecture
 - Modules
 - Module utilities
@@ -633,7 +608,6 @@ If you have more than one module, module utility, or plugin with the same name i
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 [webservers]
 www1.example.com
@@ -645,7 +619,6 @@ db1.example.com
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ---
 - hosts: webservers
@@ -661,7 +634,6 @@ Example 2 (unknown):
 ```
 
 Example 3 (unknown):
-
 ```unknown
 /path/to/modules
 /path/to/module_utils
@@ -669,7 +641,6 @@ Example 3 (unknown):
 ```
 
 Example 4 (unknown):
-
 ```unknown
 /path/to/subdir/modules
 /path/to/subdir/module_utils
@@ -680,10 +651,9 @@ Example 4 (unknown):
 
 ## Getting started — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/getting_started.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/getting_started.html
 
 **Contents:**
-
 - Getting started
 - Other ways to get involved
 

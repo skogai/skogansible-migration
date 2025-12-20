@@ -6,10 +6,9 @@
 
 ## Ansible Ecosystem Project Development Resources — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/ecosystem_project_resources.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/ecosystem_project_resources.html
 
 **Contents:**
-
 - Ansible Ecosystem Project Development Resources
 - Onboarding toolkit
 - Project template
@@ -43,10 +42,9 @@ Before letting the community know about your shiny project by adding it to the l
 
 ## Advanced Contributor Guide — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/advanced_index.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/advanced_index.html
 
 **Contents:**
-
 - Advanced Contributor Guide
 
 This guide focuses on contributors who are committers, GitHub admins, release managers, or Ansible ecosystem project developers.
@@ -55,10 +53,9 @@ This guide focuses on contributors who are committers, GitHub admins, release ma
 
 ## ansible-core Contributors Guide — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/contributions.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/contributions.html
 
 **Contents:**
-
 - ansible-core Contributors Guide
 - Working with the Ansible repo
 
@@ -86,10 +83,9 @@ A module in a collection I maintain is obsolete. How do I deprecate a module?
 
 ## Contributor path — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/contributor_path.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/contributor_path.html
 
 **Contents:**
-
 - Contributor path
 - Determine your area of interest
 - Find the corresponding project
@@ -189,10 +185,9 @@ If time permits, join the Community meetings. Note this is NOT a requirement.
 
 ## Committers Guidelines — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/committer_guidelines.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/committer_guidelines.html
 
 **Contents:**
-
 - Committers Guidelines
 - Features, high-level design, and roadmap of ansible-core
 - Features, high-level design, and roadmap of Ansible collections
@@ -273,10 +268,9 @@ Committers are expected to continue to follow the same community and contributio
 
 ## How can I help? — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/how_can_I_help.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/how_can_I_help.html
 
 **Contents:**
-
 - How can I help?
 - Become a power user
 - Ask and answer questions online
@@ -362,10 +356,9 @@ If you like Ansible and just want to spread the good word, feel free to share on
 
 ## Contributing to the Ansible Documentation — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/documentation_contributions.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/documentation_contributions.html
 
 **Contents:**
-
 - Contributing to the Ansible Documentation
 - Editing docs directly on GitHub
 - Reviewing or solving open issues
@@ -526,27 +519,23 @@ More about documenting modules
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 python3 -m venv ./venv
 source ./venv/bin/activate
 ```
 
 Example 2 (unknown):
-
 ```unknown
 python3 docs/bin/clone-core.py
 ```
 
 Example 3 (unknown):
-
 ```unknown
 pip install -r tests/requirements.in -c tests/requirements.txt # Installs tested dependency versions.
 pip install -r tests/requirements.in # Installs the unpinned dependency versions.
 ```
 
 Example 4 (unknown):
-
 ```unknown
 rstcheck changed_file.rst
 ```
@@ -555,10 +544,9 @@ rstcheck changed_file.rst
 
 ## Community Code of Conduct — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/code_of_conduct.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/code_of_conduct.html
 
 **Contents:**
-
 - Community Code of Conduct
 - Anti-harassment policy
 - Policy violations
@@ -609,7 +597,7 @@ Participants asked to stop any harassing behavior are expected to comply immedia
 
 In addition to the behaviors outlined above, continuing to behave a certain way after you have been asked to stop also constitutes harassment, even if that behavior is not specifically outlined in this policy. It is considerate and respectful to stop doing something after you have been asked to stop, and all community members are expected to comply with such requests immediately.
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting <codeofconduct@ansible.com>, to anyone with administrative power in community chat (Admins or Moderators on Matrix, ops on IRC), or to the local organizers of an event. Meetup organizers are encouraged to prominently display points of contact for reporting unacceptable behavior at local events.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting codeofconduct@ansible.com, to anyone with administrative power in community chat (Admins or Moderators on Matrix, ops on IRC), or to the local organizers of an event. Meetup organizers are encouraged to prominently display points of contact for reporting unacceptable behavior at local events.
 
 If a participant engages in harassing behavior, the meetup organizers may take any action they deem appropriate. These actions may include but are not limited to warning the offender, expelling the offender from the event, and barring the offender from future community events.
 
@@ -623,10 +611,9 @@ The Ansible Community Code of Conduct is licensed under the Creative Commons Att
 
 ## Developer Certificate Of Origin — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/developer_certificate_of_origin.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/developer_certificate_of_origin.html
 
 **Contents:**
-
 - Developer Certificate Of Origin
 
 By contributing to this project you agree to the Developer Certificate of Origin (DCO). This document was created by the Linux Kernel community and is a simple statement that you, as a contributor, have the legal right to make the contribution. See the DCO file file for details.
@@ -635,10 +622,9 @@ By contributing to this project you agree to the Developer Certificate of Origin
 
 ## Release Manager Guidelines — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/release_managers.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/release_managers.html
 
 **Contents:**
-
 - Release Manager Guidelines
 - Pre-releases: what and why
   - Beta releases
@@ -687,10 +673,9 @@ The release process is kept in a separate document so that it can be easily upda
 
 ## Communicating with the Ansible community — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/communication.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/communication.html
 
 **Contents:**
-
 - Communicating with the Ansible community
 - Code of Conduct
 - Forum
@@ -814,10 +799,9 @@ For questions related to Ansible Automation Platform, visit Red Hat support inst
 
 ## GitHub Admins — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/community/github_admins.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/community/github_admins.html
 
 **Contents:**
-
 - GitHub Admins
 - Adding and removing committers
 - Changing branch permissions for releases

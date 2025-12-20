@@ -6,10 +6,9 @@
 
 ## Ansible and Python 3 — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_python_3.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_python_3.html
 
 **Contents:**
-
 - Ansible and Python 3
 - Minimum version of Python 3.x and Python 2.x
 - Developing Ansible code that supports Python 2 and Python 3
@@ -111,7 +110,7 @@ Make sure all variables passed to a function are the same type. If you’re work
 
 Interacting with other programs goes through the operating system and C libraries and operates on things that the UNIX kernel defines. These interfaces are all byte-oriented so the Python interface is byte oriented as well. On both Python 2 and Python 3, byte strings should be given to Python’s subprocess library and byte strings should be expected back from it.
 
-One of the main places in Ansible’s control node code that we interact with other programs is the connection plugins’ exec_command methods. These methods transform any text strings they receive in the command (and arguments to the command) to execute into bytes and return stdout and stderr as byte strings Higher level functions (like action plugins’_low_level_execute_command) transform the output into text strings.
+One of the main places in Ansible’s control node code that we interact with other programs is the connection plugins’ exec_command methods. These methods transform any text strings they receive in the command (and arguments to the command) to execute into bytes and return stdout and stderr as byte strings Higher level functions (like action plugins’ _low_level_execute_command) transform the output into text strings.
 
 In modules we use a strategy known as Native Strings. This makes things easier on the community members who maintain so many of Ansible’s modules, by not breaking backwards compatibility by mandating that all strings inside of modules are text and converting between text and bytes at the borders.
 
@@ -133,9 +132,9 @@ Module-utils functions are therefore often very defensive in nature. They conver
 
 Use the following boilerplate code at the top of all python files to make certain constructs act the same way on Python 2 and Python 3:
 
-**metaclass** = type makes all classes defined in the file into new-style classes without explicitly inheriting from object.
+__metaclass__ = type makes all classes defined in the file into new-style classes without explicitly inheriting from object.
 
-The **future** imports do the following:
+The __future__ imports do the following:
 
 Makes imports look in sys.path for the modules being imported, skipping the directory in which the module doing the importing lives. If the code wants to use the directory in which the module doing the importing, there’s a new dot notation to do so.
 
@@ -178,7 +177,6 @@ In Python 3.5 and later, byte strings do not have a format() method. However, it
 **Examples:**
 
 Example 1 (python):
-
 ```python
 from ansible.module_utils.common.text.converters import to_text
 
@@ -194,7 +192,6 @@ with open('filename-with-utf8-data.txt', 'rb') as my_file:
 ```
 
 Example 2 (python):
-
 ```python
 from ansible.module_utils.common.text.converters import to_bytes
 
@@ -203,7 +200,6 @@ with open('filename.txt', 'wb') as my_file:
 ```
 
 Example 3 (python):
-
 ```python
 import os.path
 
@@ -218,7 +214,6 @@ if os.path.exists(to_bytes(filename)):
 ```
 
 Example 4 (unknown):
-
 ```unknown
 import os.path
 
@@ -230,10 +225,9 @@ os.path.split(u'/var/tmp/café/くらとみ')
 
 ## ansible-core project branches and tags — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/core_branches_and_tags.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/core_branches_and_tags.html
 
 **Contents:**
-
 - ansible-core project branches and tags
 - devel branch
 - stable-X.Y branches
@@ -262,10 +256,9 @@ The following example is for illustrative purposes only. See the ansible-core Ro
 
 ## Rebasing a pull request — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_rebasing.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_rebasing.html
 
 **Contents:**
-
 - Rebasing a pull request
 - Configuring your remotes
 - Rebasing your branch
@@ -309,7 +302,6 @@ Information on roadmaps, opening PRs, Ansibullbot, and more
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 $ git remote -v
 origin  [email protected]:YOUR_GITHUB_USERNAME/ansible.git (fetch)
@@ -317,13 +309,11 @@ origin  [email protected]:YOUR_GITHUB_USERNAME/ansible.git (push)
 ```
 
 Example 2 (unknown):
-
 ```unknown
-git remote add upstream https://github.com/ansible/ansible.git
+$ git remote add upstream https://github.com/ansible/ansible.git
 ```
 
 Example 3 (unknown):
-
 ```unknown
 $ git remote -v
 origin  [email protected]:YOUR_GITHUB_USERNAME/ansible.git (fetch)
@@ -333,7 +323,6 @@ upstream        https://github.com/ansible/ansible.git (push)
 ```
 
 Example 4 (unknown):
-
 ```unknown
 $ git status
 On branch YOUR_BRANCH
@@ -345,10 +334,9 @@ nothing to commit, working tree clean
 
 ## pep8 — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing/sanity/pep8.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing/sanity/pep8.html
 
 **Contents:**
-
 - pep8
 - Running locally
 
@@ -361,7 +349,6 @@ The PEP 8 check can be run locally as follows:
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 ansible-test sanity --test pep8 [file-or-directory-path-to-check] ...
 ```
@@ -370,10 +357,9 @@ ansible-test sanity --test pep8 [file-or-directory-path-to-check] ...
 
 ## Developing ansible-core — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_core.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_core.html
 
 **Contents:**
-
 - Developing ansible-core
 
 Although ansible-core (the code hosted in the ansible/ansible repository on GitHub) includes a few plugins that can be swapped out by the playbook directives or configuration, much of the code there is not modular. The documents here give insight into how the parts of ansible-core work together.
@@ -388,10 +374,9 @@ Got questions? Need help? Want to share your ideas? Visit the Ansible communicat
 
 ## Unit Tests — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_units.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_units.html
 
 **Contents:**
-
 - Unit Tests
 - Available Tests
 - Running Tests
@@ -493,7 +478,6 @@ The documentation of pytest - the framework actually used to run Ansible unit te
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 cd /path/to/ansible/source
 source hacking/env-setup
@@ -501,19 +485,16 @@ ansible-test units --docker -v
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-test units --docker -v apt
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-test units --docker -v --python 2.7 apt
 ```
 
 Example 4 (unknown):
-
 ```unknown
 ansible-test units --docker -v test/units/module_utils/basic/test_imports.py
 ```
@@ -522,10 +503,9 @@ ansible-test units --docker -v test/units/module_utils/basic/test_imports.py
 
 ## Using and developing module utilities — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_module_utilities.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/developing_module_utilities.html
 
 **Contents:**
-
 - Using and developing module utilities
 - Naming and finding module utilities
 - Standard module utilities
@@ -592,7 +572,7 @@ pycompat24.py - Exception workaround for Python 2.4
 
 service.py - Utilities to enable modules to work with Linux services (placeholder, not in use)
 
-six/**init**.py - Bundled copy of the Six Python library to aid in writing code compatible with both Python 2 and Python 3
+six/__init__.py - Bundled copy of the Six Python library to aid in writing code compatible with both Python 2 and Python 3
 
 splitter.py - String splitting and manipulation utilities for working with Jinja2 templates
 
@@ -609,13 +589,11 @@ For a list of migrated content with destination collections, see the runtime.yml
 **Examples:**
 
 Example 1 (python):
-
 ```python
 from ansible.module_utils.basic import AnsibleModule
 ```
 
 Example 2 (python):
-
 ```python
 from ansible.module_utils.my_shared_code import MySharedCodeClient
 ```
@@ -624,10 +602,9 @@ from ansible.module_utils.my_shared_code import MySharedCodeClient
 
 ## Testing Ansible — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing.html
 
 **Contents:**
-
 - Testing Ansible
 - Why test your Ansible contributions?
 - Types of tests
@@ -766,7 +743,6 @@ If you’d like to know more about the plans for improving testing Ansible then 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 The test `ansible-test sanity --test pep8` failed with the following errors:
 
@@ -777,20 +753,17 @@ lib/ansible/modules/network/foo/bar.py:0:0: E307 version_added should be 2.4. Cu
 ```
 
 Example 2 (unknown):
-
 ```unknown
 source hacking/env-setup
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-test sanity --test pep8
 ansible-test sanity --test validate-modules
 ```
 
 Example 4 (unknown):
-
 ```unknown
 git clone https://github.com/ansible/ansible.git ansible-pr-testing
 cd ansible-pr-testing
@@ -800,10 +773,9 @@ cd ansible-pr-testing
 
 ## Testing plugin documentation — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_documentation.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_documentation.html
 
 **Contents:**
-
 - Testing plugin documentation
 
 A quick test while developing is to use ansible-doc -t <plugin_type> <name> to see if it renders, you might need to add -M /path/to/module if the module is not somewhere Ansible expects to find it.
@@ -825,19 +797,16 @@ For other plugin types the steps are similar, just adjusting names and paths to 
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 pip install --user -r test/lib/ansible_test/_data/requirements/sanity.txt
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-test sanity --test validate-modules mymodule
 ```
 
 Example 3 (unknown):
-
 ```unknown
 ansible-test sanity --docker --test validate-modules mymodule
 ```
@@ -846,10 +815,9 @@ ansible-test sanity --docker --test validate-modules mymodule
 
 ## Sanity Tests — Ansible Core Documentation
 
-**URL:** <https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_sanity.html>
+**URL:** https://docs.ansible.com/ansible-core/2.19/dev_guide/testing_sanity.html
 
 **Contents:**
-
 - Sanity Tests
 - Set up your environment
 - How to run
@@ -892,13 +860,11 @@ See the full list of sanity tests, which also details how to fix identified issu
 **Examples:**
 
 Example 1 (unknown):
-
 ```unknown
 cd ~/ansible_collections/<NAMESPACE>/<COLLECTION_NAME>
 ```
 
 Example 2 (unknown):
-
 ```unknown
 ansible-test sanity --docker
 ```
