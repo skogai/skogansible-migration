@@ -5,20 +5,20 @@
   connection: local
 
   vars_files:
-    - ../vars/main.yml       # Shared variables
-    - ../vars/packages.yml   # Package lists
-    - ../vars/ssh.yml        # SSH configuration
-    - ../vars/ssh_vault.yml  # Encrypted SSH keys
-    - ../vars/user.yml       # User variables
-    - ../vars/git.yml        # Git configuration
-    - ../vars/chezmoi.yml    # Chezmoi configuration
+    - ../vars/main.yml # Shared variables
+    - ../vars/packages.yml # Package lists
+    - ../vars/ssh.yml # SSH configuration
+    - ../vars/ssh_vault.yml # Encrypted SSH keys
+    - ../vars/user.yml # User variables
+    - ../vars/git.yml # Git configuration
+    - ../vars/chezmoi.yml # Chezmoi configuration
 
   roles:
-    # - role: packages
-    #   tags: [packages, install]
+    - role: packages
+      tags: [packages, install]
 
-    - role: ssh
-      tags: [ssh, config]
+    # - role: ssh
+    #   tags: [ssh, config]
 
     # - role: git
     #   tags: [git, vcs]

@@ -57,7 +57,7 @@ packages:
   # - networkmanager
   - nvidia-dkms
   # - nvm
-  - ollama-cuda
+  # - ollama-cuda
   # - pgbouncer
   # - pgcli
   - picom
