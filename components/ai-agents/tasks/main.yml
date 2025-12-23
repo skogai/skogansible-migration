@@ -1,0 +1,92 @@
+---
+# AI Agents Infrastructure Setup
+# Creates users, workspaces, and permissions for AI agents to manage their own ansible playbooks
+#
+# This component sets up the infrastructure FROM THE OUTSIDE
+# After this, each agent manages their own content in /home/{agent}/.ansible/
+
+- name: Load AI agent variables
+  ansible.builtin.include_vars:
+    file: components/ai-agents/vars/main.yml
+  tags: [ai-agents]
+
+# ============================================================================
+# USER CREATION (Primitive #4: ensure_state/user)
+# ============================================================================
+
+- name: Create AI agent users
+  become: true
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment }}"
+    shell: "{{ item.shell }}"
+    groups: "{{ item.groups }}"
+    create_home: true
+    state: present
+  loop: "{{ ai_agents }}"
+  tags: [ai-agents, ai-users]
+
+# ============================================================================
+# WORKSPACE DIRECTORY STRUCTURE (Primitive #1: ensure_state/directory)
+# ============================================================================
+
+- name: Create .ansible workspace directories for each agent
+  become: true
+  ansible.builtin.file:
+    path: "/home/{{ item.0.name }}/{{ item.1 }}"
+    state: directory
+    owner: "{{ item.0.name }}"
+    group: "{{ item.0.name }}"
+    mode: '0755'
+  loop: "{{ ai_agents | product(agent_workspace_dirs) | list }}"
+  tags: [ai-agents, ai-workspace]
+
+# ============================================================================
+# SUDOERS CONFIGURATION (Primitive #2: ensure_content/file)
+# ============================================================================
+
+- name: Configure sudoers for AI agents ansible-playbook access
+  become: true
+  ansible.builtin.copy:
+    content: |
+      # AI Agents - NOPASSWD access to ansible-playbook only
+      {% for agent in ai_agents %}
+      {{ agent.name }} ALL=(ALL) NOPASSWD: {{ ansible_playbook_path }}
+      {% endfor %}
+    dest: /etc/sudoers.d/ai-agents
+    owner: root
+    group: root
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  tags: [ai-agents, ai-sudoers]
+
+# ============================================================================
+# SHARED PRIMITIVES SYMLINK (Primitive #1: ensure_state/file - link)
+# ============================================================================
+
+- name: Create symlink to shared primitives for each agent
+  become: true
+  ansible.builtin.file:
+    src: /home/skogix/.ansible/primitives
+    dest: "/home/{{ item.name }}/.ansible/primitives"
+    state: link
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  loop: "{{ ai_agents }}"
+  when: false  # Disabled until primitives directory exists
+  tags: [ai-agents, ai-primitives]
+
+- name: AI agents infrastructure setup complete
+  ansible.builtin.debug:
+    msg: |
+      AI agent users created: {{ ai_agents | map(attribute='name') | list | join(', ') }}
+      Each agent has workspace at /home/{agent}/.ansible/ with:
+        - primitives/ (for shared ansible primitives)
+        - data/ (for agent-specific configuration)
+        - playbooks/ (for agent-specific playbooks)
+        - .venv/ (for python virtual environment)
+
+      Agents have NOPASSWD sudo access to: {{ ansible_playbook_path }}
+
+      Next: Each agent creates their own ansible content in their home directory
+  tags: [ai-agents]

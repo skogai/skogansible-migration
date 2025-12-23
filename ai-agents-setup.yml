@@ -1,0 +1,20 @@
+---
+# AI Agents Infrastructure Setup Playbook
+# Creates user accounts and workspace structure for AI agents
+#
+# Usage:
+#   ansible-playbook ai-agents-setup.yml
+#   ansible-playbook ai-agents-setup.yml --tags ai-users
+#   ansible-playbook ai-agents-setup.yml --tags ai-workspace
+#   ansible-playbook ai-agents-setup.yml --check  # Dry run
+
+- name: Setup AI Agent Infrastructure
+  hosts: localhost
+  connection: local
+  become: false
+
+  tasks:
+    - name: Execute AI agents component
+      ansible.builtin.include_tasks:
+        file: components/ai-agents/tasks/main.yml
+      tags: [ai-agents]

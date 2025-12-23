@@ -1,0 +1,38 @@
+---
+# AI Agent Users Configuration
+# These agents will manage their own ansible playbooks in their home directories
+
+ai_agents:
+  - name: claude
+    email: claude@skogai.se
+    comment: "Claude AI Agent"
+    shell: /bin/bash
+    groups: wheel
+
+  - name: amy
+    email: amy@skogai.se
+    comment: "Amy AI Agent"
+    shell: /bin/bash
+    groups: wheel
+
+  - name: goose
+    email: goose@skogai.se
+    comment: "Goose AI Agent"
+    shell: /bin/bash
+    groups: wheel
+
+  - name: dot
+    email: dot@skogai.se
+    comment: "Dot AI Agent"
+    shell: /bin/bash
+    groups: wheel
+
+# Workspace structure for each agent
+agent_workspace_dirs:
+  - .ansible/primitives
+  - .ansible/data
+  - .ansible/playbooks
+  - .ansible/.venv
+
+# Sudoers configuration for ansible-playbook access
+ansible_playbook_path: /usr/bin/ansible-playbook
