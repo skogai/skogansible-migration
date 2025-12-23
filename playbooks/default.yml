@@ -12,16 +12,20 @@
     - ../vars/user.yml # User variables
     - ../vars/git.yml # Git configuration
     - ../vars/chezmoi.yml # Chezmoi configuration
+    - ../vars/zsh.yml # Zsh configuration
 
   roles:
     - role: packages
       tags: [packages, install]
 
-    # - role: ssh
-    #   tags: [ssh, config]
+    - role: ssh
+      tags: [ssh, config]
 
     # - role: git
     #   tags: [git, vcs]
     #
     # - role: chezmoi
     #   tags: [chezmoi, dotfiles]
+
+    - role: zsh
+      tags: [zsh, shell]

@@ -39,7 +39,7 @@
         mode: "{{ ssh_private_key_mode }}"
         owner: "{{ ansible_facts['user_id'] }}"
         group: "{{ ansible_facts['user_id'] }}"
-      no_log: true  # Don't log private key content
+      no_log: true # Don't log private key content
 
     - name: "SSH | Deploy SSH public key"
       ansible.builtin.copy:
@@ -72,7 +72,7 @@
           -N "{{ ssh_key_passphrase }}"
           {% if ssh_key_comment is defined %}-C "{{ ssh_key_comment }}"{% endif %}
       when: not ssh_key_stat.stat.exists
-      no_log: true  # Don't log passphrase
+      no_log: true # Don't log passphrase
 
     - name: "SSH | Set permissions on generated keys"
       when: not ssh_key_stat.stat.exists
@@ -110,26 +110,26 @@
 # Known Hosts Management
 # ==============================================================================
 
-- name: "SSH | Manage known hosts"
-  when: ssh_manage_known_hosts | bool
-  tags: [ssh, ssh-known-hosts]
-  block:
-    - name: "SSH | Scan SSH host keys"
-      ansible.builtin.command:
-        cmd: "ssh-keyscan -H {{ item }}"
-      register: ssh_host_keys
-      loop: "{{ ssh_known_hosts | default([]) }}"
-      changed_when: false
-
-    - name: "SSH | Add hosts to known_hosts"
-      ansible.builtin.known_hosts:
-        name: "{{ item.item }}"
-        key: "{{ item.stdout }}"
-        state: present
-        path: "{{ ssh_dir }}/known_hosts"
-      loop: "{{ ssh_host_keys.results }}"
-      when: item.stdout != ""
-
+# - name: "SSH | Manage known hosts"
+#   when: ssh_manage_known_hosts | bool
+#   tags: [ssh, ssh-known-hosts]
+#   block:
+#     - name: "SSH | Scan SSH host keys"
+#       ansible.builtin.command:
+#         cmd: "ssh-keyscan -H {{ item }}"
+#       register: ssh_host_keys
+#       loop: "{{ ssh_known_hosts | default([]) }}"
+#       changed_when: false
+#
+#     - name: "SSH | Add hosts to known_hosts"
+#       ansible.builtin.known_hosts:
+#         name: "{{ item.item }}"
+#         key: "{{ item.stdout }}"
+#         state: present
+#         path: "{{ ssh_dir }}/known_hosts"
+#       loop: "{{ ssh_host_keys.results }}"
+#       when: item.stdout != ""
+#
 # ==============================================================================
 # Authorized Keys Management
 # ==============================================================================
@@ -176,7 +176,6 @@
         owner: "{{ ansible_facts['user_id'] }}"
         group: "{{ ansible_facts['user_id'] }}"
         mode: "0600"
-
 # ==============================================================================
 # SSH Backup Encryption (Commented Out - Review Before Using)
 # ==============================================================================

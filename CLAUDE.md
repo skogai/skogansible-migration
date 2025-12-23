@@ -89,7 +89,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ Machine profile templating (.chezmoidata.yaml)
 - ✅ Dotfiles application with change detection
 - ✅ Support for multiple machine types (workstation, laptop, WSL)
-- ⏸️  Additional system configuration (see `docs/system-inventory-by-primitives.md`)
+- ⏸️ Additional system configuration (see `docs/system-inventory-by-primitives.md`)
 
 ## Packages Role Configuration
 
@@ -257,10 +257,10 @@ The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine
 1. Edit `vars/chezmoi.yml` and set machine-specific values:
 
    ```yaml
-   chezmoi_machine_type: laptop        # workstation, laptop, wsl
-   chezmoi_wm: sway                    # i3, sway, none
-   chezmoi_laptop_mode: true           # Enable laptop features
-   chezmoi_headless: false             # WSL environments
+   chezmoi_machine_type: laptop # workstation, laptop, wsl
+   chezmoi_wm: sway # i3, sway, none
+   chezmoi_laptop_mode: true # Enable laptop features
+   chezmoi_headless: false # WSL environments
    ```
 
 2. Run: `./run.sh --tags chezmoi`
@@ -320,15 +320,15 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 
 ### Role Documentation
 
-- roles/packages/README.md - Packages role documentation
-- roles/chezmoi/README.md - Chezmoi role documentation
-- roles/ssh/README.md - SSH role documentation
-- roles/git/README.md - Git role documentation
+- @roles/packages/README.md - Packages role documentation
+- @roles/chezmoi/README.md - Chezmoi role documentation
+- @roles/ssh/README.md - SSH role documentation
+- @roles/git/README.md - Git role documentation
 
 ### System Expansion
 
-- docs/primitives/system-inventory-by-primitives.md - Complete automation roadmap
+- @docs/primitives/system-inventory-by-primitives.md - Complete automation roadmap
 
 ### Historical Context
 
-- docs/repos/CLAUDE.md - Consolidation reference for 7 previous repos
+- @docs/repos/CLAUDE.md - Consolidation reference for 7 previous repos

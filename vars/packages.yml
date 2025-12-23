@@ -55,7 +55,7 @@ packages:
   # - neovim-nvim-treesitter  # Not in official repos - use neovim plugin manager
   # - network-manager-applet
   # - networkmanager
-  - nvidia-dkms
+  # - nvidia-dkms
   # - nvm
   # - ollama-cuda
   # - pgbouncer

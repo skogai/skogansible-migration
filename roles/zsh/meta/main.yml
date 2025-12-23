@@ -1,0 +1,21 @@
+---
+# zsh Role - Metadata
+
+galaxy_info:
+  author: skogix
+  description: Zsh shell installation and configuration
+  license: MIT
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: ArchLinux
+      versions:
+        - all
+
+  galaxy_tags:
+    - zsh
+    - shell
+    - terminal
+
+# Role dependencies (if any)
+dependencies: []

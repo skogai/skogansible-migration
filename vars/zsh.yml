@@ -1,0 +1,6 @@
+---
+zsh_install: true
+zsh_deploy_config: true
+zsh_set_default_shell: false
+zsh_enable_plugin_manager: false
+zsh_plugin_manager: "zinit"
