@@ -29,6 +29,34 @@ The repository follows standard Ansible structure:
 - **Git automation:** Standardized, reusable task files for all common git operations
 - **Chezmoi integration:** Templates `.chezmoidata.yaml` for machine-specific dotfiles configuration
 - **Collections:** community.general, kewlfft.aur, ansible.posix
+- **Semaphore UI:** Web-based Ansible playbook management (Docker on port 9005)
+
+## Semaphore Ansible UI
+
+Web interface for running and managing Ansible playbooks.
+
+**Access:**
+
+- Local: `http://localhost:9005`
+- Public: `https://semaphore.skogai.se` (Cloudflare tunnel)
+
+**Configuration:**
+
+- Docker compose: `semaphore/docker-compose.yml`
+- Data volume: `semaphore/data/`
+- Admin: skogix / skogsund1
+
+**MCP Integration:**
+
+- MCP server: `~/dev/semaphore-mcp/`
+- API token: Stored in `skogcli` as `SEMAPHORE_API_TOKEN`
+- Enables programmatic playbook execution via Claude Code
+
+**Setup:**
+
+```bash
+cd semaphore && docker compose up -d
+```
 
 ## Usage
 
