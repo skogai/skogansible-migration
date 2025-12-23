@@ -329,6 +329,10 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 
 - @docs/primitives/system-inventory-by-primitives.md - Complete automation roadmap
 
+### Configuration Decisions
+
+- @docs/SETTINGS_DECISIONS.md - Settings registry with pending questions for human review
+
 ### Historical Context
 
 - @docs/repos/CLAUDE.md - Consolidation reference for 7 previous repos

@@ -1,0 +1,11 @@
+{
+ 	"sqlite": {
+ 		"host": "/var/lib/semaphore/database.sqlite"
+ 	},
+ 	"dialect": "sqlite",
+ 	"tmp_path": "/tmp/semaphore",
+ 	"web_host": "https://semaphore.skogai.se",
+ 	"cookie_hash": "OAIcfeb0iHy+b591Q2QLkBciUKIdWzTtR1hfBtzxD6c=",
+ 	"cookie_encryption": "BwvfHZzsX+cdwh7ncvCv8s88Llokg3Xf2+N8weEJzyo=",
+ 	"access_key_encryption": "LKiYb11KUXuOnQCAWKGyr5h7LRecGVfG9sgcbpRiIIM="
+ }
