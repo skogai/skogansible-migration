@@ -1,6 +1,6 @@
 # Settings Decisions Registry
 
-**Purpose:** Central reference for configuration decisions. Agents working on issues should consult this file before making assumptions about settings.
+**Purpose:** When agents are uncertain about configuration values, they ADD questions here instead of guessing. This is a log of decisions that need human input.
 
 **Status:** 🔴 NEEDS HUMAN INPUT - Questions marked with ❓ require @skogix to answer
 
@@ -8,24 +8,41 @@
 
 ## How to Use This File
 
-### For Agents
-1. Check this file BEFORE implementing any configuration-related changes
-2. If a setting is marked ✅ CONFIRMED - use that value
-3. If a setting is marked ❓ NEEDS ANSWER - DO NOT guess, either:
-   - Ask the user in the PR/issue
-   - Skip that setting and document what's missing
-4. Update this file when user provides answers
+### For Agents - CRITICAL
+
+**When you encounter uncertainty about a setting value:**
+
+1. **DO NOT GUESS** - Never assume or make up configuration values
+2. **ADD A QUESTION** to the "Pending Decisions" section below using this format:
+
+   ```markdown
+   ### N. [Short Description]
+   **Question:** What should [setting] be?
+
+   **Context:** [Why you need this, what you found]
+
+   **Options found:** (if any)
+   - Option A (source)
+   - Option B (source)
+
+   **Answer:** `_______________` <!-- @skogix: Fill this in -->
+   ```
+
+3. **SKIP** that part of implementation and note it in your PR/commit
+4. **REFERENCE** confirmed decisions (✅) when they exist
 
 ### For @skogix
-1. Answer questions in the "Pending Decisions" section
-2. Move answered items to "Confirmed Decisions"
-3. Add any additional context that would help agents
+
+1. Answer questions by filling in the `_______________` blanks
+2. Move answered items to "Confirmed Decisions" section
+3. Add context that helps future agent decisions
 
 ---
 
 ## Confirmed Decisions ✅
 
 ### User Identity
+
 | Setting | Value | Source | Notes |
 |---------|-------|--------|-------|
 | `user_name` | `skogix` | All repos agree | Primary username |
@@ -34,6 +51,7 @@
 | `default_pager` | `bat` | vars/main.yml | |
 
 ### Paths
+
 | Setting | Value | Notes |
 |---------|-------|-------|
 | `project_root` | `~/dev` | Development projects |
@@ -41,6 +59,7 @@
 | `data_root` | `~/.local/share` | XDG data |
 
 ### System
+
 | Setting | Value | Notes |
 |---------|-------|-------|
 | `locale` | `en_US.UTF-8` | All repos agree |
@@ -51,9 +70,11 @@
 ## Pending Decisions ❓
 
 ### 1. Git Email Address
+
 **Question:** Which email should be the primary git email?
 
 **Options found:**
+
 - `emil@skogsund.se` (current repo, ansible-base main.yml)
 - `emil.skogsund@gmail.com` (ansible-base user.yml)
 
@@ -64,9 +85,11 @@
 ---
 
 ### 2. Shell Path
+
 **Question:** Which shell path is correct?
 
 **Options found:**
+
 - `/bin/zsh` (current repo)
 - `/usr/bin/zsh` (ansible-base)
 
@@ -79,9 +102,11 @@
 ---
 
 ### 3. Window Manager
+
 **Question:** Which window manager is primary?
 
 **Options found:**
+
 - `i3` (current repo chezmoi.yml)
 - `sway` (ansible-base user.yml)
 - `i3wm` (archive system.yml)
@@ -93,9 +118,11 @@
 ---
 
 ### 4. Git Commit Signing
+
 **Question:** Should commits be signed? If yes, GPG or SSH?
 
 **Found in ansible-base:**
+
 ```yaml
 git_signing_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILlUcpcztoYpgvgKEhnYBY0c52gl0/GLNDxYK4X5umgK"
 ```
@@ -103,6 +130,7 @@ git_signing_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILlUcpcztoYpgvgKEhnYBY0c52
 **Current repo:** Signing disabled (`git_gpg_sign_commits: false`, `git_ssh_sign_commits: false`)
 
 **Options:**
+
 - [ ] No signing
 - [ ] SSH signing with key above
 - [ ] GPG signing (need key ID)
@@ -112,9 +140,11 @@ git_signing_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILlUcpcztoYpgvgKEhnYBY0c52
 ---
 
 ### 5. User Groups
+
 **Question:** Which additional groups should user be in?
 
 **Found in archive:**
+
 ```yaml
 additional_groups: docker,wheel,render
 ```
@@ -122,6 +152,7 @@ additional_groups: docker,wheel,render
 **Current repo:** Not explicitly configured (relies on system defaults)
 
 **Options:**
+
 - `wheel` - sudo access (essential)
 - `docker` - Docker without sudo
 - `render` - GPU access (for Ollama, etc.)
@@ -133,13 +164,16 @@ additional_groups: docker,wheel,render
 ---
 
 ### 6. Docker Installation
+
 **Question:** Should Docker be installed and configured?
 
 **Found in:**
+
 - ansible-base packages.yml: `docker`, `docker-buildx`, `docker-compose`
 - current repo: commented out
 
 **Sub-questions:**
+
 - Install Docker? `___`
 - Rootless Docker? `___` (current has `docker-rootless-extras` in AUR)
 - Add user to docker group? `___`
@@ -164,6 +198,7 @@ additional_groups: docker,wheel,render
 | `postgresql` | Database | ❓ |
 
 **AUR Packages:**
+
 | Package | Category | Add? |
 |---------|----------|------|
 | `aichat` | AI CLI tool | ❓ |
@@ -176,9 +211,11 @@ additional_groups: docker,wheel,render
 ---
 
 ### 8. Pipewire Audio
+
 **Question:** Should Pipewire audio stack be managed by Ansible?
 
 **Found in ansible-base:**
+
 ```yaml
 - pipewire
 - pipewire-alsa
@@ -194,9 +231,11 @@ additional_groups: docker,wheel,render
 ---
 
 ### 9. Pacman Optimization
+
 **Question:** Should pacman be optimized?
 
 **Found in archive:**
+
 ```yaml
 pacman:
   parallel_downloads: 10
@@ -209,11 +248,13 @@ pacman:
 ---
 
 ### 10. Machine Type
+
 **Question:** What is the primary machine type for this configuration?
 
 **Current repo:** `machine_type: workstation`
 
 **Options:**
+
 - `workstation` - Desktop with GPU
 - `laptop` - Portable, battery management
 - `server` - Headless

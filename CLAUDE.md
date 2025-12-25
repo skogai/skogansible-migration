@@ -30,6 +30,7 @@ The repository follows standard Ansible structure:
 - **Chezmoi integration:** Templates `.chezmoidata.yaml` for machine-specific dotfiles configuration
 - **Collections:** community.general, kewlfft.aur, ansible.posix
 - **Semaphore UI:** Web-based Ansible playbook management (Docker on port 9005)
+- **Settings decisions:** When uncertain about config values, agents MUST add questions to `docs/SETTINGS_DECISIONS.md` instead of guessing
 
 ## Semaphore Ansible UI
 
@@ -359,7 +360,7 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 
 ### Configuration Decisions
 
-- @docs/SETTINGS_DECISIONS.md - Settings registry with pending questions for human review
+- @docs/SETTINGS_DECISIONS.md - When uncertain, ADD questions here instead of guessing
 
 ### Historical Context
 
