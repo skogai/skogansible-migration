@@ -91,6 +91,16 @@ repos:
             \.claude/skills/.*/references/.*\.md
           )$
 
+  # Verify Ansible Vault files are encrypted
+  - repo: local
+    hooks:
+      - id: check-vault-encryption
+        name: Ensure vault files are encrypted
+        entry: bash -c 'for file in vars/*vault*.yml; do if [ -f "$file" ]; then if ! head -1 "$file" | grep -q "^\$ANSIBLE_VAULT"; then echo "ERROR: $file is not encrypted!"; exit 1; fi; fi; done'
+        language: system
+        pass_filenames: false
+        always_run: true
+
   # Chezmoi template validation
   - repo: local
     hooks:

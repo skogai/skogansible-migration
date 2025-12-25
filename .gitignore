@@ -1,3 +1,30 @@
 backup/todo
 /tmp/*
 roles/ssh/files/test_examples/
+
+# Sensitive files - credentials and secrets
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.local
+*.secret
+*_vault.yml.decrypted
+
+# Password files
+*password*
+*secret*
+!roles/ssh/vars/example_vault.yml
+!*README*
+!*example*
+
+# Semaphore sensitive data
+semaphore/.env
+semaphore/data/
+semaphore/config/
+
+# Backup files that may contain sensitive data
+*.backup
+*.bak
+*~
