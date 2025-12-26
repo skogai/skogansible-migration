@@ -16,10 +16,10 @@ check_password_file_permissions() {
   if [ -f "$file" ]; then
     local perms
     perms=$(stat -c "%a" "$file" 2>/dev/null || stat -f "%A" "$file" 2>/dev/null)
-    if [ "$perms" != "600" ]; then
-      echo "Warning: $file has permissions $perms (should be 600)"
+    if [ "$perms" != "700" ]; then
+      echo "Warning: $file has permissions $perms (should be 700)"
       echo "Fixing permissions..."
-      chmod 600 "$file"
+      chmod 700 "$file"
     fi
   fi
 }

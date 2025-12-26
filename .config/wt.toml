@@ -1,0 +1,22 @@
+# Worktrunk Project Configuration for Ansible Repository
+# Location: .config/wt.toml
+
+# Post-create: Run after creating new worktree
+[post-create]
+direnv = "direnv allow"
+
+# Post-start: Run in background after switching to worktree
+# [post-start]
+# reminder = "echo '📂 Ansible worktree ready - run ./run.sh --check to verify'"
+
+# Pre-commit: Run before committing (validation)
+[pre-commit]
+syntax = "./run.sh site.yml --syntax-check"
+
+# Pre-merge: Run before merging back to main branch
+[pre-merge]
+dryrun = "./run.sh --check"
+
+# Post-merge: Run after successful merge
+# [post-merge]
+# confirm = "echo '✅ Merged successfully - worktree will be cleaned up'"
