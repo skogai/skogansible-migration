@@ -1,0 +1,70 @@
+---
+# Primitive: ensure_file
+# Purpose: File state management (present/absent/touch)
+# Category: ensure_state
+#
+# Usage:
+#   - include_tasks: primitives/ensure_state/file.yml
+#     vars:
+#       file_path: /path/to/file
+#       file_state: present  # present, absent, touch
+#       file_mode: '0644'  # optional, default: '0644'
+#       file_owner: username  # optional
+#       file_group: groupname  # optional
+#       file_src: /path/to/source  # optional, for copying
+#       file_content: "content"  # optional, for creating with content
+#
+# Examples:
+#   # Ensure file exists (touch)
+#   - include_tasks: primitives/ensure_state/file.yml
+#     vars:
+#       file_path: "{{ ansible_user_dir }}/.gitconfig"
+#       file_state: touch
+#
+#   # Ensure file is absent
+#   - include_tasks: primitives/ensure_state/file.yml
+#     vars:
+#       file_path: /tmp/temporary_file
+#       file_state: absent
+#
+#   # Copy file
+#   - include_tasks: primitives/ensure_state/file.yml
+#     vars:
+#       file_path: /etc/config.conf
+#       file_src: files/config.conf
+#       file_mode: '0644'
+
+- name: "Primitive | Ensure file {{ file_state | default('present') }}: {{ file_path }}"
+  ansible.builtin.file:
+    path: "{{ file_path }}"
+    state: "{{ file_state | default('file') }}"
+    mode: "{{ file_mode | default('0644') }}"
+    owner: "{{ file_owner | default(omit) }}"
+    group: "{{ file_group | default(omit) }}"
+  when:
+    - file_path is defined
+    - file_src is not defined
+    - file_content is not defined
+
+- name: "Primitive | Copy file to {{ file_path }}"
+  ansible.builtin.copy:
+    src: "{{ file_src }}"
+    dest: "{{ file_path }}"
+    mode: "{{ file_mode | default('0644') }}"
+    owner: "{{ file_owner | default(omit) }}"
+    group: "{{ file_group | default(omit) }}"
+  when:
+    - file_path is defined
+    - file_src is defined
+
+- name: "Primitive | Create file {{ file_path }} with content"
+  ansible.builtin.copy:
+    content: "{{ file_content }}"
+    dest: "{{ file_path }}"
+    mode: "{{ file_mode | default('0644') }}"
+    owner: "{{ file_owner | default(omit) }}"
+    group: "{{ file_group | default(omit) }}"
+  when:
+    - file_path is defined
+    - file_content is defined
+    - file_src is not defined

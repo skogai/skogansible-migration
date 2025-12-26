@@ -1,0 +1,28 @@
+---
+# Primitive: ensure_directory
+# Purpose: Idempotent directory creation with permissions
+# Category: ensure_state
+#
+# Usage:
+#   - include_tasks: primitives/ensure_state/directory.yml
+#     vars:
+#       directory_path: /path/to/directory
+#       directory_mode: '0755'  # optional, default: '0755'
+#       directory_owner: username  # optional
+#       directory_group: groupname  # optional
+#       directory_state: directory  # optional, default: 'directory'
+#
+# Example:
+#   - include_tasks: primitives/ensure_state/directory.yml
+#     vars:
+#       directory_path: "{{ ansible_user_dir }}/.ssh"
+#       directory_mode: '0700'
+
+- name: "Primitive | Ensure directory {{ directory_state | default('present') }}: {{ directory_path }}"
+  ansible.builtin.file:
+    path: "{{ directory_path }}"
+    state: "{{ directory_state | default('directory') }}"
+    mode: "{{ directory_mode | default('0755') }}"
+    owner: "{{ directory_owner | default(omit) }}"
+    group: "{{ directory_group | default(omit) }}"
+  when: directory_path is defined

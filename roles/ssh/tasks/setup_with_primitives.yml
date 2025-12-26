@@ -1,0 +1,95 @@
+---
+# SSH Role - Example using Primitives
+# This file demonstrates how to refactor SSH tasks using primitives
+# Compare with main.yml to see the before/after
+
+# ==============================================================================
+# Ensure SSH Directory Exists (Using Primitive)
+# ==============================================================================
+
+- name: "SSH | Ensure .ssh directory exists (primitive)"
+  ansible.builtin.include_tasks: ../../../primitives/ensure_state/directory.yml
+  vars:
+    directory_path: "{{ ssh_dir }}"
+    directory_mode: "{{ ssh_dir_mode }}"
+    directory_owner: "{{ ansible_facts['user_id'] }}"
+    directory_group: "{{ ansible_facts['user_id'] }}"
+  when: not (ssh_deploy_full_directory | bool)
+  tags: [ssh, ssh-primitives]
+
+# ==============================================================================
+# SSH Key Deployment (Using File Primitive)
+# ==============================================================================
+
+- name: "SSH | Deploy ED25519 private key (primitive)"
+  ansible.builtin.include_tasks: ../../../primitives/ensure_state/file.yml
+  vars:
+    file_path: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519"
+    file_content: "{{ ssh_private_key_ed25519 }}"
+    file_mode: "{{ ssh_private_key_mode }}"
+    file_owner: "{{ ansible_facts['user_id'] }}"
+    file_group: "{{ ansible_facts['user_id'] }}"
+  when:
+    - ssh_deploy_from_vault | bool
+    - ssh_private_key_ed25519 is defined
+    - ssh_private_key_ed25519 | length > 0
+  no_log: true
+  tags: [ssh, ssh-keys, ssh-primitives]
+
+- name: "SSH | Deploy ED25519 public key (primitive)"
+  ansible.builtin.include_tasks: ../../../primitives/ensure_state/file.yml
+  vars:
+    file_path: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519.pub"
+    file_content: "{{ ssh_public_key_ed25519 }}"
+    file_mode: "{{ ssh_public_key_mode }}"
+    file_owner: "{{ ansible_facts['user_id'] }}"
+    file_group: "{{ ansible_facts['user_id'] }}"
+  when:
+    - ssh_deploy_from_vault | bool
+    - ssh_public_key_ed25519 is defined
+    - ssh_public_key_ed25519 | length > 0
+  no_log: true
+  tags: [ssh, ssh-keys, ssh-primitives]
+
+# ==============================================================================
+# SSH Backup (Using Directory Primitive)
+# ==============================================================================
+
+- name: "SSH | Ensure backup directory exists (primitive)"
+  ansible.builtin.include_tasks: ../../../primitives/ensure_state/directory.yml
+  vars:
+    directory_path: "{{ ssh_backup_dir }}"
+    directory_mode: '0700'
+    directory_owner: "{{ ansible_facts['user_id'] }}"
+    directory_group: "{{ ansible_facts['user_id'] }}"
+  when: ssh_enable_backup | bool
+  tags: [ssh, ssh-backup, ssh-primitives]
+
+# ==============================================================================
+# Comparison Notes
+# ==============================================================================
+
+# BEFORE (inline file module):
+# - name: "SSH | Ensure .ssh directory exists"
+#   ansible.builtin.file:
+#     path: "{{ ssh_dir }}"
+#     state: directory
+#     mode: "{{ ssh_dir_mode }}"
+#     owner: "{{ ansible_facts['user_id'] }}"
+#     group: "{{ ansible_facts['user_id'] }}"
+
+# AFTER (using primitive):
+# - name: "SSH | Ensure .ssh directory exists (primitive)"
+#   ansible.builtin.include_tasks: ../../../primitives/ensure_state/directory.yml
+#   vars:
+#     directory_path: "{{ ssh_dir }}"
+#     directory_mode: "{{ ssh_dir_mode }}"
+#     directory_owner: "{{ ansible_facts['user_id'] }}"
+#     directory_group: "{{ ansible_facts['user_id'] }}"
+
+# Benefits:
+# 1. Consistent interface across all directory operations
+# 2. Single source of truth for directory creation logic
+# 3. Easier to test and maintain
+# 4. Variable naming prevents conflicts (directory_* prefix)
+# 5. Can add features to primitive once, benefit everywhere
