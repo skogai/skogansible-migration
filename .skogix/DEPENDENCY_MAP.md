@@ -111,6 +111,7 @@ Visual guide to component dependencies and integration paths.
 ## 🔗 Role-Specific Dependency Trees
 
 ### BASH Role
+
 ```
 bash role
 │
@@ -142,6 +143,7 @@ bash role
 ```
 
 ### NVIM Role
+
 ```
 nvim role
 │
@@ -159,6 +161,7 @@ nvim role
 ```
 
 ### SSH_VAULT Role
+
 ```
 ssh_vault role
 │
@@ -183,6 +186,7 @@ ssh_vault role
 ```
 
 ### SYSTEM Role
+
 ```
 system role
 │
@@ -204,6 +208,7 @@ system role
 ## 🎯 Integration Paths
 
 ### Path 1: Zero Ansible (Manual Script Integration)
+
 ```
 Source Files                    Target Location
 ────────────────               ────────────────
@@ -220,6 +225,7 @@ Value: ▮▮▮▮▮ (High - immediate utilities)
 ```
 
 ### Path 2: Bash Role Only (Ansible)
+
 ```
 Source                          Target
 ───────                        ────────
@@ -239,6 +245,7 @@ Value: ▮▮▮▮▯ (High - full automation)
 ```
 
 ### Path 3: Multi-Role Integration
+
 ```
 Source                          Target
 ───────                        ────────
@@ -265,6 +272,7 @@ Value: ▮▮▮▮▯ (High - multiple roles)
 ```
 
 ### Path 4: Complete Merge (Including SSH Vault)
+
 ```
 Source                          Target
 ───────                        ────────
@@ -296,6 +304,7 @@ Value: ▮▮▮▮▮ (Complete automation)
 ## 📋 Quick Reference Cards
 
 ### Card 1: Bash Scripts Only
+
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║              BASH SCRIPTS ONLY INTEGRATION                ║
@@ -323,6 +332,7 @@ Value: ▮▮▮▮▮ (Complete automation)
 ```
 
 ### Card 2: Full Bash Role
+
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║               FULL BASH ROLE INTEGRATION                  ║
@@ -357,6 +367,7 @@ Value: ▮▮▮▮▮ (Complete automation)
 ```
 
 ### Card 3: Multi-Role Setup
+
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║             MULTI-ROLE INTEGRATION                        ║
@@ -399,6 +410,7 @@ Value: ▮▮▮▮▮ (Complete automation)
 ## 🚨 Critical Warnings & Gotchas
 
 ### ⚠️ Hardcoded Paths (ssh_vault role)
+
 ```
 Location: roles/ssh_vault/tasks/main.yml
 
@@ -412,6 +424,7 @@ Must Be:  {{ ansible_user_dir }}/.ssh_backup
 ```
 
 ### ⚠️ Personal Information (vars/main.yml)
+
 ```
 Update these before running:
   git_user_name: "Skogix"          → Your name
@@ -420,6 +433,7 @@ Update these before running:
 ```
 
 ### ⚠️ Vaulted Variables (vars/ssh_keys.yml)
+
 ```
 This file contains encrypted SSH keys!
 
@@ -432,6 +446,7 @@ Instead:
 ```
 
 ### ⚠️ .bashrc Overwrite (bash role)
+
 ```
 The bash role WILL overwrite:
   - ~/.bashrc
@@ -449,6 +464,7 @@ Or review roles/bash/files/.bashrc first and merge manually.
 ## 🧪 Testing Strategy
 
 ### Test Level 1: Scripts Only (Safe)
+
 ```bash
 # Create test directory
 mkdir -p ~/test-dotfiles/bash
@@ -464,6 +480,7 @@ source ~/test-dotfiles/bash/git_functions.sh
 ```
 
 ### Test Level 2: Role in Container (Medium)
+
 ```bash
 # Use Docker
 docker run -it --rm -v $(pwd):/ansible ubuntu:22.04 bash
@@ -479,6 +496,7 @@ ls ~/.config/bash/
 ```
 
 ### Test Level 3: Full Integration in VM (Safe)
+
 ```bash
 # Use Vagrant or VirtualBox
 vagrant init ubuntu/jammy64
@@ -512,24 +530,28 @@ ansible-playbook main.yml
 If you're new to Ansible, follow this progression:
 
 **Week 1: Manual Integration**
+
 - Copy bash scripts manually
 - Learn what each script does
 - Source them in .bashrc
 - Get comfortable with the utilities
 
 **Week 2: Single Role**
+
 - Learn Ansible basics
 - Run bash role in test environment
 - Understand task flow
 - Test on VM
 
 **Week 3: Multi-Role**
+
 - Add system and nvim roles
 - Learn about collections
 - Manage variables
 - Deploy to test machine
 
 **Week 4: Complete Setup**
+
 - Add ssh_vault (if needed)
 - Implement role selection pattern
 - Deploy to production
@@ -574,23 +596,27 @@ START: Want to integrate this repository?
 After integration, you should have:
 
 **✅ For Scripts Only:**
+
 - [ ] All 17 scripts in ~/.config/bash/
 - [ ] Scripts sourced in .bashrc
 - [ ] Functions work when called
 
 **✅ For Bash Role:**
+
 - [ ] oh-my-bash installed
 - [ ] Custom theme active
 - [ ] All utilities available
 - [ ] .bashrc and .profile updated
 
 **✅ For Multi-Role:**
+
 - [ ] All selected roles executed successfully
 - [ ] Packages installed (neovim, jq, etc.)
 - [ ] No Ansible errors
 - [ ] System configured as expected
 
 **✅ For Complete Merge:**
+
 - [ ] All roles working
 - [ ] SSH keys deployed (if using ssh_vault)
 - [ ] All personal info updated
@@ -602,11 +628,13 @@ After integration, you should have:
 ## 📚 Additional Resources
 
 **Created Documentation:**
+
 - `INTEGRATION_GUIDE.md` - High-level overview and planning
 - `COMPONENT_BREAKDOWN.md` - Technical details and analysis
 - `DEPENDENCY_MAP.md` - This file - visual dependencies
 
 **External Resources:**
+
 - Ansible Documentation: https://docs.ansible.com/
 - Oh-My-Bash: https://github.com/ohmybash/oh-my-bash
 - Ansible Vault: https://docs.ansible.com/ansible/latest/user_guide/vault.html

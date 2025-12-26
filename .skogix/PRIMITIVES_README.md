@@ -15,9 +15,11 @@ At scale (hundreds of components, multiple machines), traditional Ansible role p
 ## The 7 Primitives
 
 ### 1. ENSURE_STATE
+
 Make resources exist with specific properties
 
 **Primitives:**
+
 - `primitives/ensure_state/package.yml` - Install/remove packages
 - `primitives/ensure_state/user.yml` - Create/modify users
 - `primitives/ensure_state/directory.yml` - Ensure directories exist
@@ -25,6 +27,7 @@ Make resources exist with specific properties
 - `primitives/ensure_state/service.yml` - Systemd service state
 
 **Example:**
+
 ```yaml
 - include_tasks: primitives/ensure_state/package.yml
   vars:
@@ -33,14 +36,17 @@ Make resources exist with specific properties
 ```
 
 ### 2. ENSURE_CONTENT
+
 Make files contain specific content
 
 **Primitives:**
+
 - `primitives/ensure_content/file_copy.yml` - Copy file content
 - `primitives/ensure_content/line_in_file.yml` - Ensure line exists
 - `primitives/ensure_content/template.yml` - Template rendering
 
 **Example:**
+
 ```yaml
 - include_tasks: primitives/ensure_content/file_copy.yml
   vars:
@@ -50,14 +56,17 @@ Make files contain specific content
 ```
 
 ### 3. QUERY_STATE
+
 Check current state before making decisions
 
 **Primitives:**
+
 - `primitives/query_state/path_exists.yml` - Check if path exists
 - `primitives/query_state/command.yml` - Check command output
 - `primitives/query_state/package.yml` - Check package installation
 
 **Example:**
+
 ```yaml
 - include_tasks: primitives/query_state/path_exists.yml
   vars:
@@ -66,13 +75,16 @@ Check current state before making decisions
 ```
 
 ### 4. SYNC
+
 Synchronize remote resources
 
 **Primitives:**
+
 - `primitives/sync/git_repo.yml` - Clone/update git repos
 - `primitives/sync/archive.yml` - Download/extract archives
 
 **Example:**
+
 ```yaml
 - include_tasks: primitives/sync/git_repo.yml
   vars:
@@ -81,14 +93,17 @@ Synchronize remote resources
 ```
 
 ### 5. EXECUTE
+
 Run arbitrary commands
 
 **Primitives:**
+
 - `primitives/execute/command.yml` - Run command
 - `primitives/execute/shell.yml` - Run shell script
 - `primitives/execute/script.yml` - Run script file
 
 **Example:**
+
 ```yaml
 - include_tasks: primitives/execute/command.yml
   vars:
@@ -97,14 +112,17 @@ Run arbitrary commands
 ```
 
 ### 6. COMPOSE
+
 High-level compositions of primitives
 
 **Primitives:**
+
 - `primitives/compose/aur_setup.yml` - Complete AUR setup
 - `primitives/compose/ssh_deploy.yml` - Deploy SSH keys
 - `primitives/compose/systemd_unit.yml` - Create systemd unit
 
 **Example:**
+
 ```yaml
 - include_tasks: primitives/compose/aur_setup.yml
   vars:
@@ -112,12 +130,15 @@ High-level compositions of primitives
 ```
 
 ### 7. UPDATE_CACHE
+
 Package database operations
 
 **Primitives:**
+
 - Built into `ensure_state/package.yml` via flags
 
 **Example:**
+
 ```yaml
 - include_tasks: primitives/ensure_state/package.yml
   vars:
@@ -173,11 +194,13 @@ Package database operations
 ## Data/Logic Separation
 
 ### Data Layer (YAML files)
+
 **What:** Lists of things (packages, users, services, config files)
 **Where:** `data/*.yml`, `files/*`
 **Changes:** Frequently (add packages, update configs)
 
 **Example:**
+
 ```yaml
 # data/packages.yml
 official_packages:
@@ -187,11 +210,13 @@ official_packages:
 ```
 
 ### Logic Layer (Primitives)
+
 **What:** How to process data (install package, create user, copy file)
 **Where:** `primitives/*/`
 **Changes:** Rarely (primitives are stable)
 
 **Example:**
+
 ```yaml
 # primitives/ensure_state/package.yml
 - name: "Install packages"
@@ -201,11 +226,13 @@ official_packages:
 ```
 
 ### Composition Layer (Components)
+
 **What:** Wire primitives together for specific features
 **Where:** `components/*/`, `primitives/compose/`
 **Changes:** Occasionally (new features, refactoring)
 
 **Example:**
+
 ```yaml
 # components/development-tools/tasks/main.yml
 - include_tasks: primitives/ensure_state/package.yml
@@ -222,22 +249,27 @@ official_packages:
 ## Benefits at Scale
 
 ### Consistency
+
 **Problem:** 200 components × unique implementations = chaos
 **Solution:** All components use same 7 primitives
 
 ### Discoverability
+
 **Problem:** "How does this component install packages?"
 **Solution:** `ls primitives/ensure_state/` → "These are the ways"
 
 ### Testability
+
 **Problem:** Testing 200 unique implementations
 **Solution:** Test 7 primitives thoroughly, test components minimally
 
 ### Maintainability
+
 **Problem:** Need to add logging to all package installations
 **Solution:** Update one primitive, affects all components
 
 ### Composability
+
 **Problem:** Building new components requires reinventing the wheel
 **Solution:** Wire up primitives, done in minutes
 
@@ -246,6 +278,7 @@ official_packages:
 ## Usage Patterns
 
 ### Simple Component (Direct primitive usage)
+
 ```yaml
 # components/neovim/tasks/main.yml
 - include_tasks: primitives/compose/aur_setup.yml
@@ -254,6 +287,7 @@ official_packages:
 ```
 
 ### Medium Component (Multiple primitives)
+
 ```yaml
 # components/ssh/tasks/main.yml
 - include_tasks: primitives/ensure_state/directory.yml
@@ -274,6 +308,7 @@ official_packages:
 ```
 
 ### Complex Component (Custom composition)
+
 ```yaml
 # components/database/tasks/main.yml
 - include_tasks: primitives/ensure_state/package.yml
@@ -332,6 +367,7 @@ When you need a new primitive:
    - No → Create new primitive
 
 2. **Structure:**
+
 ```yaml
 ---
 # Primitive: [Name]

@@ -1,0 +1,48 @@
+---
+# Cloudflared Role - Default Variables
+# Override these in your playbook, inventory, or vars/cloudflared.yml
+
+# ==============================================================================
+# Cloudflared Configuration Directory
+# ==============================================================================
+
+# Configuration directory location
+cloudflared_config_dir: "/etc/cloudflared"
+cloudflared_config_dir_mode: "0700"
+
+# ==============================================================================
+# Token Management
+# ==============================================================================
+
+# Deploy token from vaulted variables (loads from vars/cloudflared_vault.yml)
+cloudflared_deploy_token: true
+
+# Token file location
+cloudflared_token_file: "{{ cloudflared_config_dir }}/token"
+cloudflared_token_mode: "0600"
+
+# Token content (should be loaded from vault)
+# cloudflared_token: "{{ cloudflared_tunnel_token | default('') }}"
+
+# ==============================================================================
+# Systemd Service
+# ==============================================================================
+
+# Deploy systemd service
+cloudflared_deploy_service: true
+
+# Service template to use
+cloudflared_service_template: "cloudflared.service.j2"
+
+# Enable and start service
+cloudflared_enable_service: true
+
+# ==============================================================================
+# Tunnel Configuration (Optional)
+# ==============================================================================
+
+# Tunnel name (if needed for multi-tunnel setups)
+# cloudflared_tunnel_name: "my-tunnel"
+
+# Additional cloudflared arguments
+cloudflared_extra_args: ""

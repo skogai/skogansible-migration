@@ -79,6 +79,7 @@ ansible-playbook deploy-ssh.yml --ask-vault-pass
 **Setup:**
 
 1. Copy your .ssh files to `roles/ssh/files/ssh/`:
+
    ```bash
    cp ~/.ssh/id_ed25519 roles/ssh/files/ssh/
    cp ~/.ssh/id_rsa roles/ssh/files/ssh/
@@ -87,6 +88,7 @@ ansible-playbook deploy-ssh.yml --ask-vault-pass
    ```
 
 2. Encrypt all files with ansible-vault:
+
    ```bash
    for file in roles/ssh/files/ssh/*; do
      ansible-vault encrypt "$file"
@@ -94,11 +96,13 @@ ansible-playbook deploy-ssh.yml --ask-vault-pass
    ```
 
 3. Enable full directory deployment in `vars/ssh.yml`:
+
    ```yaml
    ssh_deploy_full_directory: true
    ```
 
 4. Run the playbook:
+
    ```bash
    ./run.sh --tags ssh
    ```
@@ -106,12 +110,14 @@ ansible-playbook deploy-ssh.yml --ask-vault-pass
 **What gets deployed:**
 
 All files from `roles/ssh/files/ssh/` are synced to `~/.ssh/` with automatic permission management:
+
 - Private keys (id_*): `600`
 - Public keys (*.pub): `644`
 - Vault password files (ansible-become-password, ansible-vault-password): `700` (executable)
 - Other files: preserved mode from source
 
 **Current files in this implementation (11 files):**
+
 - `.env` - Environment variables
 - `allowed_signers` - SSH commit signing configuration
 - `ansible-become-password` - Ansible vault password (executable)
@@ -127,6 +133,7 @@ All files from `roles/ssh/files/ssh/` are synced to `~/.ssh/` with automatic per
 **Additional vault variables for SSH keys:**
 
 In `vars/ssh_vault.yml`, define all three key types:
+
 ```yaml
 ssh_private_key_ed25519: |
   -----BEGIN OPENSSH PRIVATE KEY-----
@@ -151,11 +158,13 @@ ssh_public_key_ecdsa: "ecdsa-sha2-nistp256 AAAA... user@host"
 ```
 
 Enable vault key deployment in `vars/ssh.yml`:
+
 ```yaml
 ssh_deploy_from_vault: true
 ```
 
 This dual approach provides:
+
 - **Vault variables** for critical SSH keys (ed25519, rsa, ecdsa)
 - **File deployment** for drop-and-forget files (configs, certs, authorized_keys)
 
@@ -330,6 +339,7 @@ Full featured deployment with keys, config, and known hosts:
 | `ssh_key_comment` | (undefined) | Comment for generated key |
 
 **Vault variable names for multiple key types:**
+
 - ED25519: `ssh_private_key_ed25519`, `ssh_public_key_ed25519`
 - RSA: `ssh_private_key_rsa`, `ssh_public_key_rsa`
 - ECDSA: `ssh_private_key_ecdsa`, `ssh_public_key_ecdsa`
@@ -432,6 +442,7 @@ If using `ssh_key_passphrase`:
 ### Vault Decryption Failed Error
 
 **Error message:**
+
 ```
 [ERROR]: Decryption failed (no vault secrets were found that could decrypt)
 ```
