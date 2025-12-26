@@ -1,0 +1,32 @@
+---
+# Setup custom timers
+
+- name: Deploy trash-empty service unit
+  become: true
+  ansible.builtin.template:
+    src: trash-empty.service.j2
+    dest: /etc/systemd/system/trash-empty.service
+    mode: '0644'
+  when: timers_trash_empty_enabled | bool
+  notify: systemd daemon-reload
+  tags: [timers-custom, trash-empty]
+
+- name: Deploy trash-empty timer unit
+  become: true
+  ansible.builtin.template:
+    src: trash-empty.timer.j2
+    dest: /etc/systemd/system/trash-empty.timer
+    mode: '0644'
+  when: timers_trash_empty_enabled | bool
+  notify: systemd daemon-reload
+  tags: [timers-custom, trash-empty]
+
+- name: Enable and start trash-empty timer
+  become: true
+  ansible.posix.systemd:
+    name: trash-empty.timer
+    enabled: true
+    state: started
+    daemon_reload: true
+  when: timers_trash_empty_enabled | bool
+  tags: [timers-custom, trash-empty]

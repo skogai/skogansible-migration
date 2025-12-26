@@ -1,0 +1,7 @@
+---
+# Handlers for timers role
+
+- name: systemd daemon-reload
+  become: true
+  ansible.posix.systemd:
+    daemon_reload: true

@@ -1,0 +1,11 @@
+---
+# Enable and start system timers
+
+- name: Enable and start system timers
+  become: true
+  ansible.posix.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop: "{{ timers_system_enabled }}"
+  when: timers_system_enabled is defined and timers_system_enabled | length > 0

@@ -1,0 +1,21 @@
+---
+# Default variables for timers role
+
+# Enable timer management
+timers_enable: true
+
+# System timers to enable
+timers_system_enabled:
+  - fstrim.timer              # Weekly SSD TRIM
+  - paccache.timer            # Weekly package cache cleanup
+  - reflector.timer           # Mirror list updates
+  - archlinux-keyring-wkd-sync.timer  # Weekly keyring updates
+  - plocate-updatedb.timer    # File database updates (12h)
+
+# Custom timers configuration
+timers_custom_enabled: true
+
+# Trash empty timer configuration
+timers_trash_empty_enabled: true
+timers_trash_empty_days: 30
+timers_trash_empty_schedule: daily

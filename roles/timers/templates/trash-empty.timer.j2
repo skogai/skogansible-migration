@@ -1,0 +1,10 @@
+[Unit]
+Description=Empty trash older than {{ timers_trash_empty_days }} days daily
+Documentation=man:trash-empty(1)
+
+[Timer]
+OnCalendar={{ timers_trash_empty_schedule }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,12 @@
+---
+# Main tasks for timers role
+
+- name: Enable system timers
+  ansible.builtin.include_tasks: enable_system_timers.yml
+  when: timers_enable | bool
+  tags: [timers, timers-system]
+
+- name: Setup custom timers
+  ansible.builtin.include_tasks: setup_custom_timers.yml
+  when: timers_custom_enabled | bool
+  tags: [timers, timers-custom]

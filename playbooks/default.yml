@@ -13,6 +13,7 @@
     - ../vars/git.yml # Git configuration
     - ../vars/chezmoi.yml # Chezmoi configuration
     - ../vars/zsh.yml # Zsh configuration
+    - ../vars/timers.yml # Systemd timers configuration
 
   roles:
     - role: packages
@@ -20,6 +21,9 @@
 
     - role: ssh
       tags: [ssh, config]
+
+    - role: timers
+      tags: [timers, system]
 
     # - role: git
     #   tags: [git, vcs]

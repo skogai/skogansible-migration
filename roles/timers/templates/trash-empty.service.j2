@@ -1,0 +1,10 @@
+[Unit]
+Description=Empty trash older than {{ timers_trash_empty_days }} days
+Documentation=man:trash-empty(1)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/trash-empty {{ timers_trash_empty_days }}
+
+[Install]
+WantedBy=multi-user.target
