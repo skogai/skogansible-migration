@@ -197,3 +197,63 @@ Backwards compatibility: `./run.sh` (no args) uses `default.yml`
 
 - See `roles/_template/README.md` for complete example
 - Must include: purpose, requirements, variables, usage examples, tags
+
+# Security Rules
+
+## Vault Files
+
+**Encryption requirement:**
+
+- All `vars/*vault*.yml` files MUST be encrypted with ansible-vault
+- Verify: `file vars/*vault*.yml` should show "Ansible Vault, version 1.1, encryption AES256"
+
+**Password file permissions:**
+
+- Vault password file: `~/.ssh/ansible-vault-password` - **700 (executable)**
+- Become password file: `~/.ssh/ansible-become-password` - **700 (executable)**
+- WHY: Ansible reads password files by executing them as scripts
+
+**Private key permissions:**
+
+- SSH private keys: 600
+- SSH public keys: 644
+- SSH directory: 700
+
+## Secrets in Code
+
+**NEVER commit:**
+
+- Unencrypted vault files
+- Password files
+- API tokens in plaintext
+- `.env` files with secrets
+
+**ALWAYS use:**
+
+- `no_log: true` on tasks handling sensitive data (passwords, tokens, keys)
+- `.gitignore` patterns for sensitive files
+- ansible-vault for any credentials
+
+## Pre-commit Security Checks
+
+Before committing changes with secrets:
+
+```bash
+# Verify vault files are encrypted
+file vars/*vault*.yml
+
+# Check for accidental plaintext secrets
+grep -r "password\|token\|secret" . --include="*.yml" | grep -v vault | grep -v example
+
+# Run detect-secrets
+detect-secrets scan --baseline .secrets.baseline
+```
+
+## Settings Decisions
+
+**When uncertain about config values:**
+
+- ❌ NEVER guess or assume values
+- ✅ ADD questions to `docs/SETTINGS_DECISIONS.md`
+- ✅ Wait for explicit user input
+- ✅ Reference confirmed decisions when they exist
