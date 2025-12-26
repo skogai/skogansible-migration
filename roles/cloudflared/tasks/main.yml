@@ -25,6 +25,16 @@
   become: true
   tags: [cloudflared, cloudflared-token, cloudflared-vault]
   block:
+    - name: "Cloudflared | Validate token is defined"
+      ansible.builtin.assert:
+        that:
+          - cloudflared_token is defined
+          - cloudflared_token | length > 0
+        fail_msg: >-
+          cloudflared_token is not defined or empty.
+          Please ensure vars/cloudflared_vault.yml is loaded and
+          contains cloudflared_tunnel_token.
+
     - name: "Cloudflared | Deploy tunnel token file"
       ansible.builtin.copy:
         content: "{{ cloudflared_token }}"
@@ -32,7 +42,8 @@
         mode: "{{ cloudflared_token_mode }}"
         owner: root
         group: root
-      no_log: true # Don't log token content
+      no_log: true  # Don't log token content
+      register: cloudflared_token_deployed
 
 # ==============================================================================
 # Systemd Service Deployment
@@ -50,12 +61,20 @@
         mode: "0644"
         owner: root
         group: root
-      notify: Reload systemd
+      notify:
+        - Reload systemd
+        - Restart cloudflared
 
     - name: "Cloudflared | Enable and start cloudflared service"
       when: cloudflared_enable_service | bool
       ansible.builtin.systemd:
         name: cloudflared
         enabled: true
-        state: started
+        state: >-
+          {{
+            'restarted'
+            if (cloudflared_token_deployed is defined and
+                cloudflared_token_deployed.changed)
+            else 'started'
+          }}
         daemon_reload: true
