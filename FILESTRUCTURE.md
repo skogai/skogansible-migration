@@ -68,18 +68,28 @@ SkogAI/skogansible/
 │   │   ├── meta/main.yml                # Role metadata
 │   │   └── README.md                    # Complete Git role documentation
 │   │
-│   └── chezmoi/                         # Chezmoi dotfiles management role
+│   ├── chezmoi/                         # Chezmoi dotfiles management role
+│   │   ├── tasks/
+│   │   │   ├── main.yml                 # Chezmoi tasks orchestration
+│   │   │   ├── install.yml              # Chezmoi installation verification
+│   │   │   ├── init.yml                 # Source directory initialization check
+│   │   │   ├── configure.yml            # Template .chezmoidata.yaml
+│   │   │   └── apply.yml                # Apply dotfiles configuration
+│   │   ├── templates/
+│   │   │   └── chezmoidata.yaml.j2      # Machine-specific chezmoi configuration template
+│   │   ├── defaults/main.yml            # Default variables for chezmoi role
+│   │   ├── handlers/main.yml            # Handlers for chezmoi role
+│   │   └── meta/main.yml                # Role metadata
+│   │
+│   └── cloudflared/                     # Cloudflare Tunnel management role
 │       ├── tasks/
-│       │   ├── main.yml                 # Chezmoi tasks orchestration
-│       │   ├── install.yml              # Chezmoi installation verification
-│       │   ├── init.yml                 # Source directory initialization check
-│       │   ├── configure.yml            # Template .chezmoidata.yaml
-│       │   └── apply.yml                # Apply dotfiles configuration
+│       │   └── main.yml                 # Cloudflared tasks (token deployment, service management)
 │       ├── templates/
-│       │   └── chezmoidata.yaml.j2      # Machine-specific chezmoi configuration template
-│       ├── defaults/main.yml            # Default variables for chezmoi role
-│       ├── handlers/main.yml            # Handlers for chezmoi role
-│       └── meta/main.yml                # Role metadata
+│       │   └── cloudflared.service.j2   # Systemd service template (uses --token-file)
+│       ├── defaults/main.yml            # Default variables for cloudflared role
+│       ├── handlers/main.yml            # Handlers for cloudflared role (daemon-reload, restart)
+│       ├── meta/main.yml                # Role metadata
+│       └── README.md                    # Complete Cloudflared role documentation
 │
 ├── vars/                                # Variable files (role-specific configuration)
 │   ├── main.yml                         # Shared variables across roles
@@ -88,10 +98,14 @@ SkogAI/skogansible/
 │   ├── ssh_vault.yml                    # Encrypted SSH keys (ansible-vault)
 │   ├── git.yml                          # Git configuration (user, aliases, repos, hooks)
 │   ├── chezmoi.yml                      # Chezmoi configuration (machine profile, agents)
+│   ├── cloudflared.yml                  # Cloudflared configuration (deployment flags, extra args)
+│   ├── cloudflared_vault.yml            # Encrypted Cloudflare tunnel token (ansible-vault)
+│   ├── cloudflared_vault.yml.template   # Template for creating vault file
 │   └── user.yml                         # User-specific variables (username, groups, shell)
 │
 ├── docs/                                # Documentation directory
 │   ├── README.md                        # Documentation index and navigation guide
+│   ├── CLOUDFLARED_SETUP.md             # Cloudflared setup guide (comprehensive setup instructions)
 │   ├── primitives/                      # Core Ansible patterns and system inventory
 │   │   ├── ansible-core.md              # Reference: 7 fundamental Ansible primitives
 │   │   └── system-inventory-by-primitives.md # Roadmap: complete system organized by primitives
@@ -181,6 +195,10 @@ Comprehensive Git configuration with modular tasks for installation, global conf
 
 Manages dotfiles by templating machine-specific .chezmoidata.yaml configuration and applying dotfiles automatically.
 
+#### cloudflared/
+
+Manages Cloudflare Tunnel with secure token storage using ansible-vault. Deploys tunnel token from encrypted vault, configures systemd service with --token-file flag (no plaintext secrets), and manages service enablement.
+
 ### Variables
 
 All role-specific configuration stored in `vars/` directory:
@@ -190,6 +208,9 @@ All role-specific configuration stored in `vars/` directory:
 - **ssh_vault.yml** - Encrypted SSH keys (use ansible-vault to edit)
 - **git.yml** - Git user configuration, aliases, repositories, and features
 - **chezmoi.yml** - Machine profile settings (type, WM, agents, tools)
+- **cloudflared.yml** - Cloudflared configuration (deployment flags, extra args)
+- **cloudflared_vault.yml** - Encrypted Cloudflare tunnel token (use ansible-vault to edit)
+- **cloudflared_vault.yml.template** - Template for creating vault file
 - **user.yml** - User-specific variables (username, groups, shell)
 - **main.yml** - Shared variables across all roles
 
@@ -222,11 +243,11 @@ The following directories are excluded from version control (see .gitignore):
 
 ## File Counts
 
-- **4 roles** - packages, ssh, git, chezmoi
-- **7 variable files** - Role-specific configuration
-- **12+ task files** - Modular task definitions
-- **6+ templates** - Jinja2 templates for configs and hooks
-- **10+ documentation files** - Reference and historical docs
+- **5 roles** - packages, ssh, git, chezmoi, cloudflared
+- **10 variable files** - Role-specific configuration
+- **13+ task files** - Modular task definitions
+- **7+ templates** - Jinja2 templates for configs and hooks
+- **12+ documentation files** - Reference and historical docs
 - **3 collections** - Ansible Galaxy collections installed
 
 ---

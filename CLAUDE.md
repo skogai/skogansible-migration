@@ -97,6 +97,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ **ssh** - SSH directory setup, key deployment, config management, known_hosts
 - ✅ **git** - Comprehensive Git configuration and repository management
 - ✅ **chezmoi** - Dotfiles management via machine-specific configuration templating
+- ✅ **cloudflared** - Cloudflare Tunnel with secure vault token storage
 
 **Features:**
 
@@ -118,6 +119,9 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ Machine profile templating (.chezmoidata.yaml)
 - ✅ Dotfiles application with change detection
 - ✅ Support for multiple machine types (workstation, laptop, WSL)
+- ✅ Cloudflare Tunnel token deployment from encrypted vault
+- ✅ Systemd service configuration with token-file (no plaintext secrets)
+- ✅ Cloudflared service enablement and management
 - ⏸️ Additional system configuration (see `docs/system-inventory-by-primitives.md`)
 
 ## Packages Role Configuration
@@ -186,15 +190,37 @@ The Packages role manages system packages from official Arch repositories and AU
 
 ## SSH Role Configuration
 
-The SSH role manages SSH keys, configuration, and related settings. All features are **disabled by default** for safety.
+The SSH role manages SSH keys, configuration, and related settings with dual-tier deployment: vault variables for critical keys + file-based deployment for complete .ssh directory restoration.
 
-**To deploy SSH keys from vault:**
+**Quick Start - Deploy Entire .ssh Directory (Recommended):**
 
-1. Edit `vars/ssh.yml` and set `ssh_deploy_from_vault: true`
-2. Ensure `vars/ssh_vault.yml` contains your encrypted keys with variables:
-   - `ssh_private_key` - Your private key content
-   - `ssh_public_key` - Your public key content
-3. Run: `ansible-playbook playbook.yml --tags ssh --ask-vault-pass`
+1. Enable full directory deployment in `vars/ssh.yml`:
+
+   ```yaml
+   ssh_deploy_full_directory: true
+   ssh_deploy_from_vault: true  # Also deploy keys from vault variables
+   ```
+
+2. Run: `./run.sh --tags ssh`
+
+**What gets deployed:**
+
+- **From `roles/ssh/files/ssh/`** (11 vault-encrypted files):
+  - `.env`, `allowed_signers`, `authorized_keys`
+  - `ansible-become-password`, `ansible-vault-password` (executable, 700)
+  - Cloudflare Access certificates and keys
+  - `openrouter` API credentials
+
+- **From `vars/ssh_vault.yml`** (vault variables):
+  - All 3 SSH key types: ED25519, RSA, ECDSA
+  - Variable names: `ssh_private_key_ed25519`, `ssh_public_key_ed25519` (etc.)
+
+**Automatic permission management:**
+
+- Private keys: `600`
+- Public keys: `644`
+- Vault password files: `700` (executable - required by Ansible)
+- Directory: `700`
 
 **Other SSH features (configure in vars/ssh.yml):**
 
@@ -203,6 +229,23 @@ The SSH role manages SSH keys, configuration, and related settings. All features
 - `ssh_manage_known_hosts: true` - Manage known_hosts entries
 - `ssh_manage_authorized_keys: true` - Manage authorized_keys
 - `ssh_enable_backup: true` - Backup SSH directory
+
+**Common Error - Vault Password File Permissions:**
+
+If you see this error:
+
+```
+[ERROR]: Decryption failed (no vault secrets were found that could decrypt)
+```
+
+**Root cause:** The vault password file (`ansible-become-password` or `ansible-vault-password`) is not executable.
+
+**Solution:** Ansible requires vault password files to have executable permissions (chmod 700). The SSH role automatically sets this when deploying via `ssh_deploy_full_directory: true`, but if deploying manually, ensure:
+
+```bash
+chmod 700 ~/.ssh/ansible-become-password
+chmod 700 ~/.ssh/ansible-vault-password
+```
 
 **See:** `roles/ssh/README.md` for complete documentation and examples.
 
@@ -339,6 +382,73 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 
 - **~/.local/share/chezmoi/examples/ANSIBLE-INTEGRATION.md** - Full integration documentation
 
+## Cloudflared Role Configuration
+
+The Cloudflared role manages Cloudflare Tunnel with secure token storage using ansible-vault. All features are **enabled by default**.
+
+**Quick Start (Default behavior):**
+
+- Deploys tunnel token from encrypted vault
+- Creates systemd service using token-file (no plaintext secrets)
+- Enables and starts cloudflared service
+- Validates token is defined before deployment
+
+**To deploy Cloudflare Tunnel:**
+
+1. Get your tunnel token from Cloudflare Zero Trust dashboard:
+   - Go to https://one.dash.cloudflare.com/
+   - Navigate to Networks → Tunnels
+   - Create or select your tunnel
+   - Copy the tunnel token
+
+2. Create and encrypt vault file:
+
+   ```bash
+   cp vars/cloudflared_vault.yml.template vars/cloudflared_vault.yml
+   # Edit and add your token
+   nano vars/cloudflared_vault.yml
+   # Encrypt with ansible-vault
+   ansible-vault encrypt vars/cloudflared_vault.yml
+   ```
+
+3. Run: `./run.sh --tags cloudflared --ask-vault-pass`
+
+**Available Cloudflared Features (configure in vars/cloudflared.yml):**
+
+- `cloudflared_deploy_token: true` - Deploy token from vault
+- `cloudflared_deploy_service: true` - Deploy systemd service
+- `cloudflared_enable_service: true` - Enable and start service
+- `cloudflared_extra_args: ""` - Additional cloudflared arguments
+
+**Security Model:**
+
+- Token encrypted with ansible-vault (never committed plaintext)
+- Token file restricted to root (0600 permissions)
+- Service uses `--token-file` flag (no plaintext in systemd unit)
+- `no_log: true` on sensitive tasks prevents token leakage
+- Configuration directory restricted (0700 permissions)
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags cloudflared          # All cloudflared tasks
+./run.sh --tags cloudflared-token    # Only deploy token
+./run.sh --tags cloudflared-service  # Only deploy service
+./run.sh --tags cloudflared-vault    # Vault-related tasks
+```
+
+**How it works:**
+
+1. Validates tunnel token is defined in vault
+2. Creates `/etc/cloudflared/` directory with restricted permissions
+3. Deploys token to `/etc/cloudflared/token` (0600, root-owned)
+4. Templates systemd service with `--token-file` flag
+5. Enables and starts service (restarts if token changed)
+
+**See:** `roles/cloudflared/README.md` for complete documentation and troubleshooting.
+
+**See also:** `docs/CLOUDFLARED_SETUP.md` for comprehensive setup guide.
+
 ## Reference
 
 ### Essential Reading
@@ -353,6 +463,7 @@ This role complements the chezmoi setup at `~/.local/share/chezmoi`. See the int
 - @roles/chezmoi/README.md - Chezmoi role documentation
 - @roles/ssh/README.md - SSH role documentation
 - @roles/git/README.md - Git role documentation
+- @roles/cloudflared/README.md - Cloudflared role documentation
 
 ### System Expansion
 

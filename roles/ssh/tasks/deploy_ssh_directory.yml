@@ -27,4 +27,6 @@
       ansible.builtin.shell: |
         find {{ ansible_facts['env']['HOME'] }}/.ssh -type f -name 'id_*' ! -name '*.pub' -exec chmod 600 {} \;
         find {{ ansible_facts['env']['HOME'] }}/.ssh -type f -name '*.pub' -exec chmod 644 {} \;
+        chmod 700 {{ ansible_facts['env']['HOME'] }}/.ssh/ansible-become-password 2>/dev/null || true
+        chmod 700 {{ ansible_facts['env']['HOME'] }}/.ssh/ansible-vault-password 2>/dev/null || true
       changed_when: false

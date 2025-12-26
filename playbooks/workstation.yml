@@ -12,6 +12,8 @@
     - ../vars/user.yml
     - ../vars/git.yml
     - ../vars/chezmoi.yml
+    - ../vars/cloudflared.yml
+    - ../vars/cloudflared_vault.yml
 
   roles:
     - role: packages
@@ -25,3 +27,6 @@
 
     - role: chezmoi
       tags: [chezmoi, dotfiles]
+
+    - role: cloudflared
+      tags: [cloudflared, tunnel, services]

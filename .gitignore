@@ -1,5 +1,15 @@
 backup/todo
 /tmp/*
+
+# Unencrypted vault files (only commit .template or encrypted versions)
+vars/*_vault.yml
+!vars/*_vault.yml.template
+
+# Semaphore application data (contains secrets and runtime data)
+semaphore/config/
+semaphore/semaphore/
+
+# SSH test examples
 roles/ssh/files/test_examples/
 
 # Sensitive files - credentials and secrets
@@ -28,3 +38,8 @@ semaphore/config/
 *.backup
 *.bak
 *~
+
+# Worktrees
+.worktrees/*
+!.worktrees/.gitkeep
+.worktrees/
