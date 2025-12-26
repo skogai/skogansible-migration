@@ -112,5 +112,9 @@ ssh_generate_key: false
 # ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
 
 # Passphrase for the key (leave empty for no passphrase)
-# IMPORTANT: Should be vaulted if used!
+# SECURITY NOTE:
+#   - Empty passphrase = More convenient but less secure if key file is stolen
+#   - With passphrase = Additional security layer, protects against key theft
+#   - If setting a passphrase, this value MUST be vaulted for security
+# RECOMMENDATION: Use ssh-agent for convenience with passphrase-protected keys
 ssh_key_passphrase: ""

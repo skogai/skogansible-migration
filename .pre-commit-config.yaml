@@ -91,6 +91,16 @@ repos:
             \.claude/skills/.*/references/.*\.md
           )$
 
+  # Verify Ansible Vault files are encrypted with AES256
+  - repo: local
+    hooks:
+      - id: check-vault-encryption
+        name: Ensure vault files are encrypted with AES256
+        entry: .pre-commit-scripts/check-vault-encryption.sh
+        language: system
+        pass_filenames: false
+        always_run: true
+
   # Chezmoi template validation
   - repo: local
     hooks:

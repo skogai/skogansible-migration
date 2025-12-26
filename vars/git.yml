@@ -97,8 +97,14 @@ git_aliases:
 # ==============================================================================
 
 git_configure_credentials: false
+
+# SECURITY WARNING:
+#   - "store" mode saves passwords in PLAINTEXT at ~/.git-credentials
+#   - "cache" mode stores passwords in memory temporarily (recommended)
+#   - "osxkeychain" or "wincred" for OS-level secure storage
+# RECOMMENDATION: Use "cache" with timeout, or OS-specific secure storage
 git_credential_helper: "cache"
-git_credential_cache_timeout: 7200  # 2 hours
+git_credential_cache_timeout: 7200  # 2 hours (for cache mode)
 
 # ==============================================================================
 # Global .gitignore
