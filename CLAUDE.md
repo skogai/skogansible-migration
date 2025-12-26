@@ -186,15 +186,35 @@ The Packages role manages system packages from official Arch repositories and AU
 
 ## SSH Role Configuration
 
-The SSH role manages SSH keys, configuration, and related settings. All features are **disabled by default** for safety.
+The SSH role manages SSH keys, configuration, and related settings with dual-tier deployment: vault variables for critical keys + file-based deployment for complete .ssh directory restoration.
 
-**To deploy SSH keys from vault:**
+**Quick Start - Deploy Entire .ssh Directory (Recommended):**
 
-1. Edit `vars/ssh.yml` and set `ssh_deploy_from_vault: true`
-2. Ensure `vars/ssh_vault.yml` contains your encrypted keys with variables:
-   - `ssh_private_key` - Your private key content
-   - `ssh_public_key` - Your public key content
-3. Run: `ansible-playbook playbook.yml --tags ssh --ask-vault-pass`
+1. Enable full directory deployment in `vars/ssh.yml`:
+   ```yaml
+   ssh_deploy_full_directory: true
+   ssh_deploy_from_vault: true  # Also deploy keys from vault variables
+   ```
+
+2. Run: `./run.sh --tags ssh`
+
+**What gets deployed:**
+
+- **From `roles/ssh/files/ssh/`** (11 vault-encrypted files):
+  - `.env`, `allowed_signers`, `authorized_keys`
+  - `ansible-become-password`, `ansible-vault-password` (executable, 700)
+  - Cloudflare Access certificates and keys
+  - `openrouter` API credentials
+
+- **From `vars/ssh_vault.yml`** (vault variables):
+  - All 3 SSH key types: ED25519, RSA, ECDSA
+  - Variable names: `ssh_private_key_ed25519`, `ssh_public_key_ed25519` (etc.)
+
+**Automatic permission management:**
+- Private keys: `600`
+- Public keys: `644`
+- Vault password files: `700` (executable - required by Ansible)
+- Directory: `700`
 
 **Other SSH features (configure in vars/ssh.yml):**
 
