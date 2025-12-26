@@ -1,0 +1,41 @@
+---
+# Laptop profile - portable development environment with power optimization
+- name: Configure Arch Linux laptop
+  hosts: all
+  connection: local
+
+  vars_files:
+    - ../vars/main.yml
+    - ../vars/packages.yml
+    - ../vars/ssh.yml
+    - ../vars/ssh_vault.yml
+    - ../vars/user.yml
+    - ../vars/git.yml
+    - ../vars/chezmoi.yml
+    - ../vars/zsh.yml
+
+  vars:
+    # Override machine type for laptop profile
+    machine_type: laptop
+    chezmoi_machine_type: laptop
+    chezmoi_laptop_mode: true
+    chezmoi_wm: sway  # Sway for better battery life
+
+  roles:
+    # Base system (all profiles)
+    - role: packages
+      tags: [packages, install, base, laptop]
+
+    - role: ssh
+      tags: [ssh, config, base, laptop]
+
+    # Version control and dotfiles
+    - role: git
+      tags: [git, vcs, laptop]
+
+    - role: chezmoi
+      tags: [chezmoi, dotfiles, laptop]
+
+    # Shell configuration
+    - role: zsh
+      tags: [zsh, shell, laptop]

@@ -10,6 +10,8 @@ Documentation for the Ansible Arch Linux automation system.
 - **[../README.md](../README.md)** - Project overview and quick start
 - **[../FILESTRUCTURE.md](../FILESTRUCTURE.md)** - Complete file structure
 - **[../RULES.md](../RULES.md)** - Security rules and development patterns
+- **[COMPOSITION.md](COMPOSITION.md)** - Composition layer and profile orchestration
+- **[TESTING_PROFILES.md](TESTING_PROFILES.md)** - Testing guide for profile combinations
 
 ### Role Documentation
 
@@ -23,6 +25,8 @@ Documentation for the Ansible Arch Linux automation system.
 ```
 docs/
 ├── README.md                                       # This file
+├── COMPOSITION.md                                  # Composition layer architecture
+├── TESTING_PROFILES.md                             # Profile testing guide
 ├── primitives/
 │   ├── ansible-core.md                             # Reference: 7 fundamental patterns
 │   └── system-inventory-by-primitives.md           # Roadmap: System organized by primitives
@@ -31,6 +35,49 @@ docs/
 ```
 
 ## Documents
+
+### COMPOSITION.md
+
+**Purpose:** Architecture documentation for the composition layer that orchestrates roles
+
+**Use cases:**
+
+- Understanding profile-based role selection
+- Learning role dependency management
+- Designing conditional role inclusion
+- Using tag-based execution control
+
+**Content:**
+
+- Four machine profiles (workstation, laptop, server, WSL)
+- Role dependency declaration patterns
+- Conditional role inclusion with `when` clauses
+- Hierarchical tag structure
+- Playbook organization by profile
+- Role composition patterns
+- Best practices and guidelines
+
+### TESTING_PROFILES.md
+
+**Purpose:** Comprehensive testing guide for profile combinations
+
+**Use cases:**
+
+- Validating composition layer changes
+- Testing profile-specific playbooks
+- Verifying conditional inclusion logic
+- Running regression tests
+
+**Content:**
+
+- Syntax validation tests
+- Dry-run testing procedures
+- Task listing verification
+- Tag testing at all hierarchy levels
+- Profile-specific test checklists
+- Integration testing with containers/VMs
+- Troubleshooting common issues
+- CI/CD integration examples
 
 ### primitives/ansible-core.md
 

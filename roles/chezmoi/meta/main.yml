@@ -28,4 +28,6 @@ galaxy_info:
     - deployment
     - templating
 
-dependencies: []
+dependencies:
+  - role: git
+    tags: [git, vcs]

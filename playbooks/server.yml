@@ -1,0 +1,55 @@
+---
+# Server profile - headless environment with service focus
+- name: Configure Arch Linux server
+  hosts: all
+  connection: local
+
+  vars_files:
+    - ../vars/main.yml
+    - ../vars/packages.yml
+    - ../vars/ssh.yml
+    - ../vars/ssh_vault.yml
+    - ../vars/user.yml
+    - ../vars/git.yml
+    - ../vars/cloudflared.yml
+    - ../vars/cloudflared_vault.yml
+    - ../vars/filesystems.yml
+
+  vars:
+    # Override machine type for server profile
+    machine_type: server
+    chezmoi_machine_type: server
+    chezmoi_headless: true
+    chezmoi_gui: false
+    chezmoi_wm: none
+
+  roles:
+    # Base system (all profiles)
+    - role: packages
+      tags: [packages, install, base, server]
+      vars:
+        # Server-specific package overrides
+        packages_gui: false
+        packages_development: minimal
+
+    - role: ssh
+      tags: [ssh, config, base, server]
+      vars:
+        # Hardened SSH for servers
+        ssh_hardening_enabled: true
+        ssh_hardening_server_enabled: true
+
+    # Minimal version control (for deployments)
+    - role: git
+      tags: [git, vcs, server]
+
+    # Services
+    - role: cloudflared
+      tags: [cloudflared, tunnel, services, server]
+      when: cloudflared_enabled | default(true)
+
+    - role: filesystems
+      tags: [filesystems, mounts, server]
+      when:
+        - filesystems_mounts is defined
+        - filesystems_mounts | length > 0

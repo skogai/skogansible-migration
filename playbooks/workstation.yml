@@ -1,5 +1,5 @@
 ---
-# Workstation setup - full desktop/development environment
+# Workstation profile - full desktop/development environment
 - name: Configure Arch Linux workstation
   hosts: all
   connection: local
@@ -12,25 +12,53 @@
     - ../vars/user.yml
     - ../vars/git.yml
     - ../vars/chezmoi.yml
+    - ../vars/zsh.yml
     - ../vars/cloudflared.yml
     - ../vars/cloudflared_vault.yml
     - ../vars/filesystems.yml
 
+  vars:
+    # Ensure machine type is set for workstation profile
+    machine_type: workstation
+    chezmoi_machine_type: workstation
+
   roles:
+    # ========================================================================
+    # BASE SYSTEM (all profiles)
+    # ========================================================================
+
     - role: packages
-      tags: [packages, install]
+      tags: [packages, install, base, workstation]
 
     - role: ssh
-      tags: [ssh, config]
+      tags: [ssh, config, base, workstation]
+
+    # ========================================================================
+    # VERSION CONTROL & DOTFILES (all profiles)
+    # ========================================================================
 
     - role: git
-      tags: [git, vcs]
+      tags: [git, vcs, workstation]
 
     - role: chezmoi
-      tags: [chezmoi, dotfiles]
+      tags: [chezmoi, dotfiles, workstation]
+
+    # ========================================================================
+    # SHELL CONFIGURATION (all profiles)
+    # ========================================================================
+
+    - role: zsh
+      tags: [zsh, shell, workstation]
+
+    # ========================================================================
+    # SERVICES (workstation-specific)
+    # ========================================================================
 
     - role: cloudflared
-      tags: [cloudflared, tunnel, services]
+      tags: [cloudflared, tunnel, services, workstation]
 
     - role: filesystems
-      tags: [filesystems, mounts]
+      tags: [filesystems, mounts, workstation]
+      when:
+        - filesystems_mounts is defined
+        - filesystems_mounts | length > 0
