@@ -20,6 +20,12 @@ SkogAI/skogansible/
 ├── CLAUDE.md                            # Complete project documentation (detailed usage, all features)
 ├── FILESTRUCTURE.md                     # This file - complete file structure reference
 │
+├── .config/                             # Project-specific configuration
+│   └── wt.toml                          # Worktrunk hooks configuration (post-create, pre-merge, etc.)
+│
+├── .worktrees/                          # Git worktrees directory (isolated development)
+│   └── .gitkeep                         # Keeps directory in git (worktrees are gitignored)
+│
 ├── roles/                               # Ansible roles directory
 │   ├── packages/                        # Package management role (pacman + AUR)
 │   │   ├── tasks/

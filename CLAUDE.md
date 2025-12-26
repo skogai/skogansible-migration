@@ -59,6 +59,57 @@ Web interface for running and managing Ansible playbooks.
 cd semaphore && docker compose up -d
 ```
 
+## Git Worktree Management (Worktrunk)
+
+The repository uses [worktrunk](https://github.com/thought-tracker/worktrunk) for managing git worktrees - isolated working directories for parallel development.
+
+**Why Worktrees:**
+
+- Safe parallel development without branch switching
+- Each worktree is fully isolated (no `.venv` or state conflicts)
+- Test changes without affecting main development
+- Easy context switching between features
+
+**Quick Start:**
+
+```bash
+# Create and switch to new worktree
+wt switch --create --base master feature-name
+
+# List all worktrees
+wt list
+
+# Make changes, then commit with AI-generated message
+wt step commit
+
+# Merge back to master (squash, commit, remove worktree)
+wt merge
+
+# Or remove without merging
+wt remove feature-name
+```
+
+**Project Configuration:**
+
+- Global config: `~/.config/worktrunk/config.toml`
+- Project hooks: `.config/wt.toml` (in repo root)
+- Worktree path: `.worktrees/{{ branch }}/`
+- AI commits: `aichat -m claude:claude-haiku-4.5`
+
+**Workflow:**
+
+1. `wt switch --create --base master issue-123-feature` - Create isolated workspace
+2. Make changes, test with `./run.sh --check`
+3. `wt step commit` - Commit with AI-generated message
+4. `wt merge` - Squash merge back to master, cleanup worktree
+
+**Project Hooks:**
+
+- `post-create`: Allow direnv for new worktree
+- `pre-commit`: Validate Ansible syntax
+- `pre-merge`: Full dry-run validation
+- `post-start`: Show helpful reminder
+
 ## Usage
 
 **Initial setup:**
