@@ -1,6 +1,6 @@
 # Settings Decisions Registry
 
-**Purpose:** Central reference for configuration decisions. Agents working on issues should consult this file before making assumptions about settings.
+**Purpose:** When agents are uncertain about configuration values, they ADD questions here instead of guessing. This is a log of decisions that need human input.
 
 **Status:** 🔴 NEEDS HUMAN INPUT - Questions marked with ❓ require @skogix to answer
 
@@ -8,20 +8,34 @@
 
 ## How to Use This File
 
-### For Agents
+### For Agents - CRITICAL
 
-1. Check this file BEFORE implementing any configuration-related changes
-2. If a setting is marked ✅ CONFIRMED - use that value
-3. If a setting is marked ❓ NEEDS ANSWER - DO NOT guess, either:
-   - Ask the user in the PR/issue
-   - Skip that setting and document what's missing
-4. Update this file when user provides answers
+**When you encounter uncertainty about a setting value:**
+
+1. **DO NOT GUESS** - Never assume or make up configuration values
+2. **ADD A QUESTION** to the "Pending Decisions" section below using this format:
+
+   ```markdown
+   ### N. [Short Description]
+   **Question:** What should [setting] be?
+
+   **Context:** [Why you need this, what you found]
+
+   **Options found:** (if any)
+   - Option A (source)
+   - Option B (source)
+
+   **Answer:** `_______________` <!-- @skogix: Fill this in -->
+   ```
+
+3. **SKIP** that part of implementation and note it in your PR/commit
+4. **REFERENCE** confirmed decisions (✅) when they exist
 
 ### For @skogix
 
-1. Answer questions in the "Pending Decisions" section
-2. Move answered items to "Confirmed Decisions"
-3. Add any additional context that would help agents
+1. Answer questions by filling in the `_______________` blanks
+2. Move answered items to "Confirmed Decisions" section
+3. Add context that helps future agent decisions
 
 ---
 

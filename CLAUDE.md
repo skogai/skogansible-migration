@@ -29,6 +29,35 @@ The repository follows standard Ansible structure:
 - **Git automation:** Standardized, reusable task files for all common git operations
 - **Chezmoi integration:** Templates `.chezmoidata.yaml` for machine-specific dotfiles configuration
 - **Collections:** community.general, kewlfft.aur, ansible.posix
+- **Semaphore UI:** Web-based Ansible playbook management (Docker on port 9005)
+- **Settings decisions:** When uncertain about config values, agents MUST add questions to `docs/SETTINGS_DECISIONS.md` instead of guessing
+
+## Semaphore Ansible UI
+
+Web interface for running and managing Ansible playbooks.
+
+**Access:**
+
+- Local: `http://localhost:9005`
+- Public: `https://semaphore.skogai.se` (Cloudflare tunnel)
+
+**Configuration:**
+
+- Docker compose: `semaphore/docker-compose.yml`
+- Data volume: `semaphore/data/`
+- Admin: skogix / skogsund1
+
+**MCP Integration:**
+
+- MCP server: `~/dev/semaphore-mcp/`
+- API token: Stored in `skogcli` as `SEMAPHORE_API_TOKEN`
+- Enables programmatic playbook execution via Claude Code
+
+**Setup:**
+
+```bash
+cd semaphore && docker compose up -d
+```
 
 ## Usage
 
@@ -161,15 +190,37 @@ The Packages role manages system packages from official Arch repositories and AU
 
 ## SSH Role Configuration
 
-The SSH role manages SSH keys, configuration, and related settings. All features are **disabled by default** for safety.
+The SSH role manages SSH keys, configuration, and related settings with dual-tier deployment: vault variables for critical keys + file-based deployment for complete .ssh directory restoration.
 
-**To deploy SSH keys from vault:**
+**Quick Start - Deploy Entire .ssh Directory (Recommended):**
 
-1. Edit `vars/ssh.yml` and set `ssh_deploy_from_vault: true`
-2. Ensure `vars/ssh_vault.yml` contains your encrypted keys with variables:
-   - `ssh_private_key` - Your private key content
-   - `ssh_public_key` - Your public key content
-3. Run: `ansible-playbook playbook.yml --tags ssh --ask-vault-pass`
+1. Enable full directory deployment in `vars/ssh.yml`:
+
+   ```yaml
+   ssh_deploy_full_directory: true
+   ssh_deploy_from_vault: true  # Also deploy keys from vault variables
+   ```
+
+2. Run: `./run.sh --tags ssh`
+
+**What gets deployed:**
+
+- **From `roles/ssh/files/ssh/`** (11 vault-encrypted files):
+  - `.env`, `allowed_signers`, `authorized_keys`
+  - `ansible-become-password`, `ansible-vault-password` (executable, 700)
+  - Cloudflare Access certificates and keys
+  - `openrouter` API credentials
+
+- **From `vars/ssh_vault.yml`** (vault variables):
+  - All 3 SSH key types: ED25519, RSA, ECDSA
+  - Variable names: `ssh_private_key_ed25519`, `ssh_public_key_ed25519` (etc.)
+
+**Automatic permission management:**
+
+- Private keys: `600`
+- Public keys: `644`
+- Vault password files: `700` (executable - required by Ansible)
+- Directory: `700`
 
 **Other SSH features (configure in vars/ssh.yml):**
 
@@ -178,6 +229,23 @@ The SSH role manages SSH keys, configuration, and related settings. All features
 - `ssh_manage_known_hosts: true` - Manage known_hosts entries
 - `ssh_manage_authorized_keys: true` - Manage authorized_keys
 - `ssh_enable_backup: true` - Backup SSH directory
+
+**Common Error - Vault Password File Permissions:**
+
+If you see this error:
+
+```
+[ERROR]: Decryption failed (no vault secrets were found that could decrypt)
+```
+
+**Root cause:** The vault password file (`ansible-become-password` or `ansible-vault-password`) is not executable.
+
+**Solution:** Ansible requires vault password files to have executable permissions (chmod 700). The SSH role automatically sets this when deploying via `ssh_deploy_full_directory: true`, but if deploying manually, ensure:
+
+```bash
+chmod 700 ~/.ssh/ansible-become-password
+chmod 700 ~/.ssh/ansible-vault-password
+```
 
 **See:** `roles/ssh/README.md` for complete documentation and examples.
 
@@ -403,7 +471,7 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 
 ### Configuration Decisions
 
-- @docs/SETTINGS_DECISIONS.md - Settings registry with pending questions for human review
+- @docs/SETTINGS_DECISIONS.md - When uncertain, ADD questions here instead of guessing
 
 ### Historical Context
 

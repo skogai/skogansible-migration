@@ -3,18 +3,24 @@
 # Each SSH component managed separately for fine control
 
 # ==============================================================================
-# SSH Key Deployment
+# SSH Directory Deployment (Drop-and-Forget Files)
 # ==============================================================================
 
-# Deploy SSH keys from vault
+# Deploy entire .ssh directory from files/ (encrypted files approach)
+ssh_deploy_full_directory: true
+
+# ==============================================================================
+# SSH Key Deployment (Vault Variables)
+# ==============================================================================
+
+# Deploy SSH keys from vault variables (all types: ed25519, rsa, ecdsa)
 ssh_deploy_from_vault: true
 
-# Key type (when generating new keys)
-ssh_key_type: "ed25519"
-
-# Map vault variables to role variables
-ssh_private_key_content: "{{ ssh_private_key | default('') }}"
-ssh_public_key_content: "{{ ssh_public_key | default('') }}"
+# Vault variables used:
+#   - ssh_private_key_ed25519 / ssh_public_key_ed25519
+#   - ssh_private_key_rsa / ssh_public_key_rsa
+#   - ssh_private_key_ecdsa / ssh_public_key_ecdsa
+# Each key type deploys only if variable is defined in vars/ssh_vault.yml
 
 # ==============================================================================
 # SSH Configuration File

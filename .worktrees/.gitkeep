@@ -1,0 +1,2 @@
+# This file ensures the .worktrees directory is tracked by git
+# The directory itself is ignored, but we want git to know about it

@@ -8,3 +8,11 @@ vars/*_vault.yml
 # Semaphore application data (contains secrets and runtime data)
 semaphore/config/
 semaphore/semaphore/
+
+# SSH test examples
+roles/ssh/files/test_examples/
+
+# Worktrees
+.worktrees/*
+!.worktrees/.gitkeep
+.worktrees/
