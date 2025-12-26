@@ -7,7 +7,8 @@
 
 - name: "SSH | Deploy entire .ssh directory from backup"
   ansible.builtin.include_tasks: deploy_ssh_directory.yml
-  when: ssh_deploy_full_directory | default(false)
+  when: ssh_deploy_full_directory | bool
+  tags: [ssh, ssh-deploy-directory]
 
 # ==============================================================================
 # Ensure SSH Directory Exists
@@ -20,38 +21,81 @@
     mode: "{{ ssh_dir_mode }}"
     owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_facts['user_id'] }}"
-  when: not (ssh_deploy_full_directory | default(false))
+  when: not (ssh_deploy_full_directory | bool)
+  tags: [ssh]
 
 # ==============================================================================
 # SSH Key Deployment (from Vault)
 # ==============================================================================
 
-- name: "SSH | Deploy SSH keys from vault"
-  when: ssh_deploy_from_vault
+- name: "SSH | Deploy SSH keys from vault (all types)"
+  when: ssh_deploy_from_vault | bool
+  tags: [ssh, ssh-keys, ssh-vault]
   block:
-    - name: "SSH | Deploy SSH private key"
+    - name: "SSH | Deploy ED25519 private key"
       ansible.builtin.copy:
-        content: "{{ ssh_private_key_content }}"
-        dest: "{{ ssh_key_private }}"
+        content: "{{ ssh_private_key_ed25519 }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519"
         mode: "{{ ssh_private_key_mode }}"
         owner: "{{ ansible_facts['user_id'] }}"
         group: "{{ ansible_facts['user_id'] }}"
-      no_log: true  # Don't log private key content
+      when: ssh_private_key_ed25519 is defined and ssh_private_key_ed25519 | length > 0
+      no_log: true
 
-    - name: "SSH | Deploy SSH public key"
+    - name: "SSH | Deploy ED25519 public key"
       ansible.builtin.copy:
-        content: "{{ ssh_public_key_content }}"
-        dest: "{{ ssh_key_public }}"
+        content: "{{ ssh_public_key_ed25519 }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519.pub"
         mode: "{{ ssh_public_key_mode }}"
         owner: "{{ ansible_facts['user_id'] }}"
         group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_public_key_ed25519 is defined and ssh_public_key_ed25519 | length > 0
+
+    - name: "SSH | Deploy RSA private key"
+      ansible.builtin.copy:
+        content: "{{ ssh_private_key_rsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_rsa"
+        mode: "{{ ssh_private_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_private_key_rsa is defined and ssh_private_key_rsa | length > 0
+      no_log: true
+
+    - name: "SSH | Deploy RSA public key"
+      ansible.builtin.copy:
+        content: "{{ ssh_public_key_rsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_rsa.pub"
+        mode: "{{ ssh_public_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_public_key_rsa is defined and ssh_public_key_rsa | length > 0
+
+    - name: "SSH | Deploy ECDSA private key"
+      ansible.builtin.copy:
+        content: "{{ ssh_private_key_ecdsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ecdsa"
+        mode: "{{ ssh_private_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_private_key_ecdsa is defined and ssh_private_key_ecdsa | length > 0
+      no_log: true
+
+    - name: "SSH | Deploy ECDSA public key"
+      ansible.builtin.copy:
+        content: "{{ ssh_public_key_ecdsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ecdsa.pub"
+        mode: "{{ ssh_public_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_public_key_ecdsa is defined and ssh_public_key_ecdsa | length > 0
 
 # ==============================================================================
 # SSH Key Generation
 # ==============================================================================
 
 - name: "SSH | Generate SSH key pair"
-  when: ssh_generate_key and not ssh_deploy_from_vault
+  when: (ssh_generate_key | bool) and not (ssh_deploy_from_vault | bool)
+  tags: [ssh, ssh-keys, ssh-generate]
   block:
     - name: "SSH | Check if SSH key already exists"
       ansible.builtin.stat:
@@ -68,7 +112,7 @@
           -N "{{ ssh_key_passphrase }}"
           {% if ssh_key_comment is defined %}-C "{{ ssh_key_comment }}"{% endif %}
       when: not ssh_key_stat.stat.exists
-      no_log: true  # Don't log passphrase
+      no_log: true # Don't log passphrase
 
     - name: "SSH | Set permissions on generated keys"
       when: not ssh_key_stat.stat.exists
@@ -91,17 +135,8 @@
 # SSH Configuration File
 # ==============================================================================
 
-- name: "SSH | Ensure socket directory exists for ControlPath"
-  when: ssh_deploy_config
-  ansible.builtin.file:
-    path: "{{ ssh_dir }}/sockets"
-    state: directory
-    mode: "0700"
-    owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_facts['user_id'] }}"
-
 - name: "SSH | Deploy SSH config"
-  when: ssh_deploy_config
+  when: ssh_deploy_config | bool
   ansible.builtin.template:
     src: "{{ ssh_config_template }}"
     dest: "{{ ssh_config_file }}"
@@ -109,48 +144,52 @@
     owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_facts['user_id'] }}"
     backup: true
+  tags: [ssh, ssh-config]
 
 # ==============================================================================
 # Known Hosts Management
 # ==============================================================================
 
-- name: "SSH | Manage known hosts"
-  when: ssh_manage_known_hosts
-  block:
-    - name: "SSH | Scan SSH host keys"
-      ansible.builtin.command:
-        cmd: "ssh-keyscan -H {{ item }}"
-      register: ssh_host_keys
-      loop: "{{ ssh_known_hosts | default([]) }}"
-      changed_when: false
-
-    - name: "SSH | Add hosts to known_hosts"
-      ansible.builtin.known_hosts:
-        name: "{{ item.item }}"
-        key: "{{ item.stdout }}"
-        state: present
-        path: "{{ ssh_dir }}/known_hosts"
-      loop: "{{ ssh_host_keys.results }}"
-      when: item.stdout != ""
-
+# - name: "SSH | Manage known hosts"
+#   when: ssh_manage_known_hosts | bool
+#   tags: [ssh, ssh-known-hosts]
+#   block:
+#     - name: "SSH | Scan SSH host keys"
+#       ansible.builtin.command:
+#         cmd: "ssh-keyscan -H {{ item }}"
+#       register: ssh_host_keys
+#       loop: "{{ ssh_known_hosts | default([]) }}"
+#       changed_when: false
+#
+#     - name: "SSH | Add hosts to known_hosts"
+#       ansible.builtin.known_hosts:
+#         name: "{{ item.item }}"
+#         key: "{{ item.stdout }}"
+#         state: present
+#         path: "{{ ssh_dir }}/known_hosts"
+#       loop: "{{ ssh_host_keys.results }}"
+#       when: item.stdout != ""
+#
 # ==============================================================================
 # Authorized Keys Management
 # ==============================================================================
 
 - name: "SSH | Manage authorized_keys"
-  when: ssh_manage_authorized_keys
+  when: ssh_manage_authorized_keys | bool
   ansible.posix.authorized_key:
     user: "{{ ansible_facts['user_id'] }}"
     state: present
     key: "{{ item }}"
   loop: "{{ ssh_authorized_keys | default([]) }}"
+  tags: [ssh, ssh-authorized-keys]
 
 # ==============================================================================
 # SSH Backup (Optional - Advanced Feature)
 # ==============================================================================
 
 - name: "SSH | Backup SSH directory"
-  when: ssh_enable_backup
+  when: ssh_enable_backup | bool
+  tags: [ssh, ssh-backup]
   block:
     - name: "SSH | Ensure backup directory exists"
       ansible.builtin.file:
@@ -177,7 +216,6 @@
         owner: "{{ ansible_facts['user_id'] }}"
         group: "{{ ansible_facts['user_id'] }}"
         mode: "0600"
-
 # ==============================================================================
 # SSH Backup Encryption (Commented Out - Review Before Using)
 # ==============================================================================

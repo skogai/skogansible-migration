@@ -1,0 +1,18 @@
+---
+# Maintenance playbook - updates and cleanup only
+# Use for regular system maintenance without changing configuration
+- name: Maintain Arch Linux system
+  hosts: all
+  connection: local
+
+  vars_files:
+    - ../vars/main.yml
+    - ../vars/packages.yml
+
+  roles:
+    - role: packages
+      tags: [packages, update]
+      vars:
+        # Maintenance-specific overrides
+        packages_update_cache: true
+        packages_upgrade_system: true

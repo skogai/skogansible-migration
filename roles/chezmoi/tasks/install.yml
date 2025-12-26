@@ -1,0 +1,36 @@
+---
+# Install chezmoi package
+
+- name: Check if chezmoi is installed
+  ansible.builtin.command: which chezmoi
+  register: chezmoi_installed
+  changed_when: false
+  failed_when: false
+  tags:
+    - chezmoi
+    - chezmoi-install
+
+- name: Ensure chezmoi is installed
+  community.general.pacman:
+    name: chezmoi
+    state: present
+  become: true
+  when: chezmoi_installed.rc != 0
+  tags:
+    - chezmoi
+    - chezmoi-install
+
+- name: Verify chezmoi installation
+  ansible.builtin.command: chezmoi --version
+  register: chezmoi_version
+  changed_when: false
+  tags:
+    - chezmoi
+    - chezmoi-install
+
+- name: Display chezmoi version
+  ansible.builtin.debug:
+    msg: "Chezmoi version: {{ chezmoi_version.stdout }}"
+  tags:
+    - chezmoi
+    - chezmoi-install

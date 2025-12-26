@@ -1,0 +1,5 @@
+# Test SSH config-style file
+# This should get preserved permissions from source
+Host test-ansible
+    HostName example.com
+    User testuser

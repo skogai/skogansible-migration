@@ -1,0 +1,3 @@
+This file was deployed by Ansible SSH role test.
+If you see this in ~/.ssh/, the deploy_ssh_directory task works.
+This is a test file and can be safely deleted.

@@ -1,0 +1,30 @@
+---
+# Cloudflared Role Configuration
+
+# ==============================================================================
+# Token Deployment
+# ==============================================================================
+
+# Deploy tunnel token from vault
+cloudflared_deploy_token: true
+
+# Map vault variable to role variable
+cloudflared_token: "{{ cloudflared_tunnel_token | default('') }}"
+
+# ==============================================================================
+# Service Configuration
+# ==============================================================================
+
+# Deploy and enable systemd service
+cloudflared_deploy_service: true
+cloudflared_enable_service: true
+
+# Service template to use
+cloudflared_service_template: "cloudflared.service.j2"
+
+# ==============================================================================
+# Additional Configuration
+# ==============================================================================
+
+# Extra arguments to pass to cloudflared (optional)
+# cloudflared_extra_args: "--metrics localhost:8080"

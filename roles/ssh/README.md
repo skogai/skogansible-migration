@@ -1,14 +1,16 @@
-# SSH Role
+# Ansible Role: SSH
 
 A flexible Ansible role for managing SSH keys, configuration, and backups with ansible-vault support.
 
 ## Features
 
-- ✅ Deploy SSH keys from ansible-vault encrypted variables
+- ✅ Deploy entire .ssh directory from vault-encrypted files (disaster recovery)
+- ✅ Deploy SSH keys from ansible-vault encrypted variables (all 3 key types: ED25519, RSA, ECDSA)
 - ✅ Generate new SSH key pairs (RSA, ED25519, ECDSA)
 - ✅ Deploy custom SSH configuration from template
 - ✅ Manage known_hosts entries
 - ✅ Manage authorized_keys
+- ✅ Automatic permission management (vault password files set to 700, private keys to 600, public keys to 644)
 - ✅ Backup SSH directory with optional encryption
 - ✅ No hardcoded paths - fully configurable
 - ✅ Safe defaults with commented optional features
@@ -69,6 +71,102 @@ ansible-playbook deploy-ssh.yml --ask-vault-pass
 ```
 
 ## Usage Scenarios
+
+### Scenario 0: Deploy Entire .ssh Directory (Disaster Recovery)
+
+**Recommended approach** - Deploy your complete .ssh directory from vault-encrypted files stored in `roles/ssh/files/ssh/`.
+
+**Setup:**
+
+1. Copy your .ssh files to `roles/ssh/files/ssh/`:
+
+   ```bash
+   cp ~/.ssh/id_ed25519 roles/ssh/files/ssh/
+   cp ~/.ssh/id_rsa roles/ssh/files/ssh/
+   cp ~/.ssh/authorized_keys roles/ssh/files/ssh/
+   # ... etc
+   ```
+
+2. Encrypt all files with ansible-vault:
+
+   ```bash
+   for file in roles/ssh/files/ssh/*; do
+     ansible-vault encrypt "$file"
+   done
+   ```
+
+3. Enable full directory deployment in `vars/ssh.yml`:
+
+   ```yaml
+   ssh_deploy_full_directory: true
+   ```
+
+4. Run the playbook:
+
+   ```bash
+   ./run.sh --tags ssh
+   ```
+
+**What gets deployed:**
+
+All files from `roles/ssh/files/ssh/` are synced to `~/.ssh/` with automatic permission management:
+
+- Private keys (id_*): `600`
+- Public keys (*.pub): `644`
+- Vault password files (ansible-become-password, ansible-vault-password): `700` (executable)
+- Other files: preserved mode from source
+
+**Current files in this implementation (11 files):**
+
+- `.env` - Environment variables
+- `allowed_signers` - SSH commit signing configuration
+- `ansible-become-password` - Ansible vault password (executable)
+- `ansible-vault-password` - Ansible vault password (executable)
+- `authorized_keys` - SSH authorized keys for incoming connections
+- `CF-ACCESS-CLIENT-ID.pub` - Cloudflare Access SSH certificate
+- `CF-ACCESS-CLIENT-SECRET.access` - Cloudflare Access secret
+- `cloudflare-access-ssh-infrastructure.pub` - Cloudflare SSH infrastructure key
+- `open-ssh-ca.clroudflareaccess.org` - Cloudflare CA certificate
+- `open-ssh-ca.clroudflareaccess.pub` - Cloudflare CA public key
+- `openrouter` - OpenRouter API credentials
+
+**Additional vault variables for SSH keys:**
+
+In `vars/ssh_vault.yml`, define all three key types:
+
+```yaml
+ssh_private_key_ed25519: |
+  -----BEGIN OPENSSH PRIVATE KEY-----
+  (your ed25519 private key)
+  -----END OPENSSH PRIVATE KEY-----
+
+ssh_public_key_ed25519: "ssh-ed25519 AAAA... user@host"
+
+ssh_private_key_rsa: |
+  -----BEGIN OPENSSH PRIVATE KEY-----
+  (your rsa private key)
+  -----END OPENSSH PRIVATE KEY-----
+
+ssh_public_key_rsa: "ssh-rsa AAAA... user@host"
+
+ssh_private_key_ecdsa: |
+  -----BEGIN OPENSSH PRIVATE KEY-----
+  (your ecdsa private key)
+  -----END OPENSSH PRIVATE KEY-----
+
+ssh_public_key_ecdsa: "ecdsa-sha2-nistp256 AAAA... user@host"
+```
+
+Enable vault key deployment in `vars/ssh.yml`:
+
+```yaml
+ssh_deploy_from_vault: true
+```
+
+This dual approach provides:
+
+- **Vault variables** for critical SSH keys (ed25519, rsa, ecdsa)
+- **File deployment** for drop-and-forget files (configs, certs, authorized_keys)
 
 ### Scenario 1: Just Ensure SSH Directory Exists
 
@@ -181,6 +279,7 @@ Create a backup of your SSH directory:
 ```
 
 This creates:
+
 - `~/.ssh_backup/` (copy of .ssh directory)
 - `~/.ssh_backup.tar.gz` (compressed archive)
 
@@ -222,6 +321,12 @@ Full featured deployment with keys, config, and known hosts:
 
 ## Configuration Variables
 
+### SSH Directory Deployment
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ssh_deploy_full_directory` | `false` | Deploy entire .ssh directory from `roles/ssh/files/ssh/` |
+
 ### SSH Key Management
 
 | Variable | Default | Description |
@@ -232,6 +337,12 @@ Full featured deployment with keys, config, and known hosts:
 | `ssh_generate_key` | `false` | Generate new SSH key pair |
 | `ssh_key_passphrase` | `""` | Passphrase for generated key |
 | `ssh_key_comment` | (undefined) | Comment for generated key |
+
+**Vault variable names for multiple key types:**
+
+- ED25519: `ssh_private_key_ed25519`, `ssh_public_key_ed25519`
+- RSA: `ssh_private_key_rsa`, `ssh_public_key_rsa`
+- ECDSA: `ssh_private_key_ecdsa`, `ssh_public_key_ecdsa`
 
 ### SSH Configuration
 
@@ -276,6 +387,7 @@ Some advanced features are commented out in the tasks file. Review and uncomment
 ### SSH Agent Configuration
 
 Automatically start SSH agent in shell profile. **Review before enabling:**
+
 - Uncomment the "SSH Agent Configuration" section in `tasks/main.yml`
 - Set `ssh_configure_agent: true`
 - Define `ssh_agent_socket` location
@@ -283,6 +395,7 @@ Automatically start SSH agent in shell profile. **Review before enabling:**
 ### Backup Encryption
 
 Encrypt SSH backups with ansible-vault. **Review before enabling:**
+
 - Uncomment the "SSH Backup Encryption" section in `tasks/main.yml`
 - Set `ssh_encrypt_backup: true`
 - Define `ssh_vault_password_file` location
@@ -293,7 +406,9 @@ Encrypt SSH backups with ansible-vault. **Review before enabling:**
 ### Private Keys in Vault
 
 When using `ssh_deploy_from_vault`:
+
 1. Always encrypt vars files containing private keys:
+
    ```bash
    ansible-vault encrypt vars/ssh_vault.yml
    ```
@@ -305,31 +420,62 @@ When using `ssh_deploy_from_vault`:
 ### File Permissions
 
 Default permissions follow SSH security best practices:
+
 - `.ssh/` directory: `0700` (rwx------)
 - Private keys: `0600` (rw-------)
 - Public keys: `0644` (rw-r--r--)
 - Config file: `0600` (rw-------)
+- Vault password files: `0700` (rwx------) - **Must be executable for Ansible to read them**
+
+The role automatically sets these permissions when using `ssh_deploy_full_directory: true`
 
 ### Passphrases
 
 If using `ssh_key_passphrase`:
+
 1. Store in a vaulted variable
 2. Use `no_log: true` (already included)
 3. Consider using SSH agent instead
 
 ## Troubleshooting
 
+### Vault Decryption Failed Error
+
+**Error message:**
+
+```
+[ERROR]: Decryption failed (no vault secrets were found that could decrypt)
+```
+
+**Root cause:** The vault password file (`ansible-become-password` or `ansible-vault-password` in `~/.ssh/`) is not executable.
+
+**Solution:**
+
+Ansible requires vault password files to have executable permissions (chmod 700). The SSH role automatically sets this when deploying via `ssh_deploy_full_directory: true`, but if you deployed manually or permissions were changed:
+
+```bash
+chmod 700 ~/.ssh/ansible-become-password
+chmod 700 ~/.ssh/ansible-vault-password
+```
+
+**Why:** Ansible reads vault password files by executing them as scripts, so they must have the executable bit set.
+
 ### Keys not deploying from vault
 
 Check:
+
 1. `ssh_deploy_from_vault` is set to `true`
-2. Variables `ssh_private_key_content` and `ssh_public_key_content` are defined
+2. Variables are defined in `vars/ssh_vault.yml`:
+   - `ssh_private_key_ed25519`, `ssh_public_key_ed25519`
+   - `ssh_private_key_rsa`, `ssh_public_key_rsa`
+   - `ssh_private_key_ecdsa`, `ssh_public_key_ecdsa`
 3. Vault file is properly encrypted and decryptable
-4. Running playbook with `--ask-vault-pass`
+4. Running playbook with `--ask-vault-pass` or vault password file configured
 
 ### Permission denied errors
 
 Check:
+
 1. SSH directory has correct permissions (`0700`)
 2. Private key has correct permissions (`0600`)
 3. Files owned by correct user
@@ -337,6 +483,7 @@ Check:
 ### Key generation fails
 
 Check:
+
 1. `ssh_generate_key` is set to `true`
 2. `ssh_deploy_from_vault` is set to `false` (they're mutually exclusive)
 3. Key doesn't already exist (role won't overwrite)
@@ -344,6 +491,7 @@ Check:
 ### Config not deploying
 
 Check:
+
 1. `ssh_deploy_config` is set to `true`
 2. `ssh_config_template` points to valid template file
 3. Template file exists in `templates/` directory
@@ -374,13 +522,15 @@ your-ansible-project/
 
 If migrating from the original `roles/ssh_vault`:
 
-### Key Changes:
+### Key Changes
+
 1. **No hardcoded paths** - Uses `{{ ansible_user_dir }}` variables
 2. **Everything is optional** - Enable only what you need
 3. **Vault encryption commented out** - Review before enabling
 4. **No user-specific paths** - Works for any user
 
-### Migration Steps:
+### Migration Steps
+
 1. Copy vaulted SSH keys from `vars/ssh_keys.yml` to new structure
 2. Update playbook to use new variables
 3. Review and uncomment advanced features if needed

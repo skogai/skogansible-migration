@@ -1,0 +1,25 @@
+---
+# <role> Role - Variables
+# Your personal standard configuration for this role
+# These values apply to YOUR deployments (not sane defaults for anyone)
+
+# Reference shared variables from ./vars/main.yml
+<role>_user_name: "{{ user_name }}" # Where user_name is set in the global ./vars/main.yml
+<role>_user_email: "{{ user_email }}" # Where user_email is set in the global ./vars/main.yml
+
+
+# Your standard feature flag preferences
+<role>_enable_<feature_x>: true    # You typically want this enabled
+<role>_enable_<feature_y>: false   # You typically want this disabled
+
+# Your standard paths/configuration
+<role>_config_file: "{{ ansible_user_dir }}/.config/<role>/<role>rc"
+
+# Complex data structures for your standard setup
+# <role>_items:
+#   - name: "<your_standard_item_1>"
+#     enabled: true
+#     value: 100
+#   - name: "<your_standard_item_2>"
+#     enabled: false
+#     value: 50

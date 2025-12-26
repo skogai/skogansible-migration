@@ -1,0 +1,80 @@
+---
+# Cloudflared Role - Main Tasks
+# Manages Cloudflare Tunnel service with secure token storage
+
+# ==============================================================================
+# Ensure Cloudflared Configuration Directory
+# ==============================================================================
+
+- name: "Cloudflared | Ensure configuration directory exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ cloudflared_config_dir }}"
+    state: directory
+    mode: "{{ cloudflared_config_dir_mode }}"
+    owner: root
+    group: root
+  tags: [cloudflared, cloudflared-config]
+
+# ==============================================================================
+# Token Deployment (from Vault)
+# ==============================================================================
+
+- name: "Cloudflared | Deploy tunnel token from vault"
+  when: cloudflared_deploy_token | bool
+  become: true
+  tags: [cloudflared, cloudflared-token, cloudflared-vault]
+  block:
+    - name: "Cloudflared | Validate token is defined"
+      ansible.builtin.assert:
+        that:
+          - cloudflared_token is defined
+          - cloudflared_token | length > 0
+        fail_msg: >-
+          cloudflared_token is not defined or empty.
+          Please ensure vars/cloudflared_vault.yml is loaded and
+          contains cloudflared_tunnel_token.
+
+    - name: "Cloudflared | Deploy tunnel token file"
+      ansible.builtin.copy:
+        content: "{{ cloudflared_token }}"
+        dest: "{{ cloudflared_token_file }}"
+        mode: "{{ cloudflared_token_mode }}"
+        owner: root
+        group: root
+      no_log: true  # Don't log token content
+      register: cloudflared_token_deployed
+
+# ==============================================================================
+# Systemd Service Deployment
+# ==============================================================================
+
+- name: "Cloudflared | Deploy systemd service"
+  when: cloudflared_deploy_service | bool
+  become: true
+  tags: [cloudflared, cloudflared-service]
+  block:
+    - name: "Cloudflared | Deploy cloudflared systemd service"
+      ansible.builtin.template:
+        src: "{{ cloudflared_service_template }}"
+        dest: "/etc/systemd/system/cloudflared.service"
+        mode: "0644"
+        owner: root
+        group: root
+      notify:
+        - Reload systemd
+        - Restart cloudflared
+
+    - name: "Cloudflared | Enable and start cloudflared service"
+      when: cloudflared_enable_service | bool
+      ansible.builtin.systemd:
+        name: cloudflared
+        enabled: true
+        state: >-
+          {{
+            'restarted'
+            if (cloudflared_token_deployed is defined and
+                cloudflared_token_deployed.changed)
+            else 'started'
+          }}
+        daemon_reload: true

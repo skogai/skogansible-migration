@@ -1,5 +1,4 @@
 # SSH Config - Managed by Ansible
-# Generated: {{ ansible_facts['date_time']['iso8601'] }}
 
 # Global SSH settings
 Host *
@@ -8,9 +7,9 @@ Host *
     ServerAliveCountMax 3
 
     # Connection sharing for speed
-    ControlMaster auto
-    ControlPath ~/.ssh/sockets/%r@%h-%p
-    ControlPersist 600
+    # ControlMaster auto
+    # ControlPath ~/.ssh/sockets/%r@%h-%p
+    # ControlPersist 600
 
     # Security settings
     HashKnownHosts yes
@@ -77,10 +76,10 @@ Host {{ host.name }}
     IdentityFile {{ host.identity_file }}
 {% endif %}
 {% if host.identities_only is defined %}
-    IdentitiesOnly {{ host.identities_only }}
+    IdentitiesOnly {{ host.identities_only | ternary('yes', 'no') }}
 {% endif %}
 {% if host.forward_agent is defined %}
-    ForwardAgent {{ host.forward_agent }}
+    ForwardAgent {{ host.forward_agent | ternary('yes', 'no') }}
 {% endif %}
 {% if host.proxy_jump is defined %}
     ProxyJump {{ host.proxy_jump }}

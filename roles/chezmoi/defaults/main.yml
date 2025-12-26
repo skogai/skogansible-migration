@@ -1,0 +1,120 @@
+---
+# Chezmoi Role - Default Variables
+# Override these in your playbook, inventory, or vars/chezmoi.yml
+
+# ==============================================================================
+# Chezmoi Installation
+# ==============================================================================
+
+# Ensure chezmoi is installed
+chezmoi_ensure_installed: true
+
+# Chezmoi package name
+chezmoi_package_name: "chezmoi"
+
+# ==============================================================================
+# Chezmoi Source Directory
+# ==============================================================================
+
+# Initialize chezmoi source directory
+chezmoi_init_source: true
+
+# Chezmoi source directory path
+chezmoi_source_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+
+# ==============================================================================
+# Chezmoi Configuration
+# ==============================================================================
+
+# Deploy .chezmoidata.yaml configuration
+chezmoi_deploy_config: true
+
+# Apply chezmoi after configuration changes
+chezmoi_apply_on_change: true
+
+# ==============================================================================
+# Machine Profile Defaults
+# ==============================================================================
+
+# Machine type: workstation, laptop, wsl
+chezmoi_machine_type: "workstation"
+
+# Hostname
+chezmoi_hostname: "{{ inventory_hostname }}"
+
+# ==============================================================================
+# User Information Defaults
+# ==============================================================================
+
+# User name
+chezmoi_user_name: "{{ ansible_user_id }}"
+
+# User email
+chezmoi_user_email: ""
+
+# GitHub username
+chezmoi_github_user: ""
+
+# ==============================================================================
+# Environment Defaults
+# ==============================================================================
+
+# Environment type
+chezmoi_personal: true
+chezmoi_work: false
+
+# Display environment
+chezmoi_headless: false
+chezmoi_gui: true
+
+# ==============================================================================
+# Desktop Environment Defaults
+# ==============================================================================
+
+# Window manager
+chezmoi_wm: "i3"
+
+# Laptop mode
+chezmoi_laptop_mode: false
+
+# Terminal emulator
+chezmoi_terminal: "kitty"
+
+# ==============================================================================
+# Feature Flags Defaults
+# ==============================================================================
+
+# AI tools
+chezmoi_ai_tools: true
+
+# Development tools
+chezmoi_development: true
+
+# GUI applications
+chezmoi_gui_apps_enabled: "{{ chezmoi_gui }}"
+chezmoi_dunst_enabled: "{{ chezmoi_gui }}"
+chezmoi_kitty_enabled: "{{ chezmoi_gui }}"
+
+# Dev tools
+chezmoi_direnv_enabled: true
+chezmoi_gh_enabled: true
+chezmoi_gita_enabled: true
+
+# ==============================================================================
+# Agent Configuration Defaults
+# ==============================================================================
+
+# SkogAI agents
+chezmoi_agents:
+  claude: true
+  letta: true
+  amy: true
+  goose: true
+  dot: true
+
+# ==============================================================================
+# Environment-Specific Defaults
+# ==============================================================================
+
+# Debug mode
+chezmoi_debug: true

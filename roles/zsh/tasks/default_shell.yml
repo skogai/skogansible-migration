@@ -1,0 +1,15 @@
+---
+# zsh Role - Set Default Shell Tasks
+
+- name: "zsh | Get zsh path"
+  ansible.builtin.command: which zsh
+  register: zsh_path
+  changed_when: false
+  tags: [zsh, zsh-default-shell]
+
+- name: "zsh | Set zsh as default shell"
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: "{{ zsh_path.stdout }}"
+  tags: [zsh, zsh-default-shell]

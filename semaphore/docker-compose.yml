@@ -1,0 +1,16 @@
+services:
+  semaphore:
+    ports:
+      - 9005:3000
+    image: public.ecr.aws/semaphore/pro/server:v2.16.47
+    environment:
+      SEMAPHORE_DB_DIALECT: sqlite
+      SEMAPHORE_ADMIN: admin1
+      SEMAPHORE_ADMIN_PASSWORD: password1  # pragma: allowlist secret
+      SEMAPHORE_ADMIN_NAME: admin1
+      SEMAPHORE_ADMIN_EMAIL: admin@email.se
+      SEMAPHORE_WEB_ROOT: "https://semaphore.skogai.se"
+      SEMAPHORE_CONFIG_PATH: /home/skogix/.ansible/semaphore/config/config.json
+    volumes:
+      - ./semaphore/data:/home/semaphore
+      - /tmp/semaphore:/tmp/semaphore

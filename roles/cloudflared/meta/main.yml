@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  author: SkogAI
+  description: Cloudflare Tunnel management with secure token storage
+  company: SkogAI
+  license: MIT
+  min_ansible_version: "2.10"
+  platforms:
+    - name: Archlinux
+      versions:
+        - all
+
+dependencies: []

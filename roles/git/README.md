@@ -3,6 +3,7 @@
 Comprehensive Git configuration and repository management role for Ansible.
 
 This role provides standardized, reusable functions for all common git operations including:
+
 - Git installation and verification
 - Global gitconfig management
 - Git aliases configuration
@@ -120,6 +121,7 @@ git_lfs_user_install: false          # Run 'git lfs install'
 ### Advanced Configuration
 
 See `defaults/main.yml` for complete list of configuration options including:
+
 - Core settings (autocrlf, filemode, ignorecase)
 - Push/pull/merge settings
 - Diff/rebase settings
@@ -325,6 +327,7 @@ Global .gitignore template. Add patterns via `git_global_gitignore_patterns` var
 ### hooks/pre-commit.j2
 
 Example pre-commit hook with:
+
 - Trailing whitespace check
 - Protected branch prevention
 - Debug statement detection
@@ -333,6 +336,7 @@ Example pre-commit hook with:
 ### hooks/commit-msg.j2
 
 Example commit-msg hook with:
+
 - Conventional Commits format validation
 - Minimum message length check
 - Optional issue reference validation
@@ -415,6 +419,7 @@ git_ssh_signing_key: "~/.ssh/id_ed25519.pub"
 ### Hook Security
 
 Git hooks execute arbitrary code. Review all hook templates before deploying:
+
 - Pre-commit hooks run before commits
 - Commit-msg hooks validate commit messages
 - Custom hooks should be carefully reviewed
@@ -462,6 +467,7 @@ Create your own hook templates in `templates/hooks/`:
 
 1. Create template file: `templates/hooks/post-checkout.j2`
 2. Add to configuration:
+
 ```yaml
 git_hooks:
   - name: "post-checkout"
@@ -474,6 +480,7 @@ git_hooks:
 ### Git not found after installation
 
 Ensure the package name is correct for your distribution:
+
 ```yaml
 # Arch Linux
 git_package_name: "git"
@@ -485,6 +492,7 @@ git_package_name: "git"
 ### Credential helper not working
 
 Check git version and available helpers:
+
 ```bash
 git --version
 git credential-cache --help
@@ -493,6 +501,7 @@ git credential-cache --help
 ### Hooks not applying to existing repos
 
 Hooks are deployed to `~/.git-templates/hooks/`. To apply to existing repositories:
+
 ```bash
 cd /path/to/repo
 git init  # Re-initialize to copy hooks

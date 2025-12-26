@@ -17,12 +17,25 @@ git_deploy_config: true
 git_config_template: "gitconfig.j2"
 
 # User information (CUSTOMIZE THESE!)
-git_user_name: "{{ git_user_name_override | default('') }}"
-git_user_email: "{{ git_user_email_override | default('') }}"
+git_user_name: "skogix"
+git_user_email: "emil@skogsund.se"
 
-# Editor and defaults
-git_editor: "vim"
-git_default_branch: "main"
+# ==============================================================================
+# Git Core Settings
+# ==============================================================================
+
+git_core_editor: "nvim"
+git_default_branch: "master"
+git_pull_rebase: true  # Use rebase instead of merge on pull
+git_push_default: "simple"
+git_push_autoSetupRemote: true  # Automatically setup remote tracking
+
+# ==============================================================================
+# Git UI/UX Settings
+# ==============================================================================
+
+git_color_ui: true
+git_pager: "less -FRX"
 
 # ==============================================================================
 # Git Aliases
@@ -44,7 +57,10 @@ git_aliases:
 
   # History and logs
   last: "log -1 HEAD"
-  lg: "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+  lg: >-
+    log --graph
+    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    --abbrev-commit
   hist: "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
   tree: "log --graph --oneline --all --decorate"
 
@@ -80,7 +96,7 @@ git_aliases:
 # Credential Management
 # ==============================================================================
 
-git_configure_credentials: true
+git_configure_credentials: false
 git_credential_helper: "cache"
 git_credential_cache_timeout: 7200  # 2 hours
 
@@ -168,20 +184,14 @@ git_core_autocrlf: "input"
 git_core_filemode: true
 git_core_ignorecase: false
 
-# Color
-git_color_ui: "auto"
-
 # Push settings
-git_push_default: "simple"
 git_push_followTags: true
-git_push_autoSetupRemote: true
 
 # Pull settings
-git_pull_rebase: false
-git_pull_ff: "only"
+git_pull_ff: "false"     # Don't fast-forward pulls (rebase instead)
 
 # Merge settings
-git_merge_ff: "false"
+git_merge_ff: "true"     # Allow fast-forward merges when possible
 git_merge_conflictstyle: "diff3"
 
 # Diff settings

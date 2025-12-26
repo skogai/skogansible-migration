@@ -52,12 +52,12 @@ packages:
   # - mandoc
   # - nano
   - ncspot
-  - neovim-nvim-treesitter
+  # - neovim-nvim-treesitter  # Not in official repos - use neovim plugin manager
   # - network-manager-applet
   # - networkmanager
-  - nvidia-dkms
+  # - nvidia-dkms
   # - nvm
-  - ollama-cuda
+  # - ollama-cuda
   # - pgbouncer
   # - pgcli
   - picom
@@ -72,7 +72,7 @@ packages:
   - ripgrep
   # - sheldon
   # - smartmontools
-  - steam
+  # - steam  # Requires multilib repo enabled in /etc/pacman.conf
   - tree
   - unzip
   - uv
@@ -101,10 +101,10 @@ aur_packages:
   - docker-rootless-extras
   - google-chrome
   - mods
-  - neovim-nightly-bin
+  # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
   - pwvucontrol
   - rcm
-  - rustup
+  # - rustup  # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin
   # - supabase-bin
