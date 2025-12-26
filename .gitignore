@@ -3,3 +3,4 @@ backup/todo
 roles/ssh/files/test_examples/
 .worktrees/*
 !.worktrees/.gitkeep
+.worktrees/
