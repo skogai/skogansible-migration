@@ -1,0 +1,270 @@
+# SSH Server Config - Hardened Configuration
+# Managed by Ansible - Generated: {{ ansible_facts['date_time']['iso8601'] }}
+#
+# This configuration follows SSHD security best practices:
+# - Modern cryptographic algorithms only
+# - Public key authentication preferred
+# - Root login disabled
+# - No legacy/weak algorithms
+#
+# See: man sshd_config
+
+# ==============================================================================
+# Network and Protocol Settings
+# ==============================================================================
+
+# Port to listen on
+Port {{ ssh_hardening_port | default('22') }}
+
+# Address family (any, inet, inet6)
+AddressFamily {{ ssh_hardening_address_family | default('any') }}
+
+# Listen addresses (0.0.0.0 = all IPv4, :: = all IPv6)
+{% if ssh_hardening_listen_addresses is defined %}
+{% for address in ssh_hardening_listen_addresses %}
+ListenAddress {{ address }}
+{% endfor %}
+{% else %}
+ListenAddress 0.0.0.0
+ListenAddress ::
+{% endif %}
+
+# ==============================================================================
+# Cryptographic Algorithms - Modern and Secure Only
+# ==============================================================================
+
+# Key exchange algorithms (prefer curve25519)
+KexAlgorithms {{ ssh_hardening_server_kex | default('curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256') }}
+
+# Symmetric ciphers
+Ciphers {{ ssh_hardening_server_ciphers | default('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr') }}
+
+# MAC (Message Authentication Code) algorithms
+MACs {{ ssh_hardening_server_macs | default('hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256') }}
+
+# Host key algorithms
+HostKeyAlgorithms {{ ssh_hardening_server_hostkey_algs | default('ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com') }}
+
+# Public key signature algorithms
+PubkeyAcceptedAlgorithms {{ ssh_hardening_server_pubkey_algs | default('ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com') }}
+
+# ==============================================================================
+# Host Keys
+# ==============================================================================
+
+# Use modern host key types only
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+# Don't use DSA or ECDSA (less secure)
+# HostKey /etc/ssh/ssh_host_dsa_key
+# HostKey /etc/ssh/ssh_host_ecdsa_key
+
+# ==============================================================================
+# Authentication Settings
+# ==============================================================================
+
+# Root login
+PermitRootLogin {{ ssh_hardening_permit_root_login | default('prohibit-password') }}
+
+# Public key authentication (RECOMMENDED)
+PubkeyAuthentication {{ ssh_hardening_pubkey_authentication | default('yes') }}
+
+# Location of authorized keys
+AuthorizedKeysFile {{ ssh_hardening_authorized_keys_file | default('.ssh/authorized_keys') }}
+
+# Password authentication
+PasswordAuthentication {{ ssh_hardening_server_password_auth | default('yes') }}
+
+# Permit empty passwords (DANGEROUS - keep disabled)
+PermitEmptyPasswords {{ ssh_hardening_permit_empty_passwords | default('no') }}
+
+# Challenge-response authentication
+KbdInteractiveAuthentication {{ ssh_hardening_kbd_interactive | default('no') }}
+
+# Use PAM for authentication
+UsePAM {{ ssh_hardening_use_pam | default('yes') }}
+
+# GSSAPI authentication
+GSSAPIAuthentication {{ ssh_hardening_server_gssapi | default('no') }}
+
+# Host-based authentication
+HostbasedAuthentication {{ ssh_hardening_server_hostbased | default('no') }}
+IgnoreRhosts {{ ssh_hardening_ignore_rhosts | default('yes') }}
+
+# ==============================================================================
+# Login and Session Settings
+# ==============================================================================
+
+# Login grace time (time to authenticate)
+LoginGraceTime {{ ssh_hardening_login_grace_time | default('60') }}
+
+# Maximum authentication attempts per connection
+MaxAuthTries {{ ssh_hardening_max_auth_tries | default('3') }}
+
+# Maximum concurrent unauthenticated connections
+MaxStartups {{ ssh_hardening_max_startups | default('10:30:60') }}
+
+# Maximum sessions per connection
+MaxSessions {{ ssh_hardening_max_sessions | default('10') }}
+
+# Client alive interval (keepalive)
+ClientAliveInterval {{ ssh_hardening_client_alive_interval | default('300') }}
+ClientAliveCountMax {{ ssh_hardening_client_alive_count_max | default('2') }}
+
+# TCP keepalive
+TCPKeepAlive {{ ssh_hardening_tcp_keepalive | default('yes') }}
+
+# ==============================================================================
+# Access Control
+# ==============================================================================
+
+# Allow/Deny users and groups
+{% if ssh_hardening_allow_users is defined %}
+AllowUsers {{ ssh_hardening_allow_users | join(' ') }}
+{% endif %}
+
+{% if ssh_hardening_deny_users is defined %}
+DenyUsers {{ ssh_hardening_deny_users | join(' ') }}
+{% endif %}
+
+{% if ssh_hardening_allow_groups is defined %}
+AllowGroups {{ ssh_hardening_allow_groups | join(' ') }}
+{% endif %}
+
+{% if ssh_hardening_deny_groups is defined %}
+DenyGroups {{ ssh_hardening_deny_groups | join(' ') }}
+{% endif %}
+
+# ==============================================================================
+# Forwarding and Tunneling
+# ==============================================================================
+
+# X11 forwarding
+X11Forwarding {{ ssh_hardening_x11_forwarding | default('no') }}
+X11DisplayOffset {{ ssh_hardening_x11_display_offset | default('10') }}
+
+# TCP forwarding
+AllowTcpForwarding {{ ssh_hardening_allow_tcp_forwarding | default('no') }}
+
+# Agent forwarding
+AllowAgentForwarding {{ ssh_hardening_allow_agent_forwarding | default('no') }}
+
+# Gateway ports
+GatewayPorts {{ ssh_hardening_gateway_ports | default('no') }}
+
+# Tunnel device forwarding
+PermitTunnel {{ ssh_hardening_permit_tunnel | default('no') }}
+
+# Allow StreamLocal forwarding
+AllowStreamLocalForwarding {{ ssh_hardening_allow_stream_local_forwarding | default('no') }}
+
+# ==============================================================================
+# Security and Logging
+# ==============================================================================
+
+# Logging
+SyslogFacility {{ ssh_hardening_syslog_facility | default('AUTH') }}
+LogLevel {{ ssh_hardening_server_log_level | default('VERBOSE') }}
+
+# Strict mode (check permissions on home dir, .ssh, etc.)
+StrictModes {{ ssh_hardening_strict_modes | default('yes') }}
+
+# Use privilege separation (deprecated in OpenSSH 7.5+, removed in 7.8+)
+# Modern OpenSSH always uses sandbox mode, this directive is ignored
+# UsePrivilegeSeparation {{ ssh_hardening_use_privilege_separation | default('sandbox') }}
+
+# Compression (delayed until after authentication)
+Compression {{ ssh_hardening_server_compression | default('no') }}
+
+# Print message of the day
+PrintMotd {{ ssh_hardening_print_motd | default('no') }}
+
+# Print last log
+PrintLastLog {{ ssh_hardening_print_last_log | default('yes') }}
+
+# Banner
+{% if ssh_hardening_enable_banner | default(false) %}
+Banner {{ ssh_hardening_banner_file | default('/etc/ssh/banner') }}
+{% else %}
+Banner none
+{% endif %}
+
+# Permit user environment
+PermitUserEnvironment {{ ssh_hardening_permit_user_env | default('no') }}
+
+# Accept environment variables (be restrictive)
+{% if ssh_hardening_accept_env is defined %}
+AcceptEnv {{ ssh_hardening_accept_env | join(' ') }}
+{% else %}
+AcceptEnv LANG LC_*
+{% endif %}
+
+# ==============================================================================
+# Subsystems
+# ==============================================================================
+
+# SFTP subsystem
+{% if ssh_hardening_enable_sftp | default(true) %}
+Subsystem sftp {{ ssh_hardening_sftp_server | default('/usr/lib/ssh/sftp-server') }}
+{% if ssh_hardening_chroot_sftp | default(false) %}
+# Chroot SFTP users
+Match Group {{ ssh_hardening_sftp_group | default('sftponly') }}
+    ChrootDirectory {{ ssh_hardening_sftp_chroot_dir | default('/home/%u') }}
+    ForceCommand internal-sftp
+    AllowTcpForwarding no
+    X11Forwarding no
+{% endif %}
+{% endif %}
+
+# ==============================================================================
+# Additional Security Options
+# ==============================================================================
+
+# Use DNS for hostname verification
+UseDNS {{ ssh_hardening_use_dns | default('no') }}
+
+# Permit user RC files
+PermitUserRC {{ ssh_hardening_permit_user_rc | default('no') }}
+
+# Disable forwarding of authentication agent connection
+DisableForwarding {{ ssh_hardening_disable_forwarding | default('no') }}
+
+# Expose authentication methods used
+ExposeAuthInfo {{ ssh_hardening_expose_auth_info | default('no') }}
+
+# Fingerprint hash algorithm
+FingerprintHash {{ ssh_hardening_fingerprint_hash | default('sha256') }}
+
+# ==============================================================================
+# Performance Tuning
+# ==============================================================================
+
+# Rekey limit (data and time)
+RekeyLimit {{ ssh_hardening_rekey_limit_data | default('1G') }} {{ ssh_hardening_rekey_limit_time | default('1h') }}
+
+# ==============================================================================
+# Match Blocks for Specific Access Rules
+# ==============================================================================
+
+{% if ssh_hardening_match_blocks is defined %}
+# Custom match blocks for fine-grained access control
+{% for block in ssh_hardening_match_blocks %}
+Match {{ block.match }}
+{% for key, value in block.options.items() %}
+    {{ key }} {{ value }}
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+
+# ==============================================================================
+# Trusted User CA Keys (for certificate authentication)
+# ==============================================================================
+
+{% if ssh_hardening_trusted_user_ca_keys is defined %}
+TrustedUserCAKeys {{ ssh_hardening_trusted_user_ca_keys }}
+{% endif %}
+
+{% if ssh_hardening_revoked_keys is defined %}
+RevokedKeys {{ ssh_hardening_revoked_keys }}
+{% endif %}

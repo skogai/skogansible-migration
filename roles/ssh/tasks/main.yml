@@ -265,3 +265,15 @@
 #       fi
 #     create: false
 #     backup: true
+
+# ==============================================================================
+# SSH Hardening (Optional - Security Best Practices)
+# ==============================================================================
+
+- name: "SSH | Apply SSH hardening"
+  ansible.builtin.include_tasks: hardening.yml
+  when: ssh_hardening_enabled | default(false)
+  tags:
+    - ssh
+    - ssh-hardening
+    - security

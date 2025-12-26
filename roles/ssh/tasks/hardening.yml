@@ -1,0 +1,283 @@
+---
+# SSH Hardening Tasks
+# Implements security best practices for SSH client and server configuration
+
+# ==============================================================================
+# SSH Client Hardening (User's ~/.ssh/config)
+# ==============================================================================
+
+- name: "SSH Hardening | Client-side hardening"
+  when: ssh_hardening_client_enabled | default(false)
+  tags:
+    - ssh
+    - ssh-hardening
+    - ssh-hardening-client
+  block:
+    - name: "SSH Hardening | Deploy hardened SSH client config"
+      ansible.builtin.template:
+        src: "{{ ssh_hardening_client_template | default('ssh_config_hardened.j2') }}"
+        dest: "{{ ssh_config_file }}"
+        mode: "{{ ssh_config_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+        backup: true
+        validate: 'ssh -G -F %s localhost'
+
+    - name: "SSH Hardening | Ensure strict file permissions on SSH directory"
+      ansible.builtin.file:
+        path: "{{ ssh_dir }}"
+        state: directory
+        mode: "0700"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+
+    - name: "SSH Hardening | Find private keys"
+      ansible.builtin.find:
+        paths: "{{ ssh_dir }}"
+        patterns: "id_*"
+        excludes: "*.pub"
+        file_type: file
+      register: ssh_private_keys_found
+
+    - name: "SSH Hardening | Ensure strict permissions on private keys"
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: "0600"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      loop: "{{ ssh_private_keys_found.files }}"
+      when: ssh_private_keys_found.files | length > 0
+
+    - name: "SSH Hardening | Find public keys"
+      ansible.builtin.find:
+        paths: "{{ ssh_dir }}"
+        patterns: "*.pub"
+        file_type: file
+      register: ssh_public_keys_found
+
+    - name: "SSH Hardening | Ensure proper permissions on public keys"
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: "0644"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      loop: "{{ ssh_public_keys_found.files }}"
+      when: ssh_public_keys_found.files | length > 0
+
+# ==============================================================================
+# SSH Server Hardening (System-wide /etc/ssh/sshd_config)
+# ==============================================================================
+
+- name: "SSH Hardening | Server-side hardening"
+  when: ssh_hardening_server_enabled | default(false)
+  become: true
+  tags:
+    - ssh
+    - ssh-hardening
+    - ssh-hardening-server
+  block:
+    - name: "SSH Hardening | Backup current sshd_config"
+      ansible.builtin.copy:
+        src: /etc/ssh/sshd_config
+        dest: "/etc/ssh/sshd_config.backup.{{ ansible_facts['date_time']['epoch'] }}"
+        remote_src: true
+        mode: "0600"
+        owner: root
+        group: root
+
+    - name: "SSH Hardening | Deploy hardened sshd_config"
+      ansible.builtin.template:
+        src: "{{ ssh_hardening_server_template | default('sshd_config_hardened.j2') }}"
+        dest: /etc/ssh/sshd_config
+        mode: "0600"
+        owner: root
+        group: root
+        backup: true
+        validate: '/usr/sbin/sshd -t -f %s'
+      notify: restart sshd
+
+    - name: "SSH Hardening | Ensure SSH server is enabled"
+      ansible.builtin.systemd:
+        name: sshd
+        enabled: true
+        state: started
+      when: ssh_hardening_ensure_running | default(true)
+
+# ==============================================================================
+# SSH Key Algorithm Hardening
+# ==============================================================================
+
+- name: "SSH Hardening | Remove weak SSH key algorithms"
+  when:
+    - ssh_hardening_remove_weak_keys | default(false)
+    - ssh_hardening_server_enabled | default(false)
+  become: true
+  tags:
+    - ssh
+    - ssh-hardening
+    - ssh-hardening-keys
+  block:
+    - name: "SSH Hardening | Disable DSA host keys"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/ssh/ssh_host_dsa_key
+        - /etc/ssh/ssh_host_dsa_key.pub
+      when: ssh_hardening_remove_dsa | default(true)
+
+    - name: "SSH Hardening | Disable ECDSA host keys (optional)"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/ssh/ssh_host_ecdsa_key
+        - /etc/ssh/ssh_host_ecdsa_key.pub
+      when: ssh_hardening_remove_ecdsa | default(false)
+
+    - name: "SSH Hardening | Ensure ED25519 host key exists"
+      ansible.builtin.command:
+        cmd: ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
+        creates: /etc/ssh/ssh_host_ed25519_key
+      when: ssh_hardening_ensure_ed25519 | default(true)
+
+    - name: "SSH Hardening | Ensure RSA host key exists with appropriate size"
+      ansible.builtin.command:
+        cmd: "ssh-keygen -t rsa -b {{ ssh_hardening_rsa_key_size | default(4096) }} -f /etc/ssh/ssh_host_rsa_key -N ''"
+        creates: /etc/ssh/ssh_host_rsa_key
+      when: ssh_hardening_ensure_rsa | default(true)
+
+# ==============================================================================
+# SSH Security Policies
+# ==============================================================================
+
+- name: "SSH Hardening | Apply security policies"
+  when: ssh_hardening_policies_enabled | default(false)
+  become: true
+  tags:
+    - ssh
+    - ssh-hardening
+    - ssh-hardening-policies
+  block:
+    - name: "SSH Hardening | Gather package facts"
+      ansible.builtin.package_facts:
+        manager: auto
+      when: ssh_hardening_configure_fail2ban | default(false)
+
+    - name: "SSH Hardening | Verify fail2ban package exists"
+      ansible.builtin.assert:
+        that:
+          - "'fail2ban' in ansible_facts.packages"
+        fail_msg: >-
+          Fail2Ban not installed.
+          Install: sudo pacman -S fail2ban (Arch) or sudo apt install fail2ban (Debian/Ubuntu)
+        success_msg: "Fail2Ban package detected"
+      when: ssh_hardening_configure_fail2ban | default(false)
+
+    - name: "SSH Hardening | Configure PAM for SSH"
+      ansible.builtin.lineinfile:
+        path: /etc/pam.d/sshd
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+        backup: true
+      loop: "{{ ssh_hardening_pam_config | default([]) }}"
+      when: ssh_hardening_configure_pam | default(false)
+
+    - name: "SSH Hardening | Configure fail2ban for SSH"
+      ansible.builtin.template:
+        src: "{{ ssh_hardening_fail2ban_template | default('fail2ban_sshd.j2') }}"
+        dest: /etc/fail2ban/jail.d/sshd.local
+        mode: "0644"
+        owner: root
+        group: root
+      when:
+        - ssh_hardening_configure_fail2ban | default(false)
+        - ansible_facts['os_family'] == "Archlinux" or ansible_facts['os_family'] == "Debian"
+        - "'fail2ban' in ansible_facts.packages"
+      notify: restart fail2ban
+
+    - name: "SSH Hardening | Create SSH banner"
+      ansible.builtin.copy:
+        content: "{{ ssh_hardening_banner_content }}"
+        dest: "{{ ssh_hardening_banner_file | default('/etc/ssh/banner') }}"
+        mode: "0644"
+        owner: root
+        group: root
+      when:
+        - ssh_hardening_enable_banner | default(false)
+        - ssh_hardening_banner_content is defined
+
+# ==============================================================================
+# SSH Connection Limits and Rate Limiting
+# ==============================================================================
+
+- name: "SSH Hardening | Configure connection limits"
+  when:
+    - ssh_hardening_connection_limits | default(false)
+    - ssh_hardening_server_enabled | default(false)
+  become: true
+  tags:
+    - ssh
+    - ssh-hardening
+    - ssh-hardening-limits
+  block:
+    - name: "SSH Hardening | Ensure systemd socket override directory exists"
+      ansible.builtin.file:
+        path: /etc/systemd/system/sshd.socket.d
+        state: directory
+        mode: "0755"
+        owner: root
+        group: root
+      when: ansible_facts['service_mgr'] == 'systemd'
+
+    - name: "SSH Hardening | Configure systemd socket limits"
+      ansible.builtin.template:
+        src: "{{ ssh_hardening_socket_template | default('sshd.socket.j2') }}"
+        dest: /etc/systemd/system/sshd.socket.d/override.conf
+        mode: "0644"
+        owner: root
+        group: root
+      when: ansible_facts['service_mgr'] == 'systemd'
+      notify:
+        - reload systemd
+        - restart sshd
+
+# ==============================================================================
+# SSH Configuration Audit
+# ==============================================================================
+
+- name: "SSH Hardening | Audit SSH configuration"
+  when: ssh_hardening_audit_enabled | default(false)
+  tags:
+    - ssh
+    - ssh-hardening
+    - ssh-hardening-audit
+  block:
+    - name: "SSH Hardening | Check SSH client configuration"
+      ansible.builtin.command:
+        cmd: "ssh -G localhost"
+      register: ssh_client_config_check
+      changed_when: false
+      failed_when: false
+
+    - name: "SSH Hardening | Check SSH server configuration"
+      ansible.builtin.command:
+        cmd: "sshd -T"
+      become: true
+      register: ssh_server_config_check
+      changed_when: false
+      failed_when: false
+      when: ssh_hardening_server_enabled | default(false)
+
+    - name: "SSH Hardening | Display client configuration summary"
+      ansible.builtin.debug:
+        msg: "SSH client configuration validated successfully"
+      when: ssh_client_config_check.rc == 0
+
+    - name: "SSH Hardening | Display server configuration summary"
+      ansible.builtin.debug:
+        msg: "SSH server configuration validated successfully"
+      when:
+        - ssh_hardening_server_enabled | default(false)
+        - ssh_server_config_check.rc == 0

@@ -86,3 +86,45 @@ ssh_generate_key: true
 
 # Enable SSH backup functionality (creates ~/.ssh_backup/)
 ssh_enable_backup: false
+
+# ==============================================================================
+# SSH Hardening (Optional - Security Best Practices)
+# ==============================================================================
+
+# Enable SSH hardening (DISABLED by default for safety)
+# This applies security best practices to SSH configuration
+ssh_hardening_enabled: false
+
+# Client-side hardening (hardens your ~/.ssh/config)
+# Uses modern crypto algorithms and secure connection settings
+ssh_hardening_client_enabled: false
+
+# Server-side hardening (hardens /etc/ssh/sshd_config)
+# WARNING: This requires sudo/root and restarts SSH daemon
+# Test carefully before enabling on production systems
+ssh_hardening_server_enabled: false
+
+# Remove weak cryptographic algorithms
+# Removes DSA keys (always recommended), optionally ECDSA
+ssh_hardening_remove_weak_keys: false
+
+# Enable security policies (fail2ban, PAM configuration)
+ssh_hardening_policies_enabled: false
+ssh_hardening_configure_fail2ban: false
+
+# Enable configuration audit (validates SSH config)
+ssh_hardening_audit_enabled: false
+
+# Example: Enable client-side hardening only
+# ssh_hardening_enabled: true
+# ssh_hardening_client_enabled: true
+
+# Example: Enable full hardening (client + server)
+# ssh_hardening_enabled: true
+# ssh_hardening_client_enabled: true
+# ssh_hardening_server_enabled: true
+# ssh_hardening_remove_weak_keys: true
+# ssh_hardening_audit_enabled: true
+
+# Note: See roles/ssh/defaults/main.yml for all hardening options
+# Note: See roles/ssh/README.md for detailed hardening documentation

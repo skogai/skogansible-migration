@@ -1,0 +1,53 @@
+---
+# SSH Hardening Example - Client-Side Only
+# This example applies security hardening to the SSH client configuration
+# Safe for development environments (no sudo required, only affects user's ~/.ssh/config)
+
+- name: SSH Client Hardening
+  hosts: localhost
+  connection: local
+
+  vars:
+    # Enable SSH hardening
+    ssh_hardening_enabled: true
+    
+    # Client-side hardening only (safe, no sudo required)
+    ssh_hardening_client_enabled: true
+    
+    # Audit configuration after applying
+    ssh_hardening_audit_enabled: true
+    
+    # Optional: Customize cryptographic algorithms
+    # Uses secure defaults if not specified
+    # ssh_hardening_kex_algorithms: "curve25519-sha256,curve25519-sha256@libssh.org"
+    # ssh_hardening_ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com"
+    # ssh_hardening_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com"
+    
+    # Optional: Adjust connection settings
+    # ssh_hardening_server_alive_interval: 60
+    # ssh_hardening_connect_timeout: 30
+    # ssh_hardening_strict_host_checking: "ask"
+    
+    # Optional: Enable specific features per host
+    # ssh_custom_hosts:
+    #   - name: trusted-dev-server
+    #     hostname: dev.example.com
+    #     user: devuser
+    #     identity_file: ~/.ssh/id_ed25519
+    #     forward_agent: yes  # Override global hardening for this host
+
+  roles:
+    - ssh
+
+  post_tasks:
+    - name: Display next steps
+      ansible.builtin.debug:
+        msg:
+          - "SSH client configuration hardened successfully!"
+          - ""
+          - "Next steps:"
+          - "1. Review your config: cat ~/.ssh/config"
+          - "2. Test connection: ssh -v user@yourserver"
+          - "3. Check algorithm negotiation in verbose output"
+          - ""
+          - "To harden the SSH server as well, see: 08-hardening-full.yml"

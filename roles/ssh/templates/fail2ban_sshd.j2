@@ -1,0 +1,12 @@
+# Fail2Ban SSH Jail Configuration
+# Managed by Ansible - Generated: {{ ansible_facts['date_time']['iso8601'] }}
+
+[sshd]
+enabled = {{ ssh_hardening_fail2ban_enabled | default('true') }}
+port = {{ ssh_hardening_port | default('22') }}
+filter = sshd
+logpath = {{ ssh_hardening_fail2ban_logpath | default('/var/log/auth.log') }}
+maxretry = {{ ssh_hardening_fail2ban_maxretry | default('3') }}
+findtime = {{ ssh_hardening_fail2ban_findtime | default('600') }}
+bantime = {{ ssh_hardening_fail2ban_bantime | default('3600') }}
+backend = {{ ssh_hardening_fail2ban_backend | default('systemd') }}
