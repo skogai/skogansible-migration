@@ -3,3 +3,7 @@
 update_system: true
 packages: []
 aur_packages: []
+
+# Paccache configuration
+paccache_enable_timer: true  # Enable systemd timer for automatic cache cleanup
+paccache_timer_frequency: weekly  # How often to run (systemd timer OnCalendar)

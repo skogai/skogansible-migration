@@ -9,6 +9,7 @@ This role provides secure, idempotent package management including:
 - Dedicated AUR builder user for security
 - Automatic yay installation from source
 - Package database updates and system upgrades
+- Automatic package cache cleanup via paccache.timer
 
 ## Requirements
 
@@ -51,6 +52,13 @@ pacman_upgrade_system: true            # Upgrade all packages before installing
 ansible_python_interpreter: /usr/bin/python  # Python for AUR tasks
 ```
 
+### Paccache Configuration
+
+```yaml
+paccache_enable_timer: true              # Enable automatic cache cleanup
+paccache_timer_frequency: weekly         # Timer frequency (systemd OnCalendar)
+```
+
 ## Dependencies
 
 None. This role installs all required dependencies including:
@@ -58,6 +66,7 @@ None. This role installs all required dependencies including:
 - base-devel (for building AUR packages)
 - git (for cloning AUR repositories)
 - yay (AUR helper, installed from source)
+- pacman-contrib (provides paccache tool for cache management)
 
 ## Example Playbook
 
@@ -150,6 +159,18 @@ Installs packages from AUR:
 - Installs packages with yay helper
 - Only runs if `aur_packages` is defined and non-empty
 
+### 5. Paccache Timer Management (`paccache.yml`)
+
+Enables automatic pacman cache cleanup:
+
+- Enables and starts `paccache.timer` systemd unit
+- Timer provided by `pacman-contrib` package
+- Automatically removes old cached packages to free disk space
+- Runs on a configurable schedule (default: weekly)
+- Only runs if `paccache_enable_timer` is true
+
+**Note:** The paccache.timer service is provided by the system's pacman-contrib package and uses default cleanup settings (keeps last 3 package versions).
+
 ## Tags
 
 The role supports granular execution via tags:
@@ -159,6 +180,8 @@ The role supports granular execution via tags:
 - `aur` - All AUR-related tasks (user, helper, packages)
 - `aur_user` - AUR builder user setup only
 - `yay` - yay AUR helper installation only
+- `paccache` - Paccache timer management only
+- `timers` - All systemd timer-related tasks
 
 ### Tag Usage Examples
 
@@ -171,6 +194,9 @@ ansible-playbook playbook.yml --tags aur_user,yay
 
 # Install AUR packages only (requires aur_builder and yay)
 ansible-playbook playbook.yml --tags aur
+
+# Enable paccache timer only
+ansible-playbook playbook.yml --tags paccache
 
 # Full package management
 ansible-playbook playbook.yml --tags packages

@@ -1,0 +1,33 @@
+---
+# Paccache Timer Management
+# Manages systemd timer for automatic pacman cache cleanup
+
+# ==============================================================================
+# Enable and Start Paccache Timer
+# ==============================================================================
+
+- name: "Paccache | Enable and start paccache timer"
+  when: paccache_enable_timer | bool
+  become: true
+  tags: [packages, paccache, timers]
+  block:
+    - name: "Paccache | Check if paccache.timer exists"
+      ansible.builtin.systemd:
+        name: paccache.timer
+        state: started
+        enabled: true
+      register: paccache_timer_result
+      failed_when: false
+
+    - name: "Paccache | Display paccache timer status"
+      ansible.builtin.debug:
+        msg: "Paccache timer enabled and started successfully"
+      when: paccache_timer_result is succeeded
+
+    - name: "Paccache | Warning if paccache.timer not found"
+      ansible.builtin.debug:
+        msg: >
+          WARNING: paccache.timer not found on system.
+          This is normal if pacman-contrib was just installed.
+          The timer is provided by the pacman-contrib package.
+      when: paccache_timer_result is failed

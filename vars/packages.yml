@@ -31,6 +31,7 @@ packages:
   - gst-plugin-pipewire
   - htop
   - i3-wm
+  - pacman-contrib
   - i3blocks
   - i3lock
   - i3status
