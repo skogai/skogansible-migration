@@ -1,0 +1,48 @@
+---
+# Graphics Role Configuration
+# Override these values to customize GPU driver and Ollama installation
+
+# GPU driver selection
+# Options: nvidia, amd, intel, none
+graphics_driver: "nvidia"
+
+# NVIDIA driver packages (if using nvidia)
+# graphics_nvidia_packages:
+#   - nvidia
+#   - nvidia-utils
+#   - lib32-nvidia-utils
+
+# AMD driver packages (if using amd)
+# graphics_amd_packages:
+#   - xf86-video-amdgpu
+#   - vulkan-radeon
+#   - lib32-vulkan-radeon
+
+# Intel driver packages (if using intel)
+# graphics_intel_packages:
+#   - xf86-video-intel
+#   - vulkan-intel
+#   - lib32-vulkan-intel
+
+# CUDA toolkit installation
+graphics_install_cuda: false
+# graphics_cuda_packages:
+#   - cuda
+#   - cudnn
+
+# Ollama installation
+graphics_install_ollama: true
+graphics_ollama_method: "pacman"  # Options: pacman, script
+# graphics_ollama_script_url: "https://ollama.ai/install.sh"
+
+# Ollama service management
+graphics_ollama_enable_service: true
+graphics_ollama_service_state: "started"
+
+# Ollama models to pull after installation
+graphics_ollama_models:
+  - llama2
+  - codellama
+
+# Initramfs regeneration (required after driver installation)
+graphics_regenerate_initramfs: true

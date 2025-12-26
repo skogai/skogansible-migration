@@ -1,0 +1,17 @@
+---
+# CUDA Toolkit Installation Tasks
+
+- name: Verify NVIDIA drivers are installed
+  ansible.builtin.fail:
+    msg: "CUDA toolkit requires NVIDIA drivers. Please set graphics_driver: nvidia"
+  when: graphics_driver != "nvidia"
+
+- name: Install CUDA toolkit packages
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_cuda_packages }}"
+    state: present
+
+- name: Display CUDA installation complete message
+  ansible.builtin.debug:
+    msg: "CUDA toolkit installed successfully"

@@ -87,15 +87,26 @@ SkogAI/skogansible/
 │   │   ├── handlers/main.yml            # Handlers for chezmoi role
 │   │   └── meta/main.yml                # Role metadata
 │   │
-│   └── cloudflared/                     # Cloudflare Tunnel management role
+│   ├── cloudflared/                     # Cloudflare Tunnel management role
+│   │   ├── tasks/
+│   │   │   └── main.yml                 # Cloudflared tasks (token deployment, service management)
+│   │   ├── templates/
+│   │   │   └── cloudflared.service.j2   # Systemd service template (uses --token-file)
+│   │   ├── defaults/main.yml            # Default variables for cloudflared role
+│   │   ├── handlers/main.yml            # Handlers for cloudflared role (daemon-reload, restart)
+│   │   ├── meta/main.yml                # Role metadata
+│   │   └── README.md                    # Complete Cloudflared role documentation
+│   │
+│   └── graphics/                        # GPU drivers and Ollama management role
 │       ├── tasks/
-│       │   └── main.yml                 # Cloudflared tasks (token deployment, service management)
-│       ├── templates/
-│       │   └── cloudflared.service.j2   # Systemd service template (uses --token-file)
-│       ├── defaults/main.yml            # Default variables for cloudflared role
-│       ├── handlers/main.yml            # Handlers for cloudflared role (daemon-reload, restart)
+│       │   ├── main.yml                 # Graphics tasks orchestration
+│       │   ├── drivers.yml              # GPU driver installation (NVIDIA/AMD/Intel)
+│       │   ├── cuda.yml                 # CUDA toolkit installation
+│       │   └── ollama.yml               # Ollama installation and model management
+│       ├── defaults/main.yml            # Default variables for graphics role
+│       ├── handlers/main.yml            # Handlers for graphics role (initramfs regeneration)
 │       ├── meta/main.yml                # Role metadata
-│       └── README.md                    # Complete Cloudflared role documentation
+│       └── README.md                    # Complete Graphics role documentation
 │
 ├── vars/                                # Variable files (role-specific configuration)
 │   ├── main.yml                         # Shared variables across roles
@@ -107,6 +118,7 @@ SkogAI/skogansible/
 │   ├── cloudflared.yml                  # Cloudflared configuration (deployment flags, extra args)
 │   ├── cloudflared_vault.yml            # Encrypted Cloudflare tunnel token (ansible-vault)
 │   ├── cloudflared_vault.yml.template   # Template for creating vault file
+│   ├── graphics.yml                     # Graphics configuration (GPU driver, CUDA, Ollama models)
 │   └── user.yml                         # User-specific variables (username, groups, shell)
 │
 ├── docs/                                # Documentation directory
@@ -169,7 +181,7 @@ SkogAI/skogansible/
 
 ### Playbooks
 
-- **playbook.yml** - Main playbook that orchestrates all 4 roles (packages, ssh, git, chezmoi) with proper variable loading
+- **playbook.yml** - Main playbook that orchestrates all roles (packages, ssh, git, chezmoi, cloudflared, graphics) with proper variable loading
 
 ### Documentation
 
@@ -205,6 +217,10 @@ Manages dotfiles by templating machine-specific .chezmoidata.yaml configuration 
 
 Manages Cloudflare Tunnel with secure token storage using ansible-vault. Deploys tunnel token from encrypted vault, configures systemd service with --token-file flag (no plaintext secrets), and manages service enablement.
 
+#### graphics/
+
+Manages GPU drivers and Ollama AI model infrastructure. Installs NVIDIA/AMD/Intel drivers, optional CUDA toolkit, Ollama service, and pulls AI models. Automatically regenerates initramfs after driver changes.
+
 ### Variables
 
 All role-specific configuration stored in `vars/` directory:
@@ -217,6 +233,7 @@ All role-specific configuration stored in `vars/` directory:
 - **cloudflared.yml** - Cloudflared configuration (deployment flags, extra args)
 - **cloudflared_vault.yml** - Encrypted Cloudflare tunnel token (use ansible-vault to edit)
 - **cloudflared_vault.yml.template** - Template for creating vault file
+- **graphics.yml** - Graphics configuration (GPU driver selection, CUDA, Ollama models)
 - **user.yml** - User-specific variables (username, groups, shell)
 - **main.yml** - Shared variables across all roles
 
@@ -249,11 +266,11 @@ The following directories are excluded from version control (see .gitignore):
 
 ## File Counts
 
-- **5 roles** - packages, ssh, git, chezmoi, cloudflared
-- **10 variable files** - Role-specific configuration
-- **13+ task files** - Modular task definitions
+- **6 roles** - packages, ssh, git, chezmoi, cloudflared, graphics
+- **11 variable files** - Role-specific configuration
+- **17+ task files** - Modular task definitions
 - **7+ templates** - Jinja2 templates for configs and hooks
-- **12+ documentation files** - Reference and historical docs
+- **13+ documentation files** - Reference and historical docs
 - **3 collections** - Ansible Galaxy collections installed
 
 ---

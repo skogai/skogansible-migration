@@ -1,0 +1,31 @@
+---
+# GPU Driver Installation Tasks
+
+- name: Install NVIDIA drivers
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_nvidia_packages }}"
+    state: present
+  when: graphics_driver == "nvidia"
+  notify: Regenerate initramfs
+
+- name: Install AMD drivers
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_amd_packages }}"
+    state: present
+  when: graphics_driver == "amd"
+  notify: Regenerate initramfs
+
+- name: Install Intel drivers
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_intel_packages }}"
+    state: present
+  when: graphics_driver == "intel"
+  notify: Regenerate initramfs
+
+- name: Display driver installation complete message
+  ansible.builtin.debug:
+    msg: "{{ graphics_driver | upper }} drivers installed successfully"
+  when: graphics_driver in ['nvidia', 'amd', 'intel']

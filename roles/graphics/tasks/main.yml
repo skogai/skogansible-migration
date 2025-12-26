@@ -1,0 +1,25 @@
+---
+# Graphics Role - Main Tasks
+
+- name: Install GPU drivers
+  ansible.builtin.include_tasks: drivers.yml
+  when: graphics_driver != "none"
+  tags: [graphics, drivers]
+
+- name: Install CUDA toolkit
+  ansible.builtin.include_tasks: cuda.yml
+  when: graphics_install_cuda
+  tags: [graphics, cuda]
+
+- name: Install and configure Ollama
+  ansible.builtin.include_tasks: ollama.yml
+  when: graphics_install_ollama
+  tags: [graphics, ollama]
+
+- name: Regenerate initramfs
+  become: true
+  ansible.builtin.command:
+    cmd: mkinitcpio -P
+  when: graphics_regenerate_initramfs and graphics_driver != "none"
+  notify: Reboot required
+  tags: [graphics, initramfs]

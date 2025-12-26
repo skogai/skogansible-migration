@@ -15,6 +15,7 @@
     - ../vars/cloudflared.yml
     - ../vars/cloudflared_vault.yml
     - ../vars/filesystems.yml
+    - ../vars/graphics.yml
 
   roles:
     - role: packages
@@ -34,3 +35,6 @@
 
     - role: filesystems
       tags: [filesystems, mounts]
+
+    - role: graphics
+      tags: [graphics, gpu, ollama]

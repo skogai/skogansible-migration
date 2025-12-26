@@ -1,0 +1,13 @@
+---
+# Graphics Role - Handlers
+
+- name: Regenerate initramfs
+  become: true
+  ansible.builtin.command:
+    cmd: mkinitcpio -P
+  listen: Regenerate initramfs
+
+- name: Reboot required
+  ansible.builtin.debug:
+    msg: "⚠️  System reboot required for GPU driver changes to take effect"
+  listen: Reboot required
