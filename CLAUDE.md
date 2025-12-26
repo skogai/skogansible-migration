@@ -204,6 +204,22 @@ The SSH role manages SSH keys, configuration, and related settings. All features
 - `ssh_manage_authorized_keys: true` - Manage authorized_keys
 - `ssh_enable_backup: true` - Backup SSH directory
 
+**Common Error - Vault Password File Permissions:**
+
+If you see this error:
+```
+[ERROR]: Decryption failed (no vault secrets were found that could decrypt)
+```
+
+**Root cause:** The vault password file (`ansible-become-password` or `ansible-vault-password`) is not executable.
+
+**Solution:** Ansible requires vault password files to have executable permissions (chmod 700). The SSH role automatically sets this when deploying via `ssh_deploy_full_directory: true`, but if deploying manually, ensure:
+
+```bash
+chmod 700 ~/.ssh/ansible-become-password
+chmod 700 ~/.ssh/ansible-vault-password
+```
+
 **See:** `roles/ssh/README.md` for complete documentation and examples.
 
 ## Git Role Configuration
