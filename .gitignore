@@ -1,3 +1,5 @@
 backup/todo
 /tmp/*
 roles/ssh/files/test_examples/
+.worktrees/*
+!.worktrees/.gitkeep
