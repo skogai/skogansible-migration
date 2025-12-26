@@ -1,0 +1,31 @@
+---
+# Primitive: Service Management
+# Usage: include_tasks primitives/ensure_state/service.yml
+#
+# Required vars:
+#   service_name: Name of the systemd service
+#
+# Optional vars:
+#   service_enabled: (default: true) Enable service on boot
+#   service_state: (default: started) Service state (started, stopped, restarted, reloaded)
+#   service_daemon_reload: (default: false) Reload systemd daemon before managing service
+#
+# Example:
+#   - include_tasks: primitives/ensure_state/service.yml
+#     vars:
+#       service_name: sshd.service
+#       service_enabled: true
+#       service_state: started
+
+- name: "Primitive | Reload systemd daemon"
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: service_daemon_reload | default(false) | bool
+
+- name: "Primitive | Ensure service {{ service_name }} is {{ service_enabled | default(true) | ternary('enabled', 'disabled') }} and {{ service_state | default('started') }}"
+  become: true
+  ansible.builtin.systemd:
+    name: "{{ service_name }}"
+    enabled: "{{ service_enabled | default(true) }}"
+    state: "{{ service_state | default('started') }}"

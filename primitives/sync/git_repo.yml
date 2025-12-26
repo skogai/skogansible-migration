@@ -1,0 +1,34 @@
+---
+# Primitive: Git Repository Sync
+# Usage: include_tasks primitives/sync/git_repo.yml
+#
+# Required vars:
+#   repo_url: Git repository URL
+#   repo_dest: Destination directory
+#
+# Optional vars:
+#   repo_version: (default: HEAD) Branch, tag, or commit to checkout
+#   repo_update: (default: true) Update if already cloned
+#   repo_force: (default: false) Discard local changes
+#   repo_depth: (default: 0) Clone depth (0 = full history)
+#   repo_key_file: SSH key file for private repos
+#   repo_accept_hostkey: (default: false) Accept SSH host key
+#
+# Example:
+#   - include_tasks: primitives/sync/git_repo.yml
+#     vars:
+#       repo_url: https://github.com/zplug/zplug
+#       repo_dest: "{{ ansible_user_dir }}/zsh.d/.zplug"
+#       repo_version: master
+#       repo_update: true
+
+- name: "Primitive | Sync git repo: {{ repo_url }} -> {{ repo_dest }}"
+  ansible.builtin.git:
+    repo: "{{ repo_url }}"
+    dest: "{{ repo_dest }}"
+    version: "{{ repo_version | default('HEAD') }}"
+    update: "{{ repo_update | default(true) }}"
+    force: "{{ repo_force | default(false) }}"
+    depth: "{{ repo_depth | default(0) }}"
+    key_file: "{{ repo_key_file | default(omit) }}"
+    accept_hostkey: "{{ repo_accept_hostkey | default(false) }}"

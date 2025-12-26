@@ -1,0 +1,34 @@
+---
+# Primitive: Execute Shell Script
+# Usage: include_tasks primitives/execute/shell.yml
+#
+# Required vars:
+#   exec_shell: Shell command/script to execute
+#
+# Optional vars:
+#   exec_chdir: Directory to run command in
+#   exec_creates: Path that indicates command already ran (idempotency)
+#   exec_removes: Path that must exist for command to run
+#   exec_become: (default: false) Run as root
+#   exec_become_user: User to become (if not root)
+#   exec_register: Variable name to store result
+#   exec_executable: Shell to use (default: /bin/sh)
+#
+# Example:
+#   - include_tasks: primitives/execute/shell.yml
+#     vars:
+#       exec_shell: |
+#         udevadm control --reload-rules
+#         udevadm trigger
+#       exec_become: true
+
+- name: "Primitive | Execute shell: {{ exec_shell | truncate(50) }}"
+  ansible.builtin.shell:
+    cmd: "{{ exec_shell }}"
+    chdir: "{{ exec_chdir | default(omit) }}"
+    creates: "{{ exec_creates | default(omit) }}"
+    removes: "{{ exec_removes | default(omit) }}"
+    executable: "{{ exec_executable | default(omit) }}"
+  become: "{{ exec_become | default(false) }}"
+  become_user: "{{ exec_become_user | default(omit) }}"
+  register: "{{ exec_register | default('exec_result') }}"
