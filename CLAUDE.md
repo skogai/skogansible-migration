@@ -149,6 +149,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ **git** - Comprehensive Git configuration and repository management
 - ✅ **chezmoi** - Dotfiles management via machine-specific configuration templating
 - ✅ **cloudflared** - Cloudflare Tunnel with secure vault token storage
+- ✅ **graphics** - GPU drivers (NVIDIA/AMD/Intel) and Ollama AI server management
 
 **Features:**
 
@@ -173,6 +174,11 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ Cloudflare Tunnel token deployment from encrypted vault
 - ✅ Systemd service configuration with token-file (no plaintext secrets)
 - ✅ Cloudflared service enablement and management
+- ✅ GPU driver installation (NVIDIA, AMD, Intel)
+- ✅ CUDA toolkit installation (optional)
+- ✅ Ollama AI server installation and management
+- ✅ Ollama model pulling and configuration
+- ✅ Initramfs regeneration after driver changes
 - ⏸️ Additional system configuration (see `docs/system-inventory-by-primitives.md`)
 
 ## Packages Role Configuration
@@ -500,6 +506,110 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 
 **See also:** `docs/CLOUDFLARED_SETUP.md` for comprehensive setup guide.
 
+## Graphics Role Configuration
+
+The Graphics role manages GPU drivers and Ollama AI server for Arch Linux systems. All features are **disabled by default** for safety.
+
+**Quick Start (Default behavior):**
+
+- GPU drivers: disabled (set `graphics_install_drivers: true` to enable)
+- Ollama: enabled by default (`graphics_install_ollama: true`)
+- Method: pacman installation (recommended)
+
+**To configure GPU drivers:**
+
+1. Identify your GPU type:
+   ```bash
+   lspci | grep -i vga
+   ```
+
+2. Edit `vars/graphics.yml` and set your GPU type:
+   ```yaml
+   graphics_driver: nvidia  # or amd, intel, none
+   graphics_install_drivers: true
+   graphics_regenerate_initramfs: true
+   ```
+
+3. Run: `./run.sh --tags graphics`
+
+4. Reboot to load new drivers
+
+**Available Graphics Features (configure in vars/graphics.yml):**
+
+- `graphics_driver: "none"` - GPU type (nvidia, amd, intel, none)
+- `graphics_install_drivers: false` - Install GPU drivers
+- `graphics_nvidia_install_cuda: false` - Install CUDA toolkit (NVIDIA only)
+- `graphics_install_ollama: true` - Install Ollama AI server
+- `graphics_ollama_method: "pacman"` - Installation method (pacman or script)
+- `graphics_ollama_enable_service: true` - Enable Ollama systemd service
+- `graphics_ollama_pull_models: false` - Auto-pull AI models
+- `graphics_ollama_models: []` - List of models to pull
+- `graphics_regenerate_initramfs: false` - Regenerate initramfs after driver changes
+
+**GPU Driver Packages:**
+
+- **NVIDIA**: nvidia, nvidia-utils, lib32-nvidia-utils, cuda (optional)
+- **AMD**: xf86-video-amdgpu, vulkan-radeon, lib32-vulkan-radeon
+- **Intel**: xf86-video-intel, vulkan-intel, lib32-vulkan-intel
+
+**Ollama Configuration:**
+
+- Service runs on port 11434
+- Models stored in `/usr/share/ollama`
+- Systemd service: `ollama.service`
+- Common models: llama2, codellama, mistral, phi
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags graphics       # All graphics tasks
+./run.sh --tags nvidia         # Only NVIDIA drivers
+./run.sh --tags amd            # Only AMD drivers
+./run.sh --tags intel          # Only Intel drivers
+./run.sh --tags cuda           # Only CUDA toolkit
+./run.sh --tags ollama         # Only Ollama
+./run.sh --tags models         # Only model pulling
+```
+
+**Example configurations:**
+
+NVIDIA with CUDA and Ollama:
+```yaml
+graphics_driver: nvidia
+graphics_install_drivers: true
+graphics_nvidia_install_cuda: true
+graphics_regenerate_initramfs: true
+graphics_install_ollama: true
+graphics_ollama_pull_models: true
+graphics_ollama_models:
+  - llama2
+  - codellama
+```
+
+AMD with Ollama:
+```yaml
+graphics_driver: amd
+graphics_install_drivers: true
+graphics_regenerate_initramfs: true
+graphics_install_ollama: true
+```
+
+Ollama only (no GPU driver changes):
+```yaml
+graphics_install_drivers: false
+graphics_install_ollama: true
+graphics_ollama_method: pacman
+```
+
+**Important notes:**
+
+- After driver installation, reboot is required
+- CUDA toolkit is ~3GB download
+- Model pulling can be bandwidth-intensive (4GB+ per model)
+- Initramfs regeneration runs automatically when drivers change
+
+**See:** `roles/graphics/README.md` for complete documentation and troubleshooting.
+
 ## Reference
 
 ### Essential Reading
@@ -515,6 +625,7 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 - @roles/ssh/README.md - SSH role documentation
 - @roles/git/README.md - Git role documentation
 - @roles/cloudflared/README.md - Cloudflared role documentation
+- @roles/graphics/README.md - Graphics role documentation
 
 ### System Expansion
 

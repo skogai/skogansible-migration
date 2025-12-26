@@ -1,0 +1,28 @@
+---
+# NVIDIA GPU driver installation tasks
+
+- name: Install NVIDIA drivers
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_nvidia_packages }}"
+    state: present
+  when: graphics_install_drivers and graphics_driver == "nvidia"
+  notify:
+    - Regenerate initramfs
+  tags:
+    - graphics
+    - nvidia
+
+- name: Install NVIDIA CUDA toolkit
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_nvidia_cuda_packages }}"
+    state: present
+  when:
+    - graphics_install_drivers
+    - graphics_driver == "nvidia"
+    - graphics_nvidia_install_cuda
+  tags:
+    - graphics
+    - nvidia
+    - cuda

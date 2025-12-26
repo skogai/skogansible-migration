@@ -1,0 +1,46 @@
+---
+# Graphics role default variables
+
+# GPU Driver Selection
+graphics_driver: "none"  # Options: nvidia, amd, intel, none
+graphics_install_drivers: false  # Set to true to install GPU drivers
+
+# NVIDIA Configuration
+graphics_nvidia_packages:
+  - nvidia
+  - nvidia-utils
+  - lib32-nvidia-utils
+graphics_nvidia_install_cuda: false
+graphics_nvidia_cuda_packages:
+  - cuda
+  - cuda-tools
+
+# AMD Configuration
+graphics_amd_packages:
+  - xf86-video-amdgpu
+  - vulkan-radeon
+  - lib32-vulkan-radeon
+
+# Intel Configuration
+graphics_intel_packages:
+  - xf86-video-intel
+  - vulkan-intel
+  - lib32-vulkan-intel
+
+# Ollama Configuration
+graphics_install_ollama: true
+graphics_ollama_method: "pacman"  # Options: pacman, script
+graphics_ollama_install_url: "https://ollama.com/install.sh"
+graphics_ollama_enable_service: true
+graphics_ollama_start_service: true
+
+# Ollama Model Management
+graphics_ollama_pull_models: false
+graphics_ollama_models: []
+# Example models:
+# - llama2
+# - codellama
+# - mistral
+
+# Service Management
+graphics_regenerate_initramfs: false  # Set to true if kernel modules changed

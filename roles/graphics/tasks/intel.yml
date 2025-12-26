@@ -1,0 +1,14 @@
+---
+# Intel GPU driver installation tasks
+
+- name: Install Intel drivers
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_intel_packages }}"
+    state: present
+  when: graphics_install_drivers and graphics_driver == "intel"
+  notify:
+    - Regenerate initramfs
+  tags:
+    - graphics
+    - intel

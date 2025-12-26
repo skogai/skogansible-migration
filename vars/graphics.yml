@@ -1,0 +1,30 @@
+---
+# Graphics configuration variables
+# Override these values based on your system configuration
+
+# GPU Driver Configuration
+# Set to nvidia, amd, intel, or none based on your hardware
+graphics_driver: "nvidia"
+graphics_install_drivers: true
+
+# NVIDIA-specific Configuration
+graphics_nvidia_install_cuda: false
+
+# Ollama Configuration
+graphics_install_ollama: true
+graphics_ollama_method: "pacman"  # pacman or script
+graphics_ollama_enable_service: true
+graphics_ollama_start_service: true
+
+# Ollama Models
+# Set to true to automatically pull models after installation
+graphics_ollama_pull_models: false
+graphics_ollama_models:
+  - llama2
+  # - codellama
+  # - mistral
+  # - phi
+
+# Initramfs Regeneration
+# Set to true if installing GPU drivers that require initramfs regeneration
+graphics_regenerate_initramfs: true

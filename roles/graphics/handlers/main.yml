@@ -1,0 +1,9 @@
+---
+# Graphics role handlers
+
+- name: Regenerate initramfs
+  become: true
+  ansible.builtin.command:
+    cmd: mkinitcpio -P
+  when: graphics_regenerate_initramfs
+  listen: "Regenerate initramfs"

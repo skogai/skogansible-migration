@@ -1,0 +1,104 @@
+---
+# Ollama installation and management tasks
+
+- name: Install Ollama via pacman
+  become: true
+  community.general.pacman:
+    name: ollama
+    state: present
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_method == "pacman"
+  tags:
+    - graphics
+    - ollama
+
+- name: Download Ollama install script
+  ansible.builtin.get_url:
+    url: "{{ graphics_ollama_install_url }}"
+    dest: /tmp/ollama_install.sh
+    mode: '0755'
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_method == "script"
+  tags:
+    - graphics
+    - ollama
+
+- name: Install Ollama via script
+  become: true
+  ansible.builtin.command:
+    cmd: /tmp/ollama_install.sh
+    creates: /usr/local/bin/ollama
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_method == "script"
+  tags:
+    - graphics
+    - ollama
+
+- name: Remove Ollama install script
+  ansible.builtin.file:
+    path: /tmp/ollama_install.sh
+    state: absent
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_method == "script"
+  tags:
+    - graphics
+    - ollama
+
+- name: Enable Ollama service
+  become: true
+  ansible.builtin.systemd:
+    name: ollama
+    enabled: true
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_enable_service
+  tags:
+    - graphics
+    - ollama
+    - service
+
+- name: Start Ollama service
+  become: true
+  ansible.builtin.systemd:
+    name: ollama
+    state: started
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_start_service
+  tags:
+    - graphics
+    - ollama
+    - service
+
+- name: Wait for Ollama service to be ready
+  ansible.builtin.wait_for:
+    port: 11434
+    delay: 2
+    timeout: 30
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_pull_models
+    - graphics_ollama_models | length > 0
+  tags:
+    - graphics
+    - ollama
+    - models
+
+- name: Pull Ollama models
+  ansible.builtin.command:
+    cmd: "ollama pull {{ item }}"
+  loop: "{{ graphics_ollama_models }}"
+  when:
+    - graphics_install_ollama
+    - graphics_ollama_pull_models
+    - graphics_ollama_models | length > 0
+  register: ollama_pull_result
+  changed_when: "'pulling' in ollama_pull_result.stdout or 'success' in ollama_pull_result.stdout"
+  tags:
+    - graphics
+    - ollama
+    - models

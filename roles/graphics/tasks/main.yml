@@ -1,0 +1,30 @@
+---
+# Graphics role main tasks - GPU drivers and Ollama management
+
+- name: Include NVIDIA driver tasks
+  ansible.builtin.include_tasks: nvidia.yml
+  when: graphics_install_drivers and graphics_driver == "nvidia"
+  tags:
+    - graphics
+    - nvidia
+
+- name: Include AMD driver tasks
+  ansible.builtin.include_tasks: amd.yml
+  when: graphics_install_drivers and graphics_driver == "amd"
+  tags:
+    - graphics
+    - amd
+
+- name: Include Intel driver tasks
+  ansible.builtin.include_tasks: intel.yml
+  when: graphics_install_drivers and graphics_driver == "intel"
+  tags:
+    - graphics
+    - intel
+
+- name: Include Ollama tasks
+  ansible.builtin.include_tasks: ollama.yml
+  when: graphics_install_ollama
+  tags:
+    - graphics
+    - ollama

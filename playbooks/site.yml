@@ -13,6 +13,7 @@
     - ../vars/git.yml        # Git configuration
     - ../vars/chezmoi.yml    # Chezmoi configuration
     - ../vars/zsh.yml        # Zsh configuration
+    - ../vars/graphics.yml   # Graphics/GPU configuration
 
   roles:
     - role: packages
@@ -29,3 +30,6 @@
 
     - role: zsh
       tags: [zsh, shell]
+
+    - role: graphics
+      tags: [graphics, gpu, ollama]

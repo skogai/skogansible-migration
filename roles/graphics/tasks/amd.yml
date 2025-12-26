@@ -1,0 +1,14 @@
+---
+# AMD GPU driver installation tasks
+
+- name: Install AMD drivers
+  become: true
+  community.general.pacman:
+    name: "{{ graphics_amd_packages }}"
+    state: present
+  when: graphics_install_drivers and graphics_driver == "amd"
+  notify:
+    - Regenerate initramfs
+  tags:
+    - graphics
+    - amd
