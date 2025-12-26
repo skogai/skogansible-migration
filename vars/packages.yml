@@ -1,112 +1,180 @@
 ---
 # Packages to install from official repos
+# Organized by category for better maintainability
+
 packages:
-  - ansible
-  - ansible-core
+  # === Core System ===
   - base
   - base-devel
-  - bat
-  - bluez
-  - bluez-utils
-  - byobu
-  - cloudflared
+
+  # === Automation & Configuration ===
+  - ansible
+  - ansible-core
   - direnv
-  - dkms
-  - dmenu
-  # - docker
-  # - docker-buildx
-  # - docker-compose
-  # - dotnet-host
-  # - dotnet-runtime
-  # - dotnet-sdk
-  # - dotnet-source-built-artifacts
-  - dunst
-  - feh
-  - firefox
-  - fzf
-  - gammastep
+
+  # === Shell & Terminal ===
+  - zsh
+  - byobu
+  - kitty
+  - less
+  # - fish  # Alternative shell - keep commented unless needed
+
+  # === File Management & Navigation ===
+  - tree
+  - zip
+  - unzip
+  - ripgrep           # Modern grep alternative
+  - fzf               # Fuzzy finder
+  - zoxide            # Smart directory jumper
+  - bat               # Modern cat with syntax highlighting
+  - eza               # Modern ls replacement (NEW - from ansible-base)
+  - fd                # Modern find replacement (NEW - from ansible-base)
+
+  # === System Monitoring & Management ===
+  - htop              # Interactive process viewer
+  - btop              # Modern system monitor (NEW - from ansible-base)
+  - dkms              # Dynamic Kernel Module Support
+
+  # === Version Control & Development ===
   - git
   - github-cli
-  # - grub
-  - gst-plugin-pipewire
-  - htop
+  - lazygit           # Terminal UI for git
+  - lazydocker        # Terminal UI for docker
+  - python-uv         # Fast Python package installer
+  - uv                # Rust-based Python package manager
+
+  # === Window Manager & Desktop (i3) ===
   - i3-wm
   - i3blocks
   - i3lock
   - i3status
-  # - intel-ucode
-  # - iwd
-  - kitty
-  - lazydocker
-  - lazygit
-  - less
-  # - libnotify
-  # - libpulse
-  # - libva-nvidia-driver
-  # - lightdm
-  # - lightdm-gtk-greeter
-  # - linux
-  # - linux-firmware
-  # - linux-headers
-  # - maim
-  # - mandoc
-  # - nano
-  - ncspot
-  # - neovim-nvim-treesitter  # Not in official repos - use neovim plugin manager
-  # - network-manager-applet
-  # - networkmanager
-  # - nvidia-dkms
-  # - nvm
-  # - ollama-cuda
-  # - pgbouncer
-  # - pgcli
-  - picom
-  # - pipewire
+  - dmenu             # Dynamic menu for X
+  - dunst             # Notification daemon
+  - picom             # Compositor for X11
+  - feh               # Image viewer & wallpaper setter
+  - gammastep         # Screen color temperature adjuster
+  - xclip             # X clipboard tool
+  - xdotool           # X automation tool
+
+  # === Audio ===
+  - gst-plugin-pipewire
+  - wireplumber
+  # - pipewire         # Uncomment for full pipewire stack
   # - pipewire-alsa
   # - pipewire-jack
   # - pipewire-pulse
-  # - polkit-gnome
+
+  # === Bluetooth ===
+  - bluez
+  - bluez-utils
+
+  # === Network & Cloud ===
+  - wget
+  - cloudflared       # Cloudflare tunnel client
+  # - networkmanager   # Commented - usually pre-installed
+  # - network-manager-applet
+  # - iwd
+  # - wireless_tools
+
+  # === Web & Browsers ===
+  - firefox
+  - lynx              # Terminal web browser (NEW - from ansible-base)
+
+  # === Media ===
+  - ncspot            # Spotify TUI client
+
+  # === Docker (Commented - Project Specific) ===
+  # - docker
+  # - docker-buildx
+  # - docker-compose
+
+  # === .NET Development (Commented - Project Specific) ===
+  # - dotnet-host
+  # - dotnet-runtime
+  # - dotnet-sdk
+  # - dotnet-source-built-artifacts
+
+  # === Database (Commented - Project Specific) ===
   # - postgresql
   # - postgrest
-  - python-uv
-  - ripgrep
-  # - sheldon
-  # - smartmontools
-  # - steam  # Requires multilib repo enabled in /etc/pacman.conf
-  - tree
-  - unzip
-  - uv
-  # - vim
-  - wget
-  # - wireless_tools
-  - wireplumber
-  - xclip
+  # - pgbouncer
+  # - pgcli
+
+  # === Boot & System (Commented - Hardware Specific) ===
+  # - grub
+  # - intel-ucode
+  # - linux
+  # - linux-firmware
+  # - linux-headers
+
+  # === Display Manager (Commented - Alternative) ===
+  # - lightdm
+  # - lightdm-gtk-greeter
+
+  # === NVIDIA (Commented - Hardware Specific) ===
+  # - nvidia-dkms
+  # - libva-nvidia-driver
+
+  # === Additional Tools (Commented - Optional) ===
+  # - vim              # Prefer neovim
+  # - nano
+  # - mandoc
+  # - maim             # Screenshot tool
+  # - libnotify
+  # - libpulse
+  # - polkit-gnome
+  # - sheldon          # Shell plugin manager
+  # - smartmontools    # Drive monitoring
+  # - steam            # Gaming - requires multilib repo
   # - xdg-utils
-  - xdotool
   # - xorg-server-xvfb
   # - xorg-xinit
   # - xss-lock
   # - xterm
-  - zip
-  - unzip
-  - zoxide
   # - zram-generator
-  - zsh
+  # - nvm              # Node version manager - use package manager instead
+  # - ollama-cuda      # AI - hardware specific
+  # - neovim-nvim-treesitter  # Not in official repos - use neovim plugin manager
 
 # Packages to install from AUR (using yay)
+# Organized by category for better maintainability
+
 aur_packages:
-  # - claude-code
-  # - codename-goose
-  # - discord-electron-openasar
-  - docker-rootless-extras
+  # === AI & Development Tools ===
+  - mods              # AI-powered CLI tool
+  - aichat            # AI chat CLI (NEW - from ansible-base)
+  - claude-code       # Claude Code editor (NEW - uncommented)
+
+  # === Browsers & Communication ===
   - google-chrome
-  - mods
+
+  # === Docker ===
+  - docker-rootless-extras
+
+  # === Audio Control ===
+  - pwvucontrol       # PipeWire volume control
+
+  # === Dotfile Management ===
+  - rcm               # RC file (dotfile) management
+
+  # === PDF Tools ===
+  # - pdftotext       # PDF to text converter (NEW - from ansible-base, optional)
+
+  # === Development Tools (Commented - Alternative) ===
+  # - codename-goose  # AI coding assistant
   # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
-  - pwvucontrol
-  - rcm
-  # - rustup  # Conflicts with system rust package
-  # - spotify
-  # - stripe-cli-bin
-  # - supabase-bin
+
+  # === Communication (Commented - Optional) ===
+  # - discord-electron-openasar
   # - vencord
   # - vesktop
+
+  # === Media (Commented - Optional) ===
+  # - spotify
+
+  # === Cloud Services (Commented - Project Specific) ===
+  # - stripe-cli-bin
+  # - supabase-bin
+
+  # === Language Tooling (Commented - Conflicts) ===
+  # - rustup          # Conflicts with system rust package
