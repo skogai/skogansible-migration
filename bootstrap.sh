@@ -4,6 +4,35 @@ set -e
 # Bootstrap script for setting up Ansible environment
 # This script installs required packages and sets up the Python virtual environment
 
+# Show help if requested
+if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+    cat <<EOF
+Bootstrap Script for Ansible Environment
+
+Usage: $0 [OPTIONS]
+
+This script sets up the Ansible environment by:
+  1. Installing required packages (python-uv, ansible, ansible-core)
+  2. Creating Python virtual environment in .venv/
+  3. Installing detect-secrets for secret scanning
+  4. Installing Ansible Galaxy collections from .requirements.yml
+
+Options:
+  -h, --help    Show this help message
+
+Requirements:
+  - Arch Linux system with pacman
+  - Sudo access for package installation
+  - Internet connection for package downloads
+
+After bootstrap completes:
+  1. Activate venv: source .venv/bin/activate
+  2. Run playbook: ./run.sh
+
+EOF
+    exit 0
+fi
+
 echo "==> Starting Ansible bootstrap..."
 
 # Check if running with sudo privileges

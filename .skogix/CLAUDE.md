@@ -45,14 +45,17 @@ file_mode: '0644'
 ### Data/Logic Separation
 
 **Data Layer** (`data/*.yml`): Lists of things (packages, users, services, config files)
+
 - Changes frequently
 - No Ansible logic
 
 **Logic Layer** (`primitives/*/`): How to process data
+
 - Changes rarely
 - Stable, tested primitives
 
 **Composition Layer** (`components/*/`, `primitives/compose/`): Wire primitives together
+
 - Changes occasionally
 - Feature implementations
 
@@ -145,6 +148,7 @@ ansible-playbook -c local localhost -m include_tasks -a "file=primitives/ensure_
 ### Complex Component (See ssh-role)
 
 Study `components/ssh-role/` for a complete example that demonstrates:
+
 - Conditional blocks (`when:`)
 - Multiple primitive compositions
 - Vault integration for secrets
@@ -173,10 +177,12 @@ Study `components/ssh-role/` for a complete example that demonstrates:
 ### When to Create New Primitives
 
 **Add parameters to existing primitive if:**
+
 - The operation is a variation of existing functionality
 - Can be expressed through additional variables
 
 **Create new primitive if:**
+
 - Fundamentally different operation
 - Would clutter existing primitive with unrelated logic
 - Reusable across multiple components

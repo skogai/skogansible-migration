@@ -10,6 +10,7 @@ Comprehensive assistance with Ansible Core development and automation, generated
 ## When to Use This Skill
 
 This skill should be triggered when:
+
 - Writing or debugging Ansible playbooks
 - Creating or modifying Ansible modules and plugins
 - Setting up Ansible inventories (INI, YAML, dynamic)
@@ -206,30 +207,39 @@ issmallinbig: '{{ small is subset(big) }}'
 ## Key Concepts
 
 ### Playbooks
+
 YAML files defining automation workflows. Contain plays (ordered lists of tasks) that run against inventory groups. Each task invokes a module with specific parameters.
 
 ### Inventory
+
 Lists of managed hosts organized into groups. Can be static (INI/YAML files) or dynamic (scripts/plugins). Supports host and group variables, parent-child relationships.
 
 ### Modules
+
 Reusable units of code executed on managed nodes. Ansible ships with hundreds of modules (ansible.builtin collection). Use FQCN (Fully Qualified Collection Name) like `ansible.builtin.copy` for clarity.
 
 ### Plugins
+
 Extend Ansible's core functionality. Types include filters, tests, callbacks, connections, inventory, lookup, and vars plugins. Execute on the control node (unlike modules).
 
 ### Collections
+
 Packaging format for Ansible content (modules, plugins, roles, playbooks). Use `ansible-galaxy collection install` to add community collections.
 
 ### Ansible Vault
+
 Encryption system for sensitive data. Encrypts entire files or individual variables. Supports multiple vault passwords with vault IDs for different environments (dev, prod, etc.).
 
 ### FQCN (Fully Qualified Collection Name)
+
 Full path to a module/plugin: `namespace.collection.plugin_name`. Example: `ansible.builtin.copy`. Prevents naming conflicts and improves clarity.
 
 ### Facts
+
 System information gathered automatically from managed nodes. Access with `ansible_facts` variable. Disable with `gather_facts: no` in playbooks.
 
 ### Handlers
+
 Special tasks triggered by `notify` directive. Run once at the end of a play, even if notified multiple times. Common for service restarts.
 
 ## Reference Files
@@ -251,6 +261,7 @@ This skill includes comprehensive documentation in `references/`:
 - **other.md** - Miscellaneous topics not fitting other categories
 
 Use the reference files when you need:
+
 - **Detailed API documentation** for specific modules or plugins
 - **Complete parameter lists** with all options and defaults
 - **Advanced use cases** and edge case handling
@@ -266,6 +277,7 @@ Use the reference files when you need:
 4. **Explore commands.md** - Master the CLI tools for running playbooks and ad-hoc tasks
 
 **First steps:**
+
 - Install Ansible: `pip install ansible`
 - Create a simple inventory file with your test hosts
 - Write a hello-world playbook using the Quick Reference example #1
@@ -279,6 +291,7 @@ Use the reference files when you need:
 4. **Study modules.md** - Understand module parameters and return values for precise control
 
 **Focus areas:**
+
 - Organize automation with roles and collections
 - Implement proper error handling and idempotency
 - Use variables effectively (group_vars, host_vars, facts)
@@ -292,6 +305,7 @@ Use the reference files when you need:
 4. **Explore os_specific.md** - Handle platform-specific automation needs
 
 **Advanced topics:**
+
 - Develop custom modules in Python for domain-specific tasks
 - Create collection with reusable automation content
 - Implement custom inventory plugins for dynamic infrastructure
@@ -309,6 +323,7 @@ Use the reference files when you need:
 ## Common Patterns
 
 ### Pattern 1: Conditional Task Execution
+
 ```yaml
 - name: Install package
   ansible.builtin.apt:
@@ -318,6 +333,7 @@ Use the reference files when you need:
 ```
 
 ### Pattern 2: Loop Over Items
+
 ```yaml
 - name: Create multiple users
   ansible.builtin.user:
@@ -330,6 +346,7 @@ Use the reference files when you need:
 ```
 
 ### Pattern 3: Handler for Service Restart
+
 ```yaml
 tasks:
   - name: Update config
@@ -346,6 +363,7 @@ handlers:
 ```
 
 ### Pattern 4: Register and Use Task Output
+
 ```yaml
 - name: Check if file exists
   ansible.builtin.stat:
@@ -375,6 +393,7 @@ handlers:
 ## Troubleshooting
 
 **Connection issues:**
+
 ```bash
 # Test connectivity
 ansible all -m ping -i inventory.ini
@@ -387,6 +406,7 @@ ansible all -m shell -a "whoami" --ask-pass
 ```
 
 **Variable debugging:**
+
 ```yaml
 - name: Debug variable value
   ansible.builtin.debug:
@@ -395,6 +415,7 @@ ansible all -m shell -a "whoami" --ask-pass
 ```
 
 **Syntax validation:**
+
 ```bash
 # Check playbook syntax
 ansible-playbook playbook.yml --syntax-check
@@ -406,16 +427,19 @@ ansible-lint playbook.yml
 ## Resources
 
 ### Official Documentation
+
 - Ansible Core Docs: https://docs.ansible.com/ansible-core/2.19/
 - Module Index: Browse collections.md reference file
 - Getting Started Guide: getting_started.md reference file
 
 ### Community
+
 - Ansible Galaxy: https://galaxy.ansible.com/ - Browse and install collections
 - GitHub: https://github.com/ansible/ansible - Source code and issues
 - Community Forum: https://forum.ansible.com/ - Ask questions and share knowledge
 
 ### Learning Resources
+
 - Ansible Examples: https://github.com/ansible/ansible-examples
 - Workshops: https://ansible.github.io/workshops/
 - Interactive Labs: Multiple providers offer hands-on Ansible training
@@ -431,6 +455,7 @@ ansible-lint playbook.yml
 ## Updating This Skill
 
 To refresh with updated documentation:
+
 ```bash
 # Re-scrape with same configuration
 uv run cli/doc_scraper.py --config configs/ansible-core.json --enhance-local

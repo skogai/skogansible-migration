@@ -16,12 +16,14 @@ Completed comprehensive security assessment and implemented critical security fi
 ## Changes Summary
 
 ### Files Modified: 15
+
 - Configuration files: 5
 - Documentation: 5
 - Scripts: 2
 - Role files: 3
 
 ### Lines Changed: +1,452 / -43
+
 - Security documentation: +1,106 lines
 - Security fixes: +346 lines
 
@@ -32,12 +34,14 @@ Completed comprehensive security assessment and implemented critical security fi
 ### 1. Hardcoded Semaphore Admin Password ❌ → ✅
 
 **Before:**
+
 ```yaml
 # semaphore/docker-compose.yml
 SEMAPHORE_ADMIN_PASSWORD: skogsund1  # EXPOSED IN GIT!
 ```
 
 **After:**
+
 ```yaml
 # semaphore/docker-compose.yml
 SEMAPHORE_ADMIN_PASSWORD: ${SEMAPHORE_ADMIN_PASSWORD}  # From .env (not in git)
@@ -54,6 +58,7 @@ env_file:
 ### 2. Password File Validation ❌ → ✅
 
 **Before:**
+
 ```bash
 # run.sh - Assumed files exist, no validation
 --vault-password-file ~/.ssh/ansible-vault-password
@@ -61,6 +66,7 @@ env_file:
 ```
 
 **After:**
+
 ```bash
 # run.sh - Validates existence, checks permissions, provides fallback
 if [ -f "$VAULT_PASSWORD_FILE" ]; then
@@ -80,10 +86,10 @@ fi
 ```yaml
 # .pre-commit-config.yaml
 - id: check-vault-encryption
-  entry: bash -c 'for file in vars/*vault*.yml; do 
-    if ! head -1 "$file" | grep -q "^\$ANSIBLE_VAULT"; then 
-      echo "ERROR: $file is not encrypted!"; exit 1; 
-    fi; 
+  entry: bash -c 'for file in vars/*vault*.yml; do
+    if ! head -1 "$file" | grep -q "^\$ANSIBLE_VAULT"; then
+      echo "ERROR: $file is not encrypted!"; exit 1;
+    fi;
   done'
 ```
 
@@ -96,6 +102,7 @@ fi
 ### 4. Bootstrap Script Error Handling ⚠️ → ✅
 
 **Added:**
+
 - Sudo access validation
 - Package installation checks
 - Error handling with meaningful messages
@@ -114,7 +121,8 @@ fi
 ### 7. Enhanced .gitignore ⚠️ → ✅
 
 **Added patterns for:**
-- Sensitive files (*.key, *.pem, *.secret)
+
+- Sensitive files (*.key,*.pem, *.secret)
 - Password files (*password*, *secret*)
 - Environment files (.env, .env.local)
 - Semaphore data (semaphore/.env, semaphore/data/)
@@ -127,6 +135,7 @@ fi
 ### 1. docs/SECURITY_ASSESSMENT.md (531 lines)
 
 **Complete security audit report including:**
+
 - Executive summary with risk assessment
 - 1 critical, 3 high, 4 medium, 3 low priority findings
 - Detailed analysis of each issue
@@ -138,6 +147,7 @@ fi
 ### 2. docs/SECURITY.md (419 lines)
 
 **Comprehensive security guide covering:**
+
 - Credential management hierarchy
 - Ansible Vault usage and best practices
 - Password file setup and permissions
@@ -151,6 +161,7 @@ fi
 ### 3. docs/SECURITY_CHECKLIST.md (156 lines)
 
 **Quick reference for security validation:**
+
 - Pre-deployment checklist
 - Post-changes checklist
 - Monthly security audit commands
@@ -162,6 +173,7 @@ fi
 ### 4. semaphore/README.md (82 lines)
 
 **Semaphore-specific security guide:**
+
 - Setup instructions with security focus
 - Environment variable configuration
 - Access control documentation
@@ -263,27 +275,38 @@ $ ls -la *.sh
 
 ### Immediate (Before Next Use)
 
-1. **Change Semaphore Password:**
+1. **⚠️ CRITICAL: Change Semaphore Password:**
+
+   **Why:** The old password `skogsund1` is now permanently in git history (commit before this PR). Anyone with repository access can see it.
+
    ```bash
    cd semaphore
    cp .env.example .env
-   nano .env  # Set SEMAPHORE_ADMIN_PASSWORD
+   nano .env  # Set NEW secure password (not skogsund1)
    chmod 600 .env
    docker compose restart
    ```
 
+   **Password requirements:**
+   - Minimum 20 characters
+   - Mix of uppercase, lowercase, numbers, symbols
+   - NOT the old password from git history
+
 2. **Verify Password Files:**
+
    ```bash
    ls -la ~/.ssh/ansible-*-password
    # Should be: -rw------- (600 permissions)
    ```
 
 3. **Test Bootstrap:**
+
    ```bash
    ./bootstrap.sh  # Verify new error handling works
    ```
 
 4. **Test Playbook Execution:**
+
    ```bash
    ./run.sh --check  # Verify password validation works
    ```
@@ -301,6 +324,7 @@ $ ls -la *.sh
 ## Risk Assessment
 
 ### Before Security Checkup
+
 - **Overall Risk:** 🟡 MODERATE
 - **Critical Issues:** 1 (hardcoded password)
 - **High Priority:** 3 (validation, verification)
@@ -308,6 +332,7 @@ $ ls -la *.sh
 - **Low Priority:** 3 (documentation, warnings)
 
 ### After Security Checkup
+
 - **Overall Risk:** 🟢 LOW
 - **Critical Issues:** 0 (all fixed)
 - **High Priority:** 0 (all fixed)
@@ -340,11 +365,13 @@ $ ls -la *.sh
 ## Additional Resources
 
 ### Internal Documentation
+
 - [docs/SECURITY_ASSESSMENT.md](docs/SECURITY_ASSESSMENT.md) - Full audit report
 - [docs/SECURITY.md](docs/SECURITY.md) - Security guide
 - [docs/SECURITY_CHECKLIST.md](docs/SECURITY_CHECKLIST.md) - Quick checklist
 
 ### External Resources
+
 - [Ansible Vault Documentation](https://docs.ansible.com/ansible/latest/user_guide/vault.html)
 - [CIS Ansible Benchmark](https://www.cisecurity.org/)
 - [OWASP Password Storage](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
@@ -356,6 +383,7 @@ $ ls -la *.sh
 The security checkup successfully identified and resolved all critical and high-priority security issues. The repository now follows security best practices with comprehensive documentation to maintain security posture going forward.
 
 **Key Achievements:**
+
 - ✅ Eliminated hardcoded credentials
 - ✅ Added validation and error handling
 - ✅ Created comprehensive security documentation

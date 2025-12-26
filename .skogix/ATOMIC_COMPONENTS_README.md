@@ -9,9 +9,11 @@ This repository has been analyzed and broken down into atomic components for eas
 Three comprehensive guides have been created:
 
 ### 1. **INTEGRATION_GUIDE.md** (Start Here!)
+
 **Purpose:** High-level overview and planning guide
 
 **Contains:**
+
 - Repository structure overview
 - Detailed breakdown of all 4 roles
 - Variable file explanations
@@ -25,9 +27,11 @@ Three comprehensive guides have been created:
 ---
 
 ### 2. **COMPONENT_BREAKDOWN.md** (Technical Deep Dive)
+
 **Purpose:** Detailed technical analysis of each component
 
 **Contains:**
+
 - Task flow diagrams for each role
 - Individual script breakdowns (17 bash utilities)
 - Line-by-line task analysis
@@ -42,9 +46,11 @@ Three comprehensive guides have been created:
 ---
 
 ### 3. **DEPENDENCY_MAP.md** (Visual Guide)
+
 **Purpose:** Visual dependency mapping and quick reference
 
 **Contains:**
+
 - ASCII dependency graphs
 - Role-specific dependency trees
 - 4 integration path options with risk/effort ratings
@@ -61,6 +67,7 @@ Three comprehensive guides have been created:
 ## 🎯 Quick Start (Choose Your Path)
 
 ### Path 1: Just Copy the Scripts (5 minutes, Zero Risk)
+
 ```bash
 # No Ansible needed - just copy and use the utilities
 cp -r roles/bash/files/bash ~/.config/
@@ -69,6 +76,7 @@ source ~/.bashrc
 ```
 
 **You Get:**
+
 - 17 utility scripts (git helpers, neovim shortcuts, etc.)
 - No automation overhead
 - Keep your existing config
@@ -78,6 +86,7 @@ source ~/.bashrc
 ---
 
 ### Path 2: Full Bash Role Automation (30 minutes, Medium Risk)
+
 ```bash
 # Backup first!
 cp ~/.bashrc ~/.bashrc.backup
@@ -94,6 +103,7 @@ ansible-playbook your-playbook.yml --tags bash
 ```
 
 **You Get:**
+
 - Automated oh-my-bash installation
 - All 17 utility scripts
 - Custom theme
@@ -106,6 +116,7 @@ ansible-playbook your-playbook.yml --tags bash
 ---
 
 ### Path 3: Multi-Role Integration (1-2 hours, Medium-High Risk)
+
 ```bash
 # Install Ansible collections
 ansible-galaxy collection install -r requirements/common.yml
@@ -123,6 +134,7 @@ ansible-playbook your-playbook.yml
 ```
 
 **You Get:**
+
 - Complete bash environment
 - Neovim installation
 - System package management
@@ -135,6 +147,7 @@ ansible-playbook your-playbook.yml
 ---
 
 ### Path 4: Complete Merge with SSH Vault (2-4 hours, High Risk)
+
 ```bash
 # Read the security warnings first!
 cat INTEGRATION_GUIDE.md | grep -A 10 "SSH_VAULT"
@@ -147,6 +160,7 @@ sed -i 's|/home/skogix|{{ ansible_user_dir }}|g' roles/ssh_vault/tasks/main.yml
 ```
 
 **⚠️ CRITICAL:**
+
 - ssh_vault has hardcoded paths that MUST be updated
 - Handles sensitive SSH keys - review security implications
 - Requires ansible-vault setup
@@ -180,11 +194,13 @@ sed -i 's|/home/skogix|{{ ansible_user_dir }}|g' roles/ssh_vault/tasks/main.yml
    - Very basic
 
 ### **Variable Files:**
+
 - `vars/main.yml` - General configuration (update personal info!)
 - `vars/groups.yml` - Role selection pattern
 - `vars/ssh_keys.yml` - Vaulted SSH keys (don't copy as-is!)
 
 ### **Imported Roles (24):**
+
 - Located in `roles-import/`
 - All currently commented out
 - Available for use if needed
@@ -196,6 +212,7 @@ sed -i 's|/home/skogix|{{ ansible_user_dir }}|g' roles/ssh_vault/tasks/main.yml
 **Scenario:** You want the bash utilities but already have an Ansible setup
 
 **Solution:**
+
 ```bash
 # 1. Copy just the bash scripts
 cp -r roles/bash/files/bash ~/.config/
@@ -214,6 +231,7 @@ source ~/.bashrc
 **Value:** Immediate access to 17 utility scripts
 
 **Individual Scripts Available:**
+
 - `bat_functions.sh` - Better cat with syntax highlighting
 - `git_functions.sh` - Advanced git workflows
 - `git_aliases.sh` - Git shortcuts
@@ -230,24 +248,31 @@ source ~/.bashrc
 ## ⚠️ Critical Warnings Before Integration
 
 ### 1. Hardcoded Paths (ssh_vault role)
+
 The `ssh_vault` role contains hardcoded paths:
+
 - `/home/skogix/.ssh/ansible-vault`
 - `/home/skogix/.ssh_backup`
 
 **Must replace with:** `{{ ansible_user_dir }}`
 
 ### 2. Personal Information (vars/main.yml)
+
 Contains personal info that must be updated:
+
 - Git username and email
 - Dotfiles repository URL
 - Other preferences
 
 ### 3. SSH Keys (vars/ssh_keys.yml)
+
 Contains vaulted SSH keys - **DO NOT** copy to your repo!
 Create your own and vault it properly.
 
 ### 4. .bashrc Overwrite (bash role)
+
 The bash role will overwrite:
+
 - `~/.bashrc`
 - `~/.profile`
 
@@ -274,6 +299,7 @@ The bash role will overwrite:
 ## 🧪 Safe Testing Approach
 
 ### Step 1: Review Documentation (15 minutes)
+
 ```bash
 # Read the overview
 cat INTEGRATION_GUIDE.md | less
@@ -283,6 +309,7 @@ cat DEPENDENCY_MAP.md | grep -A 20 "Component Dependency Graph"
 ```
 
 ### Step 2: Test Individual Script (5 minutes)
+
 ```bash
 # Copy one script
 cp roles/bash/files/bash/git_functions.sh /tmp/
@@ -295,6 +322,7 @@ source /tmp/git_functions.sh
 ```
 
 ### Step 3: Copy All Scripts (5 minutes)
+
 ```bash
 # Copy to separate directory first
 mkdir -p ~/.config/bash-test
@@ -310,6 +338,7 @@ mv ~/.config/bash-test ~/.config/bash
 ```
 
 ### Step 4: Make Permanent (2 minutes)
+
 ```bash
 # Add to .bashrc
 echo '# Custom bash utilities from dotfile-ansible' >> ~/.bashrc
@@ -328,31 +357,37 @@ source ~/.bashrc
 The bash role includes 17 utility scripts organized by function:
 
 **Git Workflow (3 scripts):**
+
 - `git_functions.sh` - Advanced git operations
 - `git_aliases.sh` - Quick git shortcuts
 - `git_completions.sh` - Tab completion for git commands
 
 **Development Tools (4 scripts):**
+
 - `neovim_functions.sh` - Neovim workflow helpers
 - `neovim_aliases.sh` - Nvim shortcuts
 - `pkg_functions.sh` - Universal package management
 - `gpt_functions.sh` - AI/GPT integration
 
 **File Management (3 scripts):**
+
 - `bat_functions.sh` - Enhanced file viewing
 - `lsd_aliases.sh` - Modern ls alternatives
 - `paths_functions.sh` - PATH management
 
 **System Utilities (3 scripts):**
+
 - `paths_vars.sh` - Path variables
 - `vars.sh` - General environment variables
 - `speedtest_functions.sh` - Network testing
 
 **Completions (2 scripts):**
+
 - `dotfiles_completions.sh` - Dotfile command completion
 - `git_completions.sh` - Enhanced git completion
 
 **Miscellaneous (2 scripts):**
+
 - `misc_aliases.sh` - General aliases
 - Additional utilities
 
@@ -365,22 +400,27 @@ Each can be used independently or together!
 Answer these questions:
 
 **1. Do you use Ansible?**
+
 - **No** → Use Path 1 (copy scripts manually)
 - **Yes** → Continue to Q2
 
 **2. Want full automation or just utilities?**
+
 - **Just utilities** → Use Path 1 (copy scripts)
 - **Full automation** → Use Path 2 or 3
 
 **3. Need SSH key management?**
+
 - **No** → Use Path 2 or 3
 - **Yes** → Use Path 4 (but read security warnings!)
 
 **4. Are you on Arch Linux?**
+
 - **Yes** → All paths work, nvim role included
 - **No** → Skip nvim role or adapt for your distro
 
 **5. What's your risk tolerance?**
+
 - **Conservative** → Path 1 (scripts only)
 - **Moderate** → Path 2 (bash role)
 - **Aggressive** → Path 3 or 4 (full integration)
@@ -392,24 +432,28 @@ Answer these questions:
 After integration, verify:
 
 **For Scripts Only (Path 1):**
+
 - [ ] Scripts copied to ~/.config/bash/
 - [ ] Scripts sourced in .bashrc
 - [ ] Can call functions from scripts
 - [ ] No error messages on shell start
 
 **For Bash Role (Path 2):**
+
 - [ ] Oh-my-bash installed at ~/.oh-my-bash
 - [ ] Custom theme active (if using)
 - [ ] All utilities available
 - [ ] .bashrc and .profile updated correctly
 
 **For Multi-Role (Path 3):**
+
 - [ ] All roles executed without errors
 - [ ] Packages installed (nvim, jq, etc.)
 - [ ] Ansible collections installed
 - [ ] Personal info updated in vars
 
 **For Complete Merge (Path 4):**
+
 - [ ] All of Path 3 checks passed
 - [ ] SSH vault role paths updated
 - [ ] Vault password file configured

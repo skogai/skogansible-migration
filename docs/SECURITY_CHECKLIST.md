@@ -146,6 +146,7 @@ Stop immediately if you see:
 ## Contact
 
 Security questions or concerns:
+
 - Email: emil@skogsund.se
 - GitHub: @skogix
 - For vulnerabilities: Use GitHub Security Advisories

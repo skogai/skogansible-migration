@@ -4,6 +4,13 @@ This directory contains configuration for the Semaphore Ansible UI.
 
 ## Security Notice ⚠️
 
+**CRITICAL: The old admin password `skogsund1` was committed to git history!**
+
+If you're setting up Semaphore for the first time or after the security checkup PR:
+
+- **DO NOT use the old password** - it's permanently visible in git history
+- **Generate a NEW secure password** (20+ characters, mixed case, numbers, symbols)
+
 **NEVER commit the `.env` file to git - it contains sensitive credentials!**
 
 The `.env` file is automatically excluded via `.gitignore`.
@@ -11,21 +18,25 @@ The `.env` file is automatically excluded via `.gitignore`.
 ## Setup
 
 1. **Copy the example environment file:**
+
    ```bash
    cp .env.example .env
    ```
 
 2. **Edit `.env` with your credentials:**
+
    ```bash
    nano .env  # or your preferred editor
    ```
 
 3. **Set secure permissions:**
+
    ```bash
    chmod 600 .env
    ```
 
 4. **Start Semaphore:**
+
    ```bash
    docker compose up -d
    ```
@@ -50,6 +61,7 @@ The default credentials are specified in `.env.example`. **You MUST change these
 ## Troubleshooting
 
 **Container won't start:**
+
 ```bash
 # Check logs
 docker compose logs
@@ -62,6 +74,7 @@ docker compose restart
 ```
 
 **Can't login:**
+
 1. Verify credentials in `.env` file
 2. Check if password was changed via UI
 3. Reset by stopping container, removing data volume, and restarting

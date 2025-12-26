@@ -27,11 +27,13 @@ dotfile-ansible/
 ## 🎯 Atomic Components
 
 ### 1. **BASH ROLE** (Most Complex)
+
 **Location:** `roles/bash/`
 
 **Purpose:** Complete bash environment setup with oh-my-bash and extensive custom utilities
 
 **Key Files:**
+
 - `tasks/main.yml` - Main installation tasks
 - `handlers/main.yml` - Cleanup handlers
 - `files/.bashrc` - Bash configuration
@@ -55,6 +57,7 @@ dotfile-ansible/
 - `files/themes/axin/` - Custom bash theme
 
 **What It Does:**
+
 1. Installs oh-my-bash framework
 2. Copies custom .bashrc and .profile
 3. Deploys 17 utility script modules to `~/.config/bash/`
@@ -62,10 +65,12 @@ dotfile-ansible/
 5. Supports OS-specific configurations (Ubuntu, Arch, MacOS)
 
 **Dependencies:**
+
 - Oh-my-bash (downloaded during installation)
 - No Ansible Galaxy dependencies
 
 **Merge Strategy:**
+
 - **Standalone Role**: Copy entire `roles/bash/` directory
 - **Cherry-pick Scripts**: Copy individual scripts from `files/bash/` to your dotfiles
 - **Theme Only**: Copy just `files/themes/` if you want the theme
@@ -73,20 +78,25 @@ dotfile-ansible/
 ---
 
 ### 2. **NVIM ROLE** (Simple)
+
 **Location:** `roles/nvim/`
 
 **Purpose:** Installs Neovim nightly build on Arch Linux
 
 **Key Files:**
+
 - `tasks/main.yml` - Single task file
 
 **What It Does:**
+
 - Installs `neovim-git` package using AUR helper
 
 **Dependencies:**
+
 - Requires: `kewlfft.aur` collection (Arch Linux only)
 
 **Merge Strategy:**
+
 - **Direct Copy**: Copy entire role if you're on Arch
 - **Adapt**: Replace with your distro's package manager
 - **Skip**: If you already have neovim installation role
@@ -94,11 +104,13 @@ dotfile-ansible/
 ---
 
 ### 3. **SSH_VAULT ROLE** (Security Focused)
+
 **Location:** `roles/ssh_vault/`
 
 **Purpose:** Backup, encrypt, and manage SSH keys with Ansible Vault
 
 **Key Files:**
+
 - `tasks/main.yml` - Main orchestration
 - `decrypt_ssh_keys.yml` - Decryption tasks
 - `encrypt_and_upload_ssh_keys.yml` - Encryption tasks
@@ -106,6 +118,7 @@ dotfile-ansible/
 - `tests/test_encryption.yml` - Test suite
 
 **What It Does:**
+
 1. Creates backup of `~/.ssh/` directory
 2. Archives backup to `.tar.gz`
 3. Encrypts archive with ansible-vault
@@ -113,14 +126,17 @@ dotfile-ansible/
 5. Deploys SSH keys from vaulted variables
 
 **Dependencies:**
+
 - Ansible vault password file at `/home/skogix/.ssh/ansible-vault`
 - Variables: `ssh_private_key`, `ssh_public_key` (from `vars/ssh_keys.yml`)
 
 **⚠️ WARNING:**
+
 - Contains hardcoded username: `skogix`
 - **MUST UPDATE** paths before using in your setup
 
 **Merge Strategy:**
+
 - **Review & Adapt**: Update all hardcoded paths to use `{{ ansible_user_dir }}`
 - **Security Review**: Ensure vault password management fits your workflow
 - **Skip If Exists**: Only use if you don't have SSH key management
@@ -128,24 +144,29 @@ dotfile-ansible/
 ---
 
 ### 4. **SYSTEM ROLE** (Simple)
+
 **Location:** `roles/system/`
 
 **Purpose:** Basic system package management
 
 **Key Files:**
+
 - `tasks/main.yml` - Main tasks (Arch-specific currently)
 - `tasks/Archlinux.yml` - Arch Linux tasks
 - `tasks/Ubuntu.yml` - Ubuntu tasks
 - `tasks/MacOSX.yml` - MacOS tasks
 
 **What It Does:**
+
 - Updates package manager (pacman)
 - Installs `jq` package
 
 **Dependencies:**
+
 - Requires: `community.general` collection
 
 **Merge Strategy:**
+
 - **Extend**: Add to your existing system role
 - **Replace**: Use as template for multi-OS support structure
 - **Skip**: Very basic, likely redundant
@@ -155,9 +176,11 @@ dotfile-ansible/
 ## 📋 Variable Files
 
 ### **vars/main.yml**
+
 **Purpose:** General dotfiles configuration
 
 **Key Variables:**
+
 ```yaml
 dotfiles_repo_url: "https://github.com/skogix/.dotfiles.git"
 dotfiles_install_path: "{{ ansible_user_dir }}/.dotfiles"
@@ -169,6 +192,7 @@ default_shell: "/bin/bash"
 ```
 
 **Merge Strategy:**
+
 - **Extract Relevant**: Copy only variables you need
 - **Rename**: Integrate into your existing var structure
 - **⚠️ Update**: Change personal information
@@ -176,9 +200,11 @@ default_shell: "/bin/bash"
 ---
 
 ### **vars/groups.yml**
+
 **Purpose:** Role selection configuration
 
 **Key Variables:**
+
 ```yaml
 default_roles:
   - bash      # Only bash is enabled
@@ -186,17 +212,20 @@ default_roles:
 ```
 
 **Merge Strategy:**
+
 - **Reference**: Use as template for role selection pattern
 - **Copy Pattern**: Implement similar toggle system in your setup
 
 ---
 
 ### **vars/ssh_keys.yml**
+
 **Purpose:** Encrypted SSH key storage
 
 **⚠️ SENSITIVE FILE** - Contains vaulted SSH keys
 
 **Merge Strategy:**
+
 - **DO NOT COPY**: This is user-specific encrypted data
 - **Reference**: Use as template for your own vault structure
 
@@ -205,6 +234,7 @@ default_roles:
 ## 📦 External Dependencies
 
 ### **requirements/common.yml**
+
 ```yaml
 collections:
   - community.general
@@ -212,12 +242,14 @@ collections:
 ```
 
 ### **requirements/arch.yml**
+
 ```yaml
 collections:
   - kewlfft.aur
 ```
 
 **Merge Strategy:**
+
 - Add to your `requirements.yml`
 - Install with: `ansible-galaxy collection install -r requirements/common.yml`
 
@@ -226,6 +258,7 @@ collections:
 ## 🗂️ Imported Roles (roles-import/)
 
 **24 Imported Roles Available:**
+
 - bash, bat, brave, btop, fonts, fzf, gh, git, go, lazygit, lsd, lua
 - neovim, npm, nvm, python, rust, starship, system, tldr, tmux
 - warp, zoxide, zsh
@@ -233,6 +266,7 @@ collections:
 **Current Status:** All commented out in `vars/groups.yml`
 
 **Merge Strategy:**
+
 - **Evaluate Each**: Check if you need these
 - **Source**: These might be from Ansible Galaxy or custom
 - **Import**: Copy specific role directories as needed
@@ -242,22 +276,27 @@ collections:
 ## 🔧 Configuration Files
 
 ### **ansible.cfg**
+
 Key settings:
+
 - `roles_path = ./roles`
 - `stdout_callback = yaml`
 - `become = True`
 - SSH multiplexing configured
 
 **Merge Strategy:**
+
 - **Compare**: Review against your ansible.cfg
 - **Cherry-pick**: Take useful settings
 
 ---
 
 ### **inventory**
+
 Simple localhost inventory
 
 **Merge Strategy:**
+
 - **Skip**: Use your existing inventory
 
 ---
@@ -265,6 +304,7 @@ Simple localhost inventory
 ## 🚀 Integration Steps
 
 ### Option 1: Full Integration
+
 1. Copy `roles/bash/` to your roles directory
 2. Add Ansible collections to your requirements
 3. Copy relevant variables to your vars
@@ -272,13 +312,17 @@ Simple localhost inventory
 5. Run playbook
 
 ### Option 2: Selective Integration (Recommended)
+
 1. **Bash Scripts Only:**
+
    ```bash
    cp -r roles/bash/files/bash/* your-repo/files/bash/
    ```
+
    - Integrate individual scripts into your dotfiles
 
 2. **Custom Theme:**
+
    ```bash
    cp -r roles/bash/files/themes/axin your-repo/themes/
    ```
@@ -288,7 +332,9 @@ Simple localhost inventory
    - Adapt to your variable structure
 
 ### Option 3: Cherry-Pick Components
+
 Individual scripts can be used standalone:
+
 - Copy specific `roles/bash/files/bash/*.sh` files
 - Source them in your `.bashrc`
 - No Ansible needed for this approach
@@ -340,18 +386,21 @@ Individual scripts can be used standalone:
 ## 🎯 Recommended Merge Strategy
 
 **For Most Users:**
+
 1. Copy the 17 bash utility scripts individually
 2. Source them in your `.bashrc` manually
 3. Test each script independently
 4. Skip the full Ansible role unless you want oh-my-bash
 
 **For Ansible Power Users:**
+
 1. Copy entire `roles/bash/` directory
 2. Update requirements with needed collections
 3. Review and test role tasks
 4. Integrate into your playbook with proper variables
 
 **For Cherry-Pickers:**
+
 1. Identify specific utilities you need (e.g., git_functions.sh)
 2. Copy just those files
 3. Source in your shell config
@@ -369,6 +418,7 @@ Individual scripts can be used standalone:
 6. Commit changes to your repo
 
 **Questions to Consider:**
+
 - Do you already have bash configuration management?
 - Do you need all 17 utility scripts or just specific ones?
 - Are you using oh-my-bash or different framework?

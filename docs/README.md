@@ -5,16 +5,19 @@ Documentation for the Ansible Arch Linux automation system.
 ## Quick Links
 
 ### Essential Documentation
+
 - **[../CLAUDE.md](../CLAUDE.md)** - Complete project documentation
 - **[../README.md](../README.md)** - Project overview and quick start
 - **[../FILESTRUCTURE.md](../FILESTRUCTURE.md)** - Complete file structure
 
 ### Security Documentation 🔒
+
 - **[SECURITY.md](SECURITY.md)** - Security best practices and credential management
 - **[SECURITY_ASSESSMENT.md](SECURITY_ASSESSMENT.md)** - Security audit report (2025-12-25)
 - **[SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)** - Quick security validation checklist
 
 ### Role Documentation
+
 - **[../roles/packages/README.md](../roles/packages/README.md)** - Package management
 - **[../roles/ssh/README.md](../roles/ssh/README.md)** - SSH configuration
 - **[../roles/git/README.md](../roles/git/README.md)** - Git configuration
@@ -40,7 +43,9 @@ docs/
 ### Security Documentation 🔒
 
 #### SECURITY.md
+
 Comprehensive security guide covering:
+
 - Credential management (vault, passwords, keys)
 - Ansible Vault usage and best practices
 - Password file setup and permissions
@@ -51,7 +56,9 @@ Comprehensive security guide covering:
 - Secrets rotation schedule
 
 #### SECURITY_ASSESSMENT.md
+
 Detailed security audit report (2025-12-25) with:
+
 - Executive summary of security posture
 - Critical, high, medium, and low priority findings
 - Security best practices already implemented
@@ -61,7 +68,9 @@ Detailed security audit report (2025-12-25) with:
 - Testing and validation procedures
 
 #### SECURITY_CHECKLIST.md
+
 Quick reference checklist for:
+
 - Pre-deployment security checks
 - Post-change validation
 - Monthly security audits
@@ -142,6 +151,7 @@ When adding new automation:
 ## Security Best Practices
 
 Before making any changes:
+
 1. Review [SECURITY.md](SECURITY.md) for credential handling
 2. Check [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for validation steps
 3. Never commit unencrypted secrets or password files
