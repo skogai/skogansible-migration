@@ -216,6 +216,7 @@ ansible-vault view vars/cloudflared_vault.yml
 ### Permission Issues
 
 The role requires sudo for:
+
 - Creating `/etc/cloudflared/` directory
 - Writing token file
 - Installing systemd service
@@ -294,6 +295,7 @@ sudo pacman -R cloudflared
 ## Support
 
 For issues or questions:
+
 1. Check this guide and the role README
 2. Review service logs: `sudo journalctl -u cloudflared -f`
 3. Test vault decryption: `ansible-vault view vars/cloudflared_vault.yml`

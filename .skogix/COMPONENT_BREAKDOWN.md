@@ -25,9 +25,11 @@ Task Sequence:
 ```
 
 **Handlers:**
+
 - `Bash | Cleanup oh-my-bash install script` - Removes temp install script
 
 **Files Deployed:**
+
 ```
 Target: ~/.config/bash/
 ├── bat_functions.sh          # Bat (cat replacement) helpers
@@ -56,15 +58,18 @@ Target: ~/
 ```
 
 **Variables Used:**
+
 - `ansible_user_dir` - User home directory
 - `role_path` - Current role path
 - `ansible_distribution` - OS distribution (Ubuntu, Archlinux, etc.)
 - `ansible_os_family` - OS family (Debian, RedHat, etc.)
 
 **External Dependencies:**
+
 - None (oh-my-bash downloaded at runtime)
 
 **OS Support:**
+
 - ✅ All Linux distributions
 - ✅ MacOS
 - 🔍 Windows/WSL (untested)
@@ -72,72 +77,84 @@ Target: ~/
 ### Individual Script Breakdown
 
 #### 1. **bat_functions.sh**
+
 - **Purpose:** Enhanced `cat` command alternatives using `bat`
 - **Dependencies:** Requires `bat` package
 - **Merge Impact:** Low - Can be used standalone
 - **Example Functions:** Syntax-highlighted file viewing
 
 #### 2. **git_functions.sh**
+
 - **Purpose:** Advanced git workflows
 - **Dependencies:** Git
 - **Merge Impact:** Medium - May conflict with existing git helpers
 - **Example Functions:** Likely includes branch management, commit helpers
 
 #### 3. **git_aliases.sh**
+
 - **Purpose:** Git command shortcuts
 - **Dependencies:** Git
 - **Merge Impact:** Medium - May conflict with existing aliases
 - **Example Aliases:** Common git operations (gst, gco, etc.)
 
 #### 4. **neovim_functions.sh** & **neovim_aliases.sh**
+
 - **Purpose:** Neovim workflow enhancements
 - **Dependencies:** Neovim
 - **Merge Impact:** Low - Only affects nvim users
 - **Example Functions:** Project management, config switching
 
 #### 5. **pkg_functions.sh**
+
 - **Purpose:** Package manager wrapper functions
 - **Dependencies:** System package manager (pacman, apt, brew, etc.)
 - **Merge Impact:** High - May conflict with existing package helpers
 - **Example Functions:** Universal install/update/search commands
 
 #### 6. **paths_functions.sh** & **paths_vars.sh**
+
 - **Purpose:** PATH and directory navigation management
 - **Dependencies:** None
 - **Merge Impact:** Medium - Modifies PATH
 - **Example Functions:** Add/remove from PATH, directory bookmarks
 
 #### 7. **gpt_functions.sh**
+
 - **Purpose:** AI/GPT integration for shell
 - **Dependencies:** API keys, curl/wget
 - **Merge Impact:** Low - Optional enhancement
 - **Example Functions:** Command-line AI queries
 
 #### 8. **speedtest_functions.sh**
+
 - **Purpose:** Network performance testing
 - **Dependencies:** speedtest-cli or similar
 - **Merge Impact:** Low - Standalone utility
 - **Example Functions:** Quick speed tests, logging
 
 #### 9. **lsd_aliases.sh**
+
 - **Purpose:** Aliases for `lsd` (LSDeluxe - modern ls)
 - **Dependencies:** `lsd` package
 - **Merge Impact:** Low - Only affects ls commands
 - **Example Aliases:** ls, ll, la, tree alternatives
 
 #### 10. **dotfiles_completions.sh** & **git_completions.sh**
+
 - **Purpose:** Tab completion for custom commands
 - **Dependencies:** bash-completion
 - **Merge Impact:** Low - Enhancements only
 - **Example:** Auto-complete for dotfile commands
 
 #### 11. **vars.sh**
+
 - **Purpose:** General shell variables
 - **Dependencies:** None
 - **Merge Impact:** Medium - Sets environment variables
 - **Example Vars:** Editor, locale, history settings
 
 #### 12. **misc_aliases.sh**
+
 - **Purpose:** General utility aliases
 - **Dependencies:** Various (cd, mkdir, etc.)
 - **Merge Impact:** Medium - May overlap with existing aliases
@@ -157,19 +174,24 @@ Task Sequence:
 **Simple Role - Single Task**
 
 **Variables Used:**
+
 - None
 
 **External Dependencies:**
+
 - `kewlfft.aur` collection (Ansible Galaxy)
 - AUR helper (yay, paru, etc.)
 
 **OS Support:**
+
 - ✅ Arch Linux only
 - ❌ Other distributions need adaptation
 
 **Merge Strategy:**
+
 - Replace with your distro's neovim package
 - Example alternatives:
+
   ```yaml
   # Ubuntu/Debian
   - apt: name=neovim state=present
@@ -208,18 +230,22 @@ Task Sequence:
 ```
 
 **⚠️ Critical Path Issues:**
+
 - Hardcoded path: `/home/skogix/.ssh/ansible-vault`
 - Hardcoded path: `/home/skogix/.ssh_backup`
 
 **Variables Required:**
+
 - `ssh_private_key` - Content of private key (vaulted)
 - `ssh_public_key` - Content of public key (vaulted)
 
 **External Dependencies:**
+
 - ansible-vault
 - Vault password file at specified location
 
 **Files Modified:**
+
 ```
 Created:
 - ~/.ssh_backup/
@@ -232,6 +258,7 @@ Temporary:
 ```
 
 **Security Considerations:**
+
 1. Private key stored in vault
 2. Vault password file must be pre-existing
 3. Backup created before deployment
@@ -239,6 +266,7 @@ Temporary:
 5. Temporary decrypted password file cleaned up
 
 **Merge Requirements:**
+
 1. Update all `/home/skogix/` references to `{{ ansible_user_dir }}`
 2. Ensure vars/ssh_keys.yml is vaulted
 3. Set up vault password file location
@@ -257,21 +285,26 @@ Task Sequence (Arch Linux):
 ```
 
 **Additional Task Files:**
+
 - `Archlinux.yml` - Arch-specific tasks
 - `Ubuntu.yml` - Ubuntu-specific tasks (likely empty or unused)
 - `MacOSX.yml` - MacOS-specific tasks (likely empty or unused)
 
 **Variables Used:**
+
 - None
 
 **External Dependencies:**
+
 - `community.general` collection
 
 **OS Support:**
+
 - ✅ Arch Linux (implemented)
 - ⚠️ Ubuntu, MacOS (task files exist but may be empty)
 
 **Merge Strategy:**
+
 - Very basic - likely redundant
 - Consider merging into existing system/package management role
 - Add OS-specific tasks to existing multi-OS role structure
@@ -329,11 +362,13 @@ ssh_vault role
 ### Minimal Integration (Bash Scripts Only)
 
 **Dependencies:**
+
 ```
 None - Scripts can be sourced independently
 ```
 
 **Steps:**
+
 1. Copy `roles/bash/files/bash/*.sh` to your dotfiles
 2. Source in `.bashrc`: `for script in ~/.config/bash/*.sh; do source "$script"; done`
 
@@ -346,12 +381,14 @@ None - Scripts can be sourced independently
 ### Full Bash Role Integration
 
 **Dependencies:**
+
 ```
 Ansible → None (oh-my-bash downloaded at runtime)
 System → bash, wget/curl (for oh-my-bash install)
 ```
 
 **Steps:**
+
 1. Copy `roles/bash/` to your roles directory
 2. Run role in playbook
 3. Oh-my-bash auto-installs
@@ -365,6 +402,7 @@ System → bash, wget/curl (for oh-my-bash install)
 ### Complete Repository Integration
 
 **Dependencies:**
+
 ```
 Ansible Collections:
   - community.general (system role)
@@ -380,6 +418,7 @@ External:
 ```
 
 **Steps:**
+
 1. Install collections: `ansible-galaxy collection install -r requirements/common.yml`
 2. Update all personal information in vars/
 3. Copy all roles to your repository
@@ -398,12 +437,14 @@ External:
 ### Files by Category
 
 #### **Executable/Scripts (22 files)**
+
 ```
 roles/bash/files/bash/*.sh (17 files)
 roles/bash/files/themes/axin/axin.theme.sh (1 file)
 ```
 
 #### **Configuration (4 files)**
+
 ```
 roles/bash/files/.bashrc
 roles/bash/files/.profile
@@ -412,12 +453,14 @@ inventory
 ```
 
 #### **Ansible Playbooks (2 files)**
+
 ```
 main.yml
 playbook.yml
 ```
 
 #### **Ansible Tasks (12 files)**
+
 ```
 roles/bash/tasks/main.yml
 roles/bash/handlers/main.yml
@@ -434,6 +477,7 @@ roles/system/tasks/MacOSX.yml
 ```
 
 #### **Variables (3 files)**
+
 ```
 vars/main.yml
 vars/groups.yml
@@ -441,12 +485,14 @@ vars/ssh_keys.yml (vaulted)
 ```
 
 #### **Requirements (2 files)**
+
 ```
 requirements/common.yml
 requirements/arch.yml
 ```
 
 #### **Imported Roles (24 directories)**
+
 ```
 roles-import/*/ (not analyzed in detail)
 ```
@@ -478,12 +524,14 @@ roles-import/*/ (not analyzed in detail)
 ## 🚦 Integration Priority Ranking
 
 ### Priority 1: HIGH VALUE, LOW RISK
+
 1. **Bash utility scripts** (standalone copy)
    - Impact: Immediate productivity boost
    - Risk: None (doesn't affect existing config)
    - Time: 10 minutes
 
 ### Priority 2: MEDIUM VALUE, MEDIUM RISK
+
 2. **Bash role** (full Ansible integration)
    - Impact: Automated bash environment
    - Risk: Overwrites .bashrc (backup first!)
@@ -495,6 +543,7 @@ roles-import/*/ (not analyzed in detail)
    - Time: 20 minutes
 
 ### Priority 3: LOW VALUE or HIGH RISK
+
 4. **SSH vault role** (after security review)
    - Impact: Automated SSH key management
    - Risk: High (sensitive data, needs path updates)
@@ -525,6 +574,7 @@ roles-import/*/ (not analyzed in detail)
 ## 🎬 Quick Start Commands
 
 ### Install Dependencies
+
 ```bash
 # Install Ansible collections
 ansible-galaxy collection install -r requirements/common.yml
@@ -532,6 +582,7 @@ ansible-galaxy collection install -r requirements/arch.yml  # Arch only
 ```
 
 ### Test Single Role
+
 ```bash
 # Test bash role only
 ansible-playbook main.yml --tags bash
@@ -541,6 +592,7 @@ ansible-playbook main.yml -e "run_roles=[bash]"
 ```
 
 ### Copy Scripts Only (No Ansible)
+
 ```bash
 # Copy to your dotfiles
 cp -r roles/bash/files/bash ~/.config/
@@ -550,6 +602,7 @@ echo 'for script in ~/.config/bash/*.sh; do source "$script"; done' >> ~/.bashrc
 ```
 
 ### Integration Test Environment
+
 ```bash
 # Create test user/container
 docker run -it ubuntu:22.04 bash
