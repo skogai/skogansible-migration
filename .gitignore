@@ -1,6 +1,6 @@
 backup/todo
 /tmp/*
-
-# Unencrypted vault files (only commit .template or encrypted versions)
-vars/*_vault.yml
-!vars/*_vault.yml.template
+roles/ssh/files/test_examples/
+.worktrees/*
+!.worktrees/.gitkeep
+.worktrees/

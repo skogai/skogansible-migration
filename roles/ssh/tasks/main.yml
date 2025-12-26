@@ -28,26 +28,66 @@
 # SSH Key Deployment (from Vault)
 # ==============================================================================
 
-- name: "SSH | Deploy SSH keys from vault"
+- name: "SSH | Deploy SSH keys from vault (all types)"
   when: ssh_deploy_from_vault | bool
   tags: [ssh, ssh-keys, ssh-vault]
   block:
-    - name: "SSH | Deploy SSH private key"
+    - name: "SSH | Deploy ED25519 private key"
       ansible.builtin.copy:
-        content: "{{ ssh_private_key_content }}"
-        dest: "{{ ssh_key_private }}"
+        content: "{{ ssh_private_key_ed25519 }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519"
         mode: "{{ ssh_private_key_mode }}"
         owner: "{{ ansible_facts['user_id'] }}"
         group: "{{ ansible_facts['user_id'] }}"
-      no_log: true # Don't log private key content
+      when: ssh_private_key_ed25519 is defined and ssh_private_key_ed25519 | length > 0
+      no_log: true
 
-    - name: "SSH | Deploy SSH public key"
+    - name: "SSH | Deploy ED25519 public key"
       ansible.builtin.copy:
-        content: "{{ ssh_public_key_content }}"
-        dest: "{{ ssh_key_public }}"
+        content: "{{ ssh_public_key_ed25519 }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519.pub"
         mode: "{{ ssh_public_key_mode }}"
         owner: "{{ ansible_facts['user_id'] }}"
         group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_public_key_ed25519 is defined and ssh_public_key_ed25519 | length > 0
+
+    - name: "SSH | Deploy RSA private key"
+      ansible.builtin.copy:
+        content: "{{ ssh_private_key_rsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_rsa"
+        mode: "{{ ssh_private_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_private_key_rsa is defined and ssh_private_key_rsa | length > 0
+      no_log: true
+
+    - name: "SSH | Deploy RSA public key"
+      ansible.builtin.copy:
+        content: "{{ ssh_public_key_rsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_rsa.pub"
+        mode: "{{ ssh_public_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_public_key_rsa is defined and ssh_public_key_rsa | length > 0
+
+    - name: "SSH | Deploy ECDSA private key"
+      ansible.builtin.copy:
+        content: "{{ ssh_private_key_ecdsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ecdsa"
+        mode: "{{ ssh_private_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_private_key_ecdsa is defined and ssh_private_key_ecdsa | length > 0
+      no_log: true
+
+    - name: "SSH | Deploy ECDSA public key"
+      ansible.builtin.copy:
+        content: "{{ ssh_public_key_ecdsa }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ecdsa.pub"
+        mode: "{{ ssh_public_key_mode }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
+      when: ssh_public_key_ecdsa is defined and ssh_public_key_ecdsa | length > 0
 
 # ==============================================================================
 # SSH Key Generation
