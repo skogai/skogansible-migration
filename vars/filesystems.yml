@@ -2,6 +2,14 @@
 # Filesystem mounts configuration
 # Manages data drive mounts for the system
 
+# WARNING: The UUIDs below are specific to skogix's machine.
+# These values MUST be updated for your system before running this role.
+#
+# To find your filesystem UUIDs, run:
+#   sudo blkid                    # List all block devices with UUIDs
+#   sudo blkid /dev/sdX1          # Check specific device
+#   lsblk -f                      # Alternative with filesystem info
+#
 # List of filesystem mounts to manage
 data_mounts:
   - path: /mnt/extra

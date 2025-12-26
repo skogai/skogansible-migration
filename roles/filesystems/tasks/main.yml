@@ -2,6 +2,41 @@
 # Filesystems Role - Main Tasks Orchestrator
 
 # ==============================================================================
+# Validate UUIDs
+# ==============================================================================
+
+- name: "Filesystems | Verify UUIDs exist on system"
+  become: true
+  ansible.builtin.command: blkid -U {{ item.uuid }}
+  register: blkid_check
+  failed_when: false
+  changed_when: false
+  loop: "{{ data_mounts }}"
+  loop_control:
+    label: "{{ item.path }} (UUID: {{ item.uuid }})"
+  when:
+    - data_mounts is defined
+    - item.state is defined
+    - item.state in ['mounted', 'present']
+  tags:
+    - filesystems
+    - filesystems-validate
+
+- name: "Filesystems | Report missing UUIDs"
+  ansible.builtin.fail:
+    msg: "UUID {{ item.item.uuid }} for {{ item.item.path }} not found on system. Check 'sudo blkid' output."
+  loop: "{{ blkid_check.results }}"
+  loop_control:
+    label: "{{ item.item.path }}"
+  when:
+    - blkid_check is defined
+    - item.rc is defined
+    - item.rc != 0
+  tags:
+    - filesystems
+    - filesystems-validate
+
+# ==============================================================================
 # Create Mount Points
 # ==============================================================================
 
@@ -14,6 +49,8 @@
     owner: "{{ filesystems_mount_point_owner }}"
     group: "{{ filesystems_mount_point_group }}"
   loop: "{{ data_mounts }}"
+  loop_control:
+    label: "{{ item.path }}"
   when:
     - filesystems_create_mount_points
     - data_mounts is defined
@@ -39,6 +76,8 @@
     passno: "{{ item.passno | default(2) }}"
     backup: "{{ filesystems_backup_fstab }}"
   loop: "{{ data_mounts }}"
+  loop_control:
+    label: "{{ item.path }} ({{ item.fstype }})"
   when:
     - filesystems_manage_mounts
     - data_mounts is defined
