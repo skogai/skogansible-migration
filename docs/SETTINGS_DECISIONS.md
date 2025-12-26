@@ -64,6 +64,8 @@
 |---------|-------|-------|
 | `locale` | `en_US.UTF-8` | All repos agree |
 | `aur_helper` | `yay` | Current repo uses yay |
+| `window_manager` | `i3` | vars/chezmoi.yml:60 - X11-based WM |
+| `display_server` | `X11` | Uses i3, not Wayland/sway |
 
 ---
 
@@ -101,19 +103,15 @@
 
 ---
 
-### 3. Window Manager
+### 3. Window Manager ✅ RESOLVED
 
 **Question:** Which window manager is primary?
 
-**Options found:**
+**Answer:** `i3` (confirmed in vars/chezmoi.yml:60)
 
-- `i3` (current repo chezmoi.yml)
-- `sway` (ansible-base user.yml)
-- `i3wm` (archive system.yml)
+**Resolution:** Confirmed by examining vars/chezmoi.yml which explicitly sets `chezmoi_wm: i3`. This is an X11-based window manager, confirming the system uses X11 (not Wayland). Moved to Confirmed Decisions table above.
 
-**Context:** i3 = X11, sway = Wayland. Which is currently in use?
-
-**Answer:** `_______________` <!-- @skogix: i3 or sway? -->
+**Date Resolved:** 2025-12-26
 
 ---
 
@@ -270,7 +268,7 @@ pacman:
 
 | Setting | Conflict | Resolution | Date |
 |---------|----------|------------|------|
-| _None yet_ | | | |
+| `wm_type` | `i3` vs `sway` | Confirmed `i3` from vars/chezmoi.yml:60 | 2025-12-26 |
 
 ### Unresolved Conflicts
 
@@ -278,7 +276,6 @@ pacman:
 |---------|--------------|-------|
 | `git_email` in users array | `emil@skogsund.se` vs `emil.skogsund@gmail.com` | Human decision |
 | `symlink_force` | `true` (ansible-base) vs `false` (user.yml) | Human decision |
-| `wm_type` | `i3` vs `sway` | Human decision |
 
 ---
 
