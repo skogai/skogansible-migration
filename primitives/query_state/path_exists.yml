@@ -1,0 +1,41 @@
+---
+# Primitive: query_state/path_exists
+# Purpose: Check if path exists and register result
+# Usage: include_tasks with path_* variables
+#
+# Required variables:
+#   path_to_check: string - Path to check
+#   path_register_var: string - Variable name to register result
+#
+# Optional variables:
+#   path_follow: bool - Follow symlinks (default: false)
+#   path_get_checksum: bool - Get file checksum (default: false)
+#   path_get_mime: bool - Get MIME type (default: false)
+#
+# Example:
+#   - include_tasks: primitives/query_state/path_exists.yml
+#     vars:
+#       path_to_check: /usr/bin/yay
+#       path_register_var: yay_stat
+#
+#   - debug:
+#       msg: "yay exists: {{ yay_stat.stat.exists }}"
+#
+# Result structure:
+#   {{ path_register_var }}.stat.exists: bool
+#   {{ path_register_var }}.stat.isdir: bool
+#   {{ path_register_var }}.stat.isreg: bool
+#   {{ path_register_var }}.stat.mode: string
+#   {{ path_register_var }}.stat.size: int
+
+- name: "Check if {{ path_to_check }} exists"
+  ansible.builtin.stat:
+    path: "{{ path_to_check }}"
+    follow: "{{ path_follow | default(false) }}"
+    get_checksum: "{{ path_get_checksum | default(false) }}"
+    get_mime: "{{ path_get_mime | default(false) }}"
+  register: "{{ path_register_var }}"
+  tags:
+    - query
+    - primitive
+    - query_state

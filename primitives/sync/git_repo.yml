@@ -1,0 +1,41 @@
+---
+# Primitive: sync/git_repo
+# Purpose: Clone or update git repository
+# Usage: include_tasks with git_* variables
+#
+# Required variables:
+#   git_repo: string - Git repository URL
+#   git_dest: string - Destination path
+#
+# Optional variables:
+#   git_version: string - Branch/tag/commit (default: HEAD)
+#   git_update: bool - Update if exists (default: true)
+#   git_force: bool - Discard local changes (default: false)
+#   git_depth: int - Shallow clone depth (default: 0 = full)
+#   git_accept_hostkey: bool - Auto-accept SSH host key (default: false)
+#   git_key_file: string - SSH key file path
+#
+# Example:
+#   - include_tasks: primitives/sync/git_repo.yml
+#     vars:
+#       git_repo: https://aur.archlinux.org/yay.git
+#       git_dest: /home/aur_builder/yay
+#       git_version: master
+#       git_update: true
+
+- name: "Sync git repository {{ git_repo }} to {{ git_dest }}"
+  become: "{{ git_become | default(false) }}"
+  become_user: "{{ git_become_user | default(omit) }}"
+  ansible.builtin.git:
+    repo: "{{ git_repo }}"
+    dest: "{{ git_dest }}"
+    version: "{{ git_version | default('HEAD') }}"
+    update: "{{ git_update | default(true) }}"
+    force: "{{ git_force | default(false) }}"
+    depth: "{{ git_depth | default(0) }}"
+    accept_hostkey: "{{ git_accept_hostkey | default(false) }}"
+    key_file: "{{ git_key_file | default(omit) }}"
+  tags:
+    - git
+    - primitive
+    - sync

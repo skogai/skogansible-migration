@@ -1,0 +1,39 @@
+---
+# Primitive: ensure_content/template
+# Purpose: Template file with Jinja2 variables
+# Usage: include_tasks with template_* variables
+#
+# Required variables:
+#   template_src: string - Template file path (*.j2)
+#   template_dest: string - Destination path
+#
+# Optional variables:
+#   template_mode: string - File permissions (default: "0644")
+#   template_owner: string - File owner
+#   template_group: string - File group
+#   template_backup: bool - Backup existing file (default: false)
+#   template_force: bool - Overwrite if different (default: true)
+#   template_validate: string - Command to validate file
+#
+# Example:
+#   - include_tasks: primitives/ensure_content/template.yml
+#     vars:
+#       template_src: templates/ssh_config.j2
+#       template_dest: ~/.ssh/config
+#       template_mode: "0600"
+
+- name: "Template {{ template_src }} to {{ template_dest }}"
+  become: "{{ template_become | default(false) }}"
+  ansible.builtin.template:
+    src: "{{ template_src }}"
+    dest: "{{ template_dest }}"
+    mode: "{{ template_mode | default('0644') }}"
+    owner: "{{ template_owner | default(omit) }}"
+    group: "{{ template_group | default(omit) }}"
+    backup: "{{ template_backup | default(false) }}"
+    force: "{{ template_force | default(true) }}"
+    validate: "{{ template_validate | default(omit) }}"
+  tags:
+    - files
+    - primitive
+    - ensure_content

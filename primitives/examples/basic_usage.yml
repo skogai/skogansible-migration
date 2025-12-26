@@ -1,0 +1,74 @@
+---
+# Example Playbook: Basic Primitives Usage
+# This playbook demonstrates how to use each primitive independently
+#
+# Run with: ansible-playbook primitives/examples/basic_usage.yml
+
+- name: Primitives Basic Usage Examples
+  hosts: localhost
+  connection: local
+  become: false
+
+  tasks:
+    - name: "Example 1: Install a package"
+      include_tasks: ../ensure_state/package.yml
+      vars:
+        package_name: tree
+        package_state: present
+      tags:
+        - example
+        - package
+
+    - name: "Example 2: Check if a path exists"
+      include_tasks: ../query_state/path_exists.yml
+      vars:
+        path_to_check: /usr/bin/tree
+        path_register_var: tree_stat
+      tags:
+        - example
+        - query
+
+    - name: Display path query result
+      debug:
+        msg: "tree exists: {{ tree_stat.stat.exists }}"
+      tags:
+        - example
+        - query
+
+    - name: "Example 3: Ensure a line in a file"
+      include_tasks: ../ensure_content/line_in_file.yml
+      vars:
+        line_path: /tmp/test_primitives.txt
+        line_content: "This line was added by primitives!"
+        line_create: true
+        line_mode: "0644"
+      tags:
+        - example
+        - content
+
+    - name: "Example 4: Copy a file"
+      include_tasks: ../ensure_content/file_copy.yml
+      vars:
+        file_src: ../README.md
+        file_dest: /tmp/primitives_readme_copy.md
+        file_mode: "0644"
+      tags:
+        - example
+        - content
+
+    - name: "Example 5: Execute a command"
+      include_tasks: ../execute/command.yml
+      vars:
+        command_cmd: "echo 'Hello from primitives' > /tmp/primitives_hello.txt"
+        command_creates: /tmp/primitives_hello.txt
+        command_register_var: echo_result
+      tags:
+        - example
+        - execute
+
+    - name: Display command result
+      debug:
+        msg: "Command changed: {{ echo_result.changed }}"
+      tags:
+        - example
+        - execute

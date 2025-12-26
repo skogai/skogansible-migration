@@ -1,0 +1,43 @@
+---
+# Primitive: ensure_content/line_in_file
+# Purpose: Ensure specific line exists in file
+# Usage: include_tasks with line_* variables
+#
+# Required variables:
+#   line_path: string - File path
+#   line_content: string - Line to ensure exists
+#
+# Optional variables:
+#   line_state: present|absent - Default: present
+#   line_create: bool - Create file if missing (default: false)
+#   line_mode: string - File permissions if creating (default: "0644")
+#   line_regexp: string - Regex to find line to replace
+#   line_insertafter: string - Insert after this pattern
+#   line_insertbefore: string - Insert before this pattern
+#   line_validate: string - Command to validate file (use %s for temp file)
+#
+# Example:
+#   - include_tasks: primitives/ensure_content/line_in_file.yml
+#     vars:
+#       line_path: /etc/sudoers.d/11-install-aur_builder
+#       line_content: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+#       line_create: true
+#       line_mode: "0644"
+#       line_validate: 'visudo -cf %s'
+
+- name: "Ensure line in {{ line_path }}"
+  become: "{{ line_become | default(false) }}"
+  ansible.builtin.lineinfile:
+    path: "{{ line_path }}"
+    line: "{{ line_content }}"
+    state: "{{ line_state | default('present') }}"
+    create: "{{ line_create | default(false) }}"
+    mode: "{{ line_mode | default('0644') }}"
+    regexp: "{{ line_regexp | default(omit) }}"
+    insertafter: "{{ line_insertafter | default(omit) }}"
+    insertbefore: "{{ line_insertbefore | default(omit) }}"
+    validate: "{{ line_validate | default(omit) }}"
+  tags:
+    - files
+    - primitive
+    - ensure_content
