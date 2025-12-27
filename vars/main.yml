@@ -20,4 +20,4 @@ default_pager: "bat"
 
 # Machine-specific identifiers (used by chezmoi, ssh, etc.)
 machine_hostname: "{{ inventory_hostname }}"
-machine_type: "workstation"  # workstation, laptop, server
+machine_type: "workstation" # workstation, laptop, server
