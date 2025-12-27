@@ -1,0 +1,414 @@
+# ============================================================================
+# ZSH Configuration with zplug
+# Environment variables managed by: skogcli config
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# zplug Plugin Manager
+# ----------------------------------------------------------------------------
+export ZPLUG_HOME="${HOME}/.zplug"
+
+# check if zplug is installed
+if [[ ! -d $ZPLUG_HOME ]]; then
+  git clone https://github.com/zplug/zplug $ZPLUG_HOME
+fi
+
+source $ZPLUG_HOME/init.zsh
+
+# zsh-users plugins
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-history-substring-search", defer:3
+
+
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+zplug "geometry-zsh/geometry"
+
+# oh-my-zsh plugins via zplug
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/docker", from:oh-my-zsh
+zplug "plugins/sudo", from:oh-my-zsh
+zplug "plugins/ssh-agent", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
+zplug "plugins/direnv", from:oh-my-zsh
+zplug "plugins/virtualenv", from:oh-my-zsh
+zplug "plugins/pyenv", from:oh-my-zsh
+zplug "plugins/npm", from:oh-my-zsh
+# zplug "plugins/nvm", from:oh-my-zsh
+zplug "plugins/colored-man-pages", from:oh-my-zsh
+zplug "plugins/extract", from:oh-my-zsh
+zplug "plugins/z", from:oh-my-zsh
+# [TODO] zplug "plugins/tailscale", from:oh-my-zsh  # Requires tailscale to be installed
+zplug "plugins/ansible", from:oh-my-zsh    # Requires ansible to be installed
+
+# additional plugins
+# zplug "changyuheng/fz", defer:1
+# zplug "rupa/z", use:z.sh
+
+# theme (commented out, using simple prompt for now)
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+# zplug "mafredri/zsh-async", from:github, defer:0
+
+# install plugins if not installed
+if ! zplug check --verbose; then
+  zplug install
+fi
+
+# load plugins
+zplug load
+
+# ----------------------------------------------------------------------------
+# Environment Variables
+# ----------------------------------------------------------------------------
+# SkogAI configuration
+export SKOGAI="/home/skogix/skogai"
+export SKOGAI_CONFIG_DIR="/home/skogix/skogai/config"
+
+# ============================================================================
+# PATH Configuration (organized by priority)
+# ============================================================================
+
+# User binaries (highest priority)
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+# Development tools
+export PATH="$HOME/.cargo/bin:$PATH"              # Rust packages
+export PATH="$GOPATH/bin:$PATH"                   # Go packages (5000+ binaries)
+
+# Package managers
+export PATH="$HOME/.local/share/pnpm:$PATH"       # pnpm global packages
+
+# Uncomment when these tools are installed:
+# export PATH="$HOME/.dotnet/tools:$PATH"          # .NET tools
+# export PATH="$HOME/.lmstudio/bin:$PATH"          # LM Studio
+# export PATH="/mnt/extra/npm/global/bin:$PATH"    # npm global (if not using NVM)
+export PATH="$HOME/.opencode/bin:$PATH"                   # opencode
+
+# Set your preferred editor
+export EDITOR='nvim'  # or 'vim' if you prefer
+
+# [TODO] Terminal color enhancements for less pager
+# export LESS_TERMCAP_md="$(tput bold 2> /dev/null; tput setaf 2 2> /dev/null)"
+# export LESS_TERMCAP_me="$(tput sgr0 2> /dev/null)"
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ----------------------------------------------------------------------------
+# History Configuration
+# ----------------------------------------------------------------------------
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+
+# ----------------------------------------------------------------------------
+# Completion Settings
+# ----------------------------------------------------------------------------
+# Custom completions directories
+fpath+=~/.zsh-completions
+fpath+=~/.zsh-completions/completions
+
+# Initialize completions
+autoload -Uz compinit
+compinit
+
+# Enable advanced tab completion
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:descriptions' format '%d'
+zstyle ':completion:*:options' verbose yes
+zstyle ':completion:*:values' verbose yes
+zstyle ':completion:*:options' prefix-needed yes
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*:default' menu select=1
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'l:|=* r:|[.,_-]=* r:|=* m:{a-z}={A-Z}'
+# sudo completions
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+zstyle ':completion:*' keep-prefix
+zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
+zstyle ':completion:*:processes' command "ps -u $USER -o pid,stat,%cpu,%mem,cputime,command"
+
+# ----------------------------------------------------------------------------
+# Basic Options
+# ----------------------------------------------------------------------------
+# Directory navigation
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
+# Other options
+unsetopt CORRECT
+setopt INTERACTIVE_COMMENTS
+setopt PROMPT_SUBST
+
+# ----------------------------------------------------------------------------
+# Aliases
+# ----------------------------------------------------------------------------
+# Navigation & Tools (using eza for colors)
+alias ls='eza --color=always --group-directories-first'
+alias ll='eza -alF --color=always --group-directories-first --icons'
+alias la='eza -a --color=always --group-directories-first'
+alias lsa='eza -a --color=always --group-directories-first'
+alias l='eza -F --color=always --group-directories-first'
+alias lt='eza -aT --color=always --group-directories-first --icons'
+alias l.='eza -a | grep -E "^\."'
+alias lg='lazygit'
+alias c='clear'
+alias open='xdg-open'
+
+# Git shortcuts
+alias gs='git status'
+alias gp='git pull'
+alias gc='git commit'
+alias gco='git checkout'
+alias gb='git branch'
+alias gd='git diff'
+alias ga='git add'
+
+# Clipboard (Linux)
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
+# Config editing
+alias zshrc='nvim ~/.zshrc'
+# alias skenv='skogcli config list --env-only'
+# alias skadd='skogcli config add skogai.env.'
+
+# System (Arch)
+alias update='sudo pacman -Syu'
+alias rmpkg='sudo pacman -Rsn'
+alias cleanup='sudo pacman -Rsn $(pacman -Qtdq) 2>/dev/null || echo "No orphans"'
+alias jctl='journalctl -p 3 -xb'
+alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+
+# Build tools
+alias make='make -j$(nproc)'
+alias ninja='ninja -j$(nproc)'
+alias n='ninja'
+
+# [TODO] Development/Project-specific aliases
+source /home/skogix/.ssh/openrouter
+export OPENROUTER_API_KEY=$OPENROUTER_API_KEY
+alias commit='aider --commit --model openrouter/meta-llama/llama-3-70b-instruct:nitro --no-gitignore --set-env OPENROUTER_API_KEY=$OPENROUTER_API_KEY'
+alias gemini='node /home/skogix/.local/src/gemini-cli/scripts/start.js'
+# alias gemini-cli="npx @google/gemini-cli"
+# alias qwen='node /mnt/extra/20250730-skogai-main/dev/qwen-code/scripts/start.js'
+
+export FZF_BASE=/usr/share/fzf
+
+# [TODO] Advanced pacman/fzf integration (requires fzf)
+# alias fzf-pacman="pacman -Slq | fzf --preview 'pacman -Si {1}' --layout=reverse --bind 'enter:execute(sudo pacman -S {1})'"
+
+# Enable color support of ls
+# if [ -x /usr/bin/dircolors ]; then
+#     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+#     alias ls='ls --color=auto'
+#     alias grep='grep --color=auto'
+#     alias fgrep='fgrep --color=auto'
+#     alias egrep='egrep --color=auto'
+# fi
+
+# ----------------------------------------------------------------------------
+# Key Bindings
+# ----------------------------------------------------------------------------
+bindkey -v  # Use vi key bindings
+bindkey "^P" up-line-or-search
+
+# key bindings for history substring search (from zsh-history-substring-search plugin)
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# ----------------------------------------------------------------------------
+# External Integrations
+# ----------------------------------------------------------------------------
+# aichat shell integration (if available)
+source "$HOME/.local/src/aichat/scripts/shell-integration/integration.zsh"
+
+export ARGC_COMPLETIONS_ROOT="/home/skogix/.local/src/argc-completions"
+export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
+export PATH="$ARGC_COMPLETIONS_ROOT/bin:$PATH"
+# Generate completion scripts list
+argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" 2>/dev/null | sed -n 's/\.sh$//p') )
+source <(argc --argc-completions zsh $argc_scripts)
+
+# aichat keybinding (Alt+E)
+_aichat_zsh() {
+    if [[ -n "$BUFFER" ]]; then
+        local _old=$BUFFER
+        BUFFER+="⌛"
+        zle -I && zle redisplay
+        BUFFER=$(aichat -e "$_old")
+        zle end-of-line
+    fi
+}
+zle -N _aichat_zsh
+bindkey '\ee' _aichat_zsh
+
+# ----------------------------------------------------------------------------
+# Load Environment Variables from skogcli
+# ----------------------------------------------------------------------------
+# [TODO] System-specific NVM initialization (check path)
+# source $HOME/.nvm/nvm.sh
+source /usr/share/nvm/init-nvm.sh
+source /home/skogix/.nvm/nvm.sh
+# Loads all environment variables managed by skogcli
+# To add: skogcli config add skogai.env.VAR_NAME "value"
+# To list: skogcli config list --env-only
+eval "$(skogcli config export-env --namespace skogai,uv)"
+
+# Load OpenRouter API key
+[ -f "$HOME/.ssh/openrouter" ] && source "$HOME/.ssh/openrouter"
+export OPENROUTER_API_KEY=$OPENROUTER_API_KEY
+
+# Load local configuration if it exists
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# ----------------------------------------------------------------------------
+# [TODO] XDG Base Directory Specification
+# ----------------------------------------------------------------------------
+# export ANSIBLE_HOME="$XDG_DATA_HOME"/ansible
+# export AZURE_CONFIG_DIR="$XDG_DATA_HOME"/azure
+# export HISTFILE="${XDG_STATE_HOME}"/bash/history
+# export CALCHISTFILE="$XDG_CACHE_HOME"/calc_history
+# export CARGO_HOME="$XDG_DATA_HOME"/cargo
+# export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+# export DOTNET_CLI_HOME="$XDG_DATA_HOME"/dotnet
+# export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+# export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+# export XCURSOR_PATH=/usr/share/icons:$XDG_DATA_HOME/icons
+# export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
+# export NB_DIR="$XDG_DATA_HOME/nb"
+# export NBRC_PATH="$XDG_CONFIG_HOME/nbrc"
+# export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
+# export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+# export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
+# export NVM_DIR="$XDG_DATA_HOME"/nvm
+# export ZSH="$XDG_DATA_HOME"/oh-my-zsh
+# export PSQL_HISTORY="$XDG_DATA_HOME/psql_history"
+# export PYENV_ROOT="$XDG_DATA_HOME"/pyenv
+# export PYTHONSTARTUP="$HOME"/python/pythonrc
+# export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+# export SQLITE_HISTORY="$XDG_CACHE_HOME"/sqlite_history
+# alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+# export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
+# export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
+# export _Z_DATA="$XDG_DATA_HOME/z"
+# export ZPLUG_HOME="$XDG_DATA_HOME/zplug"
+# compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+# export HISTFILE="$XDG_STATE_HOME"/zsh/history
+# export ZDOTDIR="$HOME"/.config/zsh
+
+# ----------------------------------------------------------------------------
+# Additional zsh completions
+# ----------------------------------------------------------------------------
+# fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+# ----------------------------------------------------------------------------
+# [TODO] Custom functions
+# ----------------------------------------------------------------------------
+# fcs() {
+#     # Check if user is asking for help
+#     if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+#         find-claude-session --help
+#         return
+#     fi
+#     # Run find-claude-session in shell mode and evaluate the output
+#     eval "$(find-claude-session --shell "$@" | sed '/^$/d')"
+# }
+
+# alias claude="/home/skogix/.claude/local/claude"
+# eval "$(atuin init zsh)"
+
+# [ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
+# source <(leadr --zsh)
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+alias wts='wt beta select'
+
+# Task Master aliases added on 12/16/2025
+alias tm='task-master'
+alias taskmaster='task-master'
+alias hamster='task-master'
+alias ham='task-master'
+
+
+
+function use_venv() {
+    uv venv
+    source .venv/bin/activate
+}
+
+function use_standard-python() {
+    source_up_if_exists
+
+    dotenv_if_exists
+
+    source_env_if_exists .envrc.local
+
+    use venv
+
+    uv sync
+}
+
+layout_uv() {
+    if [[ -d "$UV_PROJECT_ENVIRONMENT" ]]; then
+        log_status "Existing project virtual environment \'$UV_PROJECT_ENVIRONMENT\'"
+    else
+        log_status "No project virtual environment exists."
+
+        if [[ ! -f "pyproject.toml" ]]; then  # No project in-place
+            log_status "Initializing a new Python project via \`uv init\`."
+            uv init --no-readme
+        else
+            log_status "Python project already initialized. Skipping \`uv init\`."
+        fi
+        [[ -f "hello.py" ]] && rm hello.py  # a file created by `uv init`
+
+        if [[ ! -z "$UV_PROJECT_ENVIRONMENT" ]]; then
+            log_status "Project virtual environment path set to : $UV_PROJECT_ENVIRONMENT"
+            uv venv "$UV_PROJECT_ENVIRONMENT"
+        else
+            uv venv
+            UV_PROJECT_ENVIRONMENT="$(pwd)/.venv"
+        fi
+    fi
+
+    PATH_add "$UV_PROJECT_ENVIRONMENT/bin"
+    export UV_ACTIVE=1  # or VENV_ACTIVE=1
+    export UV_PROJECT_ENVIRONMENT
+}
+
+# FZF
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,spinner:#F5E0DC,hl:#F38BA8 \
+--color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
+--color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
+--color=selected-bg:#45475A \
+--color=border:#6C7086,label:#CDD6F4"
+# Go install
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+    # pacman install
+fi
+if [ -f /usr/share/fzf/key-bindings.zsh ]; then
+    source /usr/share/fzf/key-bindings.zsh
+fi
+
+if [ -f /usr/share/fzf/completion.zsh ]; then
+    source /usr/share/fzf/completion.zsh
+fi
+
+
+# ff - Flexible File Finder
+source /home/skogix/.ff.sh

@@ -1,0 +1,6 @@
+.aider*
+.env
+.skogai/aider/aider.chat.history.md
+.skogai/aider/aider.input.history
+.skogai/aider/aider.llm.history
+.skogai/tests/__pycache__
