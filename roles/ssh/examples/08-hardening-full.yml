@@ -1,7 +1,7 @@
 ---
 # SSH Hardening Example - Full (Client + Server)
 # This example applies comprehensive security hardening to both client and server
-# 
+#
 # ⚠️  WARNING: Server-side hardening requires sudo and restarts SSH daemon
 # ⚠️  Test on non-production systems first!
 # ⚠️  Keep existing SSH session open while testing
@@ -10,7 +10,7 @@
 - name: SSH Full Hardening (Client + Server)
   hosts: localhost
   connection: local
-  
+
   # Server hardening requires privilege escalation
   # Note: This will prompt for sudo password unless configured otherwise
   vars:
@@ -19,47 +19,47 @@
   vars:
     # Enable SSH hardening
     ssh_hardening_enabled: true
-    
+
     # Enable both client and server hardening
     ssh_hardening_client_enabled: true
     ssh_hardening_server_enabled: true
-    
+
     # Remove weak cryptographic algorithms
     ssh_hardening_remove_weak_keys: true
     ssh_hardening_remove_dsa: true        # Always recommended
     ssh_hardening_remove_ecdsa: false     # Optional: set to true for maximum security
-    
+
     # Ensure strong host keys exist
     ssh_hardening_ensure_ed25519: true
     ssh_hardening_ensure_rsa: true
     ssh_hardening_rsa_key_size: 4096
-    
+
     # Audit configuration after applying
     ssh_hardening_audit_enabled: true
-    
+
     # Server authentication settings
     ssh_hardening_permit_root_login: "prohibit-password"  # or "no" for maximum security
     ssh_hardening_server_password_auth: "yes"             # or "no" to require keys only
     ssh_hardening_pubkey_authentication: "yes"
     ssh_hardening_max_auth_tries: 3
-    
+
     # Disable risky features
     ssh_hardening_x11_forwarding: "no"
     ssh_hardening_allow_tcp_forwarding: "no"
     ssh_hardening_allow_agent_forwarding: "no"
     ssh_hardening_permit_tunnel: "no"
-    
+
     # Connection limits
     ssh_hardening_login_grace_time: 60
     ssh_hardening_max_sessions: 10
     ssh_hardening_max_startups: "10:30:60"
-    
+
     # Logging (VERBOSE for security auditing)
     ssh_hardening_server_log_level: "VERBOSE"
-    
+
     # Optional: Change SSH port (remember to update firewall!)
     # ssh_hardening_port: 2222
-    
+
     # Optional: Restrict access to specific users/groups
     # ssh_hardening_allow_users:
     #   - alice
@@ -107,13 +107,13 @@
           - "  $ sudo sshd -T  # Show active config"
           - ""
           - "=========================================="
-      
+
     - name: Check SSH server status
       ansible.builtin.systemd:
         name: sshd
       register: sshd_status
       become: true
-      
+
     - name: Display SSH server status
       ansible.builtin.debug:
         msg: "SSH server is {{ sshd_status.status.ActiveState }} and {{ sshd_status.status.SubState }}"

@@ -543,6 +543,7 @@ The role includes comprehensive SSH hardening capabilities based on security bes
 ### Hardening Features
 
 #### Client-Side Hardening (`~/.ssh/config`)
+
 - Modern cryptographic algorithms only (no weak ciphers/MACs/KEX)
 - Strict host key checking
 - Ed25519 and RSA-SHA2 key types preferred
@@ -551,6 +552,7 @@ The role includes comprehensive SSH hardening capabilities based on security bes
 - Automatic permission fixing for SSH directory and keys
 
 #### Server-Side Hardening (`/etc/ssh/sshd_config`)
+
 - Modern cryptographic algorithms enforced
 - Root login restricted (prohibit-password by default)
 - Public key authentication preferred
@@ -561,6 +563,7 @@ The role includes comprehensive SSH hardening capabilities based on security bes
 - Verbose logging for security auditing
 
 #### Security Policies
+
 - Fail2Ban integration for SSH brute-force protection
 - PAM configuration for enhanced authentication
 - Systemd socket rate limiting
@@ -611,17 +614,17 @@ This hardens your `~/.ssh/config` with modern crypto algorithms and secure defau
     ssh_hardening_enabled: true
     ssh_hardening_client_enabled: true
     ssh_hardening_server_enabled: true
-    
+
     # Remove weak algorithms
     ssh_hardening_remove_weak_keys: true
     ssh_hardening_remove_dsa: true
     ssh_hardening_remove_ecdsa: false  # Optional: remove ECDSA too
-    
+
     # Security policies
     ssh_hardening_policies_enabled: true
     ssh_hardening_configure_fail2ban: true
     ssh_hardening_connection_limits: true
-    
+
     # Security banner
     ssh_hardening_enable_banner: true
     ssh_hardening_banner_content: |
@@ -629,15 +632,15 @@ This hardens your `~/.ssh/config` with modern crypto algorithms and secure defau
       *                      AUTHORIZED ACCESS ONLY                    *
       *            All activity is monitored and logged                *
       ******************************************************************
-    
+
     # Audit configuration
     ssh_hardening_audit_enabled: true
-    
+
     # Server restrictions
     ssh_hardening_permit_root_login: "no"
     ssh_hardening_server_password_auth: "no"  # Keys only!
     ssh_hardening_max_auth_tries: 3
-    
+
   roles:
     - ssh
 ```
@@ -722,6 +725,7 @@ ssh_hardening_pubkey_types: "ssh-ed25519,rsa-sha2-512,rsa-sha2-256,..."
 ### Hardening Workflow
 
 1. **Test client-side first** (safe, no sudo required):
+
    ```yaml
    ssh_hardening_enabled: true
    ssh_hardening_client_enabled: true
@@ -729,17 +733,20 @@ ssh_hardening_pubkey_types: "ssh-ed25519,rsa-sha2-512,rsa-sha2-256,..."
    ```
 
 2. **Verify client config**:
+
    ```bash
    ssh -G localhost  # Test client config
    cat ~/.ssh/config  # Review changes
    ```
 
 3. **Enable server-side** (requires sudo, test on non-production first):
+
    ```yaml
    ssh_hardening_server_enabled: true
    ```
 
 4. **CRITICAL: Test SSH access before closing current session**:
+
    ```bash
    # In a NEW terminal window:
    ssh localhost  # Test connection works
@@ -747,6 +754,7 @@ ssh_hardening_pubkey_types: "ssh-ed25519,rsa-sha2-512,rsa-sha2-256,..."
    ```
 
 5. **Add security policies** (after testing basic hardening):
+
    ```yaml
    ssh_hardening_policies_enabled: true
    ssh_hardening_configure_fail2ban: true
@@ -768,11 +776,13 @@ ssh_hardening_pubkey_types: "ssh-ed25519,rsa-sha2-512,rsa-sha2-256,..."
 #### Firewall Considerations
 
 If changing SSH port:
+
 ```yaml
 ssh_hardening_port: 2222
 ```
 
 Remember to update firewall rules:
+
 ```bash
 # UFW
 sudo ufw allow 2222/tcp
@@ -785,6 +795,7 @@ sudo firewall-cmd --reload
 #### Key-Only Authentication
 
 To require keys only (no passwords):
+
 ```yaml
 ssh_hardening_server_password_auth: "no"
 ssh_hardening_permit_empty_passwords: "no"
@@ -796,6 +807,7 @@ ssh_hardening_kbd_interactive: "no"
 #### Access Control
 
 Restrict SSH access to specific users/groups:
+
 ```yaml
 ssh_hardening_allow_users:
   - alice
@@ -810,11 +822,13 @@ ssh_hardening_allow_groups:
 #### SSH client connection fails after hardening
 
 Check algorithm mismatch:
+
 ```bash
 ssh -v user@host 2>&1 | grep -i "algorithm"
 ```
 
 Temporarily use legacy algorithms:
+
 ```bash
 ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 user@host
 ```
@@ -828,6 +842,7 @@ ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 user@host
 #### Configuration validation fails
 
 Check syntax:
+
 ```bash
 # Client
 ssh -G localhost
@@ -839,12 +854,14 @@ sudo sshd -t -f /etc/ssh/sshd_config
 #### Fail2Ban not working
 
 Check status:
+
 ```bash
 sudo fail2ban-client status sshd
 sudo fail2ban-client get sshd bantime
 ```
 
 View logs:
+
 ```bash
 sudo journalctl -u fail2ban -f
 ```
@@ -852,11 +869,13 @@ sudo journalctl -u fail2ban -f
 ### Testing Hardening
 
 Run with audit enabled to validate configuration:
+
 ```bash
 ansible-playbook playbook.yml --tags ssh -e "ssh_hardening_audit_enabled=true"
 ```
 
 The audit will:
+
 - Validate client config with `ssh -G localhost`
 - Validate server config with `sshd -T` (if server hardening enabled)
 - Report any configuration errors

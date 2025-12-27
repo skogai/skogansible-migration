@@ -11,8 +11,8 @@ repos:
       - id: trailing-whitespace
         exclude: \.tmpl$ # Allow trailing whitespace in templates
       - id: end-of-file-fixer
-        # - id: check-yaml
-        args: ["--unsafe"] # Allow custom YAML tags in chezmoi configs
+      # - id: check-yaml
+      #   args: ["--unsafe"] # Allow custom YAML tags in chezmoi configs
       - id: check-json
       - id: check-toml
       - id: check-merge-conflict
