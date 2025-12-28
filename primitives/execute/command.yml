@@ -1,0 +1,38 @@
+---
+# Primitive: execute/command
+# Purpose: Execute arbitrary command
+# Usage: include_tasks with command_* variables
+#
+# Required variables:
+#   command_cmd: string - Command to execute
+#
+# Optional variables:
+#   command_chdir: string - Change to directory before executing
+#   command_creates: string - Skip if this file exists (idempotency)
+#   command_removes: string - Skip if this file doesn't exist
+#   command_register_var: string - Variable name to register output
+#   command_failed_when: string - Expression for failure condition
+#   command_changed_when: string - Expression for changed condition
+#
+# Example:
+#   - include_tasks: primitives/execute/command.yml
+#     vars:
+#       command_cmd: makepkg -si --noconfirm --noprogressbar
+#       command_chdir: /home/aur_builder/yay
+#       command_creates: /usr/bin/yay
+#       command_register_var: makepkg_result
+
+- name: "Execute command: {{ command_cmd }}"
+  become: "{{ command_become | default(false) }}"
+  become_user: "{{ command_become_user | default(omit) }}"
+  ansible.builtin.command:
+    cmd: "{{ command_cmd }}"
+    chdir: "{{ command_chdir | default(omit) }}"
+    creates: "{{ command_creates | default(omit) }}"
+    removes: "{{ command_removes | default(omit) }}"
+  register: "{{ command_register_var | default('command_result') }}"
+  failed_when: "{{ command_failed_when | default(omit) }}"
+  changed_when: "{{ command_changed_when | default(omit) }}"
+  tags:
+    - execute
+    - primitive

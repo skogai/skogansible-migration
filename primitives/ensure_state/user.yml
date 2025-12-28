@@ -1,0 +1,40 @@
+---
+# Primitive: ensure_state/user
+# Purpose: Ensure user exists with specific properties
+# Usage: include_tasks with user_* variables
+#
+# Required variables:
+#   user_name: string - Username
+#
+# Optional variables:
+#   user_state: present|absent - Default: present
+#   user_group: string - Primary group
+#   user_groups: list - Additional groups
+#   user_shell: string - Login shell
+#   user_create_home: bool - Create home directory (default: true)
+#   user_comment: string - GECOS comment
+#   user_password: string - Encrypted password
+#
+# Example:
+#   - include_tasks: primitives/ensure_state/user.yml
+#     vars:
+#       user_name: aur_builder
+#       user_group: wheel
+#       user_shell: /bin/bash
+#       user_comment: "AUR package builder"
+
+- name: "Ensure user {{ user_name }} is {{ user_state | default('present') }}"
+  become: true
+  ansible.builtin.user:
+    name: "{{ user_name }}"
+    state: "{{ user_state | default('present') }}"
+    group: "{{ user_group | default(omit) }}"
+    groups: "{{ user_groups | default(omit) }}"
+    shell: "{{ user_shell | default(omit) }}"
+    create_home: "{{ user_create_home | default(true) }}"
+    comment: "{{ user_comment | default(omit) }}"
+    password: "{{ user_password | default(omit) }}"
+  tags:
+    - users
+    - primitive
+    - ensure_state

@@ -1,0 +1,37 @@
+---
+# Primitive: ensure_content/file_copy
+# Purpose: Copy file content to destination
+# Usage: include_tasks with file_* variables
+#
+# Required variables:
+#   file_src: string - Source file path (can be relative to playbook or role)
+#   file_dest: string - Destination path
+#
+# Optional variables:
+#   file_mode: string - File permissions (default: "0644")
+#   file_owner: string - File owner (default: current user)
+#   file_group: string - File group (default: current user group)
+#   file_backup: bool - Backup existing file (default: false)
+#   file_force: bool - Overwrite if different (default: true)
+#
+# Example:
+#   - include_tasks: primitives/ensure_content/file_copy.yml
+#     vars:
+#       file_src: files/config.conf
+#       file_dest: /etc/myapp/config.conf
+#       file_mode: "0600"
+
+- name: "Copy {{ file_src }} to {{ file_dest }}"
+  become: "{{ file_become | default(false) }}"
+  ansible.builtin.copy:
+    src: "{{ file_src }}"
+    dest: "{{ file_dest }}"
+    mode: "{{ file_mode | default('0644') }}"
+    owner: "{{ file_owner | default(omit) }}"
+    group: "{{ file_group | default(omit) }}"
+    backup: "{{ file_backup | default(false) }}"
+    force: "{{ file_force | default(true) }}"
+  tags:
+    - files
+    - primitive
+    - ensure_content
