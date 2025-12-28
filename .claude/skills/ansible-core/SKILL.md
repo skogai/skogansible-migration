@@ -3,7 +3,7 @@ name: ansible-core
 description: Use when working with Ansible Core 2.19 for automation, configuration management, playbooks, modules, or infrastructure as code (project)
 ---
 
-# Ansible Core 2.19 Skill
+# Ansible SkogAI
 
 Comprehensive assistance with Ansible Core development and automation for SkogAI projects, combining official Ansible Core 2.19 documentation with SkogAI repository-specific knowledge.
 
@@ -11,7 +11,7 @@ Comprehensive assistance with Ansible Core development and automation for SkogAI
 
 This skill should be triggered when:
 
-### Ansible Core (General)
+### Ansible SkogAI (General)
 
 - Writing or debugging Ansible playbooks
 - Creating or modifying Ansible modules and plugins
@@ -115,12 +115,12 @@ A simple playbook with tasks, the fundamental building block of Ansible automati
 - name: My first play
   hosts: myhosts
   tasks:
-   - name: Ping my hosts
-     ansible.builtin.ping:
+    - name: Ping my hosts
+      ansible.builtin.ping:
 
-   - name: Print message
-     ansible.builtin.debug:
-       msg: Hello world
+    - name: Print message
+      ansible.builtin.debug:
+        msg: Hello world
 ```
 
 **What it does:** Defines a play that runs against hosts in the `myhosts` group, pings them to verify connectivity, and prints a debug message.
@@ -225,11 +225,11 @@ Dynamically load variables from external files:
   vars:
     params:
       files:
-        - '{{ansible_distribution}}.yaml'
-        - '{{ansible_os_family}}.yaml'
+        - "{{ansible_distribution}}.yaml"
+        - "{{ansible_os_family}}.yaml"
         - default.yaml
       paths:
-        - 'vars'
+        - "vars"
 ```
 
 **What it does:** Loads YAML/JSON variables at runtime. Supports conditional loading based on facts, directory scanning, and namespace isolation.
@@ -280,9 +280,9 @@ Transform Ansible variables into YAML format in templates:
 Use Jinja2 test plugins to validate data:
 
 ```yaml
-big: [1,2,3,4,5]
-small: [3,4]
-issmallinbig: '{{ small is subset(big) }}'
+big: [1, 2, 3, 4, 5]
+small: [3, 4]
+issmallinbig: "{{ small is subset(big) }}"
 ```
 
 **What it does:** Tests if one list is a subset of another. Useful for conditional logic in playbooks based on list membership.
@@ -535,17 +535,3 @@ ansible-lint playbook.yml
 - Code examples use proper language detection for syntax highlighting
 - Quick reference patterns are extracted from real-world usage examples
 - All module/plugin names use FQCN format for clarity and future compatibility
-
-## Updating This Skill
-
-To refresh with updated documentation:
-
-```bash
-# Re-scrape with same configuration
-uv run cli/doc_scraper.py --config configs/ansible-core.json --enhance-local
-
-# Or use cached data for faster rebuild
-uv run cli/doc_scraper.py --config configs/ansible-core.json --skip-scrape --enhance-local
-```
-
-The skill will be rebuilt with the latest information from the Ansible Core documentation.
