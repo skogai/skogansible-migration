@@ -223,15 +223,15 @@ git_submodule_recurse: true
 # Repository Management (Disabled by default - customize as needed)
 # ==============================================================================
 
-git_clone_repos: true
+git_clone_repos: false
 
 # Example repository configuration (uncomment and customize):
-git_repositories:
-  - repo: "https://github.com/SkogAI/config.git"
-    dest: "{{ ansible_facts['env']['HOME'] }}/skogai/docs"
-    version: "master"
-    update: true
-    depth: 0
+# git_repositories:
+#   - repo: "https://github.com/SkogAI/config.git"
+#     dest: "{{ ansible_facts['env']['HOME'] }}/skogai/config"
+#     version: "master"
+#     update: true
+#     depth: 0
 
 # ==============================================================================
 # Git Hooks (Disabled by default)
