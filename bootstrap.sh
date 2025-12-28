@@ -89,10 +89,3 @@ echo "==> Saving Ansible configuration to ./tmp/ENV..."
 if ! ansible-config dump --type all >./tmp/ENV 2>&1; then
   echo "WARNING: Failed to dump Ansible configuration (non-fatal)"
 fi
-
-echo "==> Bootstrap completed successfully!"
-echo ""
-echo "Next steps:"
-echo "  1. Activate the virtual environment: source .venv/bin/activate"
-echo "  2. Run the playbook: ./run.sh"
-echo ""
