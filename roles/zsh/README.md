@@ -48,6 +48,7 @@ The loader (`loader.zsh`) processes files in this order:
 3. **Recursive** - Finds files in subdirectories using `**/*.ext`
 
 Example:
+
 ```zsh
 # loader.zsh
 local zsh_d="${0:h}"
@@ -248,6 +249,7 @@ roles/zsh/
 ### Loader not sourcing files
 
 Check file permissions - must be readable:
+
 ```bash
 ls -la ~/.config/zsh.d/10-settings/
 ```
@@ -255,6 +257,7 @@ ls -la ~/.config/zsh.d/10-settings/
 ### Variables not set
 
 Test direct sourcing:
+
 ```bash
 zsh -c "source ~/.config/zsh.d/10-settings/history.zsh && echo \$HISTSIZE"
 ```

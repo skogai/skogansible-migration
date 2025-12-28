@@ -558,6 +558,7 @@ The ZSH role deploys modular shell configuration using numbered directories and 
 **Current Configuration:**
 
 The role currently deploys:
+
 - Loader with recursive loading and `.env` support
 - PATH setup for user binaries and toolchains
 - 50,000 command history with smart filtering
