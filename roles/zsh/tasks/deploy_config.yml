@@ -1,0 +1,9 @@
+---
+# Deploy zsh.d configuration
+
+- name: "zsh | Deploy entire zsh.d directory"
+  ansible.builtin.copy:
+    src: "zsh.d/"
+    dest: "{{ zsh_config_dir }}/"
+    mode: preserve
+  tags: [zsh, zsh-config]
