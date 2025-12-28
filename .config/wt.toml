@@ -1,22 +1,121 @@
-# Worktrunk Project Configuration for Ansible Repository
-# Location: .config/wt.toml
+# Worktrunk Project Configuration
+# Location: <repo>/.config/wt.toml
+#
+# This file defines project-specific hooks that run automatically during
+# worktree operations. It should be checked into git and shared across all
+# developers working on the project.
 
-# Post-create: Run after creating new worktree
+# Available template variables (all hooks):
+#   {{ repo }}      - Repository name (e.g., "my-project")
+#   {{ branch }}    - Branch name (slashes replaced with dashes)
+#   {{ worktree }}  - Absolute path to the worktree
+#   {{ repo_root }} - Absolute path to the repository root
+#
+# Merge-related hooks also support:
+#   {{ target }}    - Target branch for the merge (e.g., "main")
+
+# Post-Create Hook
+# Runs SEQUENTIALLY and BLOCKS until complete
+# The worktree switch won't complete until these finish
+# Commands run one after another in the worktree directory
+#
+# Format options:
+# 1. Single string:
+#    post-create = "npm install"
+#
+# 2. Array (runs sequentially):
+#    post-create = ["npm install", "npm run build"]
+#
+# 3. Named table (runs sequentially in declaration order):
+# [post-create]
+# install = "npm install --frozen-lockfile"
+# build = "npm run build"
+
+# Post-Start Hook
+# Runs in BACKGROUND as detached processes (parallel)
+# Use for: uv sync, npm install, bundle install, build, dev servers, file watchers,
+# long-running tasks
+# The worktree switch completes immediately, these run in parallel
+# Output is logged to .git/wt-logs/{branch}-post-start-{name}.log
+#
+# Format options:
+# 1. Single string:
+#    post-start = "npm run dev"
+#
+# 2. Array (runs in parallel):
+#    post-start = ["npm run dev", "npm run watch"]
+#
+# 3. Named table (runs in parallel):
+# [post-start]
+# server = "npm run dev"
+# watch = "npm run watch"
+
+# Pre-Commit Hook
+# Runs SEQUENTIALLY before committing changes during merge (blocking, fail-fast)
+# All commands must exit with code 0 for commit to proceed
+# Runs for both squash and no-squash merge modes
+# Use for: formatters, linters, quick validation
+#
+# Format options same as post-create
+# pre-commit = "cargo fmt -- --check"
+#
+# Or multiple:
+# [pre-commit]
+# format = "cargo fmt -- --check"
+# lint = "cargo clippy -- -D warnings"
+
+# Pre-Merge Hook
+# Runs SEQUENTIALLY before merging to target branch (blocking, fail-fast)
+# All commands must exit with code 0 for merge to proceed
+# Use for: tests, linters, build verification before merging
+#
+# Format options same as post-create
+# pre-merge = ["cargo test", "cargo build"]
+#
+# Or named:
+# [pre-merge]
+# test = "cargo test"
+# build = "cargo build --release"
+
+# Post-Merge Hook
+# Runs SEQUENTIALLY in the main worktree after successful merge (blocking)
+# Runs after push succeeds but before cleanup
+# Use for: updating production builds, notifications, cleanup
+#
+# Format options same as post-create
+# post-merge = "cargo install --path ."
+
+# Example: Node.js Project
+# [post-create]
+# install = "npm ci"
+#
+# [post-start]
+# server = "npm run dev"
+#
+# [pre-merge]
+# lint = "npm run lint"
+# test = "npm test"
+
+# Example: Rust Project
+# [post-create]
+# build = "cargo build"
+#
+# [pre-merge]
+# format = "cargo fmt -- --check"
+# clippy = "cargo clippy -- -D warnings"
+# test = "cargo test"
+#
+# post-merge = "cargo install --path ."
+
+# Example: Python Project
 [post-create]
 direnv = "direnv allow"
 
-# Post-start: Run in background after switching to worktree
-# [post-start]
-# reminder = "echo '📂 Ansible worktree ready - run ./run.sh --check to verify'"
-
-# Pre-commit: Run before committing (validation)
-[pre-commit]
-syntax = "./run.sh site.yml --syntax-check"
-
-# Pre-merge: Run before merging back to main branch
+# install = "uv pip install -r requirements.txt"
+#
 [pre-merge]
-dryrun = "./run.sh --check"
+direnv = "direnv allow"
 
-# Post-merge: Run after successful merge
-# [post-merge]
-# confirm = "echo '✅ Merged successfully - worktree will be cleaned up'"
+# format = ".venv/bin/black --check ."
+# lint = ".venv/bin/ruff check ."
+# test = ".venv/bin/pytest"
