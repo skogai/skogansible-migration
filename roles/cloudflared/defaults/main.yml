@@ -7,7 +7,7 @@
 # ==============================================================================
 
 # User cloudflared directory (~/.cloudflared)
-cloudflared_user_dir: "{{ ansible_user_dir }}/.cloudflared"
+cloudflared_user_dir: "{{ ansible_facts['user_dir'] }}/.cloudflared"
 cloudflared_user_dir_mode: "0700"
 
 # ==============================================================================

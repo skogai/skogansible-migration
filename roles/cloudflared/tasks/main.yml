@@ -11,8 +11,8 @@
     path: "{{ cloudflared_user_dir }}"
     state: directory
     mode: "{{ cloudflared_user_dir_mode }}"
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
   tags: [cloudflared, cloudflared-config]
 
 # ==============================================================================
@@ -38,8 +38,8 @@
         content: "{{ cloudflared_origin_cert }}"
         dest: "{{ cloudflared_cert_file }}"
         mode: "{{ cloudflared_cert_mode }}"
-        owner: "{{ ansible_user_id }}"
-        group: "{{ ansible_user_id }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
       no_log: true  # Don't log certificate content
       register: cloudflared_cert_deployed
 
@@ -73,8 +73,8 @@
       ansible.builtin.file:
         path: "{{ cloudflared_creds_file }}"
         mode: "{{ cloudflared_creds_mode }}"
-        owner: "{{ ansible_user_id }}"
-        group: "{{ ansible_user_id }}"
+        owner: "{{ ansible_facts['user_id'] }}"
+        group: "{{ ansible_facts['user_id'] }}"
 
 # ==============================================================================
 # Systemd Service Deployment

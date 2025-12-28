@@ -17,20 +17,20 @@
     - ../vars/cloudflared.yml # Cloudflared configuration
 
   roles:
-    # - role: packages
-    #   tags: [packages, install]
-    #
-    # - role: ssh
-    #   tags: [ssh, config]
-    #
-    # - role: git
-    #   tags: [git, vcs]
-    #
-    # - role: chezmoi
-    #   tags: [chezmoi, dotfiles]
+    - role: packages
+      tags: [packages, install]
 
-    # - role: zsh
-    #   tags: [zsh, shell]
+    - role: ssh
+      tags: [ssh, config]
+
+    # - role: git
+    # tags: [git, vcs]
+
+    # - role: chezmoi
+    # tags: [chezmoi, dotfiles]
+
+    - role: zsh
+      tags: [zsh, shell]
 
     - role: cloudflared
       tags: [cloudflared, tunnel]
