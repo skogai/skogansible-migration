@@ -4,8 +4,11 @@ After=network.target
 
 [Service]
 Type=simple
-User=root
-ExecStart=/usr/bin/cloudflared tunnel --no-autoupdate run --token-file {{ cloudflared_token_file }} {{ cloudflared_extra_args | default('') }}
+User={{ ansible_user_id }}
+ExecStart=/usr/bin/cloudflared tunnel --no-autoupdate run \
+  --credentials-file {{ cloudflared_creds_file }} \
+  {{ cloudflared_extra_args | default('') }} \
+  {{ cloudflared_tunnel_id }}
 Restart=on-failure
 RestartSec=5s
 

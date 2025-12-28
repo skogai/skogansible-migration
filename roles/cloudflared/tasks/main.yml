@@ -1,49 +1,80 @@
 ---
 # Cloudflared Role - Main Tasks
-# Manages Cloudflare Tunnel service with secure token storage
+# Manages Cloudflare Tunnel service with proper credential deployment
 
 # ==============================================================================
 # Ensure Cloudflared Configuration Directory
 # ==============================================================================
 
-- name: "Cloudflared | Ensure configuration directory exists"
-  become: true
+- name: "Cloudflared | Ensure user cloudflared directory exists"
   ansible.builtin.file:
-    path: "{{ cloudflared_config_dir }}"
+    path: "{{ cloudflared_user_dir }}"
     state: directory
-    mode: "{{ cloudflared_config_dir_mode }}"
-    owner: root
-    group: root
+    mode: "{{ cloudflared_user_dir_mode }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
   tags: [cloudflared, cloudflared-config]
 
 # ==============================================================================
-# Token Deployment (from Vault)
+# Origin Certificate Deployment (from Vault)
 # ==============================================================================
 
-- name: "Cloudflared | Deploy tunnel token from vault"
-  when: cloudflared_deploy_token | bool
-  become: true
-  tags: [cloudflared, cloudflared-token, cloudflared-vault]
+- name: "Cloudflared | Deploy origin certificate from vault"
+  when: cloudflared_deploy_cert | bool
+  tags: [cloudflared, cloudflared-cert, cloudflared-vault]
   block:
-    - name: "Cloudflared | Validate token is defined"
+    - name: "Cloudflared | Validate cert is defined"
       ansible.builtin.assert:
         that:
-          - cloudflared_token is defined
-          - cloudflared_token | length > 0
+          - cloudflared_origin_cert is defined
+          - cloudflared_origin_cert | length > 0
         fail_msg: >-
-          cloudflared_token is not defined or empty.
+          cloudflared_origin_cert is not defined or empty.
           Please ensure vars/cloudflared_vault.yml is loaded and
-          contains cloudflared_tunnel_token.
+          contains cloudflared_origin_cert_content.
 
-    - name: "Cloudflared | Deploy tunnel token file"
+    - name: "Cloudflared | Deploy origin certificate (cert.pem)"
       ansible.builtin.copy:
-        content: "{{ cloudflared_token }}"
-        dest: "{{ cloudflared_token_file }}"
-        mode: "{{ cloudflared_token_mode }}"
-        owner: root
-        group: root
-      no_log: true  # Don't log token content
-      register: cloudflared_token_deployed
+        content: "{{ cloudflared_origin_cert }}"
+        dest: "{{ cloudflared_cert_file }}"
+        mode: "{{ cloudflared_cert_mode }}"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+      no_log: true  # Don't log certificate content
+      register: cloudflared_cert_deployed
+
+# ==============================================================================
+# Generate Tunnel Credentials
+# ==============================================================================
+
+- name: "Cloudflared | Generate tunnel credentials"
+  when: cloudflared_generate_creds | bool
+  tags: [cloudflared, cloudflared-creds]
+  block:
+    - name: "Cloudflared | Check if tunnel credentials exist"
+      ansible.builtin.stat:
+        path: "{{ cloudflared_creds_file }}"
+      register: cloudflared_creds_stat
+
+    - name: "Cloudflared | Generate tunnel credentials using cloudflared command"
+      when: not cloudflared_creds_stat.stat.exists or cloudflared_force_regenerate_creds | bool
+      ansible.builtin.command:
+        cmd: >-
+          cloudflared tunnel token
+          --cred-file {{ cloudflared_creds_file }}
+          {{ cloudflared_tunnel_name }}
+        creates: "{{ cloudflared_creds_file }}"
+      environment:
+        # Ensure cloudflared uses the correct cert.pem
+        TUNNEL_ORIGIN_CERT: "{{ cloudflared_cert_file }}"
+      register: cloudflared_creds_generated
+
+    - name: "Cloudflared | Set permissions on tunnel credentials"
+      ansible.builtin.file:
+        path: "{{ cloudflared_creds_file }}"
+        mode: "{{ cloudflared_creds_mode }}"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
 
 # ==============================================================================
 # Systemd Service Deployment
@@ -73,8 +104,10 @@
         state: >-
           {{
             'restarted'
-            if (cloudflared_token_deployed is defined and
-                cloudflared_token_deployed.changed)
+            if (cloudflared_cert_deployed is defined and
+                cloudflared_cert_deployed.changed) or
+               (cloudflared_creds_generated is defined and
+                cloudflared_creds_generated.changed)
             else 'started'
           }}
         daemon_reload: true

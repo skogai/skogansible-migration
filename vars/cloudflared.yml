@@ -2,14 +2,34 @@
 # Cloudflared Role Configuration
 
 # ==============================================================================
-# Token Deployment
+# Tunnel Identification
 # ==============================================================================
 
-# Deploy tunnel token from vault
-cloudflared_deploy_token: true
+# Tunnel name (human-readable name used in cloudflared commands)
+cloudflared_tunnel_name: "skogix"
+
+# Tunnel ID (UUID - used for credentials filename)
+cloudflared_tunnel_id: "ae7fd63a-935f-42b2-b1d0-a53cca0f2798"
+
+# ==============================================================================
+# Certificate Deployment
+# ==============================================================================
+
+# Deploy origin certificate from vault
+cloudflared_deploy_cert: true
 
 # Map vault variable to role variable
-cloudflared_token: "{{ cloudflared_tunnel_token | default('') }}"
+cloudflared_origin_cert: "{{ cloudflared_origin_cert_content | default('') }}"
+
+# ==============================================================================
+# Credential Generation
+# ==============================================================================
+
+# Generate tunnel credentials using cloudflared command
+cloudflared_generate_creds: true
+
+# Force regeneration (set to true to regenerate credentials file)
+cloudflared_force_regenerate_creds: false
 
 # ==============================================================================
 # Service Configuration

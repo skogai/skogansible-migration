@@ -1,15 +1,26 @@
 ---
-# Cloudflared Vault Variables
-# IMPORTANT: This file should be encrypted with ansible-vault
-
-# ==============================================================================
-# Tunnel Token
-# ==============================================================================
-# To encrypt this file after adding your token, run:
-#   ansible-vault encrypt vars/cloudflared_vault.yml
+# Cloudflared Vault Variables Template
 #
-# To edit the encrypted file later, run:
-#   ansible-vault edit vars/cloudflared_vault.yml
+# This file contains sensitive cloudflared credentials that should be encrypted with ansible-vault
+#
+# Usage:
+#   1. Copy this template: cp cloudflared_vault.yml.template cloudflared_vault.yml
+#   2. Add your actual credentials below
+#   3. Encrypt the file: ansible-vault encrypt cloudflared_vault.yml
+#
+# To get your origin certificate:
+#   1. Login to cloudflare: cloudflared login
+#   2. Certificate saved to: ~/.cloudflared/cert.pem
+#   3. Copy the content below
 
-# Replace YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE with your actual tunnel token
-# cloudflared_tunnel_token: "YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE"
+# ==============================================================================
+# Origin Certificate (cert.pem)
+# ==============================================================================
+# Obtained from: cloudflared login
+# Location: ~/.cloudflared/cert.pem
+# Format: -----BEGIN ARGO TUNNEL TOKEN----- ... -----END ARGO TUNNEL TOKEN-----
+
+cloudflared_origin_cert_content: |
+  -----BEGIN ARGO TUNNEL TOKEN-----
+  YOUR_CERTIFICATE_CONTENT_HERE
+  -----END ARGO TUNNEL TOKEN-----
