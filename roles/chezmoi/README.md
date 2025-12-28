@@ -11,13 +11,6 @@ This role provides automated dotfiles management including:
 - SkogAI agent integration
 - Automatic dotfiles application with change detection
 
-## Requirements
-
-- Ansible 2.10 or higher
-- Target system: Arch Linux (adaptable to other distros)
-- Chezmoi must be installed (verified by role, install via packages role)
-- Chezmoi source directory at `~/.local/share/chezmoi`
-
 ## Role Variables
 
 All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/chezmoi.yml`.
@@ -108,11 +101,6 @@ chezmoi_skogai_tools: "{{ ansible_user_dir }}/skogai/tools"
 ```yaml
 chezmoi_debug: true                                      # Enable debug output
 ```
-
-## Dependencies
-
-- Chezmoi must be installed (can be installed via packages role)
-- Chezmoi source directory must exist at `~/.local/share/chezmoi`
 
 ## Example Playbook
 
@@ -467,11 +455,3 @@ roles/chezmoi/
 - **Chezmoi Documentation:** <https://www.chezmoi.io/>
 - **Ansible Integration Guide:** `~/.local/share/chezmoi/examples/ANSIBLE-INTEGRATION.md`
 - **SkogAI Documentation:** `~/skogai/docs/`
-
-## License
-
-MIT
-
-## Author
-
-SkogAI (skogansible repository)

@@ -12,12 +12,6 @@ Ansible role for managing filesystem mounts on Arch Linux systems.
 - ✅ Configurable mount options
 - ✅ Idempotent operations
 
-## Requirements
-
-- Ansible 2.9+
-- `ansible.posix` collection (for `mount` module)
-- Target system: Arch Linux (should work on most Linux distributions)
-
 ## Role Variables
 
 ### Control Variables
@@ -78,22 +72,6 @@ Each mount entry supports the following parameters:
   - `absent`: Remove from fstab and unmount
 - **`dump`** (optional): Dump backup field (default: 0)
 - **`passno`** (optional): Fsck pass number (default: 2)
-
-## Dependencies
-
-This role requires the `ansible.posix` collection. Ensure it's installed:
-
-```bash
-ansible-galaxy collection install ansible.posix
-```
-
-Or add to your `requirements.yml`:
-
-```yaml
-collections:
-  - name: ansible.posix
-    version: ">=1.5.0"
-```
 
 ## Example Playbook
 
@@ -269,11 +247,3 @@ The role should create mount points automatically. If it fails, check:
 
 - Check that `state: mounted` is set (not just `present`)
 - Verify the fstab entry with `cat /etc/fstab`
-
-## License
-
-MIT
-
-## Author
-
-skogix

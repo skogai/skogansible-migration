@@ -9,13 +9,6 @@ This role provides automated Cloudflare Tunnel deployment including:
 - Systemd service configuration using token-file (no plaintext tokens in service files)
 - Service enablement and management
 
-## Requirements
-
-- Ansible 2.10 or higher
-- Target system: Arch Linux (adaptable to other distros)
-- Cloudflared package must be installed (included in packages role)
-- Cloudflare tunnel token (obtain from Cloudflare Zero Trust dashboard)
-
 ## Role Variables
 
 All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/cloudflared.yml`.
@@ -44,10 +37,6 @@ cloudflared_service_template: "cloudflared.service.j2"  # Service template
 cloudflared_enable_service: true                # Enable and start service
 cloudflared_extra_args: ""                      # Additional cloudflared arguments
 ```
-
-## Dependencies
-
-- Cloudflared package (install via packages role or manually)
 
 ## Setup Instructions
 
@@ -335,11 +324,3 @@ Add cloudflared role to your main playbook:
   tags:
     - all
 ```
-
-## License
-
-MIT
-
-## Author
-
-SkogAI (skogansible repository)
