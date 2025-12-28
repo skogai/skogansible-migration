@@ -1,0 +1,70 @@
+---
+# Example: Packages Role Integration with ensure_content Primitives
+#
+# This example shows how to use primitives for package-related configs
+
+- name: Packages Role - Using Primitives
+  hosts: localhost
+  connection: local
+
+  tasks:
+    # Deploy pacman.conf using config primitive with validation
+    - name: Deploy pacman configuration
+      include_tasks: ../ensure_content/ensure_config.yml
+      vars:
+        config_src: pacman.conf
+        config_dest: /etc/pacman.conf
+        config_mode: '0644'
+        config_validate: 'pacman-conf -c %s'
+        config_become: true
+        config_notify: update pacman cache
+      tags: [packages, pacman-config]
+
+    # Configure AUR builder sudoers using line primitive
+    - name: Allow AUR builder to run pacman without password
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: /etc/sudoers.d/11-install-aur_builder
+        line_content: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+        line_create: true
+        line_mode: '0644'
+        line_validate: 'visudo -cf %s'
+        line_become: true
+      tags: [packages, aur-setup]
+
+    # Add custom pacman repository using blockinfile primitive
+    - name: Add endeavouros repository
+      include_tasks: ../ensure_content/ensure_blockinfile.yml
+      vars:
+        block_path: /etc/pacman.conf
+        block_content: |
+          [endeavouros]
+          SigLevel = PackageRequired
+          Include = /etc/pacman.d/endeavouros-mirrorlist
+        block_marker: '# {mark} ENDEAVOUROS REPO'
+        block_insertafter: '^\[multilib\]'
+        block_validate: 'pacman-conf -c %s'
+        block_become: true
+        block_notify: update pacman cache
+      tags: [packages, pacman-repos]
+
+    # Configure makepkg.conf for AUR builds using line primitive
+    - name: Set makepkg parallel jobs
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: /etc/makepkg.conf
+        line_content: 'MAKEFLAGS="-j$(nproc)"'
+        line_regexp: '^#?MAKEFLAGS='
+        line_become: true
+      tags: [packages, makepkg-config]
+
+    # Set package cache cleanup policy using line primitive
+    - name: Set pacman cache retention
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: /etc/pacman.conf
+        line_content: 'CleanMethod = KeepInstalled'
+        line_insertafter: '^\[options\]'
+        line_regexp: '^#?CleanMethod'
+        line_become: true
+      tags: [packages, pacman-cache]

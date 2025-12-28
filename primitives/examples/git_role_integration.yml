@@ -1,0 +1,67 @@
+---
+# Example: Git Role Integration with ensure_content Primitives
+#
+# This example shows how to refactor Git role tasks to use primitives
+
+- name: Git Role - Using Primitives
+  hosts: localhost
+  connection: local
+
+  vars:
+    git_user_name: "Emil Skogsund"
+    git_user_email: "emil@skogsund.se"
+    git_editor: "nvim"
+
+  tasks:
+    # Deploy gitconfig using template primitive
+    - name: Deploy global gitconfig
+      include_tasks: ../ensure_content/ensure_template.yml
+      vars:
+        template_src: gitconfig.j2
+        template_dest: "{{ ansible_user_dir }}/.gitconfig"
+        template_mode: '0644'
+      tags: [git, git-config]
+
+    # Deploy global gitignore using config primitive
+    - name: Deploy global gitignore
+      include_tasks: ../ensure_content/ensure_config.yml
+      vars:
+        config_src: gitignore_global
+        config_dest: "{{ ansible_user_dir }}/.config/git/ignore"
+        config_mode: '0644'
+      tags: [git, git-ignore]
+
+    # Configure git aliases using blockinfile primitive
+    - name: Add git aliases to gitconfig
+      include_tasks: ../ensure_content/ensure_blockinfile.yml
+      vars:
+        block_path: "{{ ansible_user_dir }}/.gitconfig"
+        block_content: |
+          st = status
+          co = checkout
+          br = branch
+          ci = commit
+          lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        block_marker: '# {mark} GIT ALIASES'
+        block_insertafter: '^\[user\]'
+      tags: [git, git-aliases]
+
+    # Set git signing key using line primitive
+    - name: Configure SSH signing key
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: "{{ ansible_user_dir }}/.gitconfig"
+        line_content: "\tsigningkey = {{ ansible_user_dir }}/.ssh/id_ed25519.pub"
+        line_insertafter: '^\[user\]'
+        line_regexp: '^\s*signingkey'
+      tags: [git, git-signing]
+
+    # Enable commit signing
+    - name: Enable commit signing
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: "{{ ansible_user_dir }}/.gitconfig"
+        line_content: "\tgpgsign = true"
+        line_insertafter: '^\[commit\]'
+        line_regexp: '^\s*gpgsign'
+      tags: [git, git-signing]

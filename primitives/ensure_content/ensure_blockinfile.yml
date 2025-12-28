@@ -1,0 +1,70 @@
+---
+# Primitive: ensure_blockinfile
+#
+# Ensure a block of text exists in a file (or remove it)
+#
+# Required variables:
+#   block_path: Path to the file to modify
+#   block_content: The block of text to ensure exists (or remove)
+#
+# Optional variables:
+#   block_state: present or absent (default: present)
+#   block_marker: Marker line template (default: '# {mark} ANSIBLE MANAGED BLOCK')
+#   block_marker_begin: Beginning marker (default: 'BEGIN')
+#   block_marker_end: Ending marker (default: 'END')
+#   block_insertafter: Insert after this regexp (default: EOF)
+#   block_insertbefore: Insert before this regexp (mutually exclusive with insertafter)
+#   block_create: Create file if it doesn't exist (default: false)
+#   block_owner: File owner (default: current user)
+#   block_group: File group (default: current user's primary group)
+#   block_mode: File permissions (default: '0644')
+#   block_backup: Create backup before modification (default: false)
+#   block_validate: Validation command (use %s for temp file path)
+#   block_become: Run with elevated privileges (default: false)
+#
+# Example usage:
+#   - include_tasks: primitives/ensure_content/ensure_blockinfile.yml
+#     vars:
+#       block_path: /etc/ssh/sshd_config
+#       block_content: |
+#         # Modern crypto algorithms only
+#         KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org
+#         Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
+#         MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
+#       block_marker: '# {mark} SSH HARDENING'
+#       block_insertafter: '^#?Port'
+#       block_validate: 'sshd -t -f %s'
+#       block_become: true
+#
+#   - include_tasks: primitives/ensure_content/ensure_blockinfile.yml
+#     vars:
+#       block_path: ~/.bashrc
+#       block_content: |
+#         export EDITOR=nvim
+#         export VISUAL=nvim
+#         export PAGER=bat
+#       block_marker: '# {mark} CUSTOM ENV VARS'
+
+- name: "Primitive | Ensure block in {{ block_path }}"
+  ansible.builtin.blockinfile:
+    path: "{{ block_path }}"
+    block: "{{ block_content }}"
+    state: "{{ block_state | default('present') }}"
+    marker: "{{ block_marker | default('# {mark} ANSIBLE MANAGED BLOCK') }}"
+    marker_begin: "{{ block_marker_begin | default('BEGIN') }}"
+    marker_end: "{{ block_marker_end | default('END') }}"
+    insertafter: "{{ block_insertafter | default(omit) }}"
+    insertbefore: "{{ block_insertbefore | default(omit) }}"
+    create: "{{ block_create | default(false) }}"
+    owner: "{{ block_owner | default(omit) }}"
+    group: "{{ block_group | default(omit) }}"
+    mode: "{{ block_mode | default('0644') }}"
+    backup: "{{ block_backup | default(false) }}"
+    validate: "{{ block_validate | default(omit) }}"
+  become: "{{ block_become | default(false) }}"
+  register: block_result
+
+- name: "Primitive | Block modification result"
+  ansible.builtin.debug:
+    msg: "Block in {{ block_path }} - State: {{ block_state | default('present') }}, Changed: {{ block_result.changed }}"
+    verbosity: 1

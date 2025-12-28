@@ -1,0 +1,63 @@
+---
+# Primitive: ensure_line
+#
+# Ensure a specific line exists in a file (or remove it)
+#
+# Required variables:
+#   line_path: Path to the file to modify
+#   line_content: The line to ensure exists (or remove)
+#
+# Optional variables:
+#   line_state: present or absent (default: present)
+#   line_regexp: Regular expression to match line for replacement
+#   line_insertafter: Insert after this regexp (default: EOF)
+#   line_insertbefore: Insert before this regexp (mutually exclusive with insertafter)
+#   line_backrefs: Use backreferences in line_content (default: false)
+#   line_create: Create file if it doesn't exist (default: false)
+#   line_owner: File owner (default: current user)
+#   line_group: File group (default: current user's primary group)
+#   line_mode: File permissions (default: '0644')
+#   line_backup: Create backup before modification (default: false)
+#   line_validate: Validation command (use %s for temp file path)
+#   line_become: Run with elevated privileges (default: false)
+#
+# Example usage:
+#   - include_tasks: primitives/ensure_content/ensure_line.yml
+#     vars:
+#       line_path: /etc/environment
+#       line_content: "EDITOR=nvim"
+#       line_regexp: '^EDITOR='
+#       line_create: true
+#       line_become: true
+#
+#   - include_tasks: primitives/ensure_content/ensure_line.yml
+#     vars:
+#       line_path: /etc/sudoers.d/11-install-aur_builder
+#       line_content: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+#       line_create: true
+#       line_mode: '0644'
+#       line_validate: 'visudo -cf %s'
+#       line_become: true
+
+- name: "Primitive | Ensure line in {{ line_path }}"
+  ansible.builtin.lineinfile:
+    path: "{{ line_path }}"
+    line: "{{ line_content }}"
+    state: "{{ line_state | default('present') }}"
+    regexp: "{{ line_regexp | default(omit) }}"
+    insertafter: "{{ line_insertafter | default(omit) }}"
+    insertbefore: "{{ line_insertbefore | default(omit) }}"
+    backrefs: "{{ line_backrefs | default(false) }}"
+    create: "{{ line_create | default(false) }}"
+    owner: "{{ line_owner | default(omit) }}"
+    group: "{{ line_group | default(omit) }}"
+    mode: "{{ line_mode | default('0644') }}"
+    backup: "{{ line_backup | default(false) }}"
+    validate: "{{ line_validate | default(omit) }}"
+  become: "{{ line_become | default(false) }}"
+  register: line_result
+
+- name: "Primitive | Line modification result"
+  ansible.builtin.debug:
+    msg: "Line '{{ line_content }}' in {{ line_path }} - State: {{ line_state | default('present') }}, Changed: {{ line_result.changed }}"
+    verbosity: 1

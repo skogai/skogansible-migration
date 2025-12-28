@@ -1,0 +1,113 @@
+---
+# Example: System Configuration Using ensure_content Primitives
+#
+# This example shows how to manage system-level configurations
+
+- name: System Configuration - Using Primitives
+  hosts: localhost
+  connection: local
+
+  tasks:
+    # Deploy /etc/environment using blockinfile primitive
+    - name: Configure system environment variables
+      include_tasks: ../ensure_content/ensure_blockinfile.yml
+      vars:
+        block_path: /etc/environment
+        block_content: |
+          EDITOR=nvim
+          VISUAL=nvim
+          PAGER=bat
+          BROWSER=firefox
+        block_marker: '# {mark} SYSTEM DEFAULTS'
+        block_become: true
+      tags: [system, environment]
+
+    # Deploy sshd_config using template primitive with validation
+    - name: Deploy SSH server configuration
+      include_tasks: ../ensure_content/ensure_template.yml
+      vars:
+        template_src: sshd_config.j2
+        template_dest: /etc/ssh/sshd_config
+        template_mode: '0600'
+        template_validate: 'sshd -t -f %s'
+        template_become: true
+        template_notify: restart sshd
+      tags: [system, sshd]
+
+    # Add kernel modules using line primitive
+    - name: Load kernel module at boot
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: /etc/modules-load.d/custom.conf
+        line_content: "{{ item }}"
+        line_create: true
+        line_mode: '0644'
+        line_become: true
+      loop:
+        - vfio-pci
+        - kvm
+      tags: [system, kernel-modules]
+
+    # Configure kernel parameters using line primitive
+    - name: Set kernel sysctl parameters
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: /etc/sysctl.d/99-custom.conf
+        line_content: "{{ item.key }} = {{ item.value }}"
+        line_regexp: "^{{ item.key | regex_escape }}"
+        line_create: true
+        line_mode: '0644'
+        line_become: true
+      loop:
+        - { key: 'vm.swappiness', value: '10' }
+        - { key: 'fs.inotify.max_user_watches', value: '524288' }
+      tags: [system, sysctl]
+
+    # Deploy udev rules using config primitive
+    - name: Deploy custom udev rules
+      include_tasks: ../ensure_content/ensure_config.yml
+      vars:
+        config_src: "rules.d/{{ item }}"
+        config_dest: "/etc/udev/rules.d/{{ item }}"
+        config_mode: '0644'
+        config_become: true
+      loop:
+        - 99-jbl-headphones.rules
+        - 99-usb-permissions.rules
+      tags: [system, udev]
+
+    # Configure X11 keyboard layout using config primitive
+    - name: Deploy X11 keyboard configuration
+      include_tasks: ../ensure_content/ensure_config.yml
+      vars:
+        config_src: xorg.conf.d/00-keyboard.conf
+        config_dest: /etc/X11/xorg.conf.d/00-keyboard.conf
+        config_mode: '0644'
+        config_become: true
+      tags: [system, x11]
+
+    # Add systemd drop-in configuration using blockinfile primitive
+    - name: Add systemd service override
+      include_tasks: ../ensure_content/ensure_blockinfile.yml
+      vars:
+        block_path: /etc/systemd/system/docker.service.d/override.conf
+        block_content: |
+          [Service]
+          ExecStart=
+          ExecStart=/usr/bin/dockerd -H fd:// --storage-driver=overlay2
+        block_marker: '# {mark} DOCKER OVERRIDES'
+        block_create: true
+        block_mode: '0644'
+        block_become: true
+        block_notify: reload systemd
+      tags: [system, systemd]
+
+    # Configure LightDM greeter using template primitive
+    - name: Deploy LightDM greeter configuration
+      include_tasks: ../ensure_content/ensure_template.yml
+      vars:
+        template_src: lightdm/slick-greeter.conf.j2
+        template_dest: /etc/lightdm/slick-greeter.conf
+        template_mode: '0644'
+        template_become: true
+      tags: [system, lightdm]
