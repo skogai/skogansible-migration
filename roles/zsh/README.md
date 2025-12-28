@@ -1,73 +1,92 @@
 # Ansible Role: ZSH
 
-Zsh shell installation and configuration management.
+Simple ZSH configuration deployment using modular directory structure.
 
-This role provides:
+## Features
 
-- Zsh installation
-- Configuration file deployment
-- Default shell setup
-- Plugin manager integration (zinit, oh-my-zsh, etc.)
+- **Single task deployment** - Copies entire `zsh.d/` directory
+- **Modular loader** - Loads numbered directories in sequence (00, 10, 20, etc.)
+- **Recursive loading** - Supports nested files with `**/*.zsh` glob
+- **File type handling** - `.env` files sourced with `allexport`, others sourced normally
+- **Minimal by default** - Start with essentials (PATH, history, options, completions)
 
 ## Quick Start
 
-- Ansible 2.10 or higher
-- Target system: Arch Linux
-
-## Role Variables
-
-All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/zsh.yml`.
-
-### Installation
-
-```yaml
-zsh_install: true              # Install zsh
-zsh_package_name: "zsh"        # Package name
+```bash
+./run.sh --tags zsh
 ```
 
-### Configuration
+## Architecture
 
-```yaml
-zsh_deploy_config: false       # Deploy configuration file
-zsh_config_file: "{{ ansible_facts['env']['HOME'] }}/.zshrc"
+### Directory Structure
+
+```
+~/.config/zsh.d/
+├── loader.zsh          # Recursive loader
+├── 00-path/            # PATH configuration (loaded first)
+│   └── path.zsh
+├── 10-settings/        # Shell options and history
+│   ├── history.zsh
+│   └── options.zsh
+├── 20-functions/       # Custom functions (empty)
+├── 30-aliases/         # Aliases (empty)
+├── 40-completions/     # Completion system
+│   └── completions.zsh
+├── 50-secrets/         # API keys (empty)
+├── 60-exports/         # Environment exports (empty)
+└── 90-skogai/          # SkogAI integration (empty, loaded last)
 ```
 
-### Feature Flags
+### Loader Behavior
 
-```yaml
-zsh_set_default_shell: false   # Set zsh as default shell
-zsh_enable_plugin_manager: false  # Enable plugin manager
-zsh_plugin_manager: "zinit"    # Plugin manager to use
+The loader (`loader.zsh`) processes files in this order:
+
+1. **Directories** - Numerical order (00, 10, 20, ...)
+2. **File types** - Within each directory:
+   - `.zsh`, `.sh`, `.conf` - Sourced normally
+   - `.env` - Sourced with `set -o allexport` (auto-export variables)
+3. **Recursive** - Finds files in subdirectories using `**/*.ext`
+
+Example:
+```zsh
+# loader.zsh
+local zsh_d="${0:h}"
+setopt nullglob
+
+for dir in "$zsh_d"/[0-9]*(/N); do
+    for file in "$dir"/**/*.conf "$dir"/**/*.sh "$dir"/**/*.zsh "$dir"/**/*.env; do
+        if [[ -r "$file" ]]; then
+            if [[ "$file" == *.env ]]; then
+                set -o allexport
+                source "$file"
+                set +o allexport
+            else
+                source "$file"
+            fi
+        fi
+    done
+done
+
+unsetopt nullglob
 ```
 
 ## Configuration
 
-None
-
-## Example Playbook
-
-### Basic Usage
+### Role Variables (defaults/main.yml)
 
 ```yaml
-- hosts: localhost
-  roles:
-    - role: zsh
-      vars:
-        zsh_install: true
+zsh_deploy_config: true
+zsh_config_dir: "{{ ansible_user_dir }}/.config/zsh.d"
+zsh_deploy_zshrc: true
+zsh_backup_existing: true
 ```
 
-### Full Setup
+### Project Configuration (vars/zsh.yml)
 
 ```yaml
-- hosts: localhost
-  roles:
-    - role: zsh
-      vars:
-        zsh_install: true
-        zsh_deploy_config: true
-        zsh_set_default_shell: true
-        zsh_enable_plugin_manager: true
-        zsh_plugin_manager: "zinit"
+# Deploy to test directory while building
+zsh_config_dir: "{{ ansible_user_dir }}/.config/zsh.d.ansible-test"
+zsh_deploy_zshrc: false
 ```
 
 Switch to production when ready:
@@ -182,29 +201,67 @@ No `export` needed - the loader enables `allexport` automatically.
 ## Tags
 
 ```bash
-# Run entire role
-./run.sh --tags zsh
-
-# Run only installation
-./run.sh --tags zsh-install
-
-# Run only configuration
+# Deploy config only
 ./run.sh --tags zsh-config
 
-# Set default shell
-./run.sh --tags zsh-default-shell
+# Deploy .zshrc only
+./run.sh --tags zsh-zshrc
 
-# Setup plugins
-./run.sh --tags zsh-plugins
+# Deploy everything
+./run.sh --tags zsh
 ```
 
 ## Role Structure
 
-- `zsh` - Run all tasks
-- `zsh-install` - Installation tasks
-- `zsh-config` - Configuration tasks
-- `zsh-default-shell` - Default shell tasks
-- `zsh-plugins` - Plugin manager tasks
+```
+roles/zsh/
+├── defaults/main.yml       # Default variables (7 lines)
+├── tasks/
+│   ├── main.yml           # Orchestrator (2 includes)
+│   ├── deploy_config.yml  # Single copy task
+│   └── deploy_zshrc.yml   # .zshrc deployment
+├── files/
+│   └── zsh.d/             # Config files
+│       ├── loader.zsh
+│       ├── 00-path/
+│       ├── 10-settings/
+│       ├── 20-functions/
+│       ├── 30-aliases/
+│       ├── 40-completions/
+│       ├── 50-secrets/
+│       ├── 60-exports/
+│       └── 90-skogai/
+├── templates/
+│   └── zshrc.j2          # .zshrc template
+└── README.md             # This file
+```
+
+## Notes
+
+- **ZSH installation** is handled by packages role, not this role
+- **Completions** go in `40-completions/` module, not a separate directory
+- **Empty directories** have `.gitkeep` files to preserve structure
+- **Test deployment** uses `zsh.d.ansible-test` directory while building
+
+## Troubleshooting
+
+### Loader not sourcing files
+
+Check file permissions - must be readable:
+```bash
+ls -la ~/.config/zsh.d/10-settings/
+```
+
+### Variables not set
+
+Test direct sourcing:
+```bash
+zsh -c "source ~/.config/zsh.d/10-settings/history.zsh && echo \$HISTSIZE"
+```
+
+### Global configs override settings
+
+The loader must be sourced from `.zshrc` LAST so settings take precedence over global configs.
 
 ## License
 

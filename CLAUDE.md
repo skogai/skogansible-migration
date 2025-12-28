@@ -507,6 +507,65 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 
 **See also:** `docs/CLOUDFLARED_SETUP.md` for comprehensive setup guide.
 
+## ZSH Role Configuration
+
+The ZSH role deploys modular shell configuration using numbered directories and a recursive loader.
+
+**Quick Start (Default behavior):**
+
+- Deploys entire `zsh.d/` directory structure
+- Minimal configuration (PATH, history, options, completions)
+- Recursive loader handles `.zsh`, `.sh`, `.conf`, and `.env` files
+
+**To customize zsh configuration:**
+
+1. Add files to `roles/zsh/files/zsh.d/[module]/`:
+
+   ```bash
+   # Example: Add editor export
+   cat > roles/zsh/files/zsh.d/60-exports/editor.zsh << 'EOF'
+   export EDITOR='nvim'
+   export VISUAL='nvim'
+   EOF
+   ```
+
+2. Run: `./run.sh --tags zsh-config`
+
+**Available Modules:**
+
+- `00-path/` - PATH configuration (loaded first)
+- `10-settings/` - Shell options and history
+- `20-functions/` - Custom shell functions
+- `30-aliases/` - Command aliases
+- `40-completions/` - Completion system
+- `50-secrets/` - API keys (use `.env` files)
+- `60-exports/` - Environment exports
+- `90-skogai/` - SkogAI integration (loaded last)
+
+**File Type Handling:**
+
+- `.zsh`, `.sh`, `.conf` - Sourced normally
+- `.env` - Sourced with `set -o allexport` (auto-exports variables)
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags zsh-config    # Deploy config only
+./run.sh --tags zsh-zshrc     # Deploy .zshrc only
+./run.sh --tags zsh           # Deploy everything
+```
+
+**Current Configuration:**
+
+The role currently deploys:
+- Loader with recursive loading and `.env` support
+- PATH setup for user binaries and toolchains
+- 50,000 command history with smart filtering
+- Shell options (auto-cd, directory stack, etc.)
+- Completion system initialization
+
+**See:** `roles/zsh/README.md` for complete documentation.
+
 ## Reference
 
 ### Essential Reading
@@ -522,6 +581,7 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 - @roles/ssh/README.md - SSH role documentation
 - @roles/git/README.md - Git role documentation
 - @roles/cloudflared/README.md - Cloudflared role documentation
+- @roles/zsh/README.md - ZSH role documentation
 
 ### System Expansion
 
