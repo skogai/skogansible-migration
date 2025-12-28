@@ -16,12 +16,6 @@ This role provides standardized, reusable functions for all common git operation
 - Repository-specific configurations
 - Git maintenance tasks
 
-## Requirements
-
-- Ansible 2.10 or higher
-- `community.general` collection (for `git_config` module)
-- Target system: Arch Linux, Debian, Ubuntu, Fedora, or other Linux distributions
-
 ## Role Variables
 
 All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/git.yml`.
@@ -129,10 +123,6 @@ See `defaults/main.yml` for complete list of configuration options including:
 - Pack optimization
 - Submodule settings
 - And more...
-
-## Dependencies
-
-None.
 
 ## Example Playbooks
 
@@ -506,11 +496,3 @@ Hooks are deployed to `~/.git-templates/hooks/`. To apply to existing repositori
 cd /path/to/repo
 git init  # Re-initialize to copy hooks
 ```
-
-## License
-
-MIT
-
-## Author Information
-
-Created by Skogix for SkogAI's Ansible automation framework.

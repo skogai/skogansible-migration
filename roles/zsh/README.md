@@ -265,11 +265,3 @@ zsh -c "source ~/.config/zsh.d/10-settings/history.zsh && echo \$HISTSIZE"
 ### Global configs override settings
 
 The loader must be sourced from `.zshrc` LAST so settings take precedence over global configs.
-
-## License
-
-MIT
-
-## Author
-
-skogix (SkogAI)
