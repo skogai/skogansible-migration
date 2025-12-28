@@ -1,0 +1,478 @@
+#!/usr/bin/zsh
+export SKOGAI_CONFIG_DIR=/home/skogix/skogai/config/
+# ============================================================================
+# ZSH Configuration with Oh My Zsh
+# Environment variables managed by: skogcli config
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Oh My Zsh Configuration
+# ----------------------------------------------------------------------------
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="peepcode" # set by `omz`
+CASE_SENSITIVE="false"
+HYPHEN_INSENSITIVE="false"
+DISABLE_MAGIC_FUNCTIONS="true"
+ENABLE_CORRECTION="false"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"  # Uncomment for large repos
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup
+plugins=(
+    ssh-agent
+    vi-mode
+    direnv
+    virtualenv
+    themes
+    pyenv
+    z
+    uv
+    tailscale
+    git
+    npm
+    nvm
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-navigation-tools
+    ansible
+    # git
+    # colored-man-pages
+    # extract
+    # vi-mode
+    # direnv
+    # virtualenv
+    # pyenv
+    # z
+    # uv
+    # npm
+    # nvm
+    # zsh-navigation-tools
+    # ssh-agent
+    # [TODO] tailscale  # Requires tailscale to be installed
+    # [TODO] ansible    # Requires ansible to be installed
+    # [TODO] themes     # Enable if you want theme switching capabilities
+)
+
+# Load oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
+# ----------------------------------------------------------------------------
+# Environment Variables
+# ----------------------------------------------------------------------------
+# SkogAI configuration
+export SKOGAI="/home/skogix/skogai"
+export SKOGAI_CONFIG_DIR="/home/skogix/skogai/config"
+
+# ============================================================================
+# PATH Configuration (organized by priority)
+# ============================================================================
+
+# User binaries (highest priority)
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+# Development tools
+export PATH="$HOME/.cargo/bin:$PATH"              # Rust packages
+export GOPATH="/mnt/extra/go:$GOPATH"
+export PATH="$GOPATH/bin:$PATH"                   # Go packages (5000+ binaries)
+export PATH="$HOME/.opencode/bin:$PATH"           # Custom binaries
+
+# Package managers
+# export PATH="/mnt/extra/pnpm:$PATH"       # pnpm global packages
+
+# Uncomment when these tools are installed:
+# export PATH="$HOME/.dotnet/tools:$PATH"          # .NET tools
+# export PATH="$HOME/.lmstudio/bin:$PATH"          # LM Studio
+# export PATH="/mnt/extra/npm/global/bin:$PATH"    # npm global (if not using NVM)
+
+# Set your preferred editor
+export EDITOR='nvim'  # or 'vim' if you prefer
+
+# [TODO] Terminal color enhancements for less pager
+# export LESS_TERMCAP_md="$(tput bold 2> /dev/null; tput setaf 2 2> /dev/null)"
+# export LESS_TERMCAP_me="$(tput sgr0 2> /dev/null)"
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ----------------------------------------------------------------------------
+# Aliases
+# ----------------------------------------------------------------------------
+# Navigation & Tools
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias lg='lazygit'
+alias c='clear'
+alias open='xdg-open'
+
+# Git shortcuts
+alias gs='git status'
+alias gp='git pull'
+alias gc='git commit'
+alias gco='git checkout'
+alias gb='git branch'
+alias gd='git diff'
+alias ga='git add'
+
+# Clipboard (Linux)
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
+# Config editing
+alias zshrc='nvim ~/.zshrc'
+# alias skenv='skogcli config list --env-only'
+# alias skadd='skogcli config add skogai.env.'
+
+# System (Arch)
+alias update='sudo pacman -Syu'
+alias rmpkg='sudo pacman -Rsn'
+alias cleanup='sudo pacman -Rsn $(pacman -Qtdq) 2>/dev/null || echo "No orphans"'
+alias jctl='journalctl -p 3 -xb'
+alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+
+# Build tools
+alias make='make -j$(nproc)'
+alias ninja='ninja -j$(nproc)'
+alias n='ninja'
+
+# [TODO] Development/Project-specific aliases
+alias commit='aider --commit --model openrouter/meta-llama/llama-3-8b-instruct --no-gitignore --set-env OPENROUTER_API_KEY=$OPENROUTER_API_KEY'
+# alias gemini-cli="npx @google/gemini-cli"
+# alias qwen='node /mnt/extra/20250730-skogai-main/dev/qwen-code/scripts/start.js'
+
+# [TODO] Advanced pacman/fzf integration (requires fzf)
+# alias fzf-pacman="pacman -Slq | fzf --preview 'pacman -Si {1}' --layout=reverse --bind 'enter:execute(sudo pacman -S {1})'"
+
+# Enable color support of ls
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# History configuration
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+
+# ----------------------------------------------------------------------------
+# Key Bindings
+# ----------------------------------------------------------------------------
+bindkey -v  # Use emacs key bindings
+bindkey "^P" up-line-or-search
+
+# ----------------------------------------------------------------------------
+# Completions
+# ----------------------------------------------------------------------------
+# Custom completions directories
+fpath+=~/.zsh-completions
+fpath+=~/.zsh-completions/completions
+
+# Initialize completions
+autoload -Uz compinit
+compinit
+
+# Enable advanced tab completion
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Directory navigation
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
+# Prompt command substitution
+setopt PROMPT_SUBST
+
+# ----------------------------------------------------------------------------
+# External Integrations
+# ----------------------------------------------------------------------------
+# aichat shell integration (if available)
+[ -f "$HOME/.local/src/aichat/scripts/shell-integration/integration.zsh" ] && \
+    source "$HOME/.local/src/aichat/scripts/shell-integration/integration.zsh"
+
+# ZSH Navigation Tools
+[ -f "$HOME/.config/znt/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh" ] && \
+    source "$HOME/.config/znt/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh"
+
+# argc-completions setup
+# if [ -d "$HOME/.local/src/argc-completions" ]; then
+    export ARGC_COMPLETIONS_ROOT="$HOME/.local/src/argc-completions"
+    export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
+    export PATH="$ARGC_COMPLETIONS_ROOT/bin:$PATH"
+    # Generate completion scripts list
+    argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" 2>/dev/null | sed -n 's/\.sh$//p') )
+    # Source argc completions
+    [ -n "$argc_scripts" ] && source <(argc --argc-completions zsh $argc_scripts)
+# fi
+
+# aichat keybinding (Alt+E)
+_aichat_zsh() {
+    if [[ -n "$BUFFER" ]]; then
+        local _old=$BUFFER
+        BUFFER+="⌛"
+        zle -I && zle redisplay
+        BUFFER=$(aichat -e "$_old")
+        zle end-of-line
+    fi
+}
+zle -N _aichat_zsh
+bindkey '\ee' _aichat_zsh
+
+# ----------------------------------------------------------------------------
+# Load Environment Variables from skogcli
+# ----------------------------------------------------------------------------
+# Loads all environment variables managed by skogcli
+# To add: skogcli config add skogai.env.VAR_NAME "value"
+# To list: skogcli config list --env-only
+eval "$(skogcli config export-env --namespace skogai,uv,openrouter,openai)"
+
+# Load OpenRouter API key (if exists)
+# [ -f "$HOME/.ssh/openrouter" ] && source "$HOME/.ssh/openrouter"
+# [TODO] Export OPENROUTER_API_KEY if needed
+# export OPENROUTER_API_KEY=$OPENROUTER_API_KEY
+
+# [TODO] System-specific NVM initialization (check path)
+source /usr/share/nvm/nvm-exec
+
+
+# Load local configuration if it exists
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# ============================================================================
+# [TODO] ZPLUG Plugin Manager (Alternative to Oh-My-Zsh plugins)
+# Uncomment this entire section if you want to use zplug instead/alongside OMZ
+# ============================================================================
+# # Check if zplug is installed
+# if [[ ! -d ~/.zplug ]]; then
+#     git clone https://github.com/zplug/zplug ~/.zplug
+#     source ~/.zplug/init.zsh && zplug update --self
+# fi
+#
+# # Essential
+# source ~/.zplug/init.zsh
+#
+# # Zplug plugin definitions
+# zplug "changyuheng/fz", defer:1
+# zplug "rupa/z", use:z.sh
+# zplug "plugins/ssh-agent",   from:oh-my-zsh
+# zplug "plugins/git",   from:oh-my-zsh
+# zplug "zsh-users/zsh-history-substring-search"
+# zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# zplug "zsh-users/zsh-completions"
+# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+# zplug "mafredri/zsh-async", from:github, defer:0
+# zplug "lib/completion", from:oh-my-zsh
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+#
+# # Install plugins if there are plugins that have not been installed
+# if ! zplug check --verbose; then
+#     printf "Install? [y/N]: "
+#     if read -q; then
+#         echo; zplug install
+#     else
+#         echo
+#     fi
+# fi
+#
+# # Then, source plugins and add commands to $PATH
+# zplug load
+
+# ============================================================================
+# [TODO] Advanced Completion Settings (if you want more control)
+# ============================================================================
+# # Enable completions
+# if [ -d ~/.zsh/comp ]; then
+#     fpath=(~/.zsh/comp $fpath)
+#     autoload -U ~/.zsh/comp/*(:t)
+# fi
+#
+# zstyle ':completion:*' group-name ''
+# zstyle ':completion:*:messages' format '%d'
+# zstyle ':completion:*:descriptions' format '%d'
+# zstyle ':completion:*:options' verbose yes
+# zstyle ':completion:*:values' verbose yes
+# zstyle ':completion:*:options' prefix-needed yes
+# zstyle ':completion:*' use-cache true
+# zstyle ':completion:*:default' menu select=1
+# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'l:|=* r:|[.,_-]=* r:|=* m:{a-z}={A-Z}'
+# # sudo completions
+# zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+# zstyle ':completion:*' keep-prefix
+# zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
+# zstyle ':completion:*:processes' command "ps -u $USER -o pid,stat,%cpu,%mem,cputime,command"
+alias gemini='node /home/skogix/.local/src/gemini-cli/scripts/start.js'
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+
+
+fcs() {
+    # Check if user is asking for help
+    if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+        find-claude-session --help
+        return
+    fi
+    # Run find-claude-session in shell mode and evaluate the output
+    eval "$(find-claude-session --shell "$@" | sed '/^$/d')"
+}
+
+# alias claude="/home/skogix/.claude/local/claude"
+alias gay=yay
+eval "$(atuin init zsh)"
+
+
+# # ZSH has a quirk where `preexec` is only run if a command is actually run (i.e
+# # pressing ENTER at an empty command line will not cause preexec to fire). This
+# # can cause timing issues, as a user who presses "ENTER" without running a command
+# # will see the time to the start of the last command, which may be very large.
+#
+# # To fix this, we create STARSHIP_START_TIME upon preexec() firing, and destroy it
+# # after drawing the prompt. This ensures that the timing for one command is only
+# # ever drawn once (for the prompt immediately after it is run).
+#
+# zmodload zsh/parameter  # Needed to access jobstates variable for STARSHIP_JOBS_COUNT
+#
+# # Defines a function `__starship_get_time` that sets the time since epoch in millis in STARSHIP_CAPTURED_TIME.
+# if [[ $ZSH_VERSION == ([1-4]*) ]]; then
+#     # ZSH <= 5; Does not have a built-in variable so we will rely on Starship's inbuilt time function.
+#     __starship_get_time() {
+#         STARSHIP_CAPTURED_TIME=$(/usr/bin/starship time)
+#     }
+# else
+#     zmodload zsh/datetime
+#     zmodload zsh/mathfunc
+#     __starship_get_time() {
+#         (( STARSHIP_CAPTURED_TIME = int(rint(EPOCHREALTIME * 1000)) ))
+#     }
+# fi
+#
+# # The two functions below follow the naming convention `prompt_<theme>_<hook>`
+# # for compatibility with Zsh's prompt system. See
+# # https://github.com/zsh-users/zsh/blob/2876c25a28b8052d6683027998cc118fc9b50157/Functions/Prompts/promptinit#L155
+#
+# # Runs before each new command line.
+# prompt_starship_precmd() {
+#     # Save the status, because subsequent commands in this function will change $?
+#     STARSHIP_CMD_STATUS=$? STARSHIP_PIPE_STATUS=(${pipestatus[@]})
+#
+#     # Calculate duration if a command was executed
+#     if (( ${+STARSHIP_START_TIME} )); then
+#         __starship_get_time && (( STARSHIP_DURATION = STARSHIP_CAPTURED_TIME - STARSHIP_START_TIME ))
+#         unset STARSHIP_START_TIME
+#     # Drop status and duration otherwise
+#     else
+#         unset STARSHIP_DURATION STARSHIP_CMD_STATUS STARSHIP_PIPE_STATUS
+#     fi
+#
+#     # Use length of jobstates array as number of jobs. Expansion fails inside
+#     # quotes so we set it here and then use the value later on.
+#     STARSHIP_JOBS_COUNT=${#jobstates}
+# }
+#
+# # Runs after the user submits the command line, but before it is executed and
+# # only if there's an actual command to run
+# prompt_starship_preexec() {
+#     __starship_get_time && STARSHIP_START_TIME=$STARSHIP_CAPTURED_TIME
+# }
+#
+# # Add hook functions
+# autoload -Uz add-zsh-hook
+# add-zsh-hook precmd prompt_starship_precmd
+# add-zsh-hook preexec prompt_starship_preexec
+#
+# # Set up a function to redraw the prompt if the user switches vi modes
+# starship_zle-keymap-select() {
+#     zle reset-prompt
+# }
+#
+# ## Check for existing keymap-select widget.
+# # zle-keymap-select is a special widget so it'll be "user:fnName" or nothing. Let's get fnName only.
+# __starship_preserved_zle_keymap_select=${widgets[zle-keymap-select]#user:}
+# if [[ -z $__starship_preserved_zle_keymap_select ]]; then
+#     zle -N zle-keymap-select starship_zle-keymap-select;
+# else
+#     # Define a wrapper fn to call the original widget fn and then Starship's.
+#     starship_zle-keymap-select-wrapped() {
+#         $__starship_preserved_zle_keymap_select "$@";
+#         starship_zle-keymap-select "$@";
+#     }
+#     zle -N zle-keymap-select starship_zle-keymap-select-wrapped;
+# fi
+#
+# export STARSHIP_SHELL="zsh"
+#
+# # Set up the session key that will be used to store logs
+# STARSHIP_SESSION_KEY="$RANDOM$RANDOM$RANDOM$RANDOM$RANDOM"; # Random generates a number b/w 0 - 32767
+# STARSHIP_SESSION_KEY="${STARSHIP_SESSION_KEY}0000000000000000" # Pad it to 16+ chars.
+# export STARSHIP_SESSION_KEY=${STARSHIP_SESSION_KEY:0:16}; # Trim to 16-digits if excess.
+#
+# VIRTUAL_ENV_DISABLE_PROMPT=1
+#
+# setopt promptsubst
+#
+# PROMPT='$('/usr/bin/starship' prompt --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="$STARSHIP_CMD_STATUS" --pipestatus="${STARSHIP_PIPE_STATUS[*]}" --cmd-duration="${STARSHIP_DURATION:-}" --jobs="$STARSHIP_JOBS_COUNT")'
+# RPROMPT='$('/usr/bin/starship' prompt --right --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="$STARSHIP_CMD_STATUS" --pipestatus="${STARSHIP_PIPE_STATUS[*]}" --cmd-duration="${STARSHIP_DURATION:-}" --jobs="$STARSHIP_JOBS_COUNT")'
+# PROMPT2="$(/usr/bin/starship prompt --continuation)"
+#
+#
+#
+# export ANSIBLE_HOME="$XDG_DATA_HOME"/ansible
+# export AZURE_CONFIG_DIR="$XDG_DATA_HOME"/azure
+# export HISTFILE="${XDG_STATE_HOME}"/bash/history
+# export ANSIBLE_HOME="$XDG_DATA_HOME"/ansible
+# export AZURE_CONFIG_DIR="$XDG_DATA_HOME"/azure
+# export HISTFILE="${XDG_STATE_HOME}"/bash/history
+# export CALCHISTFILE="$XDG_CACHE_HOME"/calc_history
+# export CARGO_HOME="$XDG_DATA_HOME"/cargo
+# export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+# export DOTNET_CLI_HOME="$XDG_DATA_HOME"/dotnet
+# export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+# export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+# export XCURSOR_PATH=/usr/share/icons:$XDG_DATA_HOME/icons
+# export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
+# export NB_DIR="$XDG_DATA_HOME/nb"
+# export NBRC_PATH="$XDG_CONFIG_HOME/nbrc"
+# export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
+# export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+# export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
+# export NVM_DIR="$XDG_DATA_HOME"/nvm
+# export ZSH="$XDG_DATA_HOME"/oh-my-zsh
+# export PSQL_HISTORY="$XDG_DATA_HOME/psql_history"
+# export PYENV_ROOT="$XDG_DATA_HOME"/pyenv
+# export PYTHONSTARTUP="$HOME"/python/pythonrc
+# export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+# export SQLITE_HISTORY="$XDG_CACHE_HOME"/sqlite_history
+# alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+# export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
+# export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
+# export _Z_DATA="$XDG_DATA_HOME/z"
+# export ZPLUG_HOME="$XDG_DATA_HOME/zplug"
+# compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+# export HISTFILE="$XDG_STATE_HOME"/zsh/history
+# export HISTFILE="$XDG_STATE_HOME"/zsh/history
+# export ZDOTDIR="$HOME"/.config/zsh
+
+[ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
+
+
+# pnpm
+export PNPM_HOME="/home/skogix/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

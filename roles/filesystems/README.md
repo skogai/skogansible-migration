@@ -101,10 +101,10 @@ collections:
 ---
 - name: Configure filesystem mounts
   hosts: all
-  
+
   vars_files:
     - vars/filesystems.yml
-  
+
   roles:
     - role: filesystems
       tags: [filesystems]
@@ -152,6 +152,7 @@ lsblk -f
 ```
 
 Example output:
+
 ```
 /dev/sda1: UUID="93f3c5d5-d775-4364-abc2-09161102aa04" TYPE="ext4"
 ```
@@ -250,6 +251,7 @@ This role supports the following tags:
 ### Mount fails with "mount point does not exist"
 
 The role should create mount points automatically. If it fails, check:
+
 - The `filesystems_create_mount_points` variable is `true`
 - The parent directory exists (e.g., `/mnt` for `/mnt/extra`)
 

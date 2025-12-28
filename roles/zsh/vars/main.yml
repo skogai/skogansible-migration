@@ -4,12 +4,13 @@
 # These values apply to YOUR deployments (not sane defaults for anyone)
 
 # Reference shared variables from ./vars/main.yml
-# zsh_user_name: "{{ user_name }}"
+zsh_user_name: "{{ user_name }}"
 
 # Your standard feature flag preferences
-# zsh_set_default_shell: true
-# zsh_enable_plugin_manager: true
+zsh_set_default_shell: true
+zsh_enable_plugin_manager: true
 # zsh_plugin_manager: "zinit"
+zsh_plugin_manager: "zplug"
 
 # Your standard paths/configuration
-# zsh_config_file: "{{ ansible_user_dir }}/.zshrc"
+zsh_config_file: "{{ ansible_user_dir }}/.zshrc"

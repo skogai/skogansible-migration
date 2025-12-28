@@ -1,0 +1,58 @@
+---
+# Example: SSH Role Integration with ensure_content Primitives
+#
+# This example shows how to refactor SSH role tasks to use primitives
+#
+# Before: Inline tasks in roles/ssh/tasks/main.yml
+# After: Composable primitives for better reusability
+
+- name: SSH Role - Using Primitives
+  hosts: localhost
+  connection: local
+
+  vars:
+    ssh_dir: "{{ ansible_user_dir }}/.ssh"
+    ssh_config_file: "{{ ssh_dir }}/config"
+
+  tasks:
+    # Deploy SSH client config using template primitive
+    - name: Deploy SSH client configuration
+      include_tasks: ../ensure_content/ensure_template.yml
+      vars:
+        template_src: ssh_config.j2
+        template_dest: "{{ ssh_config_file }}"
+        template_mode: '0600'
+      tags: [ssh, ssh-config]
+
+    # Manage known_hosts entries using line primitive
+    - name: Add GitHub to known_hosts
+      include_tasks: ../ensure_content/ensure_line.yml
+      vars:
+        line_path: "{{ ssh_dir }}/known_hosts"
+        line_content: "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
+        line_create: true
+        line_mode: '0644'
+      tags: [ssh, ssh-known-hosts]
+
+    # Deploy authorized_keys using config primitive
+    - name: Deploy authorized_keys
+      include_tasks: ../ensure_content/ensure_config.yml
+      vars:
+        config_src: authorized_keys
+        config_dest: "{{ ssh_dir }}/authorized_keys"
+        config_mode: '0600'
+      tags: [ssh, ssh-authorized-keys]
+
+    # Add SSH hardening block using blockinfile primitive
+    - name: Add SSH client hardening
+      include_tasks: ../ensure_content/ensure_blockinfile.yml
+      vars:
+        block_path: "{{ ssh_config_file }}"
+        block_content: |
+          # Modern crypto only
+          KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org
+          Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr
+          MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
+        block_marker: '# {mark} SSH HARDENING'
+        block_insertbefore: '^Host'
+      tags: [ssh, ssh-hardening]

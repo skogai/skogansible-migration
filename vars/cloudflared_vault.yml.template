@@ -12,4 +12,4 @@
 #   ansible-vault edit vars/cloudflared_vault.yml
 
 # Replace YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE with your actual tunnel token
-cloudflared_tunnel_token: "YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE"
+# cloudflared_tunnel_token: "YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE"

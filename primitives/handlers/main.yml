@@ -1,0 +1,65 @@
+---
+# Primitive Handlers
+#
+# Common validation and reload handlers for primitives
+#
+# These handlers can be used with template_notify, config_notify, etc.
+
+# System service handlers
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+
+- name: restart sshd
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted
+  become: true
+
+- name: reload sshd
+  ansible.builtin.systemd:
+    name: sshd
+    state: reloaded
+  become: true
+
+- name: restart NetworkManager
+  ansible.builtin.systemd:
+    name: NetworkManager
+    state: restarted
+  become: true
+
+# Package manager handlers
+- name: update pacman cache
+  community.general.pacman:
+    update_cache: true
+  become: true
+
+# X11 handlers
+- name: reload X11
+  ansible.builtin.command:
+    cmd: xrdb -merge ~/.Xresources
+  when: ansible_env.DISPLAY is defined
+  failed_when: false
+
+# User session handlers
+- name: reload shell profile
+  ansible.builtin.shell: |
+    if [ -f ~/.bashrc ]; then source ~/.bashrc; fi
+    if [ -f ~/.zshrc ]; then source ~/.zshrc; fi
+  args:
+    executable: "{{ ansible_user_shell | default('/bin/bash') }}"
+  failed_when: false
+
+# Validation handlers
+- name: validate yaml syntax
+  ansible.builtin.command:
+    cmd: "python3 -c 'import yaml; yaml.safe_load(open(\"{{ item }}\"))'"
+  loop: "{{ validated_yaml_files | default([]) }}"
+  when: validated_yaml_files is defined
+
+- name: validate json syntax
+  ansible.builtin.command:
+    cmd: "python3 -c 'import json; json.load(open(\"{{ item }}\"))'"
+  loop: "{{ validated_json_files | default([]) }}"
+  when: validated_json_files is defined
