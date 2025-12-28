@@ -43,3 +43,6 @@ semaphore/config/
 .worktrees/*
 !.worktrees/.gitkeep
 .worktrees/
+galaxy_cache
+galaxy_token
+collections/ansible_collections
