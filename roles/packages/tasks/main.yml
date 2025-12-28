@@ -14,6 +14,15 @@
   community.general.pacman:
     update_cache: true
 
+- name: Configure pacman parallel downloads
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/pacman.conf
+    regexp: '^#?ParallelDownloads\s*='
+    line: 'ParallelDownloads = {{ pacman_parallel_downloads }}'
+    state: present
+  tags: [packages, pacman_config]
+
 - name: Upgrade all packages
   become: true
   community.general.pacman:

@@ -61,6 +61,7 @@
 #
 # Or multiple:
 # [pre-commit]
+# syntax = "./run.sh --syntax-check"
 # format = "cargo fmt -- --check"
 # lint = "cargo clippy -- -D warnings"
 
@@ -108,14 +109,21 @@
 # post-merge = "cargo install --path ."
 
 # Example: Python Project
-[post-create]
-direnv = "direnv allow"
+# [post-create]
+# direnv = "direnv allow"
 
 # install = "uv pip install -r requirements.txt"
 #
-[pre-merge]
-direnv = "direnv allow"
 
 # format = ".venv/bin/black --check ."
 # lint = ".venv/bin/ruff check ."
 # test = ".venv/bin/pytest"
+###
+
+[pre-merge]
+direnv = "direnv allow"
+[pre-commit]
+syntax = "./run.sh --syntax-check"
+changes = "./run.sh --check"
+[post-create]
+direnv = "direnv allow"

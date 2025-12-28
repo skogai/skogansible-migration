@@ -1,4 +1,7 @@
 ---
+# Pacman configuration
+pacman_parallel_downloads: 5
+
 # Packages to install from official repos
 packages:
   - ansible
@@ -61,10 +64,10 @@ packages:
   # - pgbouncer
   # - pgcli
   - picom
-  # - pipewire
-  # - pipewire-alsa
-  # - pipewire-jack
-  # - pipewire-pulse
+  - pipewire
+  - pipewire-alsa
+  - pipewire-jack
+  - pipewire-pulse
   # - polkit-gnome
   # - postgresql
   # - postgrest

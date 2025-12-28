@@ -14,7 +14,7 @@ config_root: "{{ ansible_user_dir }}/.config"
 data_root: "{{ ansible_user_dir }}/.local/share"
 
 # System-level settings (used by multiple roles)
-default_shell: "/bin/zsh"
+default_shell: "/usr/bin/zsh"
 default_editor: "nvim"
 default_pager: "bat"
 
