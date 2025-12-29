@@ -127,4 +127,3 @@ syntax = "./run.sh --syntax-check"
 changes = "./run.sh --check"
 [post-create]
 direnv = "direnv allow"
-bootstrap = "./bootstrap.sh"

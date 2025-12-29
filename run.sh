@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
+# Bootstrap
+sudo pacman -S python-uv --noconfirm && uv venv --seed --python 313 --link-mode=copy && uv pip install --link-mode=copy ansible ansible-core && source .venv/bin/activate && ansible-galaxy collection install -r .requirements.yml --upgrade && mkdir -p ./tmp && ansible-config dump --type all > ./tmp/ENV
+echo "$?"
+
 # Function to check file permissions
 check_password_file_permissions() {
   local file="$1"
