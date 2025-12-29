@@ -20,7 +20,7 @@ All role variables are defined in `defaults/main.yml` with sensible defaults. Ov
 ```yaml
 chezmoi_ensure_installed: true # Verify chezmoi is installed
 chezmoi_init_source: true # Check source directory exists
-chezmoi_source_dir: "{{ ansible_user_dir }}/.local/share/chezmoi" # Source directory
+chezmoi_source_dir: "{{ ansible_facts['user_dir'] }}/.local/share/chezmoi" # Source directory
 ```
 
 ### Configuration Deployment
@@ -91,9 +91,10 @@ chezmoi_agents:
   dot: true
 
 # SkogAI directory paths
-chezmoi_skogai_home: "{{ ansible_user_dir }}/skogai"
-chezmoi_skogai_docs: "{{ ansible_user_dir }}/skogai/docs"
-chezmoi_skogai_tools: "{{ ansible_user_dir }}/skogai/tools"
+chezmoi_skogai_home: "{{ ansible_facts['user_dir'] }}/skogai"
+chezmoi_skogai_docs: "{{ ansible_facts['user_dir'] }}/skogai/docs"
+chezmoi_skogai_tools: "{{ ansible_facts['user_dir'] }}/skogai/tools"
+chezmoi_skogai_ansible: "{{ ansible_facts['user_dir'] }}/.ansible"
 ```
 
 ### Debug Mode
@@ -250,7 +251,7 @@ chezmoi_agents:
   dot: true
 
 # SkogAI paths
-chezmoi_skogai_home: "{{ ansible_user_dir }}/skogai"
+chezmoi_skogai_home: "{{ ansible_facts['user_dir'] }}/skogai"
 ```
 
 ## Configuration Template
