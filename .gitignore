@@ -32,7 +32,6 @@ roles/ssh/files/test_examples/
 # Semaphore sensitive data
 semaphore/.env
 semaphore/data/
-semaphore/config/
 
 # Backup files that may contain sensitive data
 *.backup
