@@ -29,9 +29,9 @@
 {% endif %}
 
 [core]
-    editor = {{ git_core_editor }}
-{% if git_core_pager is defined and git_core_pager | length > 0 %}
-    pager = {{ git_core_pager }}
+    editor = {{ git_editor }}
+{% if git_pager is defined and git_pager | length > 0 %}
+    pager = {{ git_pager }}
 {% endif %}
     autocrlf = {{ git_core_autocrlf }}
     fileMode = {{ git_core_filemode | string | lower }}

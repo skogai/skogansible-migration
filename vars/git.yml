@@ -24,8 +24,8 @@ git_user_email: "emil@skogsund.se"
 # Git Core Settings
 # ==============================================================================
 
-git_core_editor: "nvim"
-git_core_pager: "diff-so-fancy | less --tabs=4 -RFX"
+git_editor: "nvim"
+git_pager: "diff-so-fancy | less --tabs=4 -RFX"
 git_default_branch: "master"
 git_pull_rebase: true # Use rebase instead of merge on pull
 git_push_default: "simple"
@@ -267,14 +267,11 @@ git_clone_repos: false
 
 git_deploy_hooks: true
 
-# Example hooks configuration (uncomment to enable):
-# git_hooks:
-#   - name: "pre-commit"
-#     template: "pre-commit.j2"
-#     mode: "0755"
-#   - name: "commit-msg"
-#     template: "commit-msg.j2"
-#     mode: "0755"
+# Example hooks configuration
+git_hooks:
+  - name: "pre-commit"
+    template: "example-pre-commit.j2"
+    mode: "0755"
 
 # ==============================================================================
 # Git LFS (Disabled by default)

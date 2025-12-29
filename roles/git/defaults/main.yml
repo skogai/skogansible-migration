@@ -32,8 +32,14 @@ git_user_email: ""
 # Default editor for git
 git_editor: "vim"
 
+# Default pager for git
+git_pager: ""
+
 # Default branch name for new repositories
 git_default_branch: "main"
+
+# Safe directories (trusted git directories)
+git_safe_directories: []
 
 # ==============================================================================
 # Git Aliases
@@ -71,6 +77,12 @@ git_credential_helper: "cache"
 
 # Cache timeout in seconds (only for 'cache' helper)
 git_credential_cache_timeout: 3600
+
+# URL-specific credential helpers (e.g., GitHub CLI integration)
+# git_credential_helpers:
+#   - url: "https://github.com"
+#     helper: "!/usr/bin/gh auth git-credential"
+git_credential_helpers: []
 
 # Credential store file (only for 'store' helper)
 # WARNING: Stores credentials in plain text!
@@ -199,6 +211,7 @@ git_merge_conflictstyle: "diff3"  # merge, diff3, zdiff3
 # Diff settings
 git_diff_algorithm: "histogram"  # myers, minimal, patience, histogram
 git_diff_colorMoved: "default"   # no, default, plain, blocks, zebra, dimmed-zebra
+git_diff_mnemonicPrefix: false   # Use (i)ndex, (w)ork tree, (c)ommit, (o)bject prefixes
 
 # Rebase settings
 git_rebase_autosquash: true
@@ -207,6 +220,12 @@ git_rebase_autostash: true
 # Fetch settings
 git_fetch_prune: true
 git_fetch_pruneTags: false
+
+# Column UI (auto, always, never, column, row, plain, dense, nodense)
+git_column_ui: ""
+
+# Branch sorting (-committerdate, -authordate, objectsize, etc.)
+git_branch_sort: ""
 
 # ==============================================================================
 # Git Security Settings
@@ -221,6 +240,14 @@ git_gpg_key_id: ""
 git_ssh_sign_commits: false
 git_ssh_sign_tags: false
 git_ssh_signing_key: ""
+git_gpg_ssh_program: ""  # SSH program for signing (e.g., ssh-keygen)
+
+# Commit settings
+git_commit_verbose: false  # Show diff in commit message editor
+
+# Tag settings
+git_tag_forceSignAnnotated: false  # Force GPG sign all annotated tags
+git_tag_sort: ""  # Tag sorting (e.g., -version:refname)
 
 # ==============================================================================
 # Git Backup & Maintenance
