@@ -24,13 +24,13 @@
       tags: [ssh, config]
 
     # - role: git
-    # tags: [git, vcs]
-
+    #   tags: [git, vcs]
+    #
     # - role: chezmoi
-    # tags: [chezmoi, dotfiles]
-
-    - role: zsh
-      tags: [zsh, shell]
-
-    - role: cloudflared
-      tags: [cloudflared, tunnel]
+    #   tags: [chezmoi, dotfiles]
+    #
+    # - role: zsh
+    #   tags: [zsh, shell]
+    #
+    # - role: cloudflared
+    #   tags: [cloudflared, tunnel]
