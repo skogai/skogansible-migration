@@ -21,6 +21,7 @@ repos:
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
+        exclude: \.j2$ # Exclude Jinja2 templates (permissions set on deployment)
       - id: mixed-line-ending
 
   # Shell script linting
