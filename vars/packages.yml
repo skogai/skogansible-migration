@@ -107,6 +107,7 @@ aur_packages:
   # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
   - pwvucontrol
   - rcm
+  - diff-so-fancy
   # - rustup  # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin
