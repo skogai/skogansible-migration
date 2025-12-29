@@ -23,8 +23,8 @@
     - role: ssh
       tags: [ssh, config]
 
-    # - role: git
-    #   tags: [git, vcs]
+    - role: git
+      tags: [git, vcs]
 
     - role: chezmoi
       tags: [chezmoi, dotfiles]
