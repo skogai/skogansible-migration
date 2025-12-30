@@ -32,4 +32,3 @@ zle -N _aichat_zsh
 bindkey '^s' _aichat_zsh
 # zle -N _sgpt_zsh
 # bindkey ^l _sgpt_zsh
-

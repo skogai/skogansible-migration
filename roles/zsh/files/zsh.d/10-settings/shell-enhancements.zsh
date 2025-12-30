@@ -21,4 +21,3 @@ if command -v atuin &>/dev/null; then
     fi
     [[ -f "$cache_file" ]] && source "$cache_file"
 fi
-

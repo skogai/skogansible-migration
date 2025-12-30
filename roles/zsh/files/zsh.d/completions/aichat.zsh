@@ -57,7 +57,7 @@ _aichat() {
 
 
     _arguments "${_arguments_options[@]}" $common \
-        && ret=0 
+        && ret=0
     case $state in
         models|roles|sessions|agents|rags|macros)
             local -a values expl
