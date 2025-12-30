@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 alias ls='eza --color=always --group-directories-first'
 alias ll='eza -alF --color=always --group-directories-first --icons'
 alias la='eza -a --color=always --group-directories-first'

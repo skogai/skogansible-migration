@@ -19,7 +19,7 @@
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     version: "{{ item.version | default('HEAD') }}"
-    update: "{{ item.update | default(true) }}"
+    update: "{{ item['update'] | default(true) }}"
     depth: "{{ item.depth | default(0) }}"
     accept_hostkey: "{{ item.accept_hostkey | default(true) }}"
     key_file: "{{ item.key_file | default(omit) }}"

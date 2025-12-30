@@ -1,15 +1,17 @@
 ---
 name: ansible-core
-description: Use when working with Ansible Core 2.19 for automation, configuration management, playbooks, modules, or infrastructure as code
+description: Use when working with Ansible Core 2.19 for automation, configuration management, playbooks, modules, or infrastructure as code (project)
 ---
 
-# Ansible Core 2.19 Skill
+# Ansible SkogAI
 
-Comprehensive assistance with Ansible Core development and automation, generated from official Ansible Core 2.19 documentation.
+Comprehensive assistance with Ansible Core development and automation for SkogAI projects, combining official Ansible Core 2.19 documentation with SkogAI repository-specific knowledge.
 
 ## When to Use This Skill
 
 This skill should be triggered when:
+
+### Ansible SkogAI (General)
 
 - Writing or debugging Ansible playbooks
 - Creating or modifying Ansible modules and plugins
@@ -22,6 +24,87 @@ This skill should be triggered when:
 - Implementing infrastructure as code with Ansible
 - Learning Ansible best practices and design patterns
 
+### SkogAI Ansible Repository
+
+- Working with files in `~/.ansible/` directory
+- Questions about the repository structure or specific roles
+- Creating or modifying Ansible roles in this repository
+- Understanding the primitives-based architecture
+- Questions about packages, ssh, git, chezmoi, cloudflared, zsh, or other implemented roles
+- Working with vars files, vault encryption, or role configuration
+- Using git worktrees with worktrunk for development
+
+## SkogAI Ansible Repository
+
+**Path**: `/home/skogix/.ansible/`
+**Repository**: SkogAI/skogansible
+
+### Core Documentation Files
+
+All comprehensive documentation is in the repository:
+
+- **@/home/skogix/.ansible/CLAUDE.md** - Complete project documentation, all features, usage patterns
+- **@/home/skogix/.ansible/FILESTRUCTURE.md** - Complete file structure with descriptions
+- **@/home/skogix/.ansible/docs/primitives/ansible-core.md** - 7 fundamental primitives reference
+- **@/home/skogix/.ansible/docs/primitives/system-inventory-by-primitives.md** - Complete system roadmap
+
+### Role Documentation
+
+Each role has comprehensive README:
+
+- **@/home/skogix/.ansible/roles/packages/README.md** - Package management (pacman + AUR)
+- **@/home/skogix/.ansible/roles/ssh/README.md** - SSH configuration and hardening
+- **@/home/skogix/.ansible/roles/git/README.md** - Git configuration
+- **@/home/skogix/.ansible/roles/chezmoi/README.md** - Dotfiles management
+- **@/home/skogix/.ansible/roles/cloudflared/README.md** - Cloudflare Tunnel
+- **@/home/skogix/.ansible/roles/zsh/README.md** - ZSH configuration
+
+### 7 Fundamental Primitives
+
+All automation breaks down into these patterns (see @docs/primitives/ansible-core.md for examples):
+
+1. **Task Composition** - `include_tasks` for modularity
+2. **Package State** - `pacman` module for official packages
+3. **AUR Packages** - `kewlfft.aur` module with yay
+4. **User Management** - `user` module for creating users
+5. **File Content** - `lineinfile` for ensuring file contents
+6. **Path Queries** - `stat` + `register` for checking existence
+7. **Git Repos** - `git` module for cloning/syncing
+
+### Variable Organization
+
+All role configuration in `vars/` directory:
+
+- `vars/packages.yml` - Package lists
+- `vars/ssh.yml`, `vars/ssh_vault.yml` - SSH config (vault encrypted)
+- `vars/git.yml` - Git configuration
+- `vars/chezmoi.yml` - Chezmoi machine profile
+- `vars/cloudflared.yml`, `vars/cloudflared_vault.yml` - Cloudflared config
+- `vars/zsh.yml` - ZSH configuration
+- `vars/main.yml` - Shared variables
+
+### Essential Commands
+
+```bash
+./bootstrap.sh              # Initial setup (venv + ansible)
+./run.sh                    # Run all roles
+./run.sh --check            # Dry-run
+./run.sh --tags ROLE        # Run specific role
+./run.sh --tags ROLE --ask-vault-pass  # With vault password
+
+wt switch --create --base master NAME  # Create git worktree
+wt step commit              # Commit with AI message
+wt merge                    # Merge and cleanup worktree
+```
+
+### Key Points
+
+- **Primitives-based**: All tasks use the 7 fundamental patterns
+- **Vault encryption**: Secrets in `*_vault.yml` files
+- **Git worktrees**: Use worktrunk for isolated development
+- **Documentation**: Everything documented in role READMEs and docs/
+- **Target**: Arch Linux (adaptable to other distros)
+
 ## Quick Reference
 
 ### 1. Basic Playbook Structure
@@ -32,12 +115,12 @@ A simple playbook with tasks, the fundamental building block of Ansible automati
 - name: My first play
   hosts: myhosts
   tasks:
-   - name: Ping my hosts
-     ansible.builtin.ping:
+    - name: Ping my hosts
+      ansible.builtin.ping:
 
-   - name: Print message
-     ansible.builtin.debug:
-       msg: Hello world
+    - name: Print message
+      ansible.builtin.debug:
+        msg: Hello world
 ```
 
 **What it does:** Defines a play that runs against hosts in the `myhosts` group, pings them to verify connectivity, and prints a debug message.
@@ -142,11 +225,11 @@ Dynamically load variables from external files:
   vars:
     params:
       files:
-        - '{{ansible_distribution}}.yaml'
-        - '{{ansible_os_family}}.yaml'
+        - "{{ansible_distribution}}.yaml"
+        - "{{ansible_os_family}}.yaml"
         - default.yaml
       paths:
-        - 'vars'
+        - "vars"
 ```
 
 **What it does:** Loads YAML/JSON variables at runtime. Supports conditional loading based on facts, directory scanning, and namespace isolation.
@@ -197,9 +280,9 @@ Transform Ansible variables into YAML format in templates:
 Use Jinja2 test plugins to validate data:
 
 ```yaml
-big: [1,2,3,4,5]
-small: [3,4]
-issmallinbig: '{{ small is subset(big) }}'
+big: [1, 2, 3, 4, 5]
+small: [3, 4]
+issmallinbig: "{{ small is subset(big) }}"
 ```
 
 **What it does:** Tests if one list is a subset of another. Useful for conditional logic in playbooks based on list membership.
@@ -447,21 +530,8 @@ ansible-lint playbook.yml
 ## Notes
 
 - This skill was automatically generated from official Ansible Core 2.19 documentation
+- Enhanced with SkogAI repository-specific context and primitives-based architecture
 - Reference files preserve structure and examples from source documentation
 - Code examples use proper language detection for syntax highlighting
 - Quick reference patterns are extracted from real-world usage examples
 - All module/plugin names use FQCN format for clarity and future compatibility
-
-## Updating This Skill
-
-To refresh with updated documentation:
-
-```bash
-# Re-scrape with same configuration
-uv run cli/doc_scraper.py --config configs/ansible-core.json --enhance-local
-
-# Or use cached data for faster rebuild
-uv run cli/doc_scraper.py --config configs/ansible-core.json --skip-scrape --enhance-local
-```
-
-The skill will be rebuilt with the latest information from the Ansible Core documentation.

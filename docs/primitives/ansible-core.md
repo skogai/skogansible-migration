@@ -199,3 +199,32 @@ This document demonstrates all fundamental Ansible operations using real example
 # - pacman: update_cache=true / upgrade=true
 
 # That's it. 7 primitives total
+
+# ============================================================================
+
+# REUSABLE PRIMITIVE IMPLEMENTATIONS
+
+# ============================================================================
+
+# The repository provides reusable implementations of these primitives
+# in the /primitives directory. These are parameterized task files that
+# can be included from any role.
+
+# Location: primitives/ensure_content/
+
+# ensure_template.yml    - Deploy Jinja2 templates with validation
+# ensure_config.yml      - Copy static config files with validation
+# ensure_line.yml        - Manage single lines in files
+# ensure_blockinfile.yml - Manage text blocks in files
+
+# Example usage:
+
+# - include_tasks: primitives/ensure_content/ensure_template.yml
+#   vars:
+#     template_src: sshd_config.j2
+#     template_dest: /etc/ssh/sshd_config
+#     template_mode: '0600'
+#     template_validate: 'sshd -t -f %s'
+#     template_become: true
+
+# See primitives/README.md for complete documentation and examples

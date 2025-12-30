@@ -1,5 +1,14 @@
+#!/usr/bin/env zsh
+# PATH Configuration
+# Sets up executable search paths
+
+# User-specific binaries
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$GOPATH/bin:$PATH"
-export PATH="$HOME/.local/share/pnpm:$PATH"
-export PATH="$HOME/.opencode/bin:$PATH"
+
+# Programming language toolchains
+export PATH="$HOME/.cargo/bin:$PATH"              # Rust
+export PATH="$GOPATH/bin:$PATH"                   # Go
+export PATH="$HOME/.local/share/pnpm:$PATH"       # Node/pnpm
+
+# Custom tools
+export PATH="$HOME/.opencode/bin:$PATH"           # OpenCode tools

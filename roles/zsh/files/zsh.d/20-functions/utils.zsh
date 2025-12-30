@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 mkcd() {
     [[ -z "$1" ]] && { echo "Usage: mkcd <directory>"; return 1; }
     mkdir -p "$1" && cd "$1"

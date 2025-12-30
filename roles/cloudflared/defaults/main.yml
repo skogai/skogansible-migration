@@ -6,23 +6,44 @@
 # Cloudflared Configuration Directory
 # ==============================================================================
 
-# Configuration directory location
-cloudflared_config_dir: "/etc/cloudflared"
-cloudflared_config_dir_mode: "0700"
+# User cloudflared directory (~/.cloudflared)
+cloudflared_user_dir: "{{ ansible_facts['user_dir'] }}/.cloudflared"
+cloudflared_user_dir_mode: "0700"
 
 # ==============================================================================
-# Token Management
+# Origin Certificate Management
 # ==============================================================================
 
-# Deploy token from vaulted variables (loads from vars/cloudflared_vault.yml)
-cloudflared_deploy_token: true
+# Deploy origin certificate from vaulted variables (loads from vars/cloudflared_vault.yml)
+cloudflared_deploy_cert: true
 
-# Token file location
-cloudflared_token_file: "{{ cloudflared_config_dir }}/token"
-cloudflared_token_mode: "0600"
+# Origin certificate file location (cert.pem)
+cloudflared_cert_file: "{{ cloudflared_user_dir }}/cert.pem"
+cloudflared_cert_mode: "0600"
 
-# Token content (should be loaded from vault)
-# cloudflared_token: "{{ cloudflared_tunnel_token | default('') }}"
+# Origin certificate content (should be loaded from vault)
+# cloudflared_origin_cert: "{{ cloudflared_origin_cert_content | default('') }}"
+
+# ==============================================================================
+# Tunnel Credentials
+# ==============================================================================
+
+# Generate tunnel credentials using cloudflared command
+cloudflared_generate_creds: true
+
+# Force regeneration of credentials (even if file exists)
+cloudflared_force_regenerate_creds: false
+
+# Tunnel name (used in cloudflared tunnel token command)
+cloudflared_tunnel_name: "skogix"
+
+# Tunnel ID (used for credentials filename - set in vars/cloudflared.yml)
+# Example: ae7fd63a-935f-42b2-b1d0-a53cca0f2798
+cloudflared_tunnel_id: ""
+
+# Tunnel credentials file location (named {tunnel-id}.json for automatic discovery)
+cloudflared_creds_file: "{{ cloudflared_user_dir }}/{{ cloudflared_tunnel_id }}.json"
+cloudflared_creds_mode: "0600"
 
 # ==============================================================================
 # Systemd Service
@@ -40,9 +61,6 @@ cloudflared_enable_service: true
 # ==============================================================================
 # Tunnel Configuration (Optional)
 # ==============================================================================
-
-# Tunnel name (if needed for multi-tunnel setups)
-# cloudflared_tunnel_name: "my-tunnel"
 
 # Additional cloudflared arguments
 cloudflared_extra_args: ""

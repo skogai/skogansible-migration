@@ -5,7 +5,7 @@
 # - Fail2Ban integration
 # - Connection rate limiting
 # - Security banner
-# 
+#
 # ⚠️  WARNING: Requires sudo, restarts services, configures fail2ban
 # ⚠️  Fail2Ban package must be installed: sudo pacman -S fail2ban
 # ⚠️  Test on non-production systems first!
@@ -13,28 +13,28 @@
 - name: SSH Maximum Security Hardening
   hosts: localhost
   connection: local
-  
+
   vars:
     ansible_become_password: "{{ lookup('env', 'ANSIBLE_BECOME_PASSWORD') }}"
-    
+
     # Hardening configuration
     # Enable SSH hardening
     ssh_hardening_enabled: true
-    
+
     # Enable all hardening components
     ssh_hardening_client_enabled: true
     ssh_hardening_server_enabled: true
-    
+
     # Remove weak algorithms
     ssh_hardening_remove_weak_keys: true
     ssh_hardening_remove_dsa: true
     ssh_hardening_remove_ecdsa: false
-    
+
     # Enable security policies
     ssh_hardening_policies_enabled: true
     ssh_hardening_configure_fail2ban: true
     ssh_hardening_connection_limits: true
-    
+
     # Security banner
     ssh_hardening_enable_banner: true
     ssh_hardening_banner_content: |
@@ -46,17 +46,17 @@
       *    will be prosecuted to the fullest extent of the law.        *
       *                                                                *
       ******************************************************************
-    
+
     # Audit configuration
     ssh_hardening_audit_enabled: true
-    
+
     # Strict authentication
     ssh_hardening_permit_root_login: "no"           # No root login at all
     ssh_hardening_server_password_auth: "no"        # Keys only!
     ssh_hardening_pubkey_authentication: "yes"
     ssh_hardening_max_auth_tries: 3
     ssh_hardening_permit_empty_passwords: "no"
-    
+
     # Disable all forwarding
     ssh_hardening_x11_forwarding: "no"
     ssh_hardening_allow_tcp_forwarding: "no"
@@ -64,29 +64,29 @@
     ssh_hardening_permit_tunnel: "no"
     ssh_hardening_gateway_ports: "no"
     ssh_hardening_allow_stream_local_forwarding: "no"
-    
+
     # Strict connection limits
     ssh_hardening_login_grace_time: 30              # Reduced from 60
     ssh_hardening_max_sessions: 5                    # Reduced from 10
     ssh_hardening_max_startups: "5:50:10"           # More restrictive
-    
+
     # Client alive (detect dead connections)
     ssh_hardening_client_alive_interval: 300         # 5 minutes
     ssh_hardening_client_alive_count_max: 2
-    
+
     # Verbose logging for security audit
     ssh_hardening_server_log_level: "VERBOSE"
-    
+
     # Fail2Ban settings
     ssh_hardening_fail2ban_enabled: true
     ssh_hardening_fail2ban_maxretry: 3
     ssh_hardening_fail2ban_findtime: 600            # 10 minutes
     ssh_hardening_fail2ban_bantime: 3600            # 1 hour ban
-    
+
     # Systemd socket rate limiting
     ssh_hardening_socket_max_connections: 32        # Reduced from 64
     ssh_hardening_socket_max_per_source: 5          # Reduced from 10
-    
+
     # Optional: Restrict to specific users (uncomment if needed)
     # ssh_hardening_allow_users:
     #   - alice
@@ -94,7 +94,7 @@
     # ssh_hardening_allow_groups:
     #   - wheel
     #   - sshusers
-    
+
     # Optional: Custom port (remember firewall!)
     # ssh_hardening_port: 2222
 
@@ -102,7 +102,7 @@
     - name: Check if fail2ban is installed
       ansible.builtin.package_facts:
         manager: auto
-      
+
     - name: Warn if fail2ban not installed
       ansible.builtin.debug:
         msg:
@@ -110,11 +110,11 @@
           - "Install with: sudo pacman -S fail2ban"
           - "Or disable: ssh_hardening_configure_fail2ban: false"
       when: "'fail2ban' not in ansible_facts.packages"
-      
+
     - name: Fail if fail2ban not installed and configured
       ansible.builtin.fail:
         msg: "fail2ban must be installed for this configuration"
-      when: 
+      when:
         - ssh_hardening_configure_fail2ban | default(false)
         - "'fail2ban' not in ansible_facts.packages"
 
@@ -129,7 +129,7 @@
         enabled: true
       become: true
       when: ssh_hardening_configure_fail2ban | default(false)
-    
+
     - name: Check fail2ban status
       ansible.builtin.command:
         cmd: fail2ban-client status sshd
@@ -138,14 +138,14 @@
       changed_when: false
       failed_when: false
       when: ssh_hardening_configure_fail2ban | default(false)
-    
+
     - name: Display fail2ban status
       ansible.builtin.debug:
         var: fail2ban_status.stdout_lines
-      when: 
+      when:
         - ssh_hardening_configure_fail2ban | default(false)
         - fail2ban_status.rc == 0
-    
+
     - name: Display security hardening summary
       ansible.builtin.debug:
         msg:

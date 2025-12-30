@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 dockerclean() {
     local containers=$(docker ps -a -q)
     [[ -n "$containers" ]] && docker rm $containers

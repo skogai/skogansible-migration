@@ -13,6 +13,8 @@
     - ../vars/git.yml # Git configuration
     - ../vars/chezmoi.yml # Chezmoi configuration
     - ../vars/zsh.yml # Zsh configuration
+    - ../vars/cloudflared_vault.yml # Encrypted cloudflared cert
+    - ../vars/cloudflared.yml # Cloudflared configuration
 
   roles:
     - role: packages
@@ -21,11 +23,14 @@
     - role: ssh
       tags: [ssh, config]
 
-    # - role: git
-    #   tags: [git, vcs]
+    - role: git
+      tags: [git, vcs]
 
-    # - role: chezmoi
-    #   tags: [chezmoi, dotfiles]
+    - role: chezmoi
+      tags: [chezmoi, dotfiles]
 
-    # - role: zsh
-    #   tags: [zsh, shell]
+    - role: zsh
+      tags: [zsh, shell]
+
+    # - role: cloudflared
+    #   tags: [cloudflared, tunnel]

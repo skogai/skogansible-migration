@@ -23,6 +23,7 @@ Documentation for the Ansible Arch Linux automation system.
 ```
 docs/
 ├── README.md                                       # This file
+├── SETTINGS_DECISIONS.md                           # Configuration decisions registry
 ├── primitives/
 │   ├── ansible-core.md                             # Reference: 7 fundamental patterns
 │   └── system-inventory-by-primitives.md           # Roadmap: System organized by primitives
@@ -102,4 +103,4 @@ When adding new automation:
 
 ---
 
-**Last Updated:** 2025-12-26
+**Last Updated:** 2025-12-27
