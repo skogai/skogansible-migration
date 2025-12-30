@@ -79,10 +79,6 @@ cloudflared_enable_service: true                             # Enable and start 
 cloudflared_extra_args: ""                                   # Additional cloudflared arguments
 ```
 
-## Dependencies
-
-- Cloudflared package (install via packages role or manually)
-
 ## Setup Instructions
 
 ### 1. Obtain Your Origin Certificate
