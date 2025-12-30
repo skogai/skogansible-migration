@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+#
 #compdef sem
 compdef _sem sem
 

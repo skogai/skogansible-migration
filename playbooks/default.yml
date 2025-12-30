@@ -29,8 +29,8 @@
     - role: chezmoi
       tags: [chezmoi, dotfiles]
 
-    # - role: zsh
-    #   tags: [zsh, shell]
-    #
+    - role: zsh
+      tags: [zsh, shell]
+
     # - role: cloudflared
     #   tags: [cloudflared, tunnel]
