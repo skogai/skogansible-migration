@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # ZSH Completion System Configuration
 # Sets up command completion with custom completion directories
 
@@ -7,7 +8,9 @@ fpath+=~/.config/zsh.d/completions
 
 # Initialize completion system
 autoload -Uz compinit
-compinit
+if ! type _compinit &>/dev/null; then
+  compinit
+fi
 
 # Completion behavior
 zstyle ':completion:*' menu select                              # Interactive menu

@@ -507,6 +507,8 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 
 **See also:** `docs/CLOUDFLARED_SETUP.md` for comprehensive setup guide.
 
+<<<<<<< HEAD
+
 ## ZSH Role Configuration
 
 The ZSH role deploys modular shell configuration using numbered directories and a recursive loader.
@@ -567,6 +569,70 @@ The role currently deploys:
 
 **See:** `roles/zsh/README.md` for complete documentation.
 
+||||||| parent of 55abd31 (Squash commits from master)
+=======
+
+## Zsh Role Configuration
+
+The Zsh role deploys modular shell configuration with numbered load-order directories. All features are **configurable via vars/zsh.yml**.
+
+**Quick Start (Default behavior):**
+
+- Installs zsh package
+- Deploys `~/.config/zsh.d/` directory structure (29 files)
+- Creates minimal `.zshrc` that sources the loader
+
+**To customize zsh configuration:**
+
+1. Edit files in `roles/zsh/files/zsh.d/` directories
+2. Run: `./run.sh --tags zsh`
+
+**Directory Structure (zsh.d/):**
+
+```
+~/.config/zsh.d/
+├── loader.zsh           # Sources all config files
+├── 00-path/             # PATH exports (loads first)
+├── 10-settings/         # Shell settings (8 files)
+├── 20-functions/        # Shell functions (4 files)
+├── 30-aliases/          # Aliases (5 files)
+├── 40-completions/      # Completion config (2 files)
+├── 50-secrets/          # API keys (1 file)
+├── 60-exports/          # Environment exports (2 files)
+└── 90-skogai/           # SkogAI tools (5 files)
+```
+
+**loader.zsh Behavior:**
+
+- Sources `.zsh`, `.sh`, `.conf` files normally
+- Sources `.env` files with `allexport` (auto-exports all variables)
+
+**Available Zsh Features (configure in vars/zsh.yml):**
+
+- `zsh_install: true` - Install zsh package
+- `zsh_deploy_config: true` - Deploy zsh.d structure to ~/.config
+- `zsh_set_default_shell: false` - Set zsh as default shell
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags zsh              # All zsh tasks
+./run.sh --tags zsh-install      # Only install zsh
+./run.sh --tags zsh-config       # Only deploy configuration
+./run.sh --tags zsh-default-shell # Only set default shell
+```
+
+**Design Decisions:**
+
+- **Minimal .zshrc** - Single line: `source ~/.config/zsh.d/loader.zsh`
+- **Ansible owns everything** - Chezmoi doesn't manage zsh config
+- **Numbered directories** - Deterministic load order (00 → 90)
+- **No plugin manager dependency** - Direct sourcing, no external deps
+
+**See:** `roles/zsh/README.md` for complete documentation.
+
+>>>>>>> 55abd31 (Squash commits from master)
+>>>>>>>
 ## Reference
 
 ### Essential Reading
@@ -582,7 +648,13 @@ The role currently deploys:
 - @roles/ssh/README.md - SSH role documentation
 - @roles/git/README.md - Git role documentation
 - @roles/cloudflared/README.md - Cloudflared role documentation
+<<<<<<< HEAD
 - @roles/zsh/README.md - ZSH role documentation
+||||||| parent of 55abd31 (Squash commits from master)
+=======
+- @roles/zsh/README.md - Zsh role documentation
+
+>>>>>>> 55abd31 (Squash commits from master)
 
 ### System Expansion
 

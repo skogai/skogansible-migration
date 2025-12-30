@@ -5,3 +5,5 @@ users:
     git_email: emil@skogsund.se
     git_name: skogix
     editor: nvim
+    groups_base:
+      - wheel  # sudo access

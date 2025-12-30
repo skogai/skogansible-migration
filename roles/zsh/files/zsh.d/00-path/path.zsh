@@ -1,6 +1,6 @@
+#!/usr/bin/env zsh
 # PATH Configuration
 # Sets up executable search paths
-# Loaded first (00-*) to ensure paths are available to other modules
 
 # User-specific binaries
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"

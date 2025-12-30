@@ -2,7 +2,11 @@
 
 **Purpose:** When agents are uncertain about configuration values, they ADD questions here instead of guessing. This is a log of decisions that need human input.
 
-**Status:** 🔴 NEEDS HUMAN INPUT - Questions marked with ❓ require @skogix to answer
+**Status:** ✅ COMPLETE - 9/10 questions answered (2025-12-28)
+
+**Remaining:**
+
+- Docker/Podman (deferred until needed)
 
 ---
 
@@ -49,6 +53,7 @@
 | `real_name` | `Emil Skogsund` | vars/main.yml | Full name for git, etc. |
 | `default_editor` | `nvim` | All repos agree | |
 | `default_pager` | `bat` | vars/main.yml | |
+| `git_email` | `emil@skogsund.se` | User decision 2025-12-28 | Primary git email |
 
 ### Paths
 
@@ -57,6 +62,7 @@
 | `project_root` | `~/dev` | Development projects |
 | `config_root` | `~/.config` | XDG config |
 | `data_root` | `~/.local/share` | XDG data |
+| `shell_path` | `/usr/bin/zsh` | Arch convention (functionally same as /bin/zsh) |
 
 ### System
 
@@ -64,203 +70,38 @@
 |---------|-------|-------|
 | `locale` | `en_US.UTF-8` | All repos agree |
 | `aur_helper` | `yay` | Current repo uses yay |
+| `machine_type` | `workstation` | Desktop with GPU |
+| `window_manager` | `i3` | X11 window manager |
+
+### Development
+
+| Setting | Value | Notes |
+|---------|-------|-------|
+| `git_signing` | `disabled` | No commit/tag signing (causes issues) |
+| `user_groups_base` | `wheel` | Always include wheel; other groups per-role |
+
+### Package Management
+
+| Setting | Value | Notes |
+|---------|-------|-------|
+| `pacman_parallel_downloads` | `5` | Default/basic optimization |
+| `package_selection_strategy` | `organic` | Add packages to vars/packages.yml as needed, not bulk migration |
+
+### Audio
+
+| Setting | Value | Notes |
+|---------|-------|-------|
+| `pipewire_stack` | `full` | Current live config: pipewire, pipewire-{alsa,audio,jack,pulse}, wireplumber, gst-plugin-pipewire |
 
 ---
 
 ## Pending Decisions ❓
 
-### 1. Git Email Address
-
-**Question:** Which email should be the primary git email?
-
-**Options found:**
-
-- `emil@skogsund.se` (current repo, ansible-base main.yml)
-- `emil.skogsund@gmail.com` (ansible-base user.yml)
-
-**Context:** Different emails found in different files. Need canonical answer.
-
-**Answer:** `_______________` <!-- @skogix: Fill this in -->
-
----
-
-### 2. Shell Path
-
-**Question:** Which shell path is correct?
-
-**Options found:**
-
-- `/bin/zsh` (current repo)
-- `/usr/bin/zsh` (ansible-base)
-
-**Context:** On Arch Linux, `/usr/bin/zsh` is typical. `/bin` is often a symlink to `/usr/bin`.
-
-**Recommendation:** Use `/usr/bin/zsh` for consistency with Arch conventions.
-
-**Answer:** `_______________` <!-- @skogix: Confirm or override -->
-
----
-
-### 3. Window Manager
-
-**Question:** Which window manager is primary?
-
-**Options found:**
-
-- `i3` (current repo chezmoi.yml)
-- `sway` (ansible-base user.yml)
-- `i3wm` (archive system.yml)
-
-**Context:** i3 = X11, sway = Wayland. Which is currently in use?
-
-**Answer:** `_______________` <!-- @skogix: i3 or sway? -->
-
----
-
-### 4. Git Commit Signing
-
-**Question:** Should commits be signed? If yes, GPG or SSH?
-
-**Found in ansible-base:**
-
-```yaml
-git_signing_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILlUcpcztoYpgvgKEhnYBY0c52gl0/GLNDxYK4X5umgK"
-```
-
-**Current repo:** Signing disabled (`git_gpg_sign_commits: false`, `git_ssh_sign_commits: false`)
-
-**Options:**
-
-- [ ] No signing
-- [ ] SSH signing with key above
-- [ ] GPG signing (need key ID)
-
-**Answer:** `_______________` <!-- @skogix: Which option? -->
-
----
-
-### 5. User Groups
-
-**Question:** Which additional groups should user be in?
-
-**Found in archive:**
-
-```yaml
-additional_groups: docker,wheel,render
-```
-
-**Current repo:** Not explicitly configured (relies on system defaults)
-
-**Options:**
-
-- `wheel` - sudo access (essential)
-- `docker` - Docker without sudo
-- `render` - GPU access (for Ollama, etc.)
-- `video` - Video device access
-- `audio` - Audio device access
-
-**Answer:** `_______________` <!-- @skogix: List groups -->
-
----
-
-### 6. Docker Installation
-
-**Question:** Should Docker be installed and configured?
-
-**Found in:**
-
-- ansible-base packages.yml: `docker`, `docker-buildx`, `docker-compose`
-- current repo: commented out
-
-**Sub-questions:**
-
-- Install Docker? `___`
-- Rootless Docker? `___` (current has `docker-rootless-extras` in AUR)
-- Add user to docker group? `___`
-
-**Answer:** `_______________` <!-- @skogix: Yes/No + details -->
-
----
-
-### 7. Package Selection - Missing from Current
-
-**Question:** Which of these packages from ansible-base should be added?
-
-| Package | Category | Add? |
-|---------|----------|------|
-| `eza` | CLI - modern ls | ❓ |
-| `fd` | CLI - modern find | ❓ |
-| `fish` | Shell - fish | ❓ |
-| `btop` | Monitoring | ❓ |
-| `lynx` | Browser - terminal | ❓ |
-| `steam` | Gaming | ❓ |
-| `dotnet-sdk` | Development | ❓ |
-| `postgresql` | Database | ❓ |
-
-**AUR Packages:**
-
-| Package | Category | Add? |
-|---------|----------|------|
-| `aichat` | AI CLI tool | ❓ |
-| `neovim-nightly-bin` | Editor | ❓ |
-| `pdftotext` | PDF tools | ❓ |
-| `claude-code` | AI tool | ❓ |
-
-**Answer:** <!-- @skogix: Mark Yes/No for each -->
-
----
-
-### 8. Pipewire Audio
-
-**Question:** Should Pipewire audio stack be managed by Ansible?
-
-**Found in ansible-base:**
-
-```yaml
-- pipewire
-- pipewire-alsa
-- pipewire-jack
-- pipewire-pulse
-- wireplumber
-```
-
-**Current repo:** Only `wireplumber` and `gst-plugin-pipewire`
-
-**Answer:** `_______________` <!-- @skogix: Full stack or minimal? -->
-
----
-
-### 9. Pacman Optimization
-
-**Question:** Should pacman be optimized?
-
-**Found in archive:**
-
-```yaml
-pacman:
-  parallel_downloads: 10
-```
-
-**Current repo:** Not configured
-
-**Answer:** `_______________` <!-- @skogix: Yes + value, or No -->
-
----
-
-### 10. Machine Type
-
-**Question:** What is the primary machine type for this configuration?
-
-**Current repo:** `machine_type: workstation`
-
-**Options:**
-
-- `workstation` - Desktop with GPU
-- `laptop` - Portable, battery management
-- `server` - Headless
-- `wsl` - Windows Subsystem for Linux
-
-**Is this correct?** `_______________` <!-- @skogix: Confirm or change -->
+**None.** All configuration decisions have been made except:
+
+| Decision | Status | Notes |
+|----------|--------|-------|
+| Docker/Podman | Deferred | User wants rootless containers; decide between rootless Docker or Podman when container needs arise |
 
 ---
 
@@ -270,15 +111,19 @@ pacman:
 
 | Setting | Conflict | Resolution | Date |
 |---------|----------|------------|------|
-| _None yet_ | | | |
+| `git_email` | `emil@skogsund.se` vs `emil.skogsund@gmail.com` | Use `emil@skogsund.se` | 2025-12-28 |
+| `shell_path` | `/bin/zsh` vs `/usr/bin/zsh` | Use `/usr/bin/zsh` (Arch convention) | 2025-12-28 |
+| `wm_type` | `i3` vs `sway` | Use `i3` (X11) | 2025-12-28 |
+| `git_signing` | Enabled in ansible-base vs disabled in current | Keep disabled (causes issues) | 2025-12-28 |
+| `machine_type` | Multiple options | Confirmed `workstation` | 2025-12-28 |
+| `package_selection` | Bulk migration vs organic | Organic growth strategy | 2025-12-28 |
+| `pipewire_stack` | Full stack vs minimal | Use full stack (matches live system) | 2025-12-28 |
 
 ### Unresolved Conflicts
 
-| Setting | Values Found | Needs |
-|---------|--------------|-------|
-| `git_email` in users array | `emil@skogsund.se` vs `emil.skogsund@gmail.com` | Human decision |
-| `symlink_force` | `true` (ansible-base) vs `false` (user.yml) | Human decision |
-| `wm_type` | `i3` vs `sway` | Human decision |
+| Setting | Values Found | Status |
+|---------|--------------|--------|
+| `docker_vs_podman` | Docker in ansible-base vs commented out in current | Deferred - evaluating options |
 
 ---
 
@@ -299,6 +144,8 @@ Settings were extracted from:
 
 | Date | Change | By |
 |------|--------|-----|
+| 2025-12-28 | Answered 9/10 questions; confirmed Pipewire full stack from live system | Claude + skogix |
+| 2025-12-28 | Answered 8/10 questions; moved to confirmed decisions | Claude + skogix |
 | 2025-12-23 | Initial creation with pending questions | Claude |
 
 ---
