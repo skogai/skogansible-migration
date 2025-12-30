@@ -1,0 +1,94 @@
+---
+# Composition: Complete AUR Setup
+# Usage: include_tasks primitives/compose/aur_setup.yml
+#
+# Required vars:
+#   aur_packages_to_install: List of AUR packages to install
+#
+# Optional vars:
+#   aur_builder_user: (default: aur_builder) Username for AUR operations
+#   aur_builder_group: (default: wheel) Group for AUR operations
+#   aur_helper: (default: yay) AUR helper to use (yay or paru)
+#
+# Example:
+#   - include_tasks: primitives/compose/aur_setup.yml
+#     vars:
+#       aur_packages_to_install: [neovim-git, yay, spotify]
+
+# 1. Create AUR builder user
+- include_tasks: ../ensure_state/user.yml
+  vars:
+    user_name: "{{ aur_builder_user | default('aur_builder') }}"
+    user_groups: "{{ aur_builder_group | default('wheel') }}"
+    user_shell: /bin/bash
+    user_comment: "AUR package builder"
+
+# 2. Configure sudoers for AUR builder
+- include_tasks: ../ensure_content/line_in_file.yml
+  vars:
+    line_path: "/etc/sudoers.d/11-install-{{ aur_builder_user | default('aur_builder') }}"
+    line_content: "{{ aur_builder_user | default('aur_builder') }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+    line_create: true
+    line_mode: '0644'
+    line_validate: 'visudo -cf %s'
+
+# 3. Allow wheel group to become AUR builder
+- include_tasks: ../ensure_content/line_in_file.yml
+  vars:
+    line_path: "/etc/sudoers.d/11-install-{{ aur_builder_user | default('aur_builder') }}"
+    line_content: "%wheel ALL=({{ aur_builder_user | default('aur_builder') }}) NOPASSWD: ALL"
+    line_validate: 'visudo -cf %s'
+
+# 4. Ensure base-devel and git are installed
+- include_tasks: ../ensure_state/package.yml
+  vars:
+    package_names:
+      - base-devel
+      - git
+    package_state: present
+
+# 5. Check if AUR helper exists
+- include_tasks: ../query_state/path_exists.yml
+  vars:
+    query_path: "/usr/bin/{{ aur_helper | default('yay') }}"
+    query_register: aur_helper_stat
+
+# 6. Install AUR helper if not present
+- name: "Composition | Clone {{ aur_helper | default('yay') }} repository"
+  become: true
+  become_user: "{{ aur_builder_user | default('aur_builder') }}"
+  ansible.builtin.git:
+    repo: "https://aur.archlinux.org/{{ aur_helper | default('yay') }}.git"
+    dest: "/home/{{ aur_builder_user | default('aur_builder') }}/{{ aur_helper | default('yay') }}"
+    update: true
+    version: master
+  when: not aur_helper_stat.stat.exists
+
+- name: "Composition | Build and install {{ aur_helper | default('yay') }}"
+  become: true
+  become_user: "{{ aur_builder_user | default('aur_builder') }}"
+  ansible.builtin.command:
+    cmd: makepkg -si --noconfirm --noprogressbar
+    chdir: "/home/{{ aur_builder_user | default('aur_builder') }}/{{ aur_helper | default('yay') }}"
+    creates: "/usr/bin/{{ aur_helper | default('yay') }}"
+  when: not aur_helper_stat.stat.exists
+
+# 7. Clean up build directory
+- name: "Composition | Clean up {{ aur_helper | default('yay') }} build directory"
+  become: true
+  ansible.builtin.file:
+    path: "/home/{{ aur_builder_user | default('aur_builder') }}/{{ aur_helper | default('yay') }}"
+    state: absent
+  when: not aur_helper_stat.stat.exists
+
+# 8. Install AUR packages
+- name: "Composition | Install AUR packages using {{ aur_helper | default('yay') }}"
+  kewlfft.aur.aur:
+    name: "{{ aur_packages_to_install }}"
+    use: "{{ aur_helper | default('yay') }}"
+    state: present
+  become: true
+  become_user: "{{ aur_builder_user | default('aur_builder') }}"
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  when: aur_packages_to_install is defined and aur_packages_to_install | length > 0

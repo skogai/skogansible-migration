@@ -1,0 +1,33 @@
+---
+# Primitive: Execute Command
+# Usage: include_tasks primitives/execute/command.yml
+#
+# Required vars:
+#   exec_command: Command to execute
+#
+# Optional vars:
+#   exec_chdir: Directory to run command in
+#   exec_creates: Path that indicates command already ran (idempotency)
+#   exec_removes: Path that must exist for command to run
+#   exec_become: (default: false) Run as root
+#   exec_become_user: User to become (if not root)
+#   exec_register: Variable name to store result
+#
+# Example:
+#   - include_tasks: primitives/execute/command.yml
+#     vars:
+#       exec_command: "makepkg -si --noconfirm"
+#       exec_chdir: /home/aur_builder/yay
+#       exec_creates: /usr/bin/yay
+#       exec_become: true
+#       exec_become_user: aur_builder
+
+- name: "Primitive | Execute: {{ exec_command }}"
+  ansible.builtin.command:
+    cmd: "{{ exec_command }}"
+    chdir: "{{ exec_chdir | default(omit) }}"
+    creates: "{{ exec_creates | default(omit) }}"
+    removes: "{{ exec_removes | default(omit) }}"
+  become: "{{ exec_become | default(false) }}"
+  become_user: "{{ exec_become_user | default(omit) }}"
+  register: "{{ exec_register | default('exec_result') }}"

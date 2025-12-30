@@ -1,0 +1,32 @@
+---
+# Primitive: File Copy
+# Usage: include_tasks primitives/ensure_content/file_copy.yml
+#
+# Required vars:
+#   file_src: Source file path (relative to files/ or absolute)
+#   file_dest: Destination file path
+#
+# Optional vars:
+#   file_mode: File permissions (e.g., '0644')
+#   file_owner: File owner
+#   file_group: File group
+#   file_backup: (default: false) Create backup before overwriting
+#   file_force: (default: true) Force overwrite if exists
+#
+# Example:
+#   - include_tasks: primitives/ensure_content/file_copy.yml
+#     vars:
+#       file_src: files/etc/ssh/sshd_config
+#       file_dest: /etc/ssh/sshd_config
+#       file_mode: '0600'
+#       file_backup: true
+
+- name: "Primitive | Copy file to {{ file_dest }}"
+  ansible.builtin.copy:
+    src: "{{ file_src }}"
+    dest: "{{ file_dest }}"
+    mode: "{{ file_mode | default(omit) }}"
+    owner: "{{ file_owner | default(omit) }}"
+    group: "{{ file_group | default(omit) }}"
+    backup: "{{ file_backup | default(false) }}"
+    force: "{{ file_force | default(true) }}"

@@ -1,0 +1,30 @@
+---
+# Primitive: Query Command Output
+# Usage: include_tasks primitives/query_state/command.yml
+#
+# Required vars:
+#   query_command: Command to execute
+#   query_register: Variable name to store result
+#
+# Optional vars:
+#   query_ignore_errors: (default: true) Don't fail on command errors
+#   query_changed_when: (default: false) Don't report as changed
+#
+# Example:
+#   - include_tasks: primitives/query_state/command.yml
+#     vars:
+#       query_command: "which yay"
+#       query_register: yay_which
+#
+# Access result:
+#   - debug:
+#       msg: "Command output: {{ yay_which.stdout }}"
+#       msg: "Command failed: {{ yay_which.failed }}"
+#       msg: "Return code: {{ yay_which.rc }}"
+
+- name: "Primitive | Query command: {{ query_command }}"
+  ansible.builtin.command:
+    cmd: "{{ query_command }}"
+  register: "{{ query_register }}"
+  ignore_errors: "{{ query_ignore_errors | default(true) }}"
+  changed_when: "{{ query_changed_when | default(false) }}"

@@ -1,0 +1,163 @@
+---
+# Example Playbook: Primitives Usage
+#
+# This playbook demonstrates how to use the primitives directly
+# to accomplish common tasks without creating full roles.
+#
+# Usage:
+#   ansible-playbook playbooks/example_primitives.yml --check  # Dry-run
+#   ansible-playbook playbooks/example_primitives.yml          # Apply
+
+- name: Primitives Usage Example
+  hosts: localhost
+  connection: local
+
+  tasks:
+    # ============================================================================
+    # Example 1: Package Management
+    # ============================================================================
+
+    - name: "Example | Install development packages"
+      include_tasks: ../primitives/ensure_state/package.yml
+      vars:
+        package_names:
+          - git
+          - vim
+          - curl
+        package_state: present
+        package_update_cache: true
+      tags: [example, packages]
+
+    # ============================================================================
+    # Example 2: Directory Creation
+    # ============================================================================
+
+    - name: "Example | Ensure config directory exists"
+      include_tasks: ../primitives/ensure_state/directory.yml
+      vars:
+        directory_path: "{{ ansible_user_dir }}/.config/example"
+        directory_mode: '0755'
+      tags: [example, directory]
+
+    # ============================================================================
+    # Example 3: File Content Management
+    # ============================================================================
+
+    - name: "Example | Add configuration line"
+      include_tasks: ../primitives/ensure_content/line_in_file.yml
+      vars:
+        line_path: "{{ ansible_user_dir }}/.config/example/config.txt"
+        line_content: "# Example configuration"
+        line_create: true
+        line_mode: '0644'
+      tags: [example, file]
+
+    # ============================================================================
+    # Example 4: Query State
+    # ============================================================================
+
+    - name: "Example | Check if yay is installed"
+      include_tasks: ../primitives/query_state/path_exists.yml
+      vars:
+        query_path: /usr/bin/yay
+        query_register: yay_check
+      tags: [example, query]
+
+    - name: "Example | Display yay installation status"
+      debug:
+        msg: "Yay is {{ 'installed' if yay_check.stat.exists else 'not installed' }}"
+      tags: [example, query]
+
+    # ============================================================================
+    # Example 5: Git Repository Sync
+    # ============================================================================
+
+    - name: "Example | Clone example repository"
+      include_tasks: ../primitives/sync/git_repo.yml
+      vars:
+        repo_url: https://github.com/github/gitignore.git
+        repo_dest: "{{ ansible_user_dir }}/.local/share/gitignore-templates"
+        repo_version: main
+        repo_update: true
+      tags: [example, git]
+
+    # ============================================================================
+    # Example 6: Execute Command
+    # ============================================================================
+
+    - name: "Example | Run echo command"
+      include_tasks: ../primitives/execute/command.yml
+      vars:
+        exec_command: "echo 'Primitives example completed'"
+        exec_register: echo_result
+      tags: [example, execute]
+
+    - name: "Example | Display command output"
+      debug:
+        msg: "{{ echo_result.stdout }}"
+      tags: [example, execute]
+
+    # ============================================================================
+    # Example 7: Composition - AUR Setup (commented out, requires privileges)
+    # ============================================================================
+
+    # Uncomment to test AUR setup composition
+    # This will create aur_builder user and install AUR packages
+
+    # - name: "Example | Setup AUR and install packages"
+    #   include_tasks: ../primitives/compose/aur_setup.yml
+    #   vars:
+    #     aur_packages_to_install:
+    #       - yay
+    #   tags: [example, aur]
+
+    # ============================================================================
+    # Example 8: Complex Workflow - SSH Directory Setup
+    # ============================================================================
+
+    - name: "Example | Create SSH directory"
+      include_tasks: ../primitives/ensure_state/directory.yml
+      vars:
+        directory_path: "{{ ansible_user_dir }}/.ssh"
+        directory_mode: '0700'
+      tags: [example, ssh]
+
+    - name: "Example | Create SSH config file"
+      include_tasks: ../primitives/ensure_content/line_in_file.yml
+      vars:
+        line_path: "{{ ansible_user_dir }}/.ssh/config"
+        line_content: |
+          # Example SSH configuration
+          Host example
+            HostName example.com
+            User exampleuser
+        line_create: true
+        line_mode: '0600'
+      tags: [example, ssh]
+
+    # ============================================================================
+    # Summary
+    # ============================================================================
+
+    - name: "Example | Summary"
+      debug:
+        msg: |
+          ========================================
+          Primitives Example Playbook Completed
+          ========================================
+
+          This playbook demonstrated:
+          1. Package installation (ensure_state/package.yml)
+          2. Directory creation (ensure_state/directory.yml)
+          3. File content management (ensure_content/line_in_file.yml)
+          4. State queries (query_state/path_exists.yml)
+          5. Git repository sync (sync/git_repo.yml)
+          6. Command execution (execute/command.yml)
+          7. Composition example (compose/aur_setup.yml - commented)
+          8. Complex workflow example (SSH setup)
+
+          All primitives are reusable and can be composed
+          together to build more complex automation workflows.
+
+          See primitives/README.md for full documentation.
+      tags: [example, summary]
