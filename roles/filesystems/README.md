@@ -12,12 +12,6 @@ Ansible role for managing filesystem mounts on Arch Linux systems.
 - ✅ Configurable mount options
 - ✅ Idempotent operations
 
-## Requirements
-
-- Ansible 2.9+
-- `ansible.posix` collection (for `mount` module)
-- Target system: Arch Linux (should work on most Linux distributions)
-
 ## Role Variables
 
 ### Control Variables
@@ -79,32 +73,16 @@ Each mount entry supports the following parameters:
 - **`dump`** (optional): Dump backup field (default: 0)
 - **`passno`** (optional): Fsck pass number (default: 2)
 
-## Dependencies
-
-This role requires the `ansible.posix` collection. Ensure it's installed:
-
-```bash
-ansible-galaxy collection install ansible.posix
-```
-
-Or add to your `requirements.yml`:
-
-```yaml
-collections:
-  - name: ansible.posix
-    version: ">=1.5.0"
-```
-
 ## Example Playbook
 
 ```yaml
 ---
 - name: Configure filesystem mounts
   hosts: all
-  
+
   vars_files:
     - vars/filesystems.yml
-  
+
   roles:
     - role: filesystems
       tags: [filesystems]
@@ -152,6 +130,7 @@ lsblk -f
 ```
 
 Example output:
+
 ```
 /dev/sda1: UUID="93f3c5d5-d775-4364-abc2-09161102aa04" TYPE="ext4"
 ```
@@ -250,6 +229,7 @@ This role supports the following tags:
 ### Mount fails with "mount point does not exist"
 
 The role should create mount points automatically. If it fails, check:
+
 - The `filesystems_create_mount_points` variable is `true`
 - The parent directory exists (e.g., `/mnt` for `/mnt/extra`)
 
@@ -267,11 +247,3 @@ The role should create mount points automatically. If it fails, check:
 
 - Check that `state: mounted` is set (not just `present`)
 - Verify the fstab entry with `cat /etc/fstab`
-
-## License
-
-MIT
-
-## Author
-
-skogix

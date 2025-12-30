@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 local cache_dir="${HOME}/.cache/zsh/hooks"
 
 if command -v zoxide &>/dev/null; then

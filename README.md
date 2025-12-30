@@ -10,6 +10,7 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 - **SSH Configuration** - Key deployment, config templating, known_hosts management
 - **Git Configuration** - Complete git setup with aliases, hooks, signing, LFS support
 - **Chezmoi Integration** - Machine-specific dotfiles templating and deployment
+- **Zsh Configuration** - Modular shell config with numbered load-order directories
 - **Filesystem Mounts** - UUID-based filesystem mount management with fstab integration
 - **Security** - Dedicated AUR builder user, vault-encrypted secrets
 - **Documentation** - Primitives-based reference architecture and system inventory
@@ -30,6 +31,7 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 ./run.sh --tags ssh           # Only SSH setup
 ./run.sh --tags git           # Only Git config
 ./run.sh --tags chezmoi       # Only Chezmoi
+./run.sh --tags zsh           # Only Zsh config
 ./run.sh --tags filesystems   # Only filesystem mounts
 ./run.sh --check              # Dry-run mode
 ```
@@ -39,7 +41,7 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 ```
 SkogAI/skogansible/
 ├── playbooks/                # Ansible playbooks
-│   ├── default.yml           # Main playbook (5 roles)
+│   ├── default.yml           # Main playbook (6 roles)
 │   ├── workstation.yml       # Workstation setup
 │   └── ...                   # Additional playbooks
 ├── bootstrap.sh              # Initial setup script
@@ -49,12 +51,14 @@ SkogAI/skogansible/
 │   ├── ssh/                  # SSH configuration
 │   ├── git/                  # Git configuration
 │   ├── chezmoi/              # Dotfiles management
+│   ├── zsh/                  # Zsh shell configuration
 │   └── filesystems/          # Filesystem mounts management
 ├── vars/                     # Role-specific configuration
 │   ├── packages.yml          # Package lists
 │   ├── ssh.yml               # SSH settings
 │   ├── git.yml               # Git settings
 │   ├── chezmoi.yml           # Chezmoi settings
+│   ├── zsh.yml               # Zsh settings
 │   ├── filesystems.yml       # Filesystem mount definitions
 │   └── user.yml              # User variables
 └── docs/                     # Reference documentation
@@ -81,6 +85,7 @@ All role-specific configuration is in `vars/` directory:
 - **ssh.yml** - Enable/disable SSH features (keys, config, known_hosts)
 - **git.yml** - Configure git settings (user, aliases, hooks, signing)
 - **chezmoi.yml** - Machine profile settings (type, WM, laptop mode)
+- **zsh.yml** - Zsh configuration (deploy config, default shell)
 - **filesystems.yml** - Define filesystem mounts (UUID, path, fstype, options)
 
 Each role has comprehensive documentation in its `README.md` file.
@@ -102,7 +107,7 @@ This is the main active ansible repository for SkogAI. Historical documentation 
 - **Active Repository:** SkogAI/skogansible
 - **Purpose:** Main ansible automation for Arch Linux system configuration
 - **Approach:** Primitives-based role architecture with comprehensive documentation
-- **Status:** 5 roles implemented (packages, ssh, git, chezmoi, filesystems), system expansion roadmap documented
+- **Status:** 6 roles implemented (packages, ssh, git, chezmoi, zsh, filesystems), system expansion roadmap documented
 
 ---
 

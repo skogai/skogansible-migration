@@ -4,7 +4,7 @@ This directory contains configuration for the Semaphore Ansible UI.
 
 ## Security Notice ⚠️
 
-**CRITICAL: The old admin password `skogsund1` was committed to git history!**
+**CRITICAL: The old admin password `___` was committed to git history!**
 
 If you're setting up Semaphore for the first time or after the security checkup PR:
 

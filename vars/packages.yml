@@ -1,4 +1,7 @@
 ---
+# Pacman configuration
+pacman_parallel_downloads: 5
+
 # Packages to install from official repos
 packages:
   - ansible
@@ -61,10 +64,10 @@ packages:
   # - pgbouncer
   # - pgcli
   - picom
-  # - pipewire
-  # - pipewire-alsa
-  # - pipewire-jack
-  # - pipewire-pulse
+  - pipewire
+  - pipewire-alsa
+  - pipewire-jack
+  - pipewire-pulse
   # - polkit-gnome
   # - postgresql
   # - postgrest
@@ -104,6 +107,7 @@ aur_packages:
   # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
   - pwvucontrol
   - rcm
+  - diff-so-fancy
   # - rustup  # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin

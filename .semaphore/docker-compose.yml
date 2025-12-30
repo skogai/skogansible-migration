@@ -10,9 +10,9 @@ services:
       SEMAPHORE_ADMIN_NAME: ${SEMAPHORE_ADMIN_NAME:-skogix}
       SEMAPHORE_ADMIN_EMAIL: ${SEMAPHORE_ADMIN_EMAIL:-emil@skogsund.se}
       SEMAPHORE_WEB_ROOT: ${SEMAPHORE_WEB_ROOT:-https://semaphore.skogai.se}
-      SEMAPHORE_CONFIG_PATH: /home/semaphore/config.json
     env_file:
       - .env
     volumes:
       - ./data:/home/semaphore
+      - ./config.json:/config.json
       - /tmp/semaphore:/tmp/semaphore

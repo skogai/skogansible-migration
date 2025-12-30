@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 if [[ -o interactive ]] && command -v starship &>/dev/null; then
     local cache_dir="${HOME}/.cache/zsh/hooks"
     local cache_file="${cache_dir}/starship.zsh"

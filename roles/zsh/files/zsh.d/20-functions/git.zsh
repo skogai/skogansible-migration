@@ -1,18 +1,11 @@
-gclean() {
-    git branch --merged | grep -v "\*" | grep -v main | grep -v master | xargs -n 1 git branch -d
-}
+#!/usr/bin/env zsh
 
 gbda() {
     git branch --no-color --merged | command grep -vE "^([+*]|\s*(main|master|develop|dev)\s*\$)" | command xargs git branch -d 2>/dev/null
 }
 
-gfg() {
-    command -v fzf &>/dev/null || { echo "fzf required"; return 1; }
-    local branch=$(git branch -a | grep -v HEAD | sed 's/^[[:space:]]*//' | fzf --height 20% --reverse --info=inline)
-    [[ -n "$branch" ]] && git checkout "${branch##* }"
-}
 
-glog() {
+gitlog() {
     git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 }
 

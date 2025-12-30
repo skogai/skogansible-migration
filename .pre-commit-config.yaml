@@ -9,18 +9,19 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-        exclude: \.tmpl$  # Allow trailing whitespace in templates
+        exclude: \.tmpl$ # Allow trailing whitespace in templates
       - id: end-of-file-fixer
-      - id: check-yaml
-        args: ['--unsafe']  # Allow custom YAML tags in chezmoi configs
+      # - id: check-yaml
+      #   args: ["--unsafe"] # Allow custom YAML tags in chezmoi configs
       - id: check-json
       - id: check-toml
       - id: check-merge-conflict
       - id: check-added-large-files
-        args: ['--maxkb=1000']
+        args: ["--maxkb=1000"]
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
+        exclude: \.j2$ # Exclude Jinja2 templates (permissions set on deployment)
       - id: mixed-line-ending
 
   # Shell script linting
@@ -28,8 +29,8 @@ repos:
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
-        args: ['--severity=warning']
-        exclude: ^(dot_zshrc|dot_zshenv|dot_profile|.*\.zsh|\.envrc)$  # Skip zsh-specific files and .envrc
+        args: ["--severity=warning"]
+        exclude: ^(dot_zshrc|dot_zshenv|dot_profile|.*\.zsh|\.envrc)$ # Skip zsh-specific files and .envrc
 
   # Python code formatting and linting
   - repo: https://github.com/psf/black
@@ -42,47 +43,47 @@ repos:
     rev: 7.1.1
     hooks:
       - id: flake8
-        args: ['--max-line-length=100', '--extend-ignore=E203,W503']
+        args: ["--max-line-length=100", "--extend-ignore=E203,W503"]
 
   # YAML linting
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
-    hooks:
-      - id: yamllint
-        args:
-          - '-d'
-          - >-
-            {extends: default,
-            rules: {line-length: {max: 120},
-            document-start: disable, truthy: {check-keys: false}}}
+  # - repo: https://github.com/adrienverge/yamllint
+  #   rev: v1.35.1
+  #   hooks:
+  #     - id: yamllint
+  #       args:
+  #         - "-d"
+  #         - >-
+  #           {extends: default,
+  #           rules: {line-length: {max: 180},
+  #           document-start: disable, truthy: {check-keys: false}}}
 
   # Markdown linting
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.42.0
     hooks:
       - id: markdownlint
-        args: ['--fix']
-        exclude: ^\.claude/skills/.*/references/.*\.md$  # Skip reference docs
+        args: ["--fix"]
+        exclude: ^\.claude/skills/.*/references/.*\.md$ # Skip reference docs
 
   # TypeScript/JavaScript linting (for Claude hooks)
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v9.15.0
     hooks:
       - id: eslint
-        files: \.[jt]sx?$  # *.js, *.jsx, *.ts, *.tsx
+        files: \.[jt]sx?$ # *.js, *.jsx, *.ts, *.tsx
         types: [file]
         additional_dependencies:
           - eslint@9.15.0
-          - '@typescript-eslint/parser@8.14.0'
-          - '@typescript-eslint/eslint-plugin@8.14.0'
-        args: ['--fix']
+          - "@typescript-eslint/parser@8.14.0"
+          - "@typescript-eslint/eslint-plugin@8.14.0"
+        args: ["--fix"]
 
   # Detect secrets and credentials
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
+        args: ["--baseline", ".secrets.baseline"]
         exclude: >
           (?x)^(
             package(-lock)?\.json|

@@ -1,14 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-export PATH="$HOME/.local/bin:$PATH"
-
-# Activate virtual environment
-source .venv/bin/activate
-
-# Password file configuration with validation
-VAULT_PASSWORD_FILE="${ANSIBLE_VAULT_PASSWORD_FILE:-$HOME/.ssh/ansible-vault-password}"
-BECOME_PASSWORD_FILE="${ANSIBLE_BECOME_PASSWORD_FILE:-$HOME/.ssh/ansible-become-password}"
+# Bootstrap
+sudo pacman -S python-uv --noconfirm && uv venv --seed --python 313 --link-mode=copy && uv pip install --link-mode=copy ansible ansible-core && source .venv/bin/activate && ansible-galaxy collection install -r .requirements.yml --upgrade && mkdir -p ./tmp && ansible-config dump --type all > ./tmp/ENV
+echo "$?"
 
 # Function to check file permissions
 check_password_file_permissions() {
@@ -24,30 +19,6 @@ check_password_file_permissions() {
   fi
 }
 
-# Build ansible-playbook arguments
-VAULT_PASS_ARG=""
-BECOME_PASS_ARG=""
-
-# Check vault password file
-if [ -f "$VAULT_PASSWORD_FILE" ]; then
-  check_password_file_permissions "$VAULT_PASSWORD_FILE"
-  VAULT_PASS_ARG="--vault-password-file $VAULT_PASSWORD_FILE"
-else
-  echo "Warning: Vault password file not found at $VAULT_PASSWORD_FILE"
-  echo "Will prompt for vault password if needed"
-  VAULT_PASS_ARG="--ask-vault-pass"
-fi
-
-# Check become password file
-if [ -f "$BECOME_PASSWORD_FILE" ]; then
-  check_password_file_permissions "$BECOME_PASSWORD_FILE"
-  BECOME_PASS_ARG="--become-password-file $BECOME_PASSWORD_FILE"
-else
-  echo "Warning: Become password file not found at $BECOME_PASSWORD_FILE"
-  echo "Will prompt for become password if needed"
-  BECOME_PASS_ARG="--ask-become-pass"
-fi
-
 # Determine which playbook to run
 ANSIBLE_PLAYBOOK="default.yml"
 
@@ -59,6 +30,6 @@ fi
 
 # Run playbook with remaining arguments
 ansible-playbook "./playbooks/$ANSIBLE_PLAYBOOK" -i .inventory \
-  $VAULT_PASS_ARG \
-  $BECOME_PASS_ARG \
+  --vault-password-file=$ANSIBLE_VAULT_PASSWORD_FILE \
+  --become-password-file=$ANSIBLE_BECOME_PASSWORD_FILE \
   "$@"

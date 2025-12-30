@@ -20,7 +20,7 @@ chezmoi_package_name: "chezmoi"
 chezmoi_init_source: true
 
 # Chezmoi source directory path
-chezmoi_source_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+chezmoi_source_dir: "{{ ansible_facts['user_dir'] }}/.local/share/chezmoi"
 
 # ==============================================================================
 # Chezmoi Configuration

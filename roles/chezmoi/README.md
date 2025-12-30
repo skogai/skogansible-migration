@@ -11,13 +11,6 @@ This role provides automated dotfiles management including:
 - SkogAI agent integration
 - Automatic dotfiles application with change detection
 
-## Requirements
-
-- Ansible 2.10 or higher
-- Target system: Arch Linux (adaptable to other distros)
-- Chezmoi must be installed (verified by role, install via packages role)
-- Chezmoi source directory at `~/.local/share/chezmoi`
-
 ## Role Variables
 
 All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/chezmoi.yml`.
@@ -25,55 +18,55 @@ All role variables are defined in `defaults/main.yml` with sensible defaults. Ov
 ### Installation & Setup
 
 ```yaml
-chezmoi_ensure_installed: true                           # Verify chezmoi is installed
-chezmoi_init_source: true                                # Check source directory exists
-chezmoi_source_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"  # Source directory
+chezmoi_ensure_installed: true # Verify chezmoi is installed
+chezmoi_init_source: true # Check source directory exists
+chezmoi_source_dir: "{{ ansible_facts['user_dir'] }}/.local/share/chezmoi" # Source directory
 ```
 
 ### Configuration Deployment
 
 ```yaml
-chezmoi_deploy_config: true                              # Template .chezmoidata.yaml
-chezmoi_apply_on_change: true                            # Auto-apply after config changes
+chezmoi_deploy_config: true # Template .chezmoidata.yaml
+chezmoi_apply_on_change: true # Auto-apply after config changes
 ```
 
 ### Machine Profile
 
 ```yaml
-chezmoi_machine_type: workstation                        # workstation, laptop, or wsl
-chezmoi_hostname: "{{ inventory_hostname }}"             # Machine hostname
+chezmoi_machine_type: workstation # workstation, laptop, or wsl
+chezmoi_hostname: "{{ inventory_hostname }}" # Machine hostname
 ```
 
 ### User Information
 
 ```yaml
-chezmoi_user_name: "{{ users[0].name }}"                 # User name
-chezmoi_user_email: "{{ users[0].git_email }}"           # Email address
-chezmoi_github_user: "{{ users[0].git_name }}"           # GitHub username
+chezmoi_user_name: "{{ users[0].name }}" # User name
+chezmoi_user_email: "{{ users[0].git_email }}" # Email address
+chezmoi_github_user: "{{ users[0].git_name }}" # GitHub username
 ```
 
 ### Environment Flags
 
 ```yaml
-chezmoi_personal: true                                   # Personal machine
-chezmoi_work: false                                      # Work machine
-chezmoi_headless: false                                  # Headless environment (auto-true for WSL)
-chezmoi_gui: true                                        # GUI enabled (auto-false for headless)
+chezmoi_personal: true # Personal machine
+chezmoi_work: false # Work machine
+chezmoi_headless: false # Headless environment (auto-true for WSL)
+chezmoi_gui: true # GUI enabled (auto-false for headless)
 ```
 
 ### Desktop Environment
 
 ```yaml
-chezmoi_wm: i3                                           # Window manager (i3, sway, none)
-chezmoi_laptop_mode: false                               # Laptop-specific features
-chezmoi_terminal: kitty                                  # Terminal emulator
+chezmoi_wm: i3 # Window manager (i3, sway, none)
+chezmoi_laptop_mode: false # Laptop-specific features
+chezmoi_terminal: kitty # Terminal emulator
 ```
 
 ### Feature Flags
 
 ```yaml
-chezmoi_ai_tools: true                                   # AI tools integration
-chezmoi_development: true                                # Development tools
+chezmoi_ai_tools: true # AI tools integration
+chezmoi_development: true # Development tools
 
 # GUI applications (auto-disabled if headless)
 chezmoi_gui_apps_enabled: "{{ chezmoi_gui }}"
@@ -98,21 +91,17 @@ chezmoi_agents:
   dot: true
 
 # SkogAI directory paths
-chezmoi_skogai_home: "{{ ansible_user_dir }}/skogai"
-chezmoi_skogai_docs: "{{ ansible_user_dir }}/skogai/docs"
-chezmoi_skogai_tools: "{{ ansible_user_dir }}/skogai/tools"
+chezmoi_skogai_home: "{{ ansible_facts['user_dir'] }}/skogai"
+chezmoi_skogai_docs: "{{ ansible_facts['user_dir'] }}/skogai/docs"
+chezmoi_skogai_tools: "{{ ansible_facts['user_dir'] }}/skogai/tools"
+chezmoi_skogai_ansible: "{{ ansible_facts['user_dir'] }}/.ansible"
 ```
 
 ### Debug Mode
 
 ```yaml
-chezmoi_debug: true                                      # Enable debug output
+chezmoi_debug: true # Enable debug output
 ```
-
-## Dependencies
-
-- Chezmoi must be installed (can be installed via packages role)
-- Chezmoi source directory must exist at `~/.local/share/chezmoi`
 
 ## Example Playbook
 
@@ -262,7 +251,7 @@ chezmoi_agents:
   dot: true
 
 # SkogAI paths
-chezmoi_skogai_home: "{{ ansible_user_dir }}/skogai"
+chezmoi_skogai_home: "{{ ansible_facts['user_dir'] }}/skogai"
 ```
 
 ## Configuration Template
@@ -466,12 +455,4 @@ roles/chezmoi/
 
 - **Chezmoi Documentation:** <https://www.chezmoi.io/>
 - **Ansible Integration Guide:** `~/.local/share/chezmoi/examples/ANSIBLE-INTEGRATION.md`
-- **SkogAI Documentation:** `~/skogai/docs/`
-
-## License
-
-MIT
-
-## Author
-
-SkogAI (skogansible repository)
+- **SkogAI Documentation:** `~/docs/`

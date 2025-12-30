@@ -10,14 +10,6 @@ This role provides secure, idempotent package management including:
 - Automatic yay installation from source
 - Package database updates and system upgrades
 
-## Requirements
-
-- Ansible 2.10 or higher
-- `community.general` collection (for `pacman` module)
-- `kewlfft.aur` collection (for `aur` module)
-- Target system: Arch Linux
-- User must have sudo privileges
-
 ## Role Variables
 
 All role variables are defined in `defaults/main.yml` with sensible defaults. Override them in your playbook, inventory, or `vars/packages.yml`.
@@ -50,14 +42,6 @@ pacman_upgrade_system: true            # Upgrade all packages before installing
 ```yaml
 ansible_python_interpreter: /usr/bin/python  # Python for AUR tasks
 ```
-
-## Dependencies
-
-None. This role installs all required dependencies including:
-
-- base-devel (for building AUR packages)
-- git (for cloning AUR repositories)
-- yay (AUR helper, installed from source)
 
 ## Example Playbook
 
@@ -300,11 +284,3 @@ roles/packages/
 ├── meta/main.yml          # Role metadata
 └── README.md              # This file
 ```
-
-## License
-
-MIT
-
-## Author
-
-SkogAI (skogansible repository)

@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 command -v lazygit &>/dev/null && { alias lg='lazygit'; alias lzg='lazygit'; }
 command -v lazydocker &>/dev/null && { alias lzd='lazydocker'; alias ld='lazydocker'; }
 
@@ -31,3 +32,11 @@ if command -v uv &>/dev/null; then
     alias uvr='uv run'
     alias uvv='uv venv'
 fi
+
+alias tm='task-master'
+alias taskmaster='task-master'
+alias hamster='task-master'
+alias ham='task-master'
+
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'

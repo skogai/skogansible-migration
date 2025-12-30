@@ -1,18 +1,12 @@
 ---
-- name: "zsh | Ensure zsh is installed"
-  become: true
-  ansible.builtin.package:
-    name: "{{ zsh_package_name }}"
-    state: present
-  when: zsh_install
-  tags: [zsh, zsh-install]
+# ZSH Role - Main Tasks
 
 - name: "zsh | Deploy zsh.d configuration"
-  ansible.builtin.include_tasks: configure.yml
+  ansible.builtin.include_tasks: deploy_config.yml
   when: zsh_deploy_config
   tags: [zsh, zsh-config]
 
-- name: "zsh | Set as default shell"
-  ansible.builtin.include_tasks: default_shell.yml
-  when: zsh_set_default_shell
-  tags: [zsh, zsh-default-shell]
+- name: "zsh | Deploy .zshrc file"
+  ansible.builtin.include_tasks: deploy_zshrc.yml
+  when: zsh_deploy_zshrc
+  tags: [zsh, zsh-zshrc]
