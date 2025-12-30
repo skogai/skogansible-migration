@@ -1,0 +1,64 @@
+---
+# Primitive: ensure_package
+# Purpose: Package installation wrapper with cache management
+# Category: ensure_state
+#
+# Usage:
+#   - include_tasks: primitives/ensure_state/package.yml
+#     vars:
+#       package_names: package_name  # string or list
+#       package_state: present  # present, absent, latest
+#       package_update_cache: false  # optional, update cache before install
+#       package_manager: auto  # auto, pacman, apt, dnf, yum
+#
+# Examples:
+#   # Install single package
+#   - include_tasks: primitives/ensure_state/package.yml
+#     vars:
+#       package_names: git
+#       package_state: present
+#
+#   # Install multiple packages with cache update
+#   - include_tasks: primitives/ensure_state/package.yml
+#     vars:
+#       package_names:
+#         - vim
+#         - htop
+#         - curl
+#       package_state: present
+#       package_update_cache: true
+#
+#   # Remove package
+#   - include_tasks: primitives/ensure_state/package.yml
+#     vars:
+#       package_names: obsolete-package
+#       package_state: absent
+
+- name: "Primitive | Ensure package {{ package_state | default('present') }}: {{ package_names if package_names is string else package_names | join(', ') }}"
+  become: true
+  community.general.pacman:
+    name: "{{ package_names }}"
+    state: "{{ package_state | default('present') }}"
+    update_cache: "{{ package_update_cache | default(false) }}"
+  when:
+    - package_names is defined
+    - ansible_os_family == "Archlinux" or package_manager == "pacman"
+
+- name: "Primitive | Ensure package {{ package_state | default('present') }}: {{ package_names if package_names is string else package_names | join(', ') }}"
+  become: true
+  ansible.builtin.apt:
+    name: "{{ package_names }}"
+    state: "{{ package_state | default('present') }}"
+    update_cache: "{{ package_update_cache | default(false) }}"
+  when:
+    - package_names is defined
+    - ansible_os_family == "Debian" or package_manager == "apt"
+
+- name: "Primitive | Ensure package {{ package_state | default('present') }}: {{ package_names if package_names is string else package_names | join(', ') }}"
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ package_names }}"
+    state: "{{ package_state | default('present') }}"
+  when:
+    - package_names is defined
+    - ansible_os_family == "RedHat" or package_manager == "dnf"

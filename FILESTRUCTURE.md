@@ -26,6 +26,14 @@ SkogAI/skogansible/
 ├── .worktrees/                          # Git worktrees directory (isolated development)
 │   └── .gitkeep                         # Keeps directory in git (worktrees are gitignored)
 │
+├── primitives/                          # Reusable Ansible primitives (atomic operations)
+│   ├── README.md                        # Primitives documentation and usage guide
+│   └── ensure_state/                    # State management primitives
+│       ├── directory.yml                # Idempotent directory creation with permissions
+│       ├── file.yml                     # File state management (present/absent/copy)
+│       ├── package.yml                  # Package installation wrapper (pacman/apt/dnf)
+│       └── service.yml                  # Service state management (systemd)
+│
 ├── roles/                               # Ansible roles directory
 │   ├── packages/                        # Package management role (pacman + AUR)
 │   │   ├── tasks/
@@ -39,7 +47,8 @@ SkogAI/skogansible/
 │   │
 │   ├── ssh/                             # SSH configuration role
 │   │   ├── tasks/
-│   │   │   └── main.yml                 # SSH tasks (keys, config, known_hosts, authorized_keys)
+│   │   │   ├── main.yml                 # SSH tasks (keys, config, known_hosts, authorized_keys)
+│   │   │   └── setup_with_primitives.yml # Example: SSH tasks refactored using primitives
 │   │   ├── templates/
 │   │   │   └── ssh_config.j2            # SSH config template (connection multiplexing, aliases)
 │   │   ├── examples/                    # Example configurations
@@ -204,6 +213,21 @@ SkogAI/skogansible/
 - **docs/primitives/system-inventory-by-primitives.md** - Complete system automation roadmap organized by primitives
 - **docs/repos/CLAUDE.md** - Historical documentation consolidation guide for 7 previous ansible repositories
 
+### Primitives
+
+Reusable, atomic Ansible task files organized by operation type. Primitives provide building blocks for composing roles and playbooks.
+
+#### primitives/ensure_state/
+
+State management primitives for ensuring resources exist with desired properties:
+
+- **directory.yml** - Idempotent directory creation with owner, group, and mode
+- **file.yml** - File state management (present, absent, touch) with copy and content support
+- **package.yml** - Multi-distro package installation wrapper (pacman, apt, dnf)
+- **service.yml** - Systemd service management (start, stop, enable, disable, daemon-reload)
+
+See `primitives/README.md` for usage patterns and examples.
+
 ### Roles
 
 Each role follows standard Ansible structure with tasks/, templates/, defaults/, handlers/, and meta/ directories.
@@ -282,7 +306,7 @@ The following directories are excluded from version control (see .gitignore):
 - **16+ task files** - Modular task definitions
 - **29 zsh config files** - Modular shell configuration in zsh.d/
 - **7+ templates** - Jinja2 templates for configs and hooks
-- **12+ documentation files** - Reference and historical docs
+- **13+ documentation files** - Reference and historical docs (includes primitives README)
 - **3 collections** - Ansible Galaxy collections installed
 
 ---
