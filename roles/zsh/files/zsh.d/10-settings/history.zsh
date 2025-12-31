@@ -31,8 +31,8 @@ setopt AUTO_PARAM_SLASH     # Add slash after directory completion
 setopt MENU_COMPLETE        # Cycle through completions
 
 # Correction
-setopt CORRECT              # Command correction
-setopt CORRECT_ALL          # Argument correction
+# setopt CORRECT              # Command correction
+# setopt CORRECT_ALL          # Argument correction
 
 # Globbing
 setopt EXTENDED_GLOB        # Extended globbing
@@ -63,3 +63,4 @@ setopt PROMPT_SUBST              # Enable parameter expansion in prompts
 
 # Disable unwanted features
 unsetopt CORRECT                 # Don't auto-correct commands (annoying)
+unsetopt CORRECT_ALL                 # Don't auto-correct commands (annoying)
