@@ -11,4 +11,5 @@ export PATH="$GOPATH/bin:$PATH"                   # Go
 export PATH="$HOME/.local/share/pnpm:$PATH"       # Node/pnpm
 
 # Custom tools
+export PATH="$HOME/.claude/bin:$PATH"             # Claude Code tools
 export PATH="$HOME/.opencode/bin:$PATH"           # OpenCode tools
