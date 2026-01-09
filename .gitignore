@@ -44,3 +44,4 @@ semaphore/data/
 galaxy_cache
 galaxy_token
 collections/ansible_collections
+.aider*
