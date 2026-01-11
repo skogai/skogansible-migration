@@ -17,6 +17,9 @@
     - ../vars/filesystems.yml
 
   roles:
+    - role: users
+      tags: [users, security]
+
     - role: packages
       tags: [packages, install]
 

@@ -1,0 +1,16 @@
+---
+# Ensure users from vars/user.yml exist on the system with correct group membership
+
+- name: "Users | Ensure users exist with correct groups"
+  become: true
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups_base | default([]) | join(',') }}"
+    append: true
+    create_home: "{{ users_create_home }}"
+    shell: "{{ item.shell | default(users_default_shell) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    state: present
+  loop: "{{ users }}"
+  when: users is defined and users | length > 0
+  tags: [users, users-ensure]

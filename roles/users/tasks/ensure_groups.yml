@@ -1,0 +1,13 @@
+---
+# Ensure system groups exist
+
+- name: "Users | Ensure system groups exist"
+  become: true
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | default(omit) }}"
+    system: "{{ item.system | default(false) }}"
+    state: present
+  loop: "{{ users_system_groups }}"
+  when: users_system_groups is defined and users_system_groups | length > 0
+  tags: [users, users-groups]
