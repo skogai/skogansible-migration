@@ -43,3 +43,9 @@ users:
     groups_base:
       - wheel # sudo access
       - skogai # SkogAI group for all system users
+  - name: skogai
+    git_email: skogai@skogai.se
+    git_name: skogai
+    editor: nano
+    groups_base:
+      - skogai #
