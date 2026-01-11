@@ -6,4 +6,40 @@ users:
     git_name: skogix
     editor: nvim
     groups_base:
-      - wheel  # sudo access
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
+  - name: aldervall
+    git_email: niclas@aldervall.se
+    git_name: aldervall
+    editor: nano
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
+  - name: dot
+    git_email: dot@skogai.se
+    git_name: dot
+    editor: nano
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
+  - name: amy
+    git_email: amy@skogai.se
+    git_name: amy
+    editor: nano
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
+  - name: claude
+    git_email: claude@skogai.se
+    git_name: claude
+    editor: nano
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
+  - name: goose
+    git_email: goose@skogai.se
+    git_name: goose
+    editor: nano
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
