@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
-claude() {
-    local args=("$@")
-    local extra=()
-    [[ -f .claude/AUTO_PLAN_MODE.txt ]] && extra+=("--append-system-prompt" "$(cat .claude/AUTO_PLAN_MODE.txt)")
-    command claude --dangerously-skip-permissions "${extra[@]}" "${args[@]}"
-}
-
+# claude() {
+#     local args=("$@")
+#     local extra=()
+#     [[ -f .claude/AUTO_PLAN_MODE.txt ]] && extra+=("--append-system-prompt" "$(cat .claude/AUTO_PLAN_MODE.txt)")
+#     command claude --dangerously-skip-permissions "${extra[@]}" "${args[@]}"
+# }
+#
 # Claude Code
 export FORCE_AUTO_BACKGROUND_TASKS=1
 export ENABLE_BACKGROUND_TASKS=1
