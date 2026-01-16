@@ -2,13 +2,13 @@
 # ZSH Completion System Configuration
 # Sets up command completion with custom completion directories
 
-# Add custom completion directories to fpath
-# These must be added BEFORE compinit runs
-fpath+=~/.config/zsh.d/completions
+# NOTE: fpath is now set in 00-path/completions-path.zsh to ensure it's
+# configured BEFORE zplug/compinit runs
 
-# Initialize completion system
+# Initialize completion system (only if not already initialized by zplug)
+# Most plugin managers call compinit themselves, so this is a fallback
 autoload -Uz compinit
-if ! type _compinit &>/dev/null; then
+if [[ -z "$_comps" ]]; then
   compinit
 fi
 
