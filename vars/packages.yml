@@ -51,6 +51,7 @@ packages:
   # - linux
   # - linux-firmware
   # - linux-headers
+  - just
   # - maim
   # - mandoc
   # - nano
@@ -87,6 +88,7 @@ packages:
   # - xdg-utils
   - xdotool
   # - xorg-server-xvfb
+  - starship
   # - xorg-xinit
   # - xss-lock
   # - xterm

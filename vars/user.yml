@@ -48,4 +48,5 @@ users:
     git_name: skogai
     editor: nano
     groups_base:
-      - skogai #
+      - wheel # sudo access
+      - skogai # SkogAI group

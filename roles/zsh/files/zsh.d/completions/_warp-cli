@@ -303,15 +303,6 @@ esac
     ;;
 esac
 ;;
-(speed-test)
-_arguments "${_arguments_options[@]}" : \
-'*-i+[Network interfaces to speed test over. Specify this option multiple times to capture from multiple interfaces]:INTERFACE:_default' \
-'*--interface=[Network interfaces to speed test over. Specify this option multiple times to capture from multiple interfaces]:INTERFACE:_default' \
-'--no-paginate[Disable automatic pagination]' \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-&& ret=0
-;;
 (task-dump)
 _arguments "${_arguments_options[@]}" : \
 '--no-paginate[Disable automatic pagination]' \
@@ -459,10 +450,6 @@ _arguments "${_arguments_options[@]}" : \
         esac
     ;;
 esac
-;;
-(speed-test)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
 ;;
 (task-dump)
 _arguments "${_arguments_options[@]}" : \
@@ -1295,13 +1282,6 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
-(delete-all)
-_arguments "${_arguments_options[@]}" : \
-'--no-paginate[Disable automatic pagination]' \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
 (organization)
 _arguments "${_arguments_options[@]}" : \
 '--no-paginate[Disable automatic pagination]' \
@@ -1360,10 +1340,6 @@ _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete-all)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2160,7 +2136,7 @@ _arguments "${_arguments_options[@]}" : \
 '--no-paginate[Disable automatic pagination]' \
 '-h[Print help (see more with '\''--help'\'')]' \
 '--help[Print help (see more with '\''--help'\'')]' \
-':protocol:((MASQUE\:"Use the MASQUE protocol. This is the default behavior"
+':protocol:((MASQUE\:"Use the MASQUE protocol"
 WireGuard\:"Use the WireGuard protocol. This is the legacy behavior"))' \
 && ret=0
 ;;
@@ -2621,10 +2597,6 @@ _arguments "${_arguments_options[@]}" : \
     ;;
 esac
 ;;
-(speed-test)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
 (task-dump)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -2930,10 +2902,6 @@ _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete-all)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -3480,7 +3448,6 @@ _warp-cli__debug_commands() {
 'panic:Force a daemon panic' \
 'posture:Display the most recent device posture information' \
 'pcap:Run a packet capture on the device' \
-'speed-test:Run a speed test on the device' \
 'task-dump:Get a dump of the currently running async tasks' \
 'qlog:Enable qlog logging on the tunnel, if supported by the tunnel protocol' \
 'log-filter:Modify the dynamic log filter using env-filter directives' \
@@ -3520,7 +3487,6 @@ _warp-cli__debug__help_commands() {
 'panic:Force a daemon panic' \
 'posture:Display the most recent device posture information' \
 'pcap:Run a packet capture on the device' \
-'speed-test:Run a speed test on the device' \
 'task-dump:Get a dump of the currently running async tasks' \
 'qlog:Enable qlog logging on the tunnel, if supported by the tunnel protocol' \
 'log-filter:Modify the dynamic log filter using env-filter directives' \
@@ -3609,11 +3575,6 @@ _warp-cli__debug__help__posture_commands() {
 _warp-cli__debug__help__qlog_commands() {
     local commands; commands=()
     _describe -t commands 'warp-cli debug help qlog commands' commands "$@"
-}
-(( $+functions[_warp-cli__debug__help__speed-test_commands] )) ||
-_warp-cli__debug__help__speed-test_commands() {
-    local commands; commands=()
-    _describe -t commands 'warp-cli debug help speed-test commands' commands "$@"
 }
 (( $+functions[_warp-cli__debug__help__task-dump_commands] )) ||
 _warp-cli__debug__help__task-dump_commands() {
@@ -3730,11 +3691,6 @@ _warp-cli__debug__posture_commands() {
 _warp-cli__debug__qlog_commands() {
     local commands; commands=()
     _describe -t commands 'warp-cli debug qlog commands' commands "$@"
-}
-(( $+functions[_warp-cli__debug__speed-test_commands] )) ||
-_warp-cli__debug__speed-test_commands() {
-    local commands; commands=()
-    _describe -t commands 'warp-cli debug speed-test commands' commands "$@"
 }
 (( $+functions[_warp-cli__debug__task-dump_commands] )) ||
 _warp-cli__debug__task-dump_commands() {
@@ -4177,7 +4133,6 @@ _warp-cli__help__debug_commands() {
 'panic:Force a daemon panic' \
 'posture:Display the most recent device posture information' \
 'pcap:Run a packet capture on the device' \
-'speed-test:Run a speed test on the device' \
 'task-dump:Get a dump of the currently running async tasks' \
 'qlog:Enable qlog logging on the tunnel, if supported by the tunnel protocol' \
 'log-filter:Modify the dynamic log filter using env-filter directives' \
@@ -4260,11 +4215,6 @@ _warp-cli__help__debug__posture_commands() {
 _warp-cli__help__debug__qlog_commands() {
     local commands; commands=()
     _describe -t commands 'warp-cli help debug qlog commands' commands "$@"
-}
-(( $+functions[_warp-cli__help__debug__speed-test_commands] )) ||
-_warp-cli__help__debug__speed-test_commands() {
-    local commands; commands=()
-    _describe -t commands 'warp-cli help debug speed-test commands' commands "$@"
 }
 (( $+functions[_warp-cli__help__debug__task-dump_commands] )) ||
 _warp-cli__help__debug__task-dump_commands() {
@@ -4498,7 +4448,6 @@ _warp-cli__help__registration_commands() {
 'show:Show information about the current registration' \
 'new:Register this client (Must be run before first connection!)' \
 'delete:Delete current registration' \
-'delete-all:Delete all registrations for all users and scopes' \
 'organization:Get the name of the current Teams organization' \
 'devices:Display the list of devices associated with the current registration' \
 'license:Attach the current registration to a different account using a license key' \
@@ -4511,11 +4460,6 @@ _warp-cli__help__registration_commands() {
 _warp-cli__help__registration__delete_commands() {
     local commands; commands=()
     _describe -t commands 'warp-cli help registration delete commands' commands "$@"
-}
-(( $+functions[_warp-cli__help__registration__delete-all_commands] )) ||
-_warp-cli__help__registration__delete-all_commands() {
-    local commands; commands=()
-    _describe -t commands 'warp-cli help registration delete-all commands' commands "$@"
 }
 (( $+functions[_warp-cli__help__registration__devices_commands] )) ||
 _warp-cli__help__registration__devices_commands() {
@@ -5053,7 +4997,6 @@ _warp-cli__registration_commands() {
 'show:Show information about the current registration' \
 'new:Register this client (Must be run before first connection!)' \
 'delete:Delete current registration' \
-'delete-all:Delete all registrations for all users and scopes' \
 'organization:Get the name of the current Teams organization' \
 'devices:Display the list of devices associated with the current registration' \
 'license:Attach the current registration to a different account using a license key' \
@@ -5068,11 +5011,6 @@ _warp-cli__registration__delete_commands() {
     local commands; commands=()
     _describe -t commands 'warp-cli registration delete commands' commands "$@"
 }
-(( $+functions[_warp-cli__registration__delete-all_commands] )) ||
-_warp-cli__registration__delete-all_commands() {
-    local commands; commands=()
-    _describe -t commands 'warp-cli registration delete-all commands' commands "$@"
-}
 (( $+functions[_warp-cli__registration__devices_commands] )) ||
 _warp-cli__registration__devices_commands() {
     local commands; commands=()
@@ -5084,7 +5022,6 @@ _warp-cli__registration__help_commands() {
 'show:Show information about the current registration' \
 'new:Register this client (Must be run before first connection!)' \
 'delete:Delete current registration' \
-'delete-all:Delete all registrations for all users and scopes' \
 'organization:Get the name of the current Teams organization' \
 'devices:Display the list of devices associated with the current registration' \
 'license:Attach the current registration to a different account using a license key' \
@@ -5098,11 +5035,6 @@ _warp-cli__registration__help_commands() {
 _warp-cli__registration__help__delete_commands() {
     local commands; commands=()
     _describe -t commands 'warp-cli registration help delete commands' commands "$@"
-}
-(( $+functions[_warp-cli__registration__help__delete-all_commands] )) ||
-_warp-cli__registration__help__delete-all_commands() {
-    local commands; commands=()
-    _describe -t commands 'warp-cli registration help delete-all commands' commands "$@"
 }
 (( $+functions[_warp-cli__registration__help__devices_commands] )) ||
 _warp-cli__registration__help__devices_commands() {
