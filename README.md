@@ -6,6 +6,7 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 
 ## Features
 
+- **User Management** - System user and group management with security foundation
 - **Package Management** - Official repos (61 packages) + AUR packages (7 packages) via yay
 - **SSH Configuration** - Key deployment, config templating, known_hosts management
 - **Git Configuration** - Complete git setup with aliases, hooks, signing, LFS support
@@ -27,6 +28,7 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 
 ```bash
 ./run.sh                      # Run all roles
+./run.sh --tags users         # Only user management
 ./run.sh --tags packages      # Only packages
 ./run.sh --tags ssh           # Only SSH setup
 ./run.sh --tags git           # Only Git config
@@ -41,12 +43,13 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 ```
 SkogAI/skogansible/
 ├── playbooks/                # Ansible playbooks
-│   ├── default.yml           # Main playbook (6 roles)
+│   ├── default.yml           # Main playbook (7 roles)
 │   ├── workstation.yml       # Workstation setup
 │   └── ...                   # Additional playbooks
 ├── bootstrap.sh              # Initial setup script
 ├── run.sh                    # Playbook execution wrapper
 ├── roles/
+│   ├── users/                # User and group management
 │   ├── packages/             # Package management (pacman + AUR)
 │   ├── ssh/                  # SSH configuration
 │   ├── git/                  # Git configuration
@@ -54,13 +57,13 @@ SkogAI/skogansible/
 │   ├── zsh/                  # Zsh shell configuration
 │   └── filesystems/          # Filesystem mounts management
 ├── vars/                     # Role-specific configuration
+│   ├── user.yml              # User definitions
 │   ├── packages.yml          # Package lists
 │   ├── ssh.yml               # SSH settings
 │   ├── git.yml               # Git settings
 │   ├── chezmoi.yml           # Chezmoi settings
 │   ├── zsh.yml               # Zsh settings
-│   ├── filesystems.yml       # Filesystem mount definitions
-│   └── user.yml              # User variables
+│   └── filesystems.yml       # Filesystem mount definitions
 └── docs/                     # Reference documentation
     ├── README.md             # Documentation index
     ├── primitives/           # Core Ansible patterns
@@ -81,6 +84,7 @@ SkogAI/skogansible/
 
 All role-specific configuration is in `vars/` directory:
 
+- **user.yml** - Define users and groups with group membership
 - **packages.yml** - Customize package lists (official + AUR)
 - **ssh.yml** - Enable/disable SSH features (keys, config, known_hosts)
 - **git.yml** - Configure git settings (user, aliases, hooks, signing)

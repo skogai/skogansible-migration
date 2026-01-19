@@ -17,6 +17,9 @@
     - ../vars/cloudflared.yml # Cloudflared configuration
 
   roles:
+    - role: users
+      tags: [users, security]
+
     - role: packages
       tags: [packages, install]
 

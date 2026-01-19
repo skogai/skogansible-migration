@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: SkogAI
+  description: User and group management role for Arch Linux
+  company: SkogAI
+  license: MIT
+  min_ansible_version: "2.10"
+  platforms:
+    - name: ArchLinux
+      versions:
+        - all
+  galaxy_tags:
+    - system
+    - users
+    - groups
+    - security
+
+dependencies: []

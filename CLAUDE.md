@@ -14,7 +14,7 @@ The repository follows standard Ansible structure:
 
 - **Core files:** ansible.cfg, playbook.yml, .inventory, .requirements.yml
 - **Execution scripts:** bootstrap.sh (setup), run.sh (execution)
-- **Roles:** packages/, ssh/, git/, chezmoi/, zsh/, cloudflared/ (each with tasks/, templates/, defaults/, meta/)
+- **Roles:** users/, packages/, ssh/, git/, chezmoi/, zsh/, cloudflared/ (each with tasks/, templates/, defaults/, meta/)
 - **Variables:** vars/ directory with role-specific configuration files
 - **Documentation:** docs/ with primitives reference and historical repos
 - **Collections:** Installed Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
@@ -121,8 +121,9 @@ wt remove feature-name
 **Run playbook:**
 
 ```bash
-./run.sh                      # Run all roles (packages + ssh + git + chezmoi + zsh)
+./run.sh                      # Run all roles (users + packages + ssh + git + chezmoi + zsh)
 ./run.sh --check             # Dry-run mode
+./run.sh --tags users        # Run only user management
 ./run.sh --tags packages     # Run only package management
 ./run.sh --tags ssh          # Run only SSH configuration
 ./run.sh --tags git          # Run only Git configuration
@@ -144,6 +145,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 
 **Active Roles:**
 
+- ✅ **users** - User and group management with security foundation
 - ✅ **packages** - Official Arch repository packages via pacman (61 packages)
 - ✅ **packages** - AUR packages via yay (7 packages)
 - ✅ **ssh** - SSH directory setup, key deployment, config management, known_hosts
@@ -155,6 +157,9 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 
 **Features:**
 
+- ✅ User creation and management from vars/user.yml
+- ✅ Group management and user group membership
+- ✅ Foundation for future security and privilege configuration
 - ✅ AUR builder user setup with secure sudo config
 - ✅ SSH key deployment from encrypted vault
 - ✅ SSH config template with connection multiplexing
@@ -181,6 +186,68 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ Deterministic load order (00-path through 90-skogai)
 - ✅ Auto-export for .env files
 - ⏸️ Additional system configuration (see `docs/system-inventory-by-primitives.md`)
+
+## Users Role Configuration
+
+The Users role manages system users and groups, ensuring users and groups defined in `vars/user.yml` are reflected on the system. It provides a foundation for future security and privilege management.
+
+**Quick Start (Default behavior):**
+
+- Creates system groups (e.g., `skogai`)
+- Creates/updates users from `vars/user.yml`
+- Sets correct group membership for users
+- Creates home directories if needed
+
+**To customize users and groups:**
+
+1. Edit `vars/user.yml` to add/remove users:
+
+   ```yaml
+   users:
+     - name: username
+       groups_base:
+         - wheel       # sudo access
+         - skogai      # custom group
+       shell: /bin/zsh # optional
+       comment: "User Description" # optional
+   ```
+
+2. Run: `./run.sh --tags users`
+
+**Available Features (configure in defaults/main.yml or vars):**
+
+- `users_ensure_users: true` - Ensure users exist on system
+- `users_ensure_groups: true` - Ensure groups exist on system
+- `users_create_home: true` - Create home directories
+- `users_default_shell: "/bin/bash"` - Default shell for users
+- `users_configure_sudo: false` - Configure sudo (disabled by default)
+
+**System Groups:**
+
+Default system groups created:
+
+```yaml
+users_system_groups:
+  - name: skogai
+    gid: 1100
+    system: false
+```
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags users          # All user management tasks
+./run.sh --tags users-groups   # Only group management
+./run.sh --tags users-ensure   # Only user management
+```
+
+**Separation from Packages Role:**
+
+- User management is conceptually separate from package installation
+- `aur_builder` user remains in packages role (package-specific)
+- Users role provides foundation for future security tasks (sudo, chown, chmod)
+
+**See:** `roles/users/README.md` for complete documentation.
 
 ## Packages Role Configuration
 
@@ -643,18 +710,13 @@ The Zsh role deploys modular shell configuration with numbered load-order direct
 
 ### Role Documentation
 
+- @roles/users/README.md - Users role documentation
 - @roles/packages/README.md - Packages role documentation
 - @roles/chezmoi/README.md - Chezmoi role documentation
 - @roles/ssh/README.md - SSH role documentation
 - @roles/git/README.md - Git role documentation
 - @roles/cloudflared/README.md - Cloudflared role documentation
-<<<<<<< HEAD
-- @roles/zsh/README.md - ZSH role documentation
-||||||| parent of 55abd31 (Squash commits from master)
-=======
 - @roles/zsh/README.md - Zsh role documentation
-
->>>>>>> 55abd31 (Squash commits from master)
 
 ### System Expansion
 

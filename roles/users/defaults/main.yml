@@ -1,0 +1,40 @@
+---
+# Users Role - Default Variables
+# Override these in your playbook, inventory, or vars/user.yml
+
+# ==============================================================================
+# User Management
+# ==============================================================================
+
+# Ensure users defined in vars/user.yml exist on the system
+users_ensure_users: true
+
+# Create home directories for users (if they don't exist)
+users_create_home: true
+
+# Default shell for users (can be overridden per user)
+users_default_shell: "/bin/bash"
+
+# ==============================================================================
+# Group Management
+# ==============================================================================
+
+# Ensure groups defined in vars/user.yml exist on the system
+users_ensure_groups: true
+
+# System groups to create before user management
+# These are base groups that users can be added to
+users_system_groups:
+  - name: skogai
+    gid: 1100
+    system: false
+
+# ==============================================================================
+# Security & Privileges
+# ==============================================================================
+
+# Configure sudo access for wheel group members
+users_configure_sudo: false
+
+# Validate sudoers file after changes (recommended)
+users_validate_sudoers: true
