@@ -92,6 +92,7 @@ packages:
   # - xorg-xinit
   # - xss-lock
   # - xterm
+  - jq
   - zip
   - unzip
   - zoxide
