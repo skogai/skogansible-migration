@@ -12,13 +12,16 @@ tags: ["extraction", "new-role", "from:ansible-base", "phase-1", "github"]
 ## Description
 
 ## Summary
+
 Create a new `roles/python-tools/` role extracted from `ansible-base/roles/09-uv-tools/`.
 
 ## Source
+
 - `tmp/ansible-base/roles/09-uv-tools/tasks/main.yml`
 - `tmp/ansible-base/roles/09-uv-tools/defaults/main.yml`
 
 ## Features to Include
+
 - [ ] Check if uv is installed
 - [ ] Install uv via official script or pacman
 - [ ] Install Python version via uv

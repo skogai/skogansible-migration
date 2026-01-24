@@ -12,16 +12,19 @@ tags: ["phase-2", "new-role", "github"]
 ## Description
 
 ## Purpose
+
 Manage Xorg configuration (keyboard layout, mouse settings) through Ansible.
 
 **Note**: Only implement if staying with X11 (vs migrating to Wayland)
 
 ## Reference
+
 - Keyboard: Swedish (se) with us_dvorak variant
 - Mouse: Button 12 for middle-click scroll
 - Config files: `backup/todo/extra-settings/xorg.conf.d/`
 
 ## Tasks
+
 - [ ] Decide: Staying with X11 or migrating to Wayland?
 - [ ] If X11: Create roles/xorg/ directory structure
 - [ ] Create vars/xorg.yml with configuration

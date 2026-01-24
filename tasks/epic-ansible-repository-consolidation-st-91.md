@@ -14,14 +14,16 @@ tags: ["epic", "github"]
 # Ansible Repository Consolidation & Stabilization
 
 ## Overview
+
 Consolidate 8 historical ansible repositories into a single stable, well-architected system. Priority is **stability first**, then architecture improvements.
 
 ## Source Repositories
+
 | Repo | Status | Value |
 |------|--------|-------|
 | `SkogAI/skogansible` | ✅ Active (this repo) | Current working base |
 | `SkogAI/ansible-base` | 🔄 Extract | 45 roles, graphics, uv-tools, dotfiles |
-| `Skogix/dotfile-ansible` | 🔄 Extract | Primitives 
+| `Skogix/dotfile-ansible` | 🔄 Extract | Primitives
 
 ## Notes
 

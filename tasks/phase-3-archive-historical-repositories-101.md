@@ -12,17 +12,20 @@ tags: ["phase-3", "github"]
 ## Description
 
 ## Overview
+
 After all valuable content is extracted, archive the historical repositories.
 
 ## Repositories to Archive
+
 - [ ] `SkogAI/ansible-base` - After graphics, python-tools, packages extracted
 - [ ] `Skogix/dotfile-ansible` - After primitives architecture adopted
 - [ ] `SkogAI/archive-2025-10-05-ansible` - After system optimizations extracted
 - [ ] `Skogix/.ansible` - Legacy, can archive immediately
 
 ## Archive Process
+
 1. Verify all valuable content extracted
-2. Update README with "Archived 
+2. Update README with "Archived
 
 ## Notes
 

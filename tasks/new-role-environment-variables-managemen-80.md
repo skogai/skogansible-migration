@@ -12,15 +12,18 @@ tags: ["phase-2", "new-role", "github"]
 ## Description
 
 ## Purpose
+
 Manage global environment variables through Ansible.
 
 ## Reference
+
 - Current settings: `backup/todo/extra-settings/environment`
 - Variables to manage:
   - BROWSER=firefox
   - EDITOR=nano
 
 ## Tasks
+
 - [ ] Create `roles/environment/` directory structure
 - [ ] Create `vars/environment.yml` with variable definitions
 - [ ] Add tasks to manage /etc/environment
@@ -28,6 +31,7 @@ Manage global environment variables through Ansible.
 - [ ] Test on current system
 
 ## Implementation Notes
+
 - Use lineinfile module for /etc/environment
 - S
 

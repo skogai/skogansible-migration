@@ -12,20 +12,24 @@ tags: ["from:archive", "extraction", "new-role", "phase-1", "github"]
 ## Description
 
 ## Summary
+
 Create a new `roles/system/` role for Arch Linux system optimizations, extracted from `archive-2025-10-05-ansible/tasks/skogai-core.yml`.
 
 ## Source
+
 - `tmp/archive-2025-10-05-ansible/tasks/skogai-core.yml`
 - `tmp/archive-2025-10-05-ansible/roles/02_basics/`
 
 ## Features to Include
 
 ### Pacman Configuration
+
 - [ ] Enable color output
 - [ ] Enable ParallelDownloads = 5
 - [ ] Enable ILoveCandy (optional)
 
-### Makepkg Configuration  
+### Makepkg Configuration
+
 - [ ] Disable compression (PKGEXT='.pkg.tar')
 - [ ] Enab
 

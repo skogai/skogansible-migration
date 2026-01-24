@@ -12,13 +12,16 @@ tags: ["extraction", "new-role", "from:ansible-base", "phase-1", "github"]
 ## Description
 
 ## Summary
+
 Create a new `roles/graphics/` role extracted from `ansible-base/roles/08-graphics/`.
 
 ## Source
+
 - `tmp/ansible-base/roles/08-graphics/tasks/main.yml`
 - `tmp/ansible-base/roles/08-graphics/defaults/main.yml`
 
 ## Features to Include
+
 - [ ] NVIDIA driver installation (nvidia, nvidia-utils, lib32-nvidia-utils)
 - [ ] AMD driver installation (xf86-video-amdgpu, vulkan-radeon)
 - [ ] Intel driver installation (xf86-video-intel, vulkan-intel)

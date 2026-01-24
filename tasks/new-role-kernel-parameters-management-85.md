@@ -12,13 +12,16 @@ tags: ["phase-2", "new-role", "github"]
 ## Description
 
 ## Purpose
+
 Manage kernel boot parameters (especially NVIDIA and NVME settings) through Ansible.
 
 ## Reference
+
 - Current kernel params: `backup/todo/extra-settings/kernel_cmdline.txt`
 - Required params: nvidia_drm.modeset=1 (critical for NVIDIA), nowatchdog, nvme_load=YES
 
 ## Tasks
+
 - [ ] Create roles/kernel/ directory structure
 - [ ] Create vars/kernel.yml with parameter definitions
 - [ ] Add tasks to manage GRUB_CMDLINE_LINUX_DEFAULT

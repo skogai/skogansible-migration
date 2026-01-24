@@ -12,23 +12,27 @@ tags: ["phase-2", "refactor", "github"]
 ## Description
 
 ## Overview
+
 Create a composition layer that orchestrates primitives into higher-level operations.
 
 ## Components
+
 - Role dependency management
 - Conditional role inclusion
 - Profile-based role selection (workstation, laptop, server)
 - Tag-based execution control
 
 ## Design Goals
+
 - Roles should be composable and independent
 - Clear dependency declaration
 - Support for different machine profiles
 - Minimal coupling between roles
 
 ## Acceptance Criteria
+
 - [ ] Define composition patterns
-- [ ] Update 
+- [ ] Update
 
 ## Notes
 

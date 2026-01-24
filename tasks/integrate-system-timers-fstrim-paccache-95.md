@@ -12,12 +12,15 @@ tags: ["from:archive", "extraction", "phase-1", "github"]
 ## Description
 
 ## Summary
+
 Integrate systemd timer management for system maintenance tasks.
 
 ## Source
+
 - `tmp/archive-2025-10-05-ansible/tasks/skogai-core.yml`
 
 ## Timers to Enable
+
 - [ ] `fstrim.timer` - Weekly SSD TRIM
 - [ ] `paccache.timer` - Weekly package cache cleanup
 - [ ] `reflector.timer` - Mirror list updates
@@ -25,6 +28,7 @@ Integrate systemd timer management for system maintenance tasks.
 - [ ] `plocate-updatedb.timer` - File database updates (12h)
 
 ## Custom Timers to Create
+
 - [ ] `trash-empty.timer` - Daily trash c
 
 ## Notes
