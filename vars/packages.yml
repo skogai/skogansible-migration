@@ -93,6 +93,7 @@ packages:
   # - xss-lock
   # - xterm
   - jq
+  - fd
   - zip
   - unzip
   - zoxide

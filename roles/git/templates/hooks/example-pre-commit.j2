@@ -14,12 +14,13 @@ NC='\033[0m' # No Color
 echo -e "${GREEN}Running pre-commit checks...${NC}"
 
 # Check for trailing whitespace
-if git diff --cached --check --diff-filter=ACMR ; then
+if git diff --cached --check --diff-filter=ACMR; then
     echo -e "${GREEN}✓ No trailing whitespace${NC}"
 else
     echo -e "${RED}✗ Found trailing whitespace${NC}"
     echo -e "${YELLOW}Fix with: git diff --cached --check${NC}"
-    exit 1
+    # Uncomment to make this blocking:
+    # exit 1
 fi
 
 # Check for debug statements (example - customize for your languages)
