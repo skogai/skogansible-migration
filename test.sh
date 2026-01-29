@@ -217,13 +217,21 @@ if [ "$RUN_CHECK_MODE" = true ]; then
         print_warning "Skipping check mode test"
         echo ""
     else
-        print_error "Check mode failed"
-        echo ""
-        print_warning "If privilege escalation failed, check:"
-        print_warning "  1. Are you in the correct directory?"
-        print_warning "  2. Is .envrc or .env properly sourced?"
-        print_warning "  3. Do you have sudo access configured?"
-        exit 1
+        # Run ansible-playbook in check mode with diff, using the provided password files
+        if ANSIBLE_BECOME_PASSWORD_FILE="$HOME/.ssh/ansible-become-password" \
+            ansible-playbook playbooks/site.yml \
+                --check --diff \
+                --vault-password-file "$HOME/.ssh/ansible-vault-password"; then
+            print_success "Ansible check mode completed successfully"
+        else
+            print_error "Check mode failed"
+            echo ""
+            print_warning "If privilege escalation failed, check:"
+            print_warning "  1. Are you in the correct directory?"
+            print_warning "  2. Is .envrc or .env properly sourced?"
+            print_warning "  3. Do you have sudo access configured?"
+            exit 1
+        fi
     fi
     echo ""
 fi
