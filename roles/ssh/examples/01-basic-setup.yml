@@ -1,0 +1,16 @@
+---
+# Example 1: Basic SSH Directory Setup
+# This is the simplest usage - just ensures ~/.ssh exists with correct permissions
+
+- name: Basic SSH setup
+  hosts: localhost
+  connection: local
+
+  roles:
+    - ssh
+
+  # This will:
+  # - Create ~/.ssh directory if it doesn't exist
+  # - Set permissions to 0700
+  # - Set ownership to current user
+  # That's it! Nothing else.

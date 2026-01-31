@@ -1,0 +1,213 @@
+# SSH Client Config - Hardened Configuration
+# Managed by Ansible - Generated: {{ ansible_facts['date_time']['iso8601'] }}
+#
+# This configuration follows SSH security best practices:
+# - Modern cryptographic algorithms only
+# - Strict host key checking
+# - Connection multiplexing for performance
+# - No legacy/weak algorithms
+
+# ==============================================================================
+# Global Security Settings (applies to all hosts)
+# ==============================================================================
+
+Host *
+    # Cryptographic Algorithms - Modern and Secure Only
+    # Only use modern, secure key exchange algorithms
+    KexAlgorithms {{ ssh_hardening_kex_algorithms | default('curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256') }}
+
+    # Only use strong ciphers (AES-GCM preferred, ChaCha20 as alternative)
+    Ciphers {{ ssh_hardening_ciphers | default('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr') }}
+
+    # Only use strong MAC algorithms
+    MACs {{ ssh_hardening_macs | default('hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256') }}
+
+    # Public key algorithms (prefer ed25519, then RSA-SHA2)
+    PubkeyAcceptedKeyTypes {{ ssh_hardening_pubkey_types | default('ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com') }}
+
+    # Host key algorithms (prefer ed25519, then RSA)
+    HostKeyAlgorithms {{ ssh_hardening_hostkey_algorithms | default('ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com') }}
+
+    # Authentication Settings
+    # Prefer public key authentication
+    PreferredAuthentications {{ ssh_hardening_preferred_auth | default('publickey,keyboard-interactive,password') }}
+
+    # Use modern key types only
+    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/id_rsa
+
+    # Don't try all keys, only specified ones
+    IdentitiesOnly {{ ssh_hardening_identities_only | default('yes') }}
+
+    # Host Key Verification
+    # Always verify host keys (prevent MITM attacks)
+    StrictHostKeyChecking {{ ssh_hardening_strict_host_checking | default('ask') }}
+
+    # Hash known hosts for additional privacy
+    HashKnownHosts {{ ssh_hardening_hash_known_hosts | default('yes') }}
+
+    # Check host IP addresses as well
+    CheckHostIP {{ ssh_hardening_check_host_ip | default('yes') }}
+
+    # Known hosts file location
+    UserKnownHostsFile ~/.ssh/known_hosts
+
+    # Connection Keepalive
+    # Keep connections alive (helps with firewalls/NAT)
+    ServerAliveInterval {{ ssh_hardening_server_alive_interval | default('60') }}
+    ServerAliveCountMax {{ ssh_hardening_server_alive_count | default('3') }}
+
+    # Connection timeout
+    ConnectTimeout {{ ssh_hardening_connect_timeout | default('30') }}
+
+    # Connection Multiplexing (for performance)
+    # Share connections to same host
+    ControlMaster {{ ssh_hardening_control_master | default('auto') }}
+    ControlPath {{ ssh_hardening_control_path | default('~/.ssh/sockets/%r@%h-%p') }}
+    ControlPersist {{ ssh_hardening_control_persist | default('600') }}
+
+    # Security Features
+    # Forward agent only when explicitly needed (security risk)
+    ForwardAgent {{ ssh_hardening_forward_agent | default('no') }}
+
+    # Don't forward X11 by default (security risk)
+    ForwardX11 {{ ssh_hardening_forward_x11 | default('no') }}
+    ForwardX11Trusted {{ ssh_hardening_forward_x11_trusted | default('no') }}
+
+    # Disable TCP forwarding by default (enable per-host as needed)
+    # Note: Client cannot enforce, but can request
+
+    # Don't allow GSSAPI authentication (potential security risk)
+    GSSAPIAuthentication {{ ssh_hardening_gssapi_auth | default('no') }}
+
+    # Disable host-based authentication
+    HostbasedAuthentication {{ ssh_hardening_hostbased_auth | default('no') }}
+
+    # Protocol and Version
+    # Only use SSH protocol 2 (SSH1 is insecure)
+    # Note: Protocol directive deprecated in OpenSSH 7.4+ (only SSH2 supported)
+
+    # Compression
+    # Disable compression by default (potential security issue)
+    Compression {{ ssh_hardening_compression | default('no') }}
+
+    # Escape character (useful for debugging)
+    EscapeChar {{ ssh_hardening_escape_char | default('~') }}
+
+    # Logging
+    # Set log level for debugging (ERROR, QUIET, FATAL, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
+    LogLevel {{ ssh_hardening_log_level | default('INFO') }}
+
+    # Password authentication (prefer keys)
+    PasswordAuthentication {{ ssh_hardening_password_auth | default('yes') }}
+
+    # Don't use keyboard-interactive as fallback for password
+    ChallengeResponseAuthentication {{ ssh_hardening_challenge_response | default('yes') }}
+
+    # Request TTY allocation mode (auto, yes, no, force)
+    RequestTTY {{ ssh_hardening_request_tty | default('auto') }}
+
+{% if ssh_hardening_additional_options is defined %}
+# Additional Custom Options
+{% for option in ssh_hardening_additional_options %}
+    {{ option.key }} {{ option.value }}
+{% endfor %}
+{% endif %}
+
+# ==============================================================================
+# Custom Host Configurations
+# ==============================================================================
+
+{% if ssh_custom_hosts is defined %}
+{% for host in ssh_custom_hosts %}
+Host {{ host.name }}
+    HostName {{ host.hostname }}
+{% if host.user is defined %}
+    User {{ host.user }}
+{% endif %}
+{% if host.port is defined %}
+    Port {{ host.port }}
+{% endif %}
+{% if host.identity_file is defined %}
+    IdentityFile {{ host.identity_file }}
+{% endif %}
+{% if host.identities_only is defined %}
+    IdentitiesOnly {{ host.identities_only }}
+{% endif %}
+{% if host.forward_agent is defined %}
+    ForwardAgent {{ host.forward_agent }}
+{% endif %}
+{% if host.forward_x11 is defined %}
+    ForwardX11 {{ host.forward_x11 }}
+{% endif %}
+{% if host.proxy_jump is defined %}
+    ProxyJump {{ host.proxy_jump }}
+{% endif %}
+{% if host.proxy_command is defined %}
+    ProxyCommand {{ host.proxy_command }}
+{% endif %}
+{% if host.strict_host_checking is defined %}
+    StrictHostKeyChecking {{ host.strict_host_checking }}
+{% endif %}
+{% if host.local_forward is defined %}
+    LocalForward {{ host.local_forward }}
+{% endif %}
+{% if host.remote_forward is defined %}
+    RemoteForward {{ host.remote_forward }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+# ==============================================================================
+# Example Secure Host Configurations (commented out)
+# ==============================================================================
+
+# Trusted Development Server (with agent forwarding)
+# Host dev.example.com
+#     HostName dev.example.com
+#     User devuser
+#     Port 22
+#     IdentityFile ~/.ssh/id_ed25519
+#     IdentitiesOnly yes
+#     ForwardAgent yes
+#     StrictHostKeyChecking yes
+
+# Production Server (maximum security)
+# Host prod.example.com
+#     HostName prod.example.com
+#     User produser
+#     Port 2222
+#     IdentityFile ~/.ssh/id_ed25519_prod
+#     IdentitiesOnly yes
+#     ForwardAgent no
+#     ForwardX11 no
+#     StrictHostKeyChecking yes
+#     PasswordAuthentication no
+
+# Jump Host / Bastion (security gateway)
+# Host bastion
+#     HostName bastion.example.com
+#     User bastionuser
+#     Port 22
+#     IdentityFile ~/.ssh/id_ed25519
+#     IdentitiesOnly yes
+#     ForwardAgent no
+#     StrictHostKeyChecking yes
+
+# Internal Server via Jump Host
+# Host internal
+#     HostName 10.0.1.100
+#     User internaluser
+#     ProxyJump bastion
+#     IdentityFile ~/.ssh/id_ed25519
+#     IdentitiesOnly yes
+#     StrictHostKeyChecking yes
+
+# GitHub (code hosting)
+# Host github.com
+#     HostName github.com
+#     User git
+#     IdentityFile ~/.ssh/id_ed25519_github
+#     IdentitiesOnly yes
+#     StrictHostKeyChecking yes

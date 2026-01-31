@@ -1,0 +1,70 @@
+---
+# Example Vaulted SSH Keys
+#
+# IMPORTANT: This is an EXAMPLE file showing the structure.
+# DO NOT use these example keys!
+#
+# To use this role with vaulted SSH keys:
+#
+# 1. Create your own vars file (e.g., vars/ssh_vault.yml)
+# 2. Add your actual SSH key content to it (see structure below)
+# 3. Encrypt it: ansible-vault encrypt vars/ssh_vault.yml
+# 4. Reference it in your playbook:
+#      vars_files:
+#        - vars/ssh_vault.yml
+# 5. Set ssh_deploy_from_vault: true in your playbook
+#
+# To create this file with your real keys:
+#
+#   cat > vars/ssh_vault.yml <<EOF
+#   ---
+#   ssh_private_key: |
+#     -----BEGIN OPENSSH PRIVATE KEY-----
+#     (paste your private key content here)
+#     -----END OPENSSH PRIVATE KEY-----
+#
+#   ssh_public_key: "ssh-ed25519 AAAA... user@host"
+#   EOF
+#
+#   ansible-vault encrypt vars/ssh_vault.yml
+#
+
+# ==============================================================================
+# Example structure (DO NOT USE THESE VALUES!)
+# ==============================================================================
+
+# Private key content (multi-line string)
+ssh_private_key: |
+  -----BEGIN OPENSSH PRIVATE KEY-----
+  EXAMPLE_PRIVATE_KEY_CONTENT_HERE
+  THIS_IS_NOT_A_REAL_KEY
+  DO_NOT_USE_THIS_EXAMPLE
+  -----END OPENSSH PRIVATE KEY-----
+
+# Public key content (single line string)
+ssh_public_key: "ssh-ed25519 EXAMPLE_PUBLIC_KEY_HERE user@example.com"
+
+# ==============================================================================
+# Optional: Multiple key pairs
+# ==============================================================================
+
+# If you need to manage multiple SSH keys, you can structure it like this:
+#
+# vault_ssh_keys:
+#   personal:
+#     private: |
+#       -----BEGIN OPENSSH PRIVATE KEY-----
+#       ...
+#       -----END OPENSSH PRIVATE KEY-----
+#     public: "ssh-ed25519 AAAA... personal@email.com"
+#
+#   work:
+#     private: |
+#       -----BEGIN OPENSSH PRIVATE KEY-----
+#       ...
+#       -----END OPENSSH PRIVATE KEY-----
+#     public: "ssh-ed25519 AAAA... work@company.com"
+#
+# Then in your playbook, reference the specific key:
+#   ssh_private_key_content: "{{ vault_ssh_keys.personal.private }}"
+#   ssh_public_key_content: "{{ vault_ssh_keys.personal.public }}"

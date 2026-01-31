@@ -1,23 +1,321 @@
 ---
+# SSH Role - Default Variables
+# Override these in your playbook, inventory, or vars/ssh.yml
 
-ssh_manage_config: true
-ssh_manage_config_force: false
-ssh_template_config:
-  - "{{ inventory_dir }}/templates/ssh.config.j2"
-  - "templates/ssh.config.j2"
+# ==============================================================================
+# SSH Directory Deployment
+# ==============================================================================
 
-ssh_manage_host_keys: true
-ssh_harden_security: true
+# Deploy entire .ssh directory from backup/files (CAUTION: bulk restore)
+ssh_deploy_full_directory: false
 
-ssh_config:
-  - host: "*"
-    args:
-      CanonicalizeHostname: "yes"
-      ServerAliveCountMax: "4"
-      ServerAliveInterval: "15"
-      User: "{{ ansible_facts['user_id'] }}"
+# ==============================================================================
+# SSH Key Management
+# ==============================================================================
 
-ssh_host_keys:
-  - "rsa"
-  - "ed25519"
-  - "ecdsa"
+# SSH key type (rsa, ed25519, ecdsa)
+ssh_key_type: "ed25519"
+ssh_key_size: 4096  # Only used for RSA keys
+
+# SSH key file locations
+ssh_key_private: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_{{ ssh_key_type }}"
+ssh_key_public: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_{{ ssh_key_type }}.pub"
+
+# Deploy from vaulted variables (loads from vars/ssh_vault.yml)
+ssh_deploy_from_vault: true
+ssh_private_key_content: "{{ ssh_private_key | default('') }}"
+ssh_public_key_content: "{{ ssh_public_key | default('') }}"
+
+# ==============================================================================
+# SSH Configuration
+# ==============================================================================
+
+# SSH config file location
+ssh_config_file: "{{ ansible_facts['env']['HOME'] }}/.ssh/config"
+
+# Deploy custom SSH config
+ssh_deploy_config: false
+
+# SSH config template (if ssh_deploy_config is true)
+# ssh_config_template: "ssh_config.j2"
+
+# ==============================================================================
+# SSH Directory Permissions
+# ==============================================================================
+
+ssh_dir: "{{ ansible_facts['env']['HOME'] }}/.ssh"
+ssh_dir_mode: "0700"
+ssh_private_key_mode: "0600"
+ssh_public_key_mode: "0644"
+ssh_config_mode: "0600"
+
+# ==============================================================================
+# SSH Backup & Vault Settings
+# ==============================================================================
+
+# Enable SSH backup functionality
+ssh_enable_backup: false
+
+# Backup directory
+ssh_backup_dir: "{{ ansible_facts['env']['HOME'] }}/.ssh_backup"
+ssh_backup_archive: "{{ ansible_facts['env']['HOME'] }}/.ssh_backup.tar.gz"
+
+# Encrypt backup with ansible-vault
+ssh_encrypt_backup: false
+
+# Vault password file location (if ssh_encrypt_backup is true)
+# ssh_vault_password_file: "{{ ansible_facts['env']['HOME'] }}/.ssh/ansible-vault-password"
+
+# ==============================================================================
+# SSH Known Hosts Management
+# ==============================================================================
+
+# Manage known_hosts file
+ssh_manage_known_hosts: false
+
+# Known hosts to add (list of hostnames/IPs)
+# ssh_known_hosts:
+#   - github.com
+#   - gitlab.com
+#   - bitbucket.org
+
+# ==============================================================================
+# SSH Agent Settings
+# ==============================================================================
+
+# Configure SSH agent in shell profile
+ssh_configure_agent: false
+
+# SSH agent socket location
+# ssh_agent_socket: "{{ ansible_facts['env']['HOME'] }}/.ssh/ssh-agent.sock"
+
+# ==============================================================================
+# Authorized Keys Management
+# ==============================================================================
+
+# Manage authorized_keys file
+ssh_manage_authorized_keys: false
+
+# List of public keys to add to authorized_keys
+# ssh_authorized_keys:
+#   - "ssh-ed25519 AAAAC3... user@host"
+#   - "ssh-rsa AAAAB3... another@host"
+
+# ==============================================================================
+# SSH Key Generation
+# ==============================================================================
+
+# Generate SSH key if it doesn't exist
+ssh_generate_key: false
+
+# Key comment (usually email)
+# ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
+
+# Passphrase for the key (leave empty for no passphrase)
+# SECURITY NOTE:
+#   - Empty passphrase = More convenient but less secure if key file is stolen
+#   - With passphrase = Additional security layer, protects against key theft
+#   - If setting a passphrase, this value MUST be vaulted for security
+# RECOMMENDATION: Use ssh-agent for convenience with passphrase-protected keys
+ssh_key_passphrase: ""
+
+# ==============================================================================
+# SSH Hardening Settings
+# ==============================================================================
+
+# Enable SSH hardening (disabled by default for safety)
+ssh_hardening_enabled: false
+
+# Client-side hardening (user's ~/.ssh/config)
+ssh_hardening_client_enabled: false
+ssh_hardening_client_template: "ssh_config_hardened.j2"
+
+# Server-side hardening (system's /etc/ssh/sshd_config)
+ssh_hardening_server_enabled: false
+ssh_hardening_server_template: "sshd_config_hardened.j2"
+
+# Ensure SSH server is running after hardening
+ssh_hardening_ensure_running: true
+
+# Remove weak key algorithms
+ssh_hardening_remove_weak_keys: false
+ssh_hardening_remove_dsa: true
+ssh_hardening_remove_ecdsa: false
+
+# Ensure strong host keys exist
+ssh_hardening_ensure_ed25519: true
+ssh_hardening_ensure_rsa: true
+ssh_hardening_rsa_key_size: 4096
+
+# Security policies
+ssh_hardening_policies_enabled: false
+ssh_hardening_configure_pam: false
+ssh_hardening_configure_fail2ban: false
+
+# Banner
+ssh_hardening_enable_banner: false
+# ssh_hardening_banner_content: "Authorized access only. All activity is monitored and logged."
+ssh_hardening_banner_file: "/etc/ssh/banner"
+
+# Connection limits and rate limiting
+ssh_hardening_connection_limits: false
+
+# Configuration audit
+ssh_hardening_audit_enabled: false
+
+# ==============================================================================
+# SSH Hardening - Client Configuration Defaults
+# ==============================================================================
+
+# Cryptographic algorithms (client)
+ssh_hardening_kex_algorithms: "curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256"
+ssh_hardening_ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+ssh_hardening_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256"
+ssh_hardening_pubkey_types: "ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com"
+ssh_hardening_hostkey_algorithms: "ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com"
+
+# Authentication preferences (client)
+ssh_hardening_preferred_auth: "publickey,keyboard-interactive,password"
+ssh_hardening_identities_only: "yes"
+
+# Host verification (client)
+ssh_hardening_strict_host_checking: "ask"
+ssh_hardening_hash_known_hosts: "yes"
+ssh_hardening_check_host_ip: "yes"
+
+# Connection settings (client)
+ssh_hardening_server_alive_interval: 60
+ssh_hardening_server_alive_count: 3
+ssh_hardening_connect_timeout: 30
+
+# Connection multiplexing (client)
+ssh_hardening_control_master: "auto"
+ssh_hardening_control_path: "~/.ssh/sockets/%r@%h-%p"
+ssh_hardening_control_persist: 600
+
+# Security features (client)
+ssh_hardening_forward_agent: "no"
+ssh_hardening_forward_x11: "no"
+ssh_hardening_forward_x11_trusted: "no"
+ssh_hardening_gssapi_auth: "no"
+ssh_hardening_hostbased_auth: "no"
+ssh_hardening_compression: "no"
+ssh_hardening_password_auth: "yes"
+ssh_hardening_challenge_response: "yes"
+
+# Logging (client)
+ssh_hardening_log_level: "INFO"
+ssh_hardening_escape_char: "~"
+ssh_hardening_request_tty: "auto"
+
+# ==============================================================================
+# SSH Hardening - Server Configuration Defaults
+# ==============================================================================
+
+# Network settings (server)
+ssh_hardening_port: 22
+ssh_hardening_address_family: "any"
+# ssh_hardening_listen_addresses:
+#   - 0.0.0.0
+#   - ::
+
+# Cryptographic algorithms (server)
+ssh_hardening_server_kex: "curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256"
+ssh_hardening_server_ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+ssh_hardening_server_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256"
+ssh_hardening_server_hostkey_algs: "ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com"
+ssh_hardening_server_pubkey_algs: "ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com"
+
+# Authentication (server)
+ssh_hardening_permit_root_login: "prohibit-password"
+ssh_hardening_pubkey_authentication: "yes"
+ssh_hardening_authorized_keys_file: ".ssh/authorized_keys"
+ssh_hardening_server_password_auth: "yes"
+ssh_hardening_permit_empty_passwords: "no"
+ssh_hardening_kbd_interactive: "no"
+ssh_hardening_use_pam: "yes"
+ssh_hardening_server_gssapi: "no"
+ssh_hardening_server_hostbased: "no"
+ssh_hardening_ignore_rhosts: "yes"
+
+# Session limits (server)
+ssh_hardening_login_grace_time: 60
+ssh_hardening_max_auth_tries: 3
+ssh_hardening_max_startups: "10:30:60"
+ssh_hardening_max_sessions: 10
+ssh_hardening_client_alive_interval: 300
+ssh_hardening_client_alive_count_max: 2
+ssh_hardening_tcp_keepalive: "yes"
+
+# Access control (server)
+# ssh_hardening_allow_users: []
+# ssh_hardening_deny_users: []
+# ssh_hardening_allow_groups: []
+# ssh_hardening_deny_groups: []
+
+# Forwarding and tunneling (server)
+ssh_hardening_x11_forwarding: "no"
+ssh_hardening_x11_display_offset: 10
+ssh_hardening_allow_tcp_forwarding: "no"
+ssh_hardening_allow_agent_forwarding: "no"
+ssh_hardening_gateway_ports: "no"
+ssh_hardening_permit_tunnel: "no"
+ssh_hardening_allow_stream_local_forwarding: "no"
+
+# Security and logging (server)
+ssh_hardening_syslog_facility: "AUTH"
+ssh_hardening_server_log_level: "VERBOSE"
+ssh_hardening_strict_modes: "yes"
+ssh_hardening_use_privilege_separation: "sandbox"
+ssh_hardening_server_compression: "no"
+ssh_hardening_print_motd: "no"
+ssh_hardening_print_last_log: "yes"
+ssh_hardening_permit_user_env: "no"
+# ssh_hardening_accept_env:
+#   - LANG
+#   - LC_*
+
+# SFTP (server)
+ssh_hardening_enable_sftp: true
+ssh_hardening_sftp_server: "/usr/lib/ssh/sftp-server"
+ssh_hardening_chroot_sftp: false
+# ssh_hardening_sftp_group: "sftponly"
+# ssh_hardening_sftp_chroot_dir: "/home/%u"
+
+# Additional security (server)
+ssh_hardening_use_dns: "no"
+ssh_hardening_permit_user_rc: "no"
+ssh_hardening_disable_forwarding: "no"
+ssh_hardening_expose_auth_info: "no"
+ssh_hardening_fingerprint_hash: "sha256"
+
+# Performance tuning (server)
+ssh_hardening_rekey_limit_data: "1G"
+ssh_hardening_rekey_limit_time: "1h"
+
+# ==============================================================================
+# SSH Hardening - Fail2Ban Configuration
+# ==============================================================================
+
+ssh_hardening_fail2ban_enabled: true
+# Note: logpath is ignored when backend is 'systemd' (Arch Linux, modern Debian/Ubuntu)
+# systemd backend reads from journald directly
+ssh_hardening_fail2ban_logpath: "/var/log/auth.log"
+ssh_hardening_fail2ban_maxretry: 3
+ssh_hardening_fail2ban_findtime: 600
+ssh_hardening_fail2ban_bantime: 3600
+ssh_hardening_fail2ban_backend: "systemd"
+
+# ==============================================================================
+# SSH Hardening - Systemd Socket Configuration
+# ==============================================================================
+
+ssh_hardening_socket_max_connections: 64
+ssh_hardening_socket_max_per_source: 10
+ssh_hardening_socket_backlog: 128
+ssh_hardening_socket_keepalive: "yes"
+ssh_hardening_socket_keepalive_time: 60
+ssh_hardening_socket_keepalive_interval: 10
+ssh_hardening_socket_keepalive_probes: 6
+ssh_hardening_socket_freebind: "no"
+ssh_hardening_socket_transparent: "no"

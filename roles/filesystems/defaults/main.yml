@@ -1,0 +1,31 @@
+---
+# Default variables for filesystems role
+# Override these in your playbook, inventory, or vars/filesystems.yml
+
+# ==============================================================================
+# Filesystem Management
+# ==============================================================================
+
+# Manage filesystem mounts
+filesystems_manage_mounts: true
+
+# List of filesystem mounts to manage
+# data_mounts:
+#   - path: /mnt/data
+#     uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+#     fstype: ext4
+#     opts: defaults
+#     state: mounted  # mounted, present, absent, unmounted
+#     dump: 0
+#     passno: 2
+
+# Create mount point directories if they don't exist
+filesystems_create_mount_points: true
+
+# Default permissions for mount point directories
+filesystems_mount_point_mode: "0755"
+filesystems_mount_point_owner: root
+filesystems_mount_point_group: root
+
+# Backup fstab before making changes
+filesystems_backup_fstab: true

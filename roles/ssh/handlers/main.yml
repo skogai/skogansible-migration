@@ -1,0 +1,53 @@
+---
+# SSH Role - Handlers
+
+# ==============================================================================
+# SSH Server Handlers
+# ==============================================================================
+
+- name: restart sshd
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted
+  become: true
+  listen: restart sshd
+
+- name: reload sshd
+  ansible.builtin.systemd:
+    name: sshd
+    state: reloaded
+  become: true
+  listen: reload sshd
+
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+  listen: reload systemd
+
+# ==============================================================================
+# Fail2Ban Handlers
+# ==============================================================================
+
+- name: restart fail2ban
+  ansible.builtin.systemd:
+    name: fail2ban
+    state: restarted
+  become: true
+  listen: restart fail2ban
+
+- name: reload fail2ban
+  ansible.builtin.systemd:
+    name: fail2ban
+    state: reloaded
+  become: true
+  listen: reload fail2ban
+
+# ==============================================================================
+# SSH Client Handlers (informational)
+# ==============================================================================
+
+- name: reload ssh config
+  ansible.builtin.debug:
+    msg: "SSH config reloaded (no action needed, changes take effect immediately)"
+  listen: reload ssh config

@@ -1,0 +1,92 @@
+# SSH Config - Managed by Ansible
+
+# Global SSH settings
+Host *
+    # Keep connections alive
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+    # Connection sharing for speed
+    # ControlMaster auto
+    # ControlPath ~/.ssh/sockets/%r@%h-%p
+    # ControlPersist 600
+
+    # Security settings
+    HashKnownHosts yes
+    UserKnownHostsFile ~/.ssh/known_hosts
+
+    # Use modern key types
+    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/id_rsa
+
+# ========================================
+# Example host configurations
+# Uncomment and customize as needed
+# ========================================
+
+# GitHub
+# Host github.com
+#     HostName github.com
+#     User git
+#     IdentityFile ~/.ssh/id_ed25519
+#     IdentitiesOnly yes
+
+# GitLab
+# Host gitlab.com
+#     HostName gitlab.com
+#     User git
+#     IdentityFile ~/.ssh/id_ed25519
+#     IdentitiesOnly yes
+
+# Personal Server
+# Host myserver
+#     HostName example.com
+#     User {{ ansible_facts['user_id'] }}
+#     Port 22
+#     IdentityFile ~/.ssh/id_ed25519
+#     ForwardAgent yes
+
+# Jump Host / Bastion
+# Host bastion
+#     HostName bastion.example.com
+#     User {{ ansible_facts['user_id'] }}
+#     IdentityFile ~/.ssh/id_ed25519
+#
+# Host internal-server
+#     HostName 10.0.1.100
+#     User {{ ansible_facts['user_id'] }}
+#     ProxyJump bastion
+#     IdentityFile ~/.ssh/id_ed25519
+
+# ========================================
+# Add your custom host configurations here
+# ========================================
+
+{% if ssh_custom_hosts is defined %}
+{% for host in ssh_custom_hosts %}
+Host {{ host.name }}
+    HostName {{ host.hostname }}
+{% if host.user is defined %}
+    User {{ host.user }}
+{% endif %}
+{% if host.port is defined %}
+    Port {{ host.port }}
+{% endif %}
+{% if host.identity_file is defined %}
+    IdentityFile {{ host.identity_file }}
+{% endif %}
+{% if host.identities_only is defined %}
+    IdentitiesOnly {{ host.identities_only | ternary('yes', 'no') }}
+{% endif %}
+{% if host.forward_agent is defined %}
+    ForwardAgent {{ host.forward_agent | ternary('yes', 'no') }}
+{% endif %}
+{% if host.proxy_jump is defined %}
+    ProxyJump {{ host.proxy_jump }}
+{% endif %}
+{% if host.proxy_command is defined %}
+    ProxyCommand {{ host.proxy_command }}
+{% endif %}
+
+{% endfor %}
+{% endif %}

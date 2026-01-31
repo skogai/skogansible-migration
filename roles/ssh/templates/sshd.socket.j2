@@ -1,0 +1,29 @@
+# SSH Socket Unit Override
+# Managed by Ansible - Generated: {{ ansible_facts['date_time']['iso8601'] }}
+#
+# This file configures systemd socket activation for SSH
+# with connection rate limiting
+
+[Socket]
+# Listen on IPv4 and IPv6
+ListenStream={{ ssh_hardening_port | default('22') }}
+
+# Rate limiting
+MaxConnections={{ ssh_hardening_socket_max_connections | default('64') }}
+MaxConnectionsPerSource={{ ssh_hardening_socket_max_per_source | default('10') }}
+
+# Connection backlog
+Backlog={{ ssh_hardening_socket_backlog | default('128') }}
+
+# Keep-alive settings
+KeepAlive={{ ssh_hardening_socket_keepalive | default('yes') }}
+KeepAliveTimeSec={{ ssh_hardening_socket_keepalive_time | default('60') }}
+KeepAliveIntervalSec={{ ssh_hardening_socket_keepalive_interval | default('10') }}
+KeepAliveProbes={{ ssh_hardening_socket_keepalive_probes | default('6') }}
+
+# Accept connections immediately
+Accept=no
+
+# Socket options
+FreeBind={{ ssh_hardening_socket_freebind | default('no') }}
+Transparent={{ ssh_hardening_socket_transparent | default('no') }}

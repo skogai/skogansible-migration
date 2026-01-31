@@ -1,0 +1,13 @@
+---
+# Cloudflared Role - Handlers
+
+- name: Reload systemd
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart cloudflared
+  become: true
+  ansible.builtin.systemd:
+    name: cloudflared
+    state: restarted

@@ -1,0 +1,87 @@
+---
+# Filesystems Role - Main Tasks Orchestrator
+
+# ==============================================================================
+# Validate UUIDs
+# ==============================================================================
+
+- name: "Filesystems | Verify UUIDs exist on system"
+  become: true
+  ansible.builtin.command: blkid -U {{ item.uuid }}
+  register: blkid_check
+  failed_when: false
+  changed_when: false
+  loop: "{{ data_mounts }}"
+  loop_control:
+    label: "{{ item.path }} (UUID: {{ item.uuid }})"
+  when:
+    - data_mounts is defined
+    - item.state is defined
+    - item.state in ['mounted', 'present']
+  tags:
+    - filesystems
+    - filesystems-validate
+
+- name: "Filesystems | Report missing UUIDs"
+  ansible.builtin.fail:
+    msg: "UUID {{ item.item.uuid }} for {{ item.item.path }} not found on system. Check 'sudo blkid' output."
+  loop: "{{ blkid_check.results }}"
+  loop_control:
+    label: "{{ item.item.path }}"
+  when:
+    - blkid_check is defined
+    - item.rc is defined
+    - item.rc != 0
+  tags:
+    - filesystems
+    - filesystems-validate
+
+# ==============================================================================
+# Create Mount Points
+# ==============================================================================
+
+- name: "Filesystems | Ensure mount point directories exist"
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: "{{ filesystems_mount_point_mode }}"
+    owner: "{{ filesystems_mount_point_owner }}"
+    group: "{{ filesystems_mount_point_group }}"
+  loop: "{{ data_mounts }}"
+  loop_control:
+    label: "{{ item.path }}"
+  when:
+    - filesystems_create_mount_points
+    - data_mounts is defined
+    - item.state is defined
+    - item.state in ['mounted', 'present']
+  tags:
+    - filesystems
+    - filesystems-mount-points
+
+# ==============================================================================
+# Manage fstab Entries and Mount Filesystems
+# ==============================================================================
+
+- name: "Filesystems | Manage fstab entries and mount filesystems"
+  become: true
+  ansible.posix.mount:
+    path: "{{ item.path }}"
+    src: "UUID={{ item.uuid }}"
+    fstype: "{{ item.fstype }}"
+    opts: "{{ item.opts | default('defaults') }}"
+    state: "{{ item.state | default('mounted') }}"
+    dump: "{{ item.dump | default(0) }}"
+    passno: "{{ item.passno | default(2) }}"
+    backup: "{{ filesystems_backup_fstab }}"
+  loop: "{{ data_mounts }}"
+  loop_control:
+    label: "{{ item.path }} ({{ item.fstype }})"
+  when:
+    - filesystems_manage_mounts
+    - data_mounts is defined
+  tags:
+    - filesystems
+    - filesystems-mount
+    - filesystems-fstab

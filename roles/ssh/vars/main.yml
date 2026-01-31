@@ -1,0 +1,10 @@
+---
+# SSH Role - Variables
+# Your personal standard configuration for this role
+# These values apply to YOUR deployments (not sane defaults for anyone)
+
+# Reference shared variables from ./vars/main.yml
+ssh_key_comment: "{{ user_email }}"  # Use global user email as key comment
+
+# Your standard feature flag preferences (only set what you ALWAYS want)
+# Deployment-specific settings go in ../../vars/ssh.yml instead

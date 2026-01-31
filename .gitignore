@@ -1,17 +1,45 @@
-.claude/data/sessions
-logs
-ansible_facts.yml
+backup/todo
+/tmp/*
+
+# Unencrypted vault files (only commit .template or encrypted versions)
+vars/*_vault.yml
+!vars/*_vault.yml.template
+
+# Semaphore application data (contains secrets and runtime data)
+semaphore/config/
+semaphore/semaphore/
+
+# SSH test examples
+roles/ssh/files/test_examples/
+
+# Sensitive files - credentials and secrets
+*.key
+*.pem
+*.p12
+*.pfx
 .env
-.aider*
-.collections/ansible_collections
-galaxy_cache
-galaxy_token
-.cache
-.ansible/
-# Molecule
-.molecule/
-__pycache__/
-*.pyc
-tmp/molecule.8Jg-.default
-collections/ansible_collections
-mcp/node_modules
+.env.local
+*.secret
+*_vault.yml.decrypted
+
+# Password files
+*password*
+*secret*
+!roles/ssh/vars/example_vault.yml
+!*README*
+!*example*
+
+# Semaphore sensitive data
+semaphore/.env
+semaphore/data/
+semaphore/config/
+
+# Backup files that may contain sensitive data
+*.backup
+*.bak
+*~
+
+# Worktrees
+.worktrees/*
+!.worktrees/.gitkeep
+.worktrees/
