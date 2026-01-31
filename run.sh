@@ -1,11 +1,31 @@
 #!/usr/bin/env bash
-# Run ansible-playbook with environment variables from .env
-# Usage: ./run.sh [playbook] [ansible-playbook options]
-# Example: ./run.sh playbooks/all.yml
-# Example: ./run.sh playbooks/site.yml --tags dotfiles
-# Example: ./run.sh playbooks/all.yml --check
+set -e
 
-PLAYBOOK="${1:-playbooks/all.yml}"
-shift || true  # Remove first arg if present, continue if not
+# Function to check file permissions
+check_password_file_permissions() {
+  local file="$1"
+  if [ -f "$file" ]; then
+    local perms
+    perms=$(stat -c "%a" "$file" 2>/dev/null || stat -f "%A" "$file" 2>/dev/null)
+    if [ "$perms" != "700" ]; then
+      echo "Warning: $file has permissions $perms (should be 700)"
+      echo "Fixing permissions..."
+      chmod 700 "$file"
+    fi
+  fi
+}
 
-ansible-playbook "$PLAYBOOK" "$@"
+# Determine which playbook to run
+ANSIBLE_PLAYBOOK="default.yml"
+
+# If first argument is a .yml file, use it as the playbook
+if [[ "$1" == *.yml ]]; then
+  ANSIBLE_PLAYBOOK="$1"
+  shift # Remove playbook from arguments
+fi
+
+# Run playbook with remaining arguments
+ansible-playbook "./playbooks/$ANSIBLE_PLAYBOOK" -i .inventory \
+  --vault-password-file=$ANSIBLE_VAULT_PASSWORD_FILE \
+  --become-password-file=$ANSIBLE_BECOME_PASSWORD_FILE \
+  "$@"

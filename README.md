@@ -1,113 +1,109 @@
-# GitHub Flow Template
+# Ansible Arch Linux Setup
 
-A template repository for Python projects using GitHub Flow with Claude Code integration.
+**Repository:** SkogAI/skogansible (active/canonical ansible repository)
+
+Automated Arch Linux system configuration using Ansible with comprehensive role-based management.
 
 ## Features
 
-- **Claude Code Integration** - AI-powered workflow automation via @claude mentions
-- **Auto-Merge** - Automatically merge approved PRs when CI passes
-- **Python + uv** - Fast dependency management
-- **Supabase Ready** - Cloud and self-hosted support
-- **CLI Tools** - Command-line tools for working with Claude
-- **Centralized Workflows** - Reusable workflows from SkogAI/.github
+- **Package Management** - Official repos (61 packages) + AUR packages (7 packages) via yay
+- **SSH Configuration** - Key deployment, config templating, known_hosts management
+- **Git Configuration** - Complete git setup with aliases, hooks, signing, LFS support
+- **Chezmoi Integration** - Machine-specific dotfiles templating and deployment
+- **Filesystem Mounts** - UUID-based filesystem mount management with fstab integration
+- **Security** - Dedicated AUR builder user, vault-encrypted secrets
+- **Documentation** - Primitives-based reference architecture and system inventory
 
 ## Quick Start
 
-### Clone and Setup
+**Bootstrap (first time):**
 
 ```bash
-git clone <your-repo-url>
-cd github-flow
-
-# Install dependencies
-uv sync --all-extras --dev
-
-# Set up pre-commit hooks
-uv run pre-commit install
+./bootstrap.sh    # Creates venv, installs Ansible + collections
 ```
 
-### Using Claude
+**Run playbook:**
 
-Trigger Claude Code by mentioning @claude in:
-- Issues
-- Pull requests
-- Comments on issues/PRs
-
-Claude will create branches, implement changes, and respond automatically.
-
-## CLI Tools
-
-This repository includes tools for working with Claude. See [scripts/README.md](scripts/README.md) for details.
-
-Quick reference:
 ```bash
-# Create issue with @claude
-./scripts/claude-issue "fix the auth bug"
-
-# Comment on existing issue
-./scripts/claude-on-issue 123 "analyze this bug"
-
-# Create PR with @claude
-./scripts/claude-pr "review this refactoring"
-
-# Comment on existing PR
-./scripts/claude-on-pr 42 "check edge cases"
-
-# View Claude activity
-./scripts/claude-status
-
-# Auto-merge approved PRs
-./scripts/auto-merge
+./run.sh                      # Run all roles
+./run.sh --tags packages      # Only packages
+./run.sh --tags ssh           # Only SSH setup
+./run.sh --tags git           # Only Git config
+./run.sh --tags chezmoi       # Only Chezmoi
+./run.sh --tags filesystems   # Only filesystem mounts
+./run.sh --check              # Dry-run mode
 ```
+
+## Project Structure
+
+```
+SkogAI/skogansible/
+├── playbooks/                # Ansible playbooks
+│   ├── default.yml           # Main playbook (5 roles)
+│   ├── workstation.yml       # Workstation setup
+│   └── ...                   # Additional playbooks
+├── bootstrap.sh              # Initial setup script
+├── run.sh                    # Playbook execution wrapper
+├── roles/
+│   ├── packages/             # Package management (pacman + AUR)
+│   ├── ssh/                  # SSH configuration
+│   ├── git/                  # Git configuration
+│   ├── chezmoi/              # Dotfiles management
+│   └── filesystems/          # Filesystem mounts management
+├── vars/                     # Role-specific configuration
+│   ├── packages.yml          # Package lists
+│   ├── ssh.yml               # SSH settings
+│   ├── git.yml               # Git settings
+│   ├── chezmoi.yml           # Chezmoi settings
+│   ├── filesystems.yml       # Filesystem mount definitions
+│   └── user.yml              # User variables
+└── docs/                     # Reference documentation
+    ├── README.md             # Documentation index
+    ├── primitives/           # Core Ansible patterns
+    │   ├── ansible-core.md
+    │   └── system-inventory-by-primitives.md
+    └── repos/                # Historical repository documentation
+        └── CLAUDE.md         # Consolidation reference
+```
+
+## Prerequisites
+
+- Arch Linux system
+- `uv` (Python package manager)
+- `skogcli` (environment variable management via `.envrc`)
+- `direnv` (optional, for automatic environment activation)
+
+## Configuration
+
+All role-specific configuration is in `vars/` directory:
+
+- **packages.yml** - Customize package lists (official + AUR)
+- **ssh.yml** - Enable/disable SSH features (keys, config, known_hosts)
+- **git.yml** - Configure git settings (user, aliases, hooks, signing)
+- **chezmoi.yml** - Machine profile settings (type, WM, laptop mode)
+- **filesystems.yml** - Define filesystem mounts (UUID, path, fstype, options)
+
+Each role has comprehensive documentation in its `README.md` file.
 
 ## Documentation
 
-- [CLAUDE.md](CLAUDE.md) - Instructions for Claude Code sessions
-- [docs/workflows.md](docs/workflows.md) - Technical workflow documentation
-- [scripts/README.md](scripts/README.md) - CLI tools documentation
+- **CLAUDE.md** - Complete project documentation (detailed usage, configuration, all features)
+- **roles/*/README.md** - Role-specific documentation with examples
+- **docs/README.md** - Documentation index and navigation
+- **docs/primitives/** - Core Ansible patterns and system inventory
+- **docs/repos/** - Historical ansible repository documentation (7 repos, 1,275+ tasks)
 
-## How It Works
+## Historical Context
 
-### Claude Workflow
+This is the main active ansible repository for SkogAI. Historical documentation from 7 previous ansible repository iterations (ansible-base, dotfile-ansible, setup, etc.) is preserved in `docs/repos/` for consolidation and pattern reference.
 
-1. Mention @claude in an issue, PR, or comment
-2. `.github/workflows/claude.yml` triggers
-3. Calls centralized workflow from `SkogAI/.github`
-4. Claude Code executes the task
-5. Creates branch `claude/issue-N-YYYYMMDD-HHMM` if needed
-6. Posts results back to the issue/PR
+## Repository Identity
 
-### Auto-Merge
+- **Active Repository:** SkogAI/skogansible
+- **Purpose:** Main ansible automation for Arch Linux system configuration
+- **Approach:** Primitives-based role architecture with comprehensive documentation
+- **Status:** 5 roles implemented (packages, ssh, git, chezmoi, filesystems), system expansion roadmap documented
 
-The repository includes an auto-merge workflow that keeps your development moving:
+---
 
-1. **Automatic Detection** - Runs when PRs are reviewed or CI completes
-2. **Smart Checks** - Verifies:
-   - ✅ PR has been approved by reviewers
-   - ✅ All CI checks pass
-   - ✅ No merge conflicts exist
-3. **Automatic Merge** - Merges approved PRs immediately using squash merge
-4. **Clean Up** - Automatically deletes merged branches
-
-**Benefits:**
-- No more idle PRs waiting for manual merge
-- Reduced context switching for developers
-- Faster delivery of approved changes
-- Automatic cleanup of merged branches
-
-See `.github/workflows/auto-merge.yml` for the workflow configuration.
-
-## Repository Structure
-
-```
-.
-├── .github/workflows/    # GitHub Actions workflows
-├── docs/                 # Documentation
-├── scripts/              # CLI tools for Claude integration
-├── CLAUDE.md             # Instructions for Claude Code
-└── README.md             # This file
-```
-
-## License
-
-MIT
+For comprehensive documentation, configuration details, and usage examples, see **CLAUDE.md**.
