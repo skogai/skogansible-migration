@@ -1,0 +1,31 @@
+---
+# Main playbook - runs ALL roles for complete system configuration
+- name: Configure Arch Linux system (complete)
+  hosts: all
+  connection: local
+
+  vars_files:
+    - ../vars/main.yml # Shared variables
+    - ../vars/packages.yml # Package lists
+    - ../vars/ssh.yml # SSH configuration
+    - ../vars/ssh_vault.yml # Encrypted SSH keys
+    - ../vars/user.yml # User variables
+    - ../vars/git.yml # Git configuration
+    - ../vars/chezmoi.yml # Chezmoi configuration
+    - ../vars/zsh.yml # Zsh configuration
+
+  roles:
+    - role: packages
+      tags: [packages, install]
+
+    - role: ssh
+      tags: [ssh, config]
+
+    # - role: git
+    #   tags: [git, vcs]
+
+    # - role: chezmoi
+    #   tags: [chezmoi, dotfiles]
+
+    # - role: zsh
+    #   tags: [zsh, shell]
