@@ -1,0 +1,33 @@
+---
+# <role> Role - Handlers
+# Handlers are triggered by 'notify' in tasks
+# [@skogix:most roles dont need handlers - only use if you have actual service/daemon restarts]
+
+# Example: Restart systemd service after config change
+# - name: Restart <role> service
+#   become: true
+#   ansible.builtin.systemd:
+#     name: <role>
+#     state: restarted
+#   listen: restart <role>
+
+# Example: Reload systemd daemon after service file change
+# - name: Reload systemd daemon
+#   become: true
+#   ansible.builtin.systemd:
+#     daemon_reload: true
+#   listen: reload systemd
+
+# Example: Reload nginx after config change
+# - name: Reload nginx
+#   become: true
+#   ansible.builtin.systemd:
+#     name: nginx
+#     state: reloaded
+#   listen: reload nginx
+
+# Example: Simple notification (most common for config-only roles)
+# - name: Notify config updated
+#   ansible.builtin.debug:
+#     msg: "<role> configuration updated. Changes effective immediately."
+#   listen: config updated

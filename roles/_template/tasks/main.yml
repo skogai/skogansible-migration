@@ -1,0 +1,32 @@
+---
+# <role> Role - Main Tasks
+
+# ==============================================================================
+# Installation
+# ==============================================================================
+
+- name: "<role> | Ensure <role> is installed"
+  become: true
+  ansible.builtin.package:
+    name: "{{ <role>_package_name }}"
+    state: present
+  when: <role>_install
+  tags: [<role>, <role>-install]
+
+# ==============================================================================
+# Configuration
+# ==============================================================================
+
+- name: "<role> | Deploy configuration"
+  ansible.builtin.include_tasks: configure.yml
+  when: <role>_deploy_config
+  tags: [<role>, <role>-config]
+
+# ==============================================================================
+# Features
+# ==============================================================================
+
+- name: "<role> | Enable <feature-x>"
+  ansible.builtin.include_tasks: <feature-x>.yml
+  when: <role>_enable_<feature-x>
+  tags: [<role>, <role>-<feature-x>]
