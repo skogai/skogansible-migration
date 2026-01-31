@@ -1,0 +1,5 @@
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+export PATH="$HOME/.local/share/pnpm:$PATH"
+export PATH="$HOME/.opencode/bin:$PATH"

@@ -1,0 +1,130 @@
+---
+# SSH Role Configuration - Granular Approach
+# Each SSH component managed separately for fine control
+
+# ==============================================================================
+# SSH Directory Deployment (Drop-and-Forget Files)
+# ==============================================================================
+
+# Deploy entire .ssh directory from files/ (encrypted files approach)
+ssh_deploy_full_directory: true
+
+# ==============================================================================
+# SSH Key Deployment (Vault Variables)
+# ==============================================================================
+
+# Deploy SSH keys from vault variables (all types: ed25519, rsa, ecdsa)
+ssh_deploy_from_vault: true
+
+# Vault variables used:
+#   - ssh_private_key_ed25519 / ssh_public_key_ed25519
+#   - ssh_private_key_rsa / ssh_public_key_rsa
+#   - ssh_private_key_ecdsa / ssh_public_key_ecdsa
+# Each key type deploys only if variable is defined in vars/ssh_vault.yml
+
+# ==============================================================================
+# SSH Configuration File
+# ==============================================================================
+
+# Deploy custom SSH config from template
+ssh_deploy_config: true
+ssh_config_template: "ssh_config.j2"
+
+# Custom hosts for SSH config
+ssh_custom_hosts:
+  - name: soft
+    hostname: git.skogix.se
+    identity_file: ~/.ssh/id_ed25519
+
+  - name: aldervall
+    hostname: soft-serve
+    user: root
+    port: 22
+    identity_file: ~/.ssh/id_ed25519
+    identities_only: yes
+
+  - name: ssh.skogai.se
+    hostname: ssh.skogai.se
+    proxy_command: /usr/bin/cloudflared access ssh --hostname %h
+
+# ==============================================================================
+# Known Hosts Management
+# ==============================================================================
+
+# Manage known_hosts file
+ssh_manage_known_hosts: true
+
+# Known hosts to add
+ssh_known_hosts:
+  - skogai.se
+
+# ==============================================================================
+# Authorized Keys Management
+# ==============================================================================
+
+# Manage authorized_keys file (for incoming SSH access)
+ssh_manage_authorized_keys: false
+
+# List of public keys to add to authorized_keys
+# ssh_authorized_keys:
+#   - "ssh-ed25519 AAAAC3... user@laptop"
+#   - "ssh-rsa AAAAB3... user@desktop"
+
+# ==============================================================================
+# SSH Key Generation
+# ==============================================================================
+
+# Generate new SSH key if it doesn't exist
+ssh_generate_key: true
+
+# Key comment (usually email)
+# ssh_key_comment: "your.email@example.com"
+
+# ==============================================================================
+# Backup
+# ==============================================================================
+
+# Enable SSH backup functionality (creates ~/.ssh_backup/)
+ssh_enable_backup: false
+
+# ==============================================================================
+# SSH Hardening (Optional - Security Best Practices)
+# ==============================================================================
+
+# Enable SSH hardening (DISABLED by default for safety)
+# This applies security best practices to SSH configuration
+ssh_hardening_enabled: false
+
+# Client-side hardening (hardens your ~/.ssh/config)
+# Uses modern crypto algorithms and secure connection settings
+ssh_hardening_client_enabled: false
+
+# Server-side hardening (hardens /etc/ssh/sshd_config)
+# WARNING: This requires sudo/root and restarts SSH daemon
+# Test carefully before enabling on production systems
+ssh_hardening_server_enabled: false
+
+# Remove weak cryptographic algorithms
+# Removes DSA keys (always recommended), optionally ECDSA
+ssh_hardening_remove_weak_keys: false
+
+# Enable security policies (fail2ban, PAM configuration)
+ssh_hardening_policies_enabled: false
+ssh_hardening_configure_fail2ban: false
+
+# Enable configuration audit (validates SSH config)
+ssh_hardening_audit_enabled: false
+
+# Example: Enable client-side hardening only
+# ssh_hardening_enabled: true
+# ssh_hardening_client_enabled: true
+
+# Example: Enable full hardening (client + server)
+# ssh_hardening_enabled: true
+# ssh_hardening_client_enabled: true
+# ssh_hardening_server_enabled: true
+# ssh_hardening_remove_weak_keys: true
+# ssh_hardening_audit_enabled: true
+
+# Note: See roles/ssh/defaults/main.yml for all hardening options
+# Note: See roles/ssh/README.md for detailed hardening documentation

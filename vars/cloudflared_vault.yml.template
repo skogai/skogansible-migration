@@ -1,0 +1,15 @@
+---
+# Cloudflared Vault Variables
+# IMPORTANT: This file should be encrypted with ansible-vault
+
+# ==============================================================================
+# Tunnel Token
+# ==============================================================================
+# To encrypt this file after adding your token, run:
+#   ansible-vault encrypt vars/cloudflared_vault.yml
+#
+# To edit the encrypted file later, run:
+#   ansible-vault edit vars/cloudflared_vault.yml
+
+# Replace YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE with your actual tunnel token
+# cloudflared_tunnel_token: "YOUR_CLOUDFLARE_TUNNEL_TOKEN_HERE"

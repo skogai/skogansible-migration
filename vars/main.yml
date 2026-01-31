@@ -1,0 +1,23 @@
+---
+# Shared Variables - Source of Truth
+# Variables used across MULTIPLE roles
+# This is the central place for cross-role configuration
+
+# User identity (used by git, ssh, chezmoi, etc.)
+user_name: "skogix"
+real_name: "Emil Skogsund"
+user_email: "emil@skogsund.se"
+
+# Common paths (used by multiple roles)
+project_root: "{{ ansible_user_dir }}/dev"
+config_root: "{{ ansible_user_dir }}/.config"
+data_root: "{{ ansible_user_dir }}/.local/share"
+
+# System-level settings (used by multiple roles)
+default_shell: "/bin/zsh"
+default_editor: "nvim"
+default_pager: "bat"
+
+# Machine-specific identifiers (used by chezmoi, ssh, etc.)
+machine_hostname: "{{ inventory_hostname }}"
+machine_type: "workstation" # workstation, laptop, server

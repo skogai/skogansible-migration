@@ -1,58 +1,112 @@
 ---
-# Package lists
+# Packages to install from official repos
 packages:
-  - git
-aur_packages:
-  - nvm
-  - rcm
-  - llm
-  - curl
-  - direnv
-  - fzf
-  - 7zip
-  - lazygit
-  - tailscale
-  - xclip
-  - zsh
-  - atuin
+  - ansible
+  - ansible-core
+  - base
+  - base-devel
   - bat
-  - bitwarden-cli
-  - btop
-  - cloc
-  - diff-so-fancy
-  - difftastic
-  - eza
-  - fd
+  - bluez
+  - bluez-utils
+  - byobu
+  - cloudflared
+  - direnv
+  - dkms
+  - dmenu
+  # - docker
+  # - docker-buildx
+  # - docker-compose
+  # - dotnet-host
+  # - dotnet-runtime
+  # - dotnet-sdk
+  # - dotnet-source-built-artifacts
+  - dunst
+  - feh
+  - firefox
   - fzf
-  - gdu
-  - gh
-  - git-delta
-  - glow
-  - graphviz
-  - jless
-  - jnv
-  - jq
+  - gammastep
+  - git
+  - github-cli
+  # - grub
+  - gst-plugin-pipewire
+  - htop
+  - i3-wm
+  - i3blocks
+  - i3lock
+  - i3status
+  # - intel-ucode
+  # - iwd
+  - kitty
   - lazydocker
   - lazygit
-  - mise
-  - most
-  - navi
-  - nb
-  - ncdu
-  - neovim
-  - parallel
-  - pipx
-  - plantuml
+  - less
+  # - libnotify
+  # - libpulse
+  # - libva-nvidia-driver
+  # - lightdm
+  # - lightdm-gtk-greeter
+  # - linux
+  # - linux-firmware
+  # - linux-headers
+  # - maim
+  # - mandoc
+  # - nano
+  - ncspot
+  # - neovim-nvim-treesitter  # Not in official repos - use neovim plugin manager
+  # - network-manager-applet
+  # - networkmanager
+  # - nvidia-dkms
+  # - nvm
+  # - ollama-cuda
+  # - pgbouncer
+  # - pgcli
+  - picom
+  # - pipewire
+  # - pipewire-alsa
+  # - pipewire-jack
+  # - pipewire-pulse
+  # - polkit-gnome
+  # - postgresql
+  # - postgrest
+  - python-uv
   - ripgrep
-  - starship
-  - tmux
+  # - sheldon
+  # - smartmontools
+  # - steam  # Requires multilib repo enabled in /etc/pacman.conf
   - tree
-  - vifm
-  - vim
-  - xdg-ninja
-  - xq
-  - yadm
-  - yank
+  - unzip
+  - uv
+  # - vim
+  - wget
+  # - wireless_tools
+  - wireplumber
+  - xclip
+  # - xdg-utils
+  - xdotool
+  # - xorg-server-xvfb
+  # - xorg-xinit
+  # - xss-lock
+  # - xterm
+  - zip
+  - unzip
   - zoxide
-  - zplug
-  # TODO: Add from: pacman -Qm | cut -d' ' -f1
+  # - zram-generator
+  - zsh
+
+# Packages to install from AUR (using yay)
+aur_packages:
+  # - claude-code
+  # - codename-goose
+  # - discord-electron-openasar
+  - docker-rootless-extras
+  - google-chrome
+  - mods
+  # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
+  - pwvucontrol
+  - rcm
+  # - rustup  # Conflicts with system rust package
+  # - spotify
+  # - stripe-cli-bin
+  # - supabase-bin
+  # - vencord
+  # - vesktop

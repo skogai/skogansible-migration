@@ -1,0 +1,293 @@
+---
+# Git Role Configuration
+# Override role defaults here for your specific setup
+
+# ==============================================================================
+# Installation
+# ==============================================================================
+
+git_install: true
+
+# ==============================================================================
+# Global Git Configuration
+# ==============================================================================
+
+# Deploy complete .gitconfig from template
+git_deploy_config: true
+git_config_template: "gitconfig.j2"
+
+# User information (CUSTOMIZE THESE!)
+git_user_name: "skogix"
+git_user_email: "emil@skogsund.se"
+
+# ==============================================================================
+# Git Core Settings
+# ==============================================================================
+
+git_core_editor: "nvim"
+git_default_branch: "master"
+git_pull_rebase: true # Use rebase instead of merge on pull
+git_push_default: "simple"
+git_push_autoSetupRemote: true # Automatically setup remote tracking
+
+# ==============================================================================
+# Git UI/UX Settings
+# ==============================================================================
+
+git_color_ui: true
+git_pager: "less -FRX"
+
+# ==============================================================================
+# Git Aliases
+# ==============================================================================
+
+git_deploy_aliases: true
+
+# Customized aliases for common workflows
+git_aliases:
+  # Basic shortcuts
+  st: "status"
+  co: "checkout"
+  br: "branch"
+  ci: "commit"
+
+  # Undo operations
+  unstage: "reset HEAD --"
+  undo: "reset --soft HEAD~1"
+
+  # History and logs
+  last: "log -1 HEAD"
+  lg: >-
+    log --graph
+    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    --abbrev-commit
+  hist: "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
+  tree: "log --graph --oneline --all --decorate"
+
+  # Commit helpers
+  amend: "commit --amend --no-edit"
+  amendm: "commit --amend"
+
+  # Push helpers
+  pushf: "push --force-with-lease"
+  pushu: "push -u origin HEAD"
+
+  # Branch operations
+  brd: "branch -d"
+  brD: "branch -D"
+  branches: "branch -a"
+
+  # Diff helpers
+  df: "diff"
+  dfc: "diff --cached"
+  dfs: "diff --stat"
+
+  # Stash helpers
+  stash-list: "stash list"
+  stash-pop: "stash pop"
+  stash-show: "stash show -p"
+
+  # Workflow helpers
+  sync: "!git pull --rebase && git push"
+  cleanup: "!git branch --merged | grep -v '*' | grep -v 'main' | grep -v 'master' | xargs -r git branch -d"
+  find: "!git log --all --oneline --graph --decorate | grep -i"
+
+# ==============================================================================
+# Credential Management
+# ==============================================================================
+
+git_configure_credentials: false
+
+# SECURITY WARNING:
+#   - "store" mode saves passwords in PLAINTEXT at ~/.git-credentials
+#   - "cache" mode stores passwords in memory temporarily (recommended)
+#   - "osxkeychain" or "wincred" for OS-level secure storage
+# RECOMMENDATION: Use "cache" with timeout, or OS-specific secure storage
+git_credential_helper: "cache"
+git_credential_cache_timeout: 7200 # 2 hours (for cache mode)
+
+# ==============================================================================
+# Global .gitignore
+# ==============================================================================
+
+git_deploy_global_gitignore: true
+
+git_global_gitignore_patterns:
+  # OS Files
+  - ".DS_Store"
+  - ".DS_Store?"
+  - "._*"
+  - ".Spotlight-V100"
+  - ".Trashes"
+  - "ehthumbs.db"
+  - "Thumbs.db"
+  - "Desktop.ini"
+
+  # Editor Files
+  - "*.swp"
+  - "*.swo"
+  - "*~"
+  - ".vscode/"
+  - ".idea/"
+  - "*.sublime-workspace"
+  - "*.sublime-project"
+  - ".project"
+  - ".settings/"
+
+  # Build Artifacts & Dependencies
+  - "*.log"
+  - "*.tmp"
+  - "*.cache"
+  - "*.pid"
+  - "*.seed"
+  - "*.pid.lock"
+  - "node_modules/"
+  - "__pycache__/"
+  - "*.pyc"
+  - "*.pyo"
+  - "*.pyd"
+  - ".pytest_cache/"
+  - ".tox/"
+  - ".coverage"
+  - ".mypy_cache/"
+  - "dist/"
+  - "build/"
+  - "*.egg-info/"
+  - ".eggs/"
+  - "vendor/"
+  - "venv/"
+  - ".venv/"
+  - "ENV/"
+  - "env/"
+
+  # Security & Secrets
+  - ".env"
+  - ".env.local"
+  - ".env.*.local"
+  - "*.key"
+  - "*.pem"
+  - "*.cert"
+  - "*.crt"
+  - "credentials.json"
+  - "secrets.yml"
+  - "secrets.yaml"
+
+  # Compiled / Binary files
+  - "*.com"
+  - "*.class"
+  - "*.dll"
+  - "*.exe"
+  - "*.o"
+  - "*.so"
+  - "*.dylib"
+
+# ==============================================================================
+# Git Configuration Options (Fine-tuning)
+# ==============================================================================
+
+# Core settings
+git_core_autocrlf: "input"
+git_core_filemode: true
+git_core_ignorecase: true
+
+# Push settings
+git_push_followTags: true
+
+# Pull settings
+git_pull_ff: "false" # Don't fast-forward pulls (rebase instead)
+
+# Merge settings
+git_merge_ff: "true" # Allow fast-forward merges when possible
+git_merge_conflictstyle: "diff3"
+
+# Diff settings
+git_diff_algorithm: "histogram"
+git_diff_colorMoved: "default"
+
+# Rebase settings
+git_rebase_autosquash: true
+git_rebase_autostash: true
+
+# Fetch settings
+git_fetch_prune: true
+git_fetch_pruneTags: false
+
+# Rerere (reuse recorded resolution)
+git_rerere_enabled: true
+git_rerere_autoupdate: true
+
+# Submodules
+git_submodule_recurse: true
+
+# ==============================================================================
+# Repository Management (Disabled by default - customize as needed)
+# ==============================================================================
+
+git_clone_repos: true
+
+# Example repository configuration (uncomment and customize):
+git_repositories:
+  - repo: "https://github.com/SkogAI/config.git"
+    dest: "{{ ansible_facts['env']['HOME'] }}/skogai/docs"
+    version: "master"
+    update: true
+    depth: 0
+
+# ==============================================================================
+# Git Hooks (Disabled by default)
+# ==============================================================================
+
+git_deploy_hooks: true
+
+# Example hooks configuration (uncomment to enable):
+# git_hooks:
+#   - name: "pre-commit"
+#     template: "pre-commit.j2"
+#     mode: "0755"
+#   - name: "commit-msg"
+#     template: "commit-msg.j2"
+#     mode: "0755"
+
+# ==============================================================================
+# Git LFS (Disabled by default)
+# ==============================================================================
+
+git_lfs_install: true
+git_lfs_user_install: true
+
+# ==============================================================================
+# Commit/Tag Signing (Disabled by default)
+# ==============================================================================
+
+git_gpg_sign_commits: false
+git_gpg_sign_tags: false
+# git_gpg_key_id: "YOUR_GPG_KEY_ID"
+
+git_ssh_sign_commits: false
+git_ssh_sign_tags: false
+# git_ssh_signing_key: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519.pub"
+
+# ==============================================================================
+# Repository-Specific Configuration (Disabled by default)
+# ==============================================================================
+
+git_deploy_repo_configs: false
+
+# Example repo-specific config (uncomment and customize):
+# git_repo_configs:
+#   - path: "{{ ansible_facts['env']['HOME'] }}/work/project"
+#     config:
+#       user.email: "work@company.com"
+#       user.name: "Work Name"
+#       core.sshCommand: "ssh -i ~/.ssh/work_key"
+
+# ==============================================================================
+# Git Maintenance (Disabled by default)
+# ==============================================================================
+
+git_run_maintenance: false
+git_maintenance_schedule: "daily"
+
+# git_maintenance_repos:
+#   - "{{ ansible_facts['env']['HOME'] }}/projects/repo1"
+#   - "{{ ansible_facts['env']['HOME'] }}/projects/repo2"

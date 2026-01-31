@@ -1,0 +1,115 @@
+---
+# Chezmoi configuration variables
+# Controls how chezmoi integrates with dotfiles management
+
+# ==============================================================================
+# CHEZMOI INSTALLATION & SETUP
+# ==============================================================================
+
+# Whether to install chezmoi (should already be in packages.yml)
+chezmoi_ensure_installed: true
+
+# Whether to initialize chezmoi source directory
+chezmoi_init_source: true
+
+# Chezmoi source directory
+chezmoi_source_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+
+# Whether to deploy .chezmoidata.yaml configuration
+chezmoi_deploy_config: true
+
+# Whether to apply chezmoi after configuration changes
+chezmoi_apply_on_change: true
+
+# ==============================================================================
+# MACHINE PROFILE
+# ==============================================================================
+
+# Machine type: workstation, laptop, wsl
+chezmoi_machine_type: workstation
+
+# Hostname (defaults to inventory hostname)
+chezmoi_hostname: "{{ inventory_hostname }}"
+
+# ==============================================================================
+# USER INFORMATION
+# ==============================================================================
+
+# User information (pulled from users list)
+chezmoi_user_name: "{{ users[0].name }}"
+chezmoi_user_email: "{{ users[0].git_email }}"
+chezmoi_github_user: "{{ users[0].git_name }}"
+
+# ==============================================================================
+# ENVIRONMENT FLAGS
+# ==============================================================================
+
+# Environment type flags
+chezmoi_personal: true
+chezmoi_work: false
+
+# Display environment
+chezmoi_headless: false  # Auto-true for WSL
+chezmoi_gui: true        # Auto-false for headless
+
+# ==============================================================================
+# DESKTOP ENVIRONMENT
+# ==============================================================================
+
+# Window manager: i3, sway, none
+chezmoi_wm: i3
+
+# Laptop mode (battery management, etc.)
+chezmoi_laptop_mode: false
+
+# Terminal emulator
+chezmoi_terminal: kitty
+
+# ==============================================================================
+# FEATURE FLAGS
+# ==============================================================================
+
+# AI tools integration
+chezmoi_ai_tools: true
+
+# Development tools
+chezmoi_development: true
+
+# GUI applications (auto-disabled if headless)
+chezmoi_gui_apps_enabled: "{{ chezmoi_gui }}"
+chezmoi_dunst_enabled: "{{ chezmoi_gui }}"
+chezmoi_kitty_enabled: "{{ chezmoi_gui }}"
+
+# Dev tools
+chezmoi_direnv_enabled: true
+chezmoi_gh_enabled: true
+chezmoi_gita_enabled: true
+
+# ==============================================================================
+# SKOGAI AGENT CONFIGURATIONS
+# ==============================================================================
+
+# Enable/disable individual agents
+chezmoi_agents:
+  claude: true
+  letta: true
+  amy: true
+  goose: true
+  dot: true
+
+# ==============================================================================
+# SKOGAI PATHS (OPTIONAL)
+# ==============================================================================
+
+# SkogAI directory paths
+# Comment out if not using SkogAI
+chezmoi_skogai_home: "{{ ansible_user_dir }}/skogai"
+chezmoi_skogai_docs: "{{ ansible_user_dir }}/skogai/docs"
+chezmoi_skogai_tools: "{{ ansible_user_dir }}/skogai/tools"
+
+# ==============================================================================
+# ENVIRONMENT-SPECIFIC SETTINGS
+# ==============================================================================
+
+# Debug mode
+chezmoi_debug: true
