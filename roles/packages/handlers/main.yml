@@ -1,9 +1,2 @@
 ---
-
-- name: "Start packagekit"
-  ansible.builtin.systemd:
-    name: "packagekit"
-    state: "started"
-    enabled: true
-  become: true
-  when: packages_packagekit_enabled
+# Handlers for packages role

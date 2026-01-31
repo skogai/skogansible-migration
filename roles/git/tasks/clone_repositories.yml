@@ -1,0 +1,48 @@
+---
+# Git Role - Clone Git Repositories
+
+- name: "Git | Ensure parent directories exist for repositories"
+  ansible.builtin.file:
+    path: "{{ item.dest | dirname }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+  loop: "{{ git_repositories }}"
+  when: git_repositories is defined and git_repositories | length > 0
+  tags:
+    - git
+    - git-clone
+
+- name: "Git | Clone or update repositories"
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: "{{ item.version | default('HEAD') }}"
+    update: "{{ item.update | default(true) }}"
+    depth: "{{ item.depth | default(0) }}"
+    accept_hostkey: "{{ item.accept_hostkey | default(true) }}"
+    key_file: "{{ item.key_file | default(omit) }}"
+    force: "{{ item.force | default(false) }}"
+  loop: "{{ git_repositories }}"
+  when: git_repositories is defined and git_repositories | length > 0
+  register: git_clone_result
+  tags:
+    - git
+    - git-clone
+
+- name: "Git | Set ownership on cloned repositories"
+  ansible.builtin.file:
+    path: "{{ item.item.dest }}"
+    state: directory
+    recurse: false
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+  loop: "{{ git_clone_result.results }}"
+  when:
+    - git_clone_result is defined
+    - git_clone_result.results is defined
+    - item.changed
+  tags:
+    - git
+    - git-clone

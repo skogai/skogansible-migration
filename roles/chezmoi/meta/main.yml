@@ -1,0 +1,31 @@
+---
+galaxy_info:
+  author: Skogix
+  description: Chezmoi dotfiles management and configuration
+  company: SkogAI
+  license: MIT
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: Archlinux
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+
+  galaxy_tags:
+    - chezmoi
+    - dotfiles
+    - configuration
+    - management
+    - deployment
+    - templating
+
+dependencies: []

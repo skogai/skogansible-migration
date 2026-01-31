@@ -1,0 +1,53 @@
+---
+# Apply chezmoi configuration to deploy dotfiles
+
+- name: Check what chezmoi would change (dry-run)
+  ansible.builtin.command: chezmoi diff
+  register: chezmoi_diff
+  changed_when: false
+  failed_when: false
+  tags:
+    - chezmoi
+    - chezmoi-apply
+
+- name: Display pending chezmoi changes
+  ansible.builtin.debug:
+    msg: "{{ chezmoi_diff.stdout_lines }}"
+  when: chezmoi_diff.stdout | length > 0
+  tags:
+    - chezmoi
+    - chezmoi-apply
+
+- name: Apply chezmoi configuration
+  ansible.builtin.command: chezmoi apply --verbose
+  register: chezmoi_apply_result
+  changed_when: >
+    'modified' in chezmoi_apply_result.stdout or
+    'added' in chezmoi_apply_result.stdout or
+    'removed' in chezmoi_apply_result.stdout
+  tags:
+    - chezmoi
+    - chezmoi-apply
+
+- name: Display chezmoi apply result
+  ansible.builtin.debug:
+    msg: "{{ chezmoi_apply_result.stdout_lines }}"
+  when: chezmoi_apply_result.changed
+  tags:
+    - chezmoi
+    - chezmoi-apply
+
+- name: Verify chezmoi state
+  ansible.builtin.command: chezmoi status
+  register: chezmoi_status
+  changed_when: false
+  tags:
+    - chezmoi
+    - chezmoi-apply
+
+- name: Display chezmoi status
+  ansible.builtin.debug:
+    msg: "{{ 'Chezmoi state is clean' if chezmoi_status.stdout | length == 0 else chezmoi_status.stdout_lines }}"
+  tags:
+    - chezmoi
+    - chezmoi-apply

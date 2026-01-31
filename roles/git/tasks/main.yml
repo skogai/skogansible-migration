@@ -1,38 +1,123 @@
 ---
+# Git Role - Main Tasks Orchestrator
 
-- name: "Template gitconfig"
-  vars:
-    key_contents: "{{ lookup('ansible.builtin.file', git_signing_key_file) | split(' ') }}"
-  ansible.builtin.template:
-    src: "{{ lookup('ansible.builtin.first_found', git_template_gitconfig) }}"
-    dest: "{{ git_config_path }}"
-    mode: "0755"
-  tags: [git, config, signing, dotfiles]
+# ==============================================================================
+# Install Git
+# ==============================================================================
 
-- name: "Ensure gitconfig.d directory exists"
-  ansible.builtin.file:
-    path: "{{ git_config_dir }}"
-    mode: "0755"
-    state: "directory"
-  tags: [git, config, signing, dotfiles]
+- name: "Git | Install git package"
+  ansible.builtin.include_tasks: install.yml
+  when: git_install
+  tags:
+    - git
+    - git-install
 
-- name: "Register SSH key with Github"
-  community.general.github_key:
-    name: "{{ git_ssh_key_name }}"
-    pubkey: "{{ lookup('ansible.builtin.file', git_ssh_key_public) }}"
-    state: "present"
-    token: "{{ git_github_token }}"
-  when: git_ssh_key_upload
-  tags: [github, keys]
+# ==============================================================================
+# Global Git Configuration
+# ==============================================================================
 
-- name: "Import authorized keys tasks"
-  ansible.builtin.import_tasks:
-    file: "get_authorized_keys.yml"
+- name: "Git | Configure global git settings"
+  ansible.builtin.include_tasks: configure_global.yml
+  when: git_user_name | length > 0 or git_user_email | length > 0 or git_deploy_config
+  tags:
+    - git
+    - git-config
 
-- name: "Import repo cloning tasks"
-  ansible.builtin.import_tasks:
-    file: "clone_repos.yml"
+# ==============================================================================
+# Git Aliases
+# ==============================================================================
 
-- name: "Import signing key tasks"
-  ansible.builtin.import_tasks:
-    file: "manage_signing_key.yml"
+- name: "Git | Configure git aliases"
+  ansible.builtin.include_tasks: configure_aliases.yml
+  when: git_deploy_aliases and git_aliases is defined
+  tags:
+    - git
+    - git-aliases
+
+# ==============================================================================
+# Git Credentials
+# ==============================================================================
+
+- name: "Git | Configure credential helper"
+  ansible.builtin.include_tasks: configure_credentials.yml
+  when: git_configure_credentials
+  tags:
+    - git
+    - git-credentials
+
+# ==============================================================================
+# Global .gitignore
+# ==============================================================================
+
+- name: "Git | Deploy global .gitignore"
+  ansible.builtin.include_tasks: deploy_gitignore.yml
+  when: git_deploy_global_gitignore
+  tags:
+    - git
+    - git-gitignore
+
+# ==============================================================================
+# Git LFS
+# ==============================================================================
+
+- name: "Git | Install and configure Git LFS"
+  ansible.builtin.include_tasks: install_lfs.yml
+  when: git_lfs_install
+  tags:
+    - git
+    - git-lfs
+
+# ==============================================================================
+# Clone Repositories
+# ==============================================================================
+
+- name: "Git | Clone repositories"
+  ansible.builtin.include_tasks: clone_repositories.yml
+  when: git_clone_repos and git_repositories is defined
+  tags:
+    - git
+    - git-clone
+
+# ==============================================================================
+# Git Hooks
+# ==============================================================================
+
+- name: "Git | Deploy git hooks"
+  ansible.builtin.include_tasks: deploy_hooks.yml
+  when: git_deploy_hooks and git_hooks is defined
+  tags:
+    - git
+    - git-hooks
+
+# ==============================================================================
+# Commit/Tag Signing (GPG or SSH)
+# ==============================================================================
+
+- name: "Git | Configure commit and tag signing"
+  ansible.builtin.include_tasks: configure_signing.yml
+  when: git_gpg_sign_commits or git_gpg_sign_tags or git_ssh_sign_commits or git_ssh_sign_tags
+  tags:
+    - git
+    - git-signing
+
+# ==============================================================================
+# Repository-Specific Configuration
+# ==============================================================================
+
+- name: "Git | Configure repository-specific settings"
+  ansible.builtin.include_tasks: configure_repo_specific.yml
+  when: git_deploy_repo_configs and git_repo_configs is defined
+  tags:
+    - git
+    - git-repo-config
+
+# ==============================================================================
+# Git Maintenance
+# ==============================================================================
+
+- name: "Git | Run git maintenance"
+  ansible.builtin.include_tasks: maintenance.yml
+  when: git_run_maintenance and git_maintenance_repos is defined
+  tags:
+    - git
+    - git-maintenance

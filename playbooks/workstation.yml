@@ -1,0 +1,36 @@
+---
+# Workstation setup - full desktop/development environment
+- name: Configure Arch Linux workstation
+  hosts: all
+  connection: local
+
+  vars_files:
+    - ../vars/main.yml
+    - ../vars/packages.yml
+    - ../vars/ssh.yml
+    - ../vars/ssh_vault.yml
+    - ../vars/user.yml
+    - ../vars/git.yml
+    - ../vars/chezmoi.yml
+    - ../vars/cloudflared.yml
+    - ../vars/cloudflared_vault.yml
+    - ../vars/filesystems.yml
+
+  roles:
+    - role: packages
+      tags: [packages, install]
+
+    - role: ssh
+      tags: [ssh, config]
+
+    - role: git
+      tags: [git, vcs]
+
+    - role: chezmoi
+      tags: [chezmoi, dotfiles]
+
+    - role: cloudflared
+      tags: [cloudflared, tunnel, services]
+
+    - role: filesystems
+      tags: [filesystems, mounts]

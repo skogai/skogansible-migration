@@ -1,0 +1,44 @@
+#!/bin/bash
+# {{ ansible_managed }}
+# Git commit-msg hook template
+# This hook validates the commit message format
+
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Example: Enforce conventional commits format
+# Format: type(scope): description
+# Types: feat, fix, docs, style, refactor, test, chore
+CONVENTIONAL_REGEX="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,100}"
+
+if ! echo "$COMMIT_MSG" | grep -qE "$CONVENTIONAL_REGEX"; then
+    echo "Error: Invalid commit message format"
+    echo ""
+    echo "Commit message must follow the Conventional Commits format:"
+    echo "  type(scope): description"
+    echo ""
+    echo "Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert"
+    echo ""
+    echo "Examples:"
+    echo "  feat(auth): add user login functionality"
+    echo "  fix(api): resolve timeout issue in requests"
+    echo "  docs: update README with setup instructions"
+    echo ""
+    exit 1
+fi
+
+# Example: Check minimum message length
+MIN_LENGTH=10
+if [ ${#COMMIT_MSG} -lt $MIN_LENGTH ]; then
+    echo "Error: Commit message is too short (minimum $MIN_LENGTH characters)"
+    exit 1
+fi
+
+# Example: Check for issue/ticket reference (optional)
+# Uncomment to require issue references like JIRA-123, #456
+# if ! echo "$COMMIT_MSG" | grep -qE '(JIRA-[0-9]+|#[0-9]+)'; then
+#     echo "Warning: No issue reference found in commit message"
+#     echo "Consider adding a reference like: JIRA-123 or #456"
+# fi
+
+exit 0

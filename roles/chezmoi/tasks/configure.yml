@@ -1,0 +1,44 @@
+---
+# Configure chezmoi by templating .chezmoidata.yaml
+
+- name: Ensure chezmoi source directory exists
+  ansible.builtin.file:
+    path: "{{ chezmoi_source_dir }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - chezmoi
+    - chezmoi-config
+
+- name: Template .chezmoidata.yaml configuration
+  ansible.builtin.template:
+    src: chezmoidata.yaml.j2
+    dest: "{{ chezmoi_source_dir }}/.chezmoidata.yaml"
+    mode: '0644'
+  register: chezmoidata_templated
+  notify: Apply chezmoi
+  tags:
+    - chezmoi
+    - chezmoi-config
+
+- name: Display configuration status
+  ansible.builtin.debug:
+    msg: "Chezmoi configuration {{ 'updated' if chezmoidata_templated.changed else 'unchanged' }}"
+  tags:
+    - chezmoi
+    - chezmoi-config
+
+- name: Verify chezmoi data
+  ansible.builtin.command: chezmoi data
+  register: chezmoi_data_output
+  changed_when: false
+  tags:
+    - chezmoi
+    - chezmoi-config
+
+- name: Display chezmoi machine profile
+  ansible.builtin.debug:
+    msg: "Machine type: {{ chezmoi_machine_type }}, Hostname: {{ chezmoi_hostname }}, WM: {{ chezmoi_wm }}"
+  tags:
+    - chezmoi
+    - chezmoi-config

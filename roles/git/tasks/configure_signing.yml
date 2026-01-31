@@ -1,0 +1,94 @@
+---
+# Git Role - Configure Commit/Tag Signing (GPG or SSH)
+
+# ==============================================================================
+# GPG Signing Configuration
+# ==============================================================================
+
+- name: "Git | Configure GPG commit signing"
+  when: git_gpg_sign_commits
+  block:
+    - name: "Git | Enable GPG commit signing"
+      community.general.git_config:
+        name: commit.gpgSign
+        value: "true"
+        scope: global
+      tags:
+        - git
+        - git-signing
+
+    - name: "Git | Configure GPG signing key"
+      when: git_gpg_key_id | length > 0
+      community.general.git_config:
+        name: user.signingKey
+        value: "{{ git_gpg_key_id }}"
+        scope: global
+      tags:
+        - git
+        - git-signing
+
+- name: "Git | Configure GPG tag signing"
+  when: git_gpg_sign_tags
+  community.general.git_config:
+    name: tag.gpgSign
+    value: "true"
+    scope: global
+  tags:
+    - git
+    - git-signing
+
+# ==============================================================================
+# SSH Signing Configuration (Git 2.34+)
+# ==============================================================================
+
+- name: "Git | Configure SSH commit signing"
+  when: git_ssh_sign_commits
+  block:
+    - name: "Git | Enable SSH commit signing"
+      community.general.git_config:
+        name: commit.gpgSign
+        value: "true"
+        scope: global
+      tags:
+        - git
+        - git-signing
+
+    - name: "Git | Set GPG format to SSH"
+      community.general.git_config:
+        name: gpg.format
+        value: "ssh"
+        scope: global
+      tags:
+        - git
+        - git-signing
+
+    - name: "Git | Configure SSH signing key"
+      when: git_ssh_signing_key | length > 0
+      community.general.git_config:
+        name: user.signingKey
+        value: "{{ git_ssh_signing_key }}"
+        scope: global
+      tags:
+        - git
+        - git-signing
+
+- name: "Git | Configure SSH tag signing"
+  when: git_ssh_sign_tags
+  block:
+    - name: "Git | Enable SSH tag signing"
+      community.general.git_config:
+        name: tag.gpgSign
+        value: "true"
+        scope: global
+      tags:
+        - git
+        - git-signing
+
+    - name: "Git | Set GPG format to SSH for tags"
+      community.general.git_config:
+        name: gpg.format
+        value: "ssh"
+        scope: global
+      tags:
+        - git
+        - git-signing

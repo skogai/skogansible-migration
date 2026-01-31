@@ -1,30 +1,288 @@
 ---
+# Git Role - Default Variables
+# Override these in your playbook, inventory, or vars/git.yml
 
-git_email_address: "{{
-  host_email_address | default(ansible_facts['user_id'] + '@' + ansible_facts['hostname'])
-}}"
-git_github_token: ""
-git_config_path: "{{ ansible_facts['user_dir'] }}/.gitconfig"
-git_config_dir: "{{ ansible_facts['user_dir'] }}/.gitconfig.d"
+# ==============================================================================
+# Git Installation
+# ==============================================================================
 
-git_template_gitconfig:
-  - "{{ inventory_dir }}/templates/gitconfig.j2"
-  - "templates/gitconfig.j2"
+# Install git if not present
+git_install: true
 
-git_ssh_authorized_keys_from_github: true
-git_ssh_authorized_keys_match: "[*]"
+# Git package name (varies by distribution)
+git_package_name: "git"
 
-git_ssh_key_upload: true
-git_ssh_key_name: "{{ ansible_facts['user_id'] }}@{{ ansible_facts['hostname'] }}"
-git_ssh_key_private: "{{ ansible_facts['user_dir'] }}/.ssh/id_ed25519"
-git_ssh_key_public: "{{ git_ssh_key_private }}.pub"
+# ==============================================================================
+# Global Git Configuration
+# ==============================================================================
 
-git_signing_key_upload: true
-git_signing_key_type: "ssh"
-git_signing_key_file: "{{ git_ssh_key_private }}.pub"
-git_signing_allowed_signers: "{{ ansible_facts['user_dir'] }}/.ssh/allowed_signers"
+# Deploy .gitconfig from template
+git_deploy_config: false
 
-git_repos: []
-git_repos_update: false
-git_repos_as_worktrees: false
-git_repos_path: "{{ ansible_facts['user_dir'] }}/Git/"  # include trailing slash
+# Template to use for .gitconfig
+git_config_template: "gitconfig.j2"
+
+# Git config file location
+git_config_file: "{{ ansible_facts['env']['HOME'] }}/.gitconfig"
+
+# User configuration
+git_user_name: ""
+git_user_email: ""
+
+# Default editor for git
+git_editor: "vim"
+
+# Default branch name for new repositories
+git_default_branch: "main"
+
+# ==============================================================================
+# Git Aliases
+# ==============================================================================
+
+# Deploy git aliases
+git_deploy_aliases: false
+
+# Common git aliases (customize as needed)
+git_aliases:
+  st: "status"
+  co: "checkout"
+  br: "branch"
+  ci: "commit"
+  unstage: "reset HEAD --"
+  last: "log -1 HEAD"
+  lg: >-
+    log --graph
+    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    --abbrev-commit
+  hist: "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
+  amend: "commit --amend --no-edit"
+  pushf: "push --force-with-lease"
+  undo: "reset --soft HEAD~1"
+
+# ==============================================================================
+# Git Credential Management
+# ==============================================================================
+
+# Configure git credential helper
+git_configure_credentials: false
+
+# Credential helper type (cache, store, osxkeychain, manager-core, etc.)
+git_credential_helper: "cache"
+
+# Cache timeout in seconds (only for 'cache' helper)
+git_credential_cache_timeout: 3600
+
+# Credential store file (only for 'store' helper)
+# WARNING: Stores credentials in plain text!
+git_credential_store_file: "{{ ansible_facts['env']['HOME'] }}/.git-credentials"
+
+# ==============================================================================
+# Git LFS (Large File Storage)
+# ==============================================================================
+
+# Install and configure Git LFS
+git_lfs_install: false
+
+# Git LFS package name
+git_lfs_package_name: "git-lfs"
+
+# Run git lfs install for user
+git_lfs_user_install: false
+
+# ==============================================================================
+# Repository Management
+# ==============================================================================
+
+# Clone repositories
+git_clone_repos: false
+
+# List of repositories to clone
+# git_repositories:
+#   - repo: "https://github.com/user/repo.git"
+#     dest: "{{ ansible_facts['env']['HOME'] }}/projects/repo"
+#     version: "main"  # branch, tag, or commit
+#     update: true     # pull updates if repo exists
+#     depth: 0         # shallow clone depth (0 = full clone)
+#     accept_hostkey: true
+#     key_file: ""     # SSH key file path
+#     force: false     # discard local changes when updating
+
+# ==============================================================================
+# .gitignore Templates
+# ==============================================================================
+
+# Deploy global .gitignore
+git_deploy_global_gitignore: false
+
+# Global gitignore file location
+git_global_gitignore_file: "{{ ansible_facts['env']['HOME'] }}/.gitignore_global"
+
+# Template for global gitignore
+git_global_gitignore_template: "gitignore_global.j2"
+
+# Global gitignore patterns (customize as needed)
+git_global_gitignore_patterns:
+  # OS Files
+  - ".DS_Store"
+  - "Thumbs.db"
+  - "Desktop.ini"
+
+  # Editor Files
+  - "*.swp"
+  - "*.swo"
+  - "*~"
+  - ".vscode/"
+  - ".idea/"
+  - "*.sublime-*"
+
+  # Build Artifacts
+  - "*.log"
+  - "*.tmp"
+  - "*.cache"
+  - "node_modules/"
+  - "__pycache__/"
+  - "*.pyc"
+  - ".pytest_cache/"
+  - "dist/"
+  - "build/"
+
+  # Security
+  - ".env"
+  - ".env.local"
+  - "*.key"
+  - "*.pem"
+
+# ==============================================================================
+# Git Hooks
+# ==============================================================================
+
+# Deploy git hooks templates
+git_deploy_hooks: false
+
+# Directory containing hook templates
+git_hooks_template_dir: "hooks"
+
+# List of hooks to deploy globally
+# git_hooks:
+#   - name: "pre-commit"
+#     template: "pre-commit.j2"
+#     mode: "0755"
+#   - name: "commit-msg"
+#     template: "commit-msg.j2"
+#     mode: "0755"
+
+# ==============================================================================
+# Git Configuration Options
+# ==============================================================================
+
+# Core settings
+git_core_autocrlf: "input"  # false, true, input
+git_core_filemode: true
+git_core_ignorecase: false
+
+# Color settings
+git_color_ui: "auto"  # auto, always, never
+
+# Push settings
+git_push_default: "simple"  # simple, matching, current, upstream
+git_push_followTags: true
+git_push_autoSetupRemote: true
+
+# Pull settings
+git_pull_rebase: false  # true, false, merges, interactive
+git_pull_ff: "only"     # only, true, false
+
+# Merge settings
+git_merge_ff: "false"  # true, false, only
+git_merge_conflictstyle: "diff3"  # merge, diff3, zdiff3
+
+# Diff settings
+git_diff_algorithm: "histogram"  # myers, minimal, patience, histogram
+git_diff_colorMoved: "default"   # no, default, plain, blocks, zebra, dimmed-zebra
+
+# Rebase settings
+git_rebase_autosquash: true
+git_rebase_autostash: true
+
+# Fetch settings
+git_fetch_prune: true
+git_fetch_pruneTags: false
+
+# ==============================================================================
+# Git Security Settings
+# ==============================================================================
+
+# GPG signing
+git_gpg_sign_commits: false
+git_gpg_sign_tags: false
+git_gpg_key_id: ""
+
+# SSH signing (Git 2.34+)
+git_ssh_sign_commits: false
+git_ssh_sign_tags: false
+git_ssh_signing_key: ""
+
+# ==============================================================================
+# Git Backup & Maintenance
+# ==============================================================================
+
+# Run git maintenance on repositories
+git_run_maintenance: false
+
+# Repositories to maintain
+# git_maintenance_repos:
+#   - "{{ ansible_facts['env']['HOME'] }}/projects/repo1"
+#   - "{{ ansible_facts['env']['HOME'] }}/projects/repo2"
+
+# Maintenance schedule (hourly, daily, weekly, incremental, none)
+git_maintenance_schedule: "daily"
+
+# ==============================================================================
+# Advanced Git Configuration
+# ==============================================================================
+
+# Enable git rerere (reuse recorded resolution)
+git_rerere_enabled: true
+git_rerere_autoupdate: true
+
+# Enable git fsmonitor for large repos
+git_fsmonitor_enabled: false
+
+# Pack optimization
+git_pack_threads: 0  # 0 = auto-detect CPU count
+git_pack_windowMemory: "0"  # 0 = unlimited
+
+# ==============================================================================
+# Git Submodule Configuration
+# ==============================================================================
+
+# Recurse submodules by default
+git_submodule_recurse: true
+
+# ==============================================================================
+# Include Custom Configs
+# ==============================================================================
+
+# Include additional git config files
+git_include_configs: false
+
+# List of config files to include
+# git_config_includes:
+#   - path: "~/.gitconfig.local"
+#   - path: "~/.gitconfig.work"
+#     condition: "gitdir:~/work/"  # conditional include
+
+# ==============================================================================
+# Repository-specific Configs
+# ==============================================================================
+
+# Deploy repository-specific .git/config settings
+git_deploy_repo_configs: false
+
+# List of repository configs
+# git_repo_configs:
+#   - path: "{{ ansible_facts['env']['HOME'] }}/projects/work-repo"
+#     config:
+#       user.email: "work@example.com"
+#       user.name: "Work Name"
+#       core.sshCommand: "ssh -i ~/.ssh/work_key"
