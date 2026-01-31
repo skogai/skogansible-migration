@@ -1,5 +1,10 @@
 ---
-# Setup AUR user and helper first
+# Ensure user groups are configured first
+- name: Configure user groups
+  ansible.builtin.include_tasks: user_groups.yml
+  tags: [user_groups]
+
+# Setup AUR user and helper
 - name: Setup AUR builder user
   ansible.builtin.include_tasks: aur_user.yml
   tags: [aur, aur_user]
@@ -13,6 +18,15 @@
   become: true
   community.general.pacman:
     update_cache: true
+
+- name: Configure pacman parallel downloads
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/pacman.conf
+    regexp: '^#?ParallelDownloads\s*='
+    line: 'ParallelDownloads = {{ pacman_parallel_downloads }}'
+    state: present
+  tags: [packages, pacman_config]
 
 - name: Upgrade all packages
   become: true

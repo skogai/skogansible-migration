@@ -1,4 +1,7 @@
 ---
+# Pacman configuration
+pacman_parallel_downloads: 5
+
 # Packages to install from official repos
 packages:
   - ansible
@@ -48,6 +51,7 @@ packages:
   # - linux
   # - linux-firmware
   # - linux-headers
+  - just
   # - maim
   # - mandoc
   # - nano
@@ -61,10 +65,10 @@ packages:
   # - pgbouncer
   # - pgcli
   - picom
-  # - pipewire
-  # - pipewire-alsa
-  # - pipewire-jack
-  # - pipewire-pulse
+  - pipewire
+  - pipewire-alsa
+  - pipewire-jack
+  - pipewire-pulse
   # - polkit-gnome
   # - postgresql
   # - postgrest
@@ -84,9 +88,12 @@ packages:
   # - xdg-utils
   - xdotool
   # - xorg-server-xvfb
+  - starship
   # - xorg-xinit
   # - xss-lock
   # - xterm
+  - jq
+  - fd
   - zip
   - unzip
   - zoxide
@@ -104,6 +111,7 @@ aur_packages:
   # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
   - pwvucontrol
   - rcm
+  - diff-so-fancy
   # - rustup  # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin

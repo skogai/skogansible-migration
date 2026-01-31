@@ -1,0 +1,37 @@
+---
+# Primitive: Line in File
+# Usage: include_tasks primitives/ensure_content/line_in_file.yml
+#
+# Required vars:
+#   line_path: Path to file
+#   line_content: Line content to ensure exists
+#
+# Optional vars:
+#   line_state: (default: present) Line state (present, absent)
+#   line_create: (default: false) Create file if doesn't exist
+#   line_mode: File permissions if creating
+#   line_regexp: Regex pattern to replace (instead of adding new line)
+#   line_insertafter: Insert after this pattern (default: EOF)
+#   line_insertbefore: Insert before this pattern
+#   line_validate: Command to validate file after change
+#
+# Example:
+#   - include_tasks: primitives/ensure_content/line_in_file.yml
+#     vars:
+#       line_path: /etc/sudoers.d/aur_builder
+#       line_content: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+#       line_create: true
+#       line_mode: '0644'
+#       line_validate: 'visudo -cf %s'
+
+- name: "Primitive | Ensure line in {{ line_path }}"
+  ansible.builtin.lineinfile:
+    path: "{{ line_path }}"
+    line: "{{ line_content }}"
+    state: "{{ line_state | default('present') }}"
+    create: "{{ line_create | default(false) }}"
+    mode: "{{ line_mode | default(omit) }}"
+    regexp: "{{ line_regexp | default(omit) }}"
+    insertafter: "{{ line_insertafter | default(omit) }}"
+    insertbefore: "{{ line_insertbefore | default(omit) }}"
+    validate: "{{ line_validate | default(omit) }}"

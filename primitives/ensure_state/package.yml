@@ -1,0 +1,36 @@
+---
+# Primitive: Package Management
+# Usage: include_tasks primitives/ensure_state/package.yml
+#
+# Required vars:
+#   package_names: (list or string) Package name(s) to manage
+#
+# Optional vars:
+#   package_state: (default: present) Package state (present, absent, latest)
+#   package_update_cache: (default: false) Update package cache before operation
+#   package_upgrade: (default: false) Upgrade all packages before installing
+#
+# Example:
+#   - include_tasks: primitives/ensure_state/package.yml
+#     vars:
+#       package_names: [git, vim, curl]
+#       package_state: present
+#       package_update_cache: true
+
+- name: "Primitive | Update package cache"
+  become: true
+  community.general.pacman:
+    update_cache: true
+  when: package_update_cache | default(false) | bool
+
+- name: "Primitive | Upgrade all packages"
+  become: true
+  community.general.pacman:
+    upgrade: true
+  when: package_upgrade | default(false) | bool
+
+- name: "Primitive | Ensure package {{ package_state | default('present') }}: {{ package_names if package_names is string else package_names | join(', ') }}"
+  become: true
+  community.general.pacman:
+    name: "{{ package_names }}"
+    state: "{{ package_state | default('present') }}"

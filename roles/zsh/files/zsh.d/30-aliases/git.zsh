@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 alias gs='git status'
 alias gp='git pull'
 alias gc='git commit'

@@ -1,0 +1,26 @@
+---
+# Primitive: Check if Path Exists
+# Usage: include_tasks primitives/query_state/path_exists.yml
+#
+# Required vars:
+#   query_path: Path to check
+#   query_register: Variable name to store result
+#
+# Optional vars:
+#   query_follow: (default: false) Follow symlinks
+#
+# Example:
+#   - include_tasks: primitives/query_state/path_exists.yml
+#     vars:
+#       query_path: /usr/bin/yay
+#       query_register: yay_exists
+#
+# Access result:
+#   - debug:
+#       msg: "Yay exists: {{ yay_exists.stat.exists }}"
+
+- name: "Primitive | Check if path exists: {{ query_path }}"
+  ansible.builtin.stat:
+    path: "{{ query_path }}"
+    follow: "{{ query_follow | default(false) }}"
+  register: "{{ query_register }}"

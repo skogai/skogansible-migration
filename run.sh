@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
+# Source .envrc if direnv isn't loaded
+if [ -z "$ANSIBLE_BECOME_PASSWORD_FILE" ]; then
+  export ANSIBLE_BECOME_PASSWORD_FILE=/home/skogix/.ssh/ansible-become-password
+  export ANSIBLE_VAULT_PASSWORD_FILE=/home/skogix/.ssh/ansible-vault-password
+fi
+
 # Function to check file permissions
 check_password_file_permissions() {
   local file="$1"
@@ -15,6 +21,15 @@ check_password_file_permissions() {
   fi
 }
 
+# Check password file permissions
+check_password_file_permissions "$ANSIBLE_BECOME_PASSWORD_FILE"
+check_password_file_permissions "$ANSIBLE_VAULT_PASSWORD_FILE"
+
+# Activate venv if not already active
+if [ -z "$VIRTUAL_ENV" ] && [ -d ".venv" ]; then
+  source .venv/bin/activate
+fi
+
 # Determine which playbook to run
 ANSIBLE_PLAYBOOK="default.yml"
 
@@ -26,6 +41,6 @@ fi
 
 # Run playbook with remaining arguments
 ansible-playbook "./playbooks/$ANSIBLE_PLAYBOOK" -i .inventory \
-  --vault-password-file=$ANSIBLE_VAULT_PASSWORD_FILE \
-  --become-password-file=$ANSIBLE_BECOME_PASSWORD_FILE \
+  --vault-password-file="$ANSIBLE_VAULT_PASSWORD_FILE" \
+  --become-password-file="$ANSIBLE_BECOME_PASSWORD_FILE" \
   "$@"

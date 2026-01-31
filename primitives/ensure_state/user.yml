@@ -1,0 +1,36 @@
+---
+# Primitive: User Management
+# Usage: include_tasks primitives/ensure_state/user.yml
+#
+# Required vars:
+#   user_name: Username to manage
+#
+# Optional vars:
+#   user_state: (default: present) User state (present, absent)
+#   user_password: Encrypted password
+#   user_shell: Login shell (default: /bin/bash)
+#   user_groups: Additional groups (comma-separated string or list)
+#   user_create_home: (default: true) Create home directory
+#   user_system: (default: false) System user
+#   user_comment: User description/full name
+#
+# Example:
+#   - include_tasks: primitives/ensure_state/user.yml
+#     vars:
+#       user_name: skogix
+#       user_password: "{{ vault_user_password }}"
+#       user_shell: /bin/zsh
+#       user_groups: wheel,docker
+#       user_comment: "Primary User"
+
+- name: "Primitive | Ensure user {{ user_state | default('present') }}: {{ user_name }}"
+  become: true
+  ansible.builtin.user:
+    name: "{{ user_name }}"
+    state: "{{ user_state | default('present') }}"
+    password: "{{ user_password | default(omit) }}"
+    shell: "{{ user_shell | default('/bin/bash') }}"
+    groups: "{{ user_groups | default(omit) }}"
+    create_home: "{{ user_create_home | default(true) }}"
+    system: "{{ user_system | default(false) }}"
+    comment: "{{ user_comment | default(omit) }}"

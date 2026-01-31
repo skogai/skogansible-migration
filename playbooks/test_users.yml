@@ -1,0 +1,18 @@
+---
+# Test playbook for users role - no vault files required
+- name: Test users role
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  vars_files:
+    - ../vars/user.yml
+
+  vars:
+    # Override defaults for testing
+    users_ensure_users: true
+    users_ensure_groups: true
+
+  roles:
+    - role: users
+      tags: [users, security]

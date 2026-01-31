@@ -15,6 +15,9 @@
     - ../vars/zsh.yml        # Zsh configuration
 
   roles:
+    - role: users
+      tags: [users, security]
+
     - role: packages
       tags: [packages, install]
 

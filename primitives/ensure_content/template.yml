@@ -1,0 +1,33 @@
+---
+# Primitive: Template File
+# Usage: include_tasks primitives/ensure_content/template.yml
+#
+# Required vars:
+#   template_src: Source template file (relative to templates/ or absolute)
+#   template_dest: Destination file path
+#
+# Optional vars:
+#   template_mode: File permissions (e.g., '0644')
+#   template_owner: File owner
+#   template_group: File group
+#   template_backup: (default: false) Create backup before overwriting
+#   template_force: (default: true) Force overwrite if exists
+#   template_validate: Command to validate rendered template
+#
+# Example:
+#   - include_tasks: primitives/ensure_content/template.yml
+#     vars:
+#       template_src: ssh_config.j2
+#       template_dest: "{{ ansible_user_dir }}/.ssh/config"
+#       template_mode: '0600'
+
+- name: "Primitive | Template file to {{ template_dest }}"
+  ansible.builtin.template:
+    src: "{{ template_src }}"
+    dest: "{{ template_dest }}"
+    mode: "{{ template_mode | default(omit) }}"
+    owner: "{{ template_owner | default(omit) }}"
+    group: "{{ template_group | default(omit) }}"
+    backup: "{{ template_backup | default(false) }}"
+    force: "{{ template_force | default(true) }}"
+    validate: "{{ template_validate | default(omit) }}"

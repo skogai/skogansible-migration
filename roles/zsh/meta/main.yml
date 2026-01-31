@@ -1,9 +1,9 @@
 ---
-# zsh Role - Metadata
-
 galaxy_info:
+  role_name: zsh
   author: skogix
-  description: Zsh shell installation and configuration
+  description: Comprehensive ZSH configuration with modular architecture
+  company: SkogAI
   license: MIT
   min_ansible_version: "2.10"
 
@@ -11,11 +11,19 @@ galaxy_info:
     - name: ArchLinux
       versions:
         - all
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
 
   galaxy_tags:
-    - zsh
     - shell
-    - terminal
+    - zsh
+    - configuration
+    - dotfiles
 
-# Role dependencies (if any)
 dependencies: []

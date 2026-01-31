@@ -1,12 +1,18 @@
 ---
-# zsh Role - Handlers
-# Handlers are triggered by 'notify' in tasks
+# ZSH Role Handlers
 
-# zsh is not a daemon, so no restart handlers needed
-# Config changes take effect on next shell session
+- name: rebuild zsh completion cache
+  ansible.builtin.shell: |
+    rm -f ~/.zcompdump
+    autoload -Uz compinit
+    compinit
+  args:
+    executable: /bin/zsh
+  changed_when: false
 
-# Example: Notify config updated
-# - name: Notify zsh config updated
-#   ansible.builtin.debug:
-#     msg: "zsh configuration updated. Start new shell session to apply."
-#   listen: config updated
+- name: source zshrc
+  ansible.builtin.shell: source ~/.zshrc
+  args:
+    executable: /bin/zsh
+  changed_when: false
+  failed_when: false

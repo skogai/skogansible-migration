@@ -1,2 +1,7 @@
-alias commit='aider --commit --model openrouter/meta-llama/llama-3-70b-instruct:nitro --no-gitignore --set-env OPENROUTER_API_KEY=$OPENROUTER_API_KEY'
-alias gemini='node /home/skogix/.local/src/gemini-cli/scripts/start.js'
+#!/usr/bin/env zsh
+alias commitall-aider='aider --commit --model openrouter/google/gemini-2.5-flash --no-gitignore'
+alias commitadd='wt step commit --stage tracked'
+alias commitadd='wt step commit --stage none'
+# alias gemini='node /home/skogix/.local/src/gemini-cli/scripts/start.js'
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+alias wts='wt select'

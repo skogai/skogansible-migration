@@ -16,15 +16,16 @@ git_install: true
 git_deploy_config: true
 git_config_template: "gitconfig.j2"
 
-# User information (CUSTOMIZE THESE!)
-git_user_name: "skogix"
+# User information (from live config)
+git_user_name: "Emil Skogsund"
 git_user_email: "emil@skogsund.se"
 
 # ==============================================================================
 # Git Core Settings
 # ==============================================================================
 
-git_core_editor: "nvim"
+git_editor: "nvim"
+git_pager: "diff-so-fancy | less --tabs=4 -RFX"
 git_default_branch: "master"
 git_pull_rebase: true # Use rebase instead of merge on pull
 git_push_default: "simple"
@@ -35,7 +36,6 @@ git_push_autoSetupRemote: true # Automatically setup remote tracking
 # ==============================================================================
 
 git_color_ui: true
-git_pager: "less -FRX"
 
 # ==============================================================================
 # Git Aliases
@@ -92,11 +92,27 @@ git_aliases:
   cleanup: "!git branch --merged | grep -v '*' | grep -v 'main' | grep -v 'master' | xargs -r git branch -d"
   find: "!git log --all --oneline --graph --decorate | grep -i"
 
+  # Quantum computing themed aliases
+  quantum-state: "log --graph --all --oneline --decorate"
+  superposition: "branch --contains"
+  entanglement: "log --format=%h %an %s --name-only --diff-filter=M"
+  collapse: "commit"
+  teleport: "cherry-pick"
+  dimension: "branch"
+  multiverse: "remote"
+
 # ==============================================================================
 # Credential Management
 # ==============================================================================
 
-git_configure_credentials: false
+git_configure_credentials: true
+
+# GitHub CLI integration for credentials
+git_credential_helpers:
+  - url: "https://github.com"
+    helper: "!/usr/bin/gh auth git-credential"
+  - url: "https://gist.github.com"
+    helper: "!/usr/bin/gh auth git-credential"
 
 # SECURITY WARNING:
 #   - "store" mode saves passwords in PLAINTEXT at ~/.git-credentials
@@ -190,6 +206,10 @@ git_core_autocrlf: "input"
 git_core_filemode: true
 git_core_ignorecase: true
 
+# Safe directories
+git_safe_directories:
+  - "/home/skogix/skogai"
+
 # Push settings
 git_push_followTags: true
 
@@ -199,10 +219,12 @@ git_pull_ff: "false" # Don't fast-forward pulls (rebase instead)
 # Merge settings
 git_merge_ff: "true" # Allow fast-forward merges when possible
 git_merge_conflictstyle: "diff3"
+git_merge_tool: ""
 
 # Diff settings
 git_diff_algorithm: "histogram"
-git_diff_colorMoved: "default"
+git_diff_colorMoved: "plain"
+git_diff_mnemonicPrefix: true
 
 # Rebase settings
 git_rebase_autosquash: true
@@ -219,19 +241,25 @@ git_rerere_autoupdate: true
 # Submodules
 git_submodule_recurse: true
 
+# Column UI
+git_column_ui: "auto"
+
+# Branch settings
+git_branch_sort: "-committerdate"
+
 # ==============================================================================
 # Repository Management (Disabled by default - customize as needed)
 # ==============================================================================
 
-git_clone_repos: true
+git_clone_repos: false
 
 # Example repository configuration (uncomment and customize):
-git_repositories:
-  - repo: "https://github.com/SkogAI/config.git"
-    dest: "{{ ansible_facts['env']['HOME'] }}/skogai/docs"
-    version: "master"
-    update: true
-    depth: 0
+# git_repositories:
+#   - repo: "https://github.com/SkogAI/config.git"
+#     dest: "{{ ansible_facts['env']['HOME'] }}/skogai/config"
+#     version: "master"
+#     update: true
+#     depth: 0
 
 # ==============================================================================
 # Git Hooks (Disabled by default)
@@ -239,14 +267,11 @@ git_repositories:
 
 git_deploy_hooks: true
 
-# Example hooks configuration (uncomment to enable):
-# git_hooks:
-#   - name: "pre-commit"
-#     template: "pre-commit.j2"
-#     mode: "0755"
-#   - name: "commit-msg"
-#     template: "commit-msg.j2"
-#     mode: "0755"
+# Example hooks configuration
+git_hooks:
+  - name: "pre-commit"
+    template: "example-pre-commit.j2"
+    mode: "0755"
 
 # ==============================================================================
 # Git LFS (Disabled by default)
@@ -256,16 +281,26 @@ git_lfs_install: true
 git_lfs_user_install: true
 
 # ==============================================================================
-# Commit/Tag Signing (Disabled by default)
+# Commit/Tag Signing (SSH-based signing enabled)
 # ==============================================================================
 
+# GPG signing (disabled - using SSH instead)
 git_gpg_sign_commits: false
 git_gpg_sign_tags: false
 # git_gpg_key_id: "YOUR_GPG_KEY_ID"
 
-git_ssh_sign_commits: false
-git_ssh_sign_tags: false
-# git_ssh_signing_key: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519.pub"
+# SSH signing (enabled)
+git_ssh_sign_commits: true
+git_ssh_sign_tags: true
+git_ssh_signing_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDFoUpUb/CaUNSMW3jAEmjBK0OUe3r+NgdKwxyl63NB4"
+git_gpg_ssh_program: "ssh-keygen"
+
+# Commit settings
+git_commit_verbose: true
+
+# Tag settings
+git_tag_forceSignAnnotated: true
+git_tag_sort: "-version:refname"
 
 # ==============================================================================
 # Repository-Specific Configuration (Disabled by default)

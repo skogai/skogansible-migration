@@ -1,0 +1,10 @@
+---
+# Deploy .zshrc file
+
+- name: "zsh | Deploy .zshrc from template"
+  ansible.builtin.template:
+    src: "{{ zsh_zshrc_template }}"
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    mode: '0644'
+    backup: "{{ zsh_backup_existing }}"
+  tags: [zsh, zsh-zshrc]

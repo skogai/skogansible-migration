@@ -14,7 +14,7 @@ The repository follows standard Ansible structure:
 
 - **Core files:** ansible.cfg, playbook.yml, .inventory, .requirements.yml
 - **Execution scripts:** bootstrap.sh (setup), run.sh (execution)
-- **Roles:** packages/, ssh/, git/, chezmoi/ (each with tasks/, templates/, defaults/, meta/)
+- **Roles:** users/, packages/, ssh/, git/, chezmoi/, zsh/, cloudflared/ (each with tasks/, templates/, defaults/, meta/)
 - **Variables:** vars/ directory with role-specific configuration files
 - **Documentation:** docs/ with primitives reference and historical repos
 - **Collections:** Installed Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
@@ -24,7 +24,7 @@ The repository follows standard Ansible structure:
 - **Become method:** `become: true` on individual tasks (not playbook level)
 - **Sudo password:** Set via `$ANSIBLE_BECOME_PASSWORD_FILE` exported by `skogcli` through `.envrc`
 - **Python interpreter:** Hardcoded venv path in `ansible.cfg`: `/home/skogix/.ansible/.venv/bin/python`
-- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, git.yml, chezmoi.yml, user.yml)
+- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, git.yml, chezmoi.yml, zsh.yml, user.yml)
 - **AUR support:** Dedicated `aur_builder` user for secure AUR package building
 - **Git automation:** Standardized, reusable task files for all common git operations
 - **Chezmoi integration:** Templates `.chezmoidata.yaml` for machine-specific dotfiles configuration
@@ -121,12 +121,14 @@ wt remove feature-name
 **Run playbook:**
 
 ```bash
-./run.sh                      # Run all roles (packages + ssh + git + chezmoi)
+./run.sh                      # Run all roles (users + packages + ssh + git + chezmoi + zsh)
 ./run.sh --check             # Dry-run mode
+./run.sh --tags users        # Run only user management
 ./run.sh --tags packages     # Run only package management
 ./run.sh --tags ssh          # Run only SSH configuration
 ./run.sh --tags git          # Run only Git configuration
 ./run.sh --tags chezmoi      # Run only Chezmoi configuration
+./run.sh --tags zsh          # Run only Zsh configuration
 ./run.sh --tags aur          # Run only AUR-related tasks
 ```
 
@@ -143,15 +145,21 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 
 **Active Roles:**
 
+- ✅ **users** - User and group management with security foundation
 - ✅ **packages** - Official Arch repository packages via pacman (61 packages)
 - ✅ **packages** - AUR packages via yay (7 packages)
 - ✅ **ssh** - SSH directory setup, key deployment, config management, known_hosts
 - ✅ **git** - Comprehensive Git configuration and repository management
 - ✅ **chezmoi** - Dotfiles management via machine-specific configuration templating
+- ✅ **zsh** - Modular shell configuration with numbered load-order directories
 - ✅ **cloudflared** - Cloudflare Tunnel with secure vault token storage
+- ✅ **zsh** - Modular ZSH configuration with recursive loader
 
 **Features:**
 
+- ✅ User creation and management from vars/user.yml
+- ✅ Group management and user group membership
+- ✅ Foundation for future security and privilege configuration
 - ✅ AUR builder user setup with secure sudo config
 - ✅ SSH key deployment from encrypted vault
 - ✅ SSH config template with connection multiplexing
@@ -173,7 +181,73 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 - ✅ Cloudflare Tunnel token deployment from encrypted vault
 - ✅ Systemd service configuration with token-file (no plaintext secrets)
 - ✅ Cloudflared service enablement and management
+- ✅ Modular zsh configuration (29 files in numbered directories)
+- ✅ Minimal .zshrc with loader pattern
+- ✅ Deterministic load order (00-path through 90-skogai)
+- ✅ Auto-export for .env files
 - ⏸️ Additional system configuration (see `docs/system-inventory-by-primitives.md`)
+
+## Users Role Configuration
+
+The Users role manages system users and groups, ensuring users and groups defined in `vars/user.yml` are reflected on the system. It provides a foundation for future security and privilege management.
+
+**Quick Start (Default behavior):**
+
+- Creates system groups (e.g., `skogai`)
+- Creates/updates users from `vars/user.yml`
+- Sets correct group membership for users
+- Creates home directories if needed
+
+**To customize users and groups:**
+
+1. Edit `vars/user.yml` to add/remove users:
+
+   ```yaml
+   users:
+     - name: username
+       groups_base:
+         - wheel       # sudo access
+         - skogai      # custom group
+       shell: /bin/zsh # optional
+       comment: "User Description" # optional
+   ```
+
+2. Run: `./run.sh --tags users`
+
+**Available Features (configure in defaults/main.yml or vars):**
+
+- `users_ensure_users: true` - Ensure users exist on system
+- `users_ensure_groups: true` - Ensure groups exist on system
+- `users_create_home: true` - Create home directories
+- `users_default_shell: "/bin/bash"` - Default shell for users
+- `users_configure_sudo: false` - Configure sudo (disabled by default)
+
+**System Groups:**
+
+Default system groups created:
+
+```yaml
+users_system_groups:
+  - name: skogai
+    gid: 1100
+    system: false
+```
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags users          # All user management tasks
+./run.sh --tags users-groups   # Only group management
+./run.sh --tags users-ensure   # Only user management
+```
+
+**Separation from Packages Role:**
+
+- User management is conceptually separate from package installation
+- `aur_builder` user remains in packages role (package-specific)
+- Users role provides foundation for future security tasks (sudo, chown, chmod)
+
+**See:** `roles/users/README.md` for complete documentation.
 
 ## Packages Role Configuration
 
@@ -500,6 +574,132 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 
 **See also:** `docs/CLOUDFLARED_SETUP.md` for comprehensive setup guide.
 
+<<<<<<< HEAD
+
+## ZSH Role Configuration
+
+The ZSH role deploys modular shell configuration using numbered directories and a recursive loader.
+
+**Quick Start (Default behavior):**
+
+- Deploys entire `zsh.d/` directory structure
+- Minimal configuration (PATH, history, options, completions)
+- Recursive loader handles `.zsh`, `.sh`, `.conf`, and `.env` files
+
+**To customize zsh configuration:**
+
+1. Add files to `roles/zsh/files/zsh.d/[module]/`:
+
+   ```bash
+   # Example: Add editor export
+   cat > roles/zsh/files/zsh.d/60-exports/editor.zsh << 'EOF'
+   export EDITOR='nvim'
+   export VISUAL='nvim'
+   EOF
+   ```
+
+2. Run: `./run.sh --tags zsh-config`
+
+**Available Modules:**
+
+- `00-path/` - PATH configuration (loaded first)
+- `10-settings/` - Shell options and history
+- `20-functions/` - Custom shell functions
+- `30-aliases/` - Command aliases
+- `40-completions/` - Completion system
+- `50-secrets/` - API keys (use `.env` files)
+- `60-exports/` - Environment exports
+- `90-skogai/` - SkogAI integration (loaded last)
+
+**File Type Handling:**
+
+- `.zsh`, `.sh`, `.conf` - Sourced normally
+- `.env` - Sourced with `set -o allexport` (auto-exports variables)
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags zsh-config    # Deploy config only
+./run.sh --tags zsh-zshrc     # Deploy .zshrc only
+./run.sh --tags zsh           # Deploy everything
+```
+
+**Current Configuration:**
+
+The role currently deploys:
+
+- Loader with recursive loading and `.env` support
+- PATH setup for user binaries and toolchains
+- 50,000 command history with smart filtering
+- Shell options (auto-cd, directory stack, etc.)
+- Completion system initialization
+
+**See:** `roles/zsh/README.md` for complete documentation.
+
+||||||| parent of 55abd31 (Squash commits from master)
+=======
+
+## Zsh Role Configuration
+
+The Zsh role deploys modular shell configuration with numbered load-order directories. All features are **configurable via vars/zsh.yml**.
+
+**Quick Start (Default behavior):**
+
+- Installs zsh package
+- Deploys `~/.config/zsh.d/` directory structure (29 files)
+- Creates minimal `.zshrc` that sources the loader
+
+**To customize zsh configuration:**
+
+1. Edit files in `roles/zsh/files/zsh.d/` directories
+2. Run: `./run.sh --tags zsh`
+
+**Directory Structure (zsh.d/):**
+
+```
+~/.config/zsh.d/
+├── loader.zsh           # Sources all config files
+├── 00-path/             # PATH exports (loads first)
+├── 10-settings/         # Shell settings (8 files)
+├── 20-functions/        # Shell functions (4 files)
+├── 30-aliases/          # Aliases (5 files)
+├── 40-completions/      # Completion config (2 files)
+├── 50-secrets/          # API keys (1 file)
+├── 60-exports/          # Environment exports (2 files)
+└── 90-skogai/           # SkogAI tools (5 files)
+```
+
+**loader.zsh Behavior:**
+
+- Sources `.zsh`, `.sh`, `.conf` files normally
+- Sources `.env` files with `allexport` (auto-exports all variables)
+
+**Available Zsh Features (configure in vars/zsh.yml):**
+
+- `zsh_install: true` - Install zsh package
+- `zsh_deploy_config: true` - Deploy zsh.d structure to ~/.config
+- `zsh_set_default_shell: false` - Set zsh as default shell
+
+**Granular tag support:**
+
+```bash
+./run.sh --tags zsh              # All zsh tasks
+./run.sh --tags zsh-install      # Only install zsh
+./run.sh --tags zsh-config       # Only deploy configuration
+./run.sh --tags zsh-default-shell # Only set default shell
+```
+
+**Design Decisions:**
+
+- **Minimal .zshrc** - Single line: `source ~/.config/zsh.d/loader.zsh`
+- **Ansible owns everything** - Chezmoi doesn't manage zsh config
+- **Numbered directories** - Deterministic load order (00 → 90)
+- **No plugin manager dependency** - Direct sourcing, no external deps
+
+**See:** `roles/zsh/README.md` for complete documentation.
+
+>>>>>>> 55abd31 (Squash commits from master)
+>>>>>>>
 ## Reference
 
 ### Essential Reading
@@ -510,11 +710,13 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 
 ### Role Documentation
 
+- @roles/users/README.md - Users role documentation
 - @roles/packages/README.md - Packages role documentation
 - @roles/chezmoi/README.md - Chezmoi role documentation
 - @roles/ssh/README.md - SSH role documentation
 - @roles/git/README.md - Git role documentation
 - @roles/cloudflared/README.md - Cloudflared role documentation
+- @roles/zsh/README.md - Zsh role documentation
 
 ### System Expansion
 

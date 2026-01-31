@@ -1,0 +1,24 @@
+---
+# Users Role - Main Tasks Orchestrator
+
+# ==============================================================================
+# Group Management
+# ==============================================================================
+
+- name: "Users | Ensure system groups"
+  ansible.builtin.include_tasks: ensure_groups.yml
+  when: users_ensure_groups
+  tags:
+    - users
+    - users-groups
+
+# ==============================================================================
+# User Management
+# ==============================================================================
+
+- name: "Users | Ensure users exist"
+  ansible.builtin.include_tasks: ensure_users.yml
+  when: users_ensure_users
+  tags:
+    - users
+    - users-ensure

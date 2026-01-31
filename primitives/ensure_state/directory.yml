@@ -1,0 +1,29 @@
+---
+# Primitive: Directory Management
+# Usage: include_tasks primitives/ensure_state/directory.yml
+#
+# Required vars:
+#   directory_path: Path to directory
+#
+# Optional vars:
+#   directory_state: (default: directory) State (directory, absent)
+#   directory_mode: Permissions mode (e.g., '0755')
+#   directory_owner: Directory owner
+#   directory_group: Directory group
+#   directory_recurse: (default: false) Recursively set permissions
+#
+# Example:
+#   - include_tasks: primitives/ensure_state/directory.yml
+#     vars:
+#       directory_path: "{{ ansible_user_dir }}/.ssh"
+#       directory_mode: '0700'
+#       directory_owner: "{{ ansible_user_id }}"
+
+- name: "Primitive | Ensure directory {{ directory_state | default('directory') }}: {{ directory_path }}"
+  ansible.builtin.file:
+    path: "{{ directory_path }}"
+    state: "{{ directory_state | default('directory') }}"
+    mode: "{{ directory_mode | default(omit) }}"
+    owner: "{{ directory_owner | default(omit) }}"
+    group: "{{ directory_group | default(omit) }}"
+    recurse: "{{ directory_recurse | default(false) }}"

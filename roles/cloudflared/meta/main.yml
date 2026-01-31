@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: SkogAI
-  description: Cloudflare Tunnel management with secure token storage
+  description: Cloudflare Tunnel management with proper credential deployment
   company: SkogAI
   license: MIT
   min_ansible_version: "2.10"

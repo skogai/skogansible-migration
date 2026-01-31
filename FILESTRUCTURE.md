@@ -26,6 +26,14 @@ SkogAI/skogansible/
 ├── .worktrees/                          # Git worktrees directory (isolated development)
 │   └── .gitkeep                         # Keeps directory in git (worktrees are gitignored)
 │
+├── primitives/                          # Reusable Ansible primitives (atomic operations)
+│   ├── README.md                        # Primitives documentation and usage guide
+│   └── ensure_state/                    # State management primitives
+│       ├── directory.yml                # Idempotent directory creation with permissions
+│       ├── file.yml                     # File state management (present/absent/copy)
+│       ├── package.yml                  # Package installation wrapper (pacman/apt/dnf)
+│       └── service.yml                  # Service state management (systemd)
+│
 ├── roles/                               # Ansible roles directory
 │   ├── packages/                        # Package management role (pacman + AUR)
 │   │   ├── tasks/
@@ -39,7 +47,8 @@ SkogAI/skogansible/
 │   │
 │   ├── ssh/                             # SSH configuration role
 │   │   ├── tasks/
-│   │   │   └── main.yml                 # SSH tasks (keys, config, known_hosts, authorized_keys)
+│   │   │   ├── main.yml                 # SSH tasks (keys, config, known_hosts, authorized_keys)
+│   │   │   └── setup_with_primitives.yml # Example: SSH tasks refactored using primitives
 │   │   ├── templates/
 │   │   │   └── ssh_config.j2            # SSH config template (connection multiplexing, aliases)
 │   │   ├── examples/                    # Example configurations
@@ -87,15 +96,37 @@ SkogAI/skogansible/
 │   │   ├── handlers/main.yml            # Handlers for chezmoi role
 │   │   └── meta/main.yml                # Role metadata
 │   │
-│   └── cloudflared/                     # Cloudflare Tunnel management role
+│   ├── cloudflared/                     # Cloudflare Tunnel management role
+│   │   ├── tasks/
+│   │   │   └── main.yml                 # Cloudflared tasks (token deployment, service management)
+│   │   ├── templates/
+│   │   │   └── cloudflared.service.j2   # Systemd service template (uses --token-file)
+│   │   ├── defaults/main.yml            # Default variables for cloudflared role
+│   │   ├── handlers/main.yml            # Handlers for cloudflared role (daemon-reload, restart)
+│   │   ├── meta/main.yml                # Role metadata
+│   │   └── README.md                    # Complete Cloudflared role documentation
+│   │
+│   └── zsh/                             # Zsh shell configuration role
 │       ├── tasks/
-│       │   └── main.yml                 # Cloudflared tasks (token deployment, service management)
-│       ├── templates/
-│       │   └── cloudflared.service.j2   # Systemd service template (uses --token-file)
-│       ├── defaults/main.yml            # Default variables for cloudflared role
-│       ├── handlers/main.yml            # Handlers for cloudflared role (daemon-reload, restart)
+│       │   ├── main.yml                 # Zsh tasks orchestration
+│       │   ├── configure.yml            # Deploy zsh.d directory and .zshrc
+│       │   └── default_shell.yml        # Set zsh as default shell
+│       ├── files/
+│       │   └── zsh.d/                   # Modular zsh configuration (29 files)
+│       │       ├── loader.zsh           # Main loader (sources all config)
+│       │       ├── 00-path/             # PATH exports
+│       │       ├── 10-settings/         # Shell settings (8 files)
+│       │       ├── 20-functions/        # Shell functions (4 files)
+│       │       ├── 30-aliases/          # Aliases (5 files)
+│       │       ├── 40-completions/      # Completion config (2 files)
+│       │       ├── 50-secrets/          # API keys (1 file)
+│       │       ├── 60-exports/          # Environment exports (2 files)
+│       │       └── 90-skogai/           # SkogAI tools (5 files)
+│       ├── defaults/main.yml            # Default variables for zsh role
+│       ├── handlers/main.yml            # Handlers for zsh role
 │       ├── meta/main.yml                # Role metadata
-│       └── README.md                    # Complete Cloudflared role documentation
+│       ├── vars/main.yml                # Role variables
+│       └── README.md                    # Complete Zsh role documentation
 │
 ├── vars/                                # Variable files (role-specific configuration)
 │   ├── main.yml                         # Shared variables across roles
@@ -107,6 +138,7 @@ SkogAI/skogansible/
 │   ├── cloudflared.yml                  # Cloudflared configuration (deployment flags, extra args)
 │   ├── cloudflared_vault.yml            # Encrypted Cloudflare tunnel token (ansible-vault)
 │   ├── cloudflared_vault.yml.template   # Template for creating vault file
+│   ├── zsh.yml                          # Zsh role configuration (deploy flags)
 │   └── user.yml                         # User-specific variables (username, groups, shell)
 │
 ├── docs/                                # Documentation directory
@@ -181,6 +213,21 @@ SkogAI/skogansible/
 - **docs/primitives/system-inventory-by-primitives.md** - Complete system automation roadmap organized by primitives
 - **docs/repos/CLAUDE.md** - Historical documentation consolidation guide for 7 previous ansible repositories
 
+### Primitives
+
+Reusable, atomic Ansible task files organized by operation type. Primitives provide building blocks for composing roles and playbooks.
+
+#### primitives/ensure_state/
+
+State management primitives for ensuring resources exist with desired properties:
+
+- **directory.yml** - Idempotent directory creation with owner, group, and mode
+- **file.yml** - File state management (present, absent, touch) with copy and content support
+- **package.yml** - Multi-distro package installation wrapper (pacman, apt, dnf)
+- **service.yml** - Systemd service management (start, stop, enable, disable, daemon-reload)
+
+See `primitives/README.md` for usage patterns and examples.
+
 ### Roles
 
 Each role follows standard Ansible structure with tasks/, templates/, defaults/, handlers/, and meta/ directories.
@@ -205,6 +252,10 @@ Manages dotfiles by templating machine-specific .chezmoidata.yaml configuration 
 
 Manages Cloudflare Tunnel with secure token storage using ansible-vault. Deploys tunnel token from encrypted vault, configures systemd service with --token-file flag (no plaintext secrets), and manages service enablement.
 
+#### zsh/
+
+Manages zsh shell configuration with modular zsh.d structure. Deploys numbered configuration directories (00-path through 90-skogai) to ~/.config/zsh.d/ with a minimal .zshrc that sources the loader. Supports deterministic load order, .env files with auto-export, and clean separation of concerns.
+
 ### Variables
 
 All role-specific configuration stored in `vars/` directory:
@@ -217,6 +268,7 @@ All role-specific configuration stored in `vars/` directory:
 - **cloudflared.yml** - Cloudflared configuration (deployment flags, extra args)
 - **cloudflared_vault.yml** - Encrypted Cloudflare tunnel token (use ansible-vault to edit)
 - **cloudflared_vault.yml.template** - Template for creating vault file
+- **zsh.yml** - Zsh role configuration (deploy config, default shell flags)
 - **user.yml** - User-specific variables (username, groups, shell)
 - **main.yml** - Shared variables across all roles
 
@@ -249,11 +301,12 @@ The following directories are excluded from version control (see .gitignore):
 
 ## File Counts
 
-- **5 roles** - packages, ssh, git, chezmoi, cloudflared
-- **10 variable files** - Role-specific configuration
-- **13+ task files** - Modular task definitions
+- **6 roles** - packages, ssh, git, chezmoi, cloudflared, zsh
+- **11 variable files** - Role-specific configuration
+- **16+ task files** - Modular task definitions
+- **29 zsh config files** - Modular shell configuration in zsh.d/
 - **7+ templates** - Jinja2 templates for configs and hooks
-- **12+ documentation files** - Reference and historical docs
+- **13+ documentation files** - Reference and historical docs (includes primitives README)
 - **3 collections** - Ansible Galaxy collections installed
 
 ---

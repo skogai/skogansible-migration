@@ -13,7 +13,7 @@ chezmoi_ensure_installed: true
 chezmoi_init_source: true
 
 # Chezmoi source directory
-chezmoi_source_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+chezmoi_source_dir: "{{ ansible_facts['user_dir'] }}/.local/share/chezmoi"
 
 # Whether to deploy .chezmoidata.yaml configuration
 chezmoi_deploy_config: true
@@ -49,8 +49,8 @@ chezmoi_personal: true
 chezmoi_work: false
 
 # Display environment
-chezmoi_headless: false  # Auto-true for WSL
-chezmoi_gui: true        # Auto-false for headless
+chezmoi_headless: false # Auto-true for WSL
+chezmoi_gui: true # Auto-false for headless
 
 # ==============================================================================
 # DESKTOP ENVIRONMENT
@@ -103,9 +103,10 @@ chezmoi_agents:
 
 # SkogAI directory paths
 # Comment out if not using SkogAI
-chezmoi_skogai_home: "{{ ansible_user_dir }}/skogai"
-chezmoi_skogai_docs: "{{ ansible_user_dir }}/skogai/docs"
-chezmoi_skogai_tools: "{{ ansible_user_dir }}/skogai/tools"
+chezmoi_skogai_home: "{{ ansible_facts['user_dir'] }}/skogai"
+chezmoi_skogai_docs: "{{ ansible_facts['user_dir'] }}/skogai/docs"
+chezmoi_skogai_tools: "{{ ansible_facts['user_dir'] }}/skogai/tools"
+chezmoi_skogai_ansible: "{{ ansible_facts['user_dir'] }}/.ansible"
 
 # ==============================================================================
 # ENVIRONMENT-SPECIFIC SETTINGS
