@@ -36,6 +36,13 @@ users:
     groups_base:
       - wheel # sudo access
       - skogai # SkogAI group for all system users
+  - name: letta
+    git_email: letta@skogai.se
+    git_name: letta
+    editor: nvim
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
   - name: goose
     git_email: goose@skogai.se
     git_name: goose
@@ -43,10 +50,10 @@ users:
     groups_base:
       - wheel # sudo access
       - skogai # SkogAI group for all system users
-  # - name: skogai
-  #   git_email: skogai@skogai.se
-  #   git_name: skogai
-  #   editor: nvim
-  #   groups_base:
-  #     - wheel # sudo access
-  #     - skogai # SkogAI group
+  - name: skogai
+    git_email: skogai@skogai.se
+    git_name: skogai
+    editor: nvim
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group
