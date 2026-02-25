@@ -1,4 +1,0 @@
-[submodule ".skogai"]
-	path = .skogai
-	url = git@github.com:SkogAI/.skogai.git
-	branch = develop
