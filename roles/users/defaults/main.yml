@@ -13,7 +13,7 @@ users_ensure_users: true
 users_create_home: true
 
 # Default shell for users (can be overridden per user)
-users_default_shell: "/bin/bash"
+users_default_shell: "/bin/zsh"
 
 # ==============================================================================
 # Group Management
@@ -34,7 +34,7 @@ users_system_groups:
 # ==============================================================================
 
 # Configure sudo access for wheel group members
-users_configure_sudo: false
+users_configure_sudo: true
 
 # Validate sudoers file after changes (recommended)
 users_validate_sudoers: true
