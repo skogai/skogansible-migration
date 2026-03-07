@@ -60,7 +60,7 @@ packages:
   # - network-manager-applet
   # - networkmanager
   # - nvidia-dkms
-  # - nvm
+  - nvm
   # - ollama-cuda
   # - pgbouncer
   # - pgcli
