@@ -142,7 +142,6 @@ git_global_gitignore_patterns:
   # Editor Files
   - "*.swp"
   - "*.swo"
-  - "*~"
   - ".vscode/"
   - ".idea/"
   - "*.sublime-*"
