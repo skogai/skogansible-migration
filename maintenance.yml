@@ -1,14 +1,10 @@
 ---
 # Maintenance playbook - updates and cleanup only
 # Use for regular system maintenance without changing configuration
+# Variables are auto-loaded from group_vars/all/
 - name: Maintain Arch Linux system
   hosts: all
   connection: local
-
-  vars_files:
-    - ../vars/main.yml
-    - ../vars/user.yml
-    - ../vars/packages.yml
 
   roles:
     - role: packages

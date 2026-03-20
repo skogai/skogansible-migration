@@ -77,20 +77,20 @@ Ansible variable hierarchy (lowest to highest precedence):
 
 2. **`roles/<role>/vars/main.yml`** - Your personal standard configuration
    - Your typical preferences for this role
-   - References/pass through to the global value from `./vars/main.yml`
+   - References/pass through to the global value from `group_vars/all/main.yml`
    - Allows for granular configuration changes while still using global settings as default
    - Example: `git_user_name: "{{ user_name }}"`
 
-3. **`./vars/main.yml`** - Shared variables (source of truth)
+3. **`group_vars/all/main.yml`** - Shared variables (source of truth, auto-loaded)
    - Variables used by MULTIPLE roles
    - Global user info, paths, common settings
    - Example: `user_name: "skogix"`, `editor: "nvim"`
 
-4. **`./vars/<role>.yml`** - Role-specific overrides
+4. **`group_vars/all/<role>.yml`** - Role-specific overrides (auto-loaded)
    - Deployment-specific overrides for individual roles
    - Example: `user_email: "skogix@skogai.se"` (work machine)
 
-5. **`./vars/<role>_vault.yml`** - Encrypted secrets
+5. **`group_vars/all/<role>_vault.yml`** - Encrypted secrets (auto-loaded)
    - Sensitive data encrypted with ansible-vault
    - Example: SSH private keys, API tokens
 
@@ -120,7 +120,7 @@ Ansible variable hierarchy (lowest to highest precedence):
 
   ```yaml
   # ROLE Role - Default Variables
-  # Override these in your playbook, inventory, or vars/ROLE.yml
+  # Override these in your playbook, inventory, or group_vars/all/ROLE.yml
   ```
 
 - Every variable MUST have explanatory comment above it
@@ -174,12 +174,14 @@ Ansible variable hierarchy (lowest to highest precedence):
 
 ## Playbook Organization
 
-Use `playbooks/` directory for different deployment scenarios:
+Playbooks live at the project root (Ansible best practice):
 
 - **site.yml** - Main playbook (all roles, complete setup)
 - **workstation.yml** - Full desktop/development environment
 - **bootstrap.yml** - Minimal initial setup (fresh install)
 - **maintenance.yml** - Updates and cleanup only
+
+Variables are auto-loaded from `group_vars/all/` — no `vars_files:` needed.
 
 Usage:
 
@@ -204,8 +206,8 @@ Backwards compatibility: `./run.sh` (no args) uses `default.yml`
 
 **Encryption requirement:**
 
-- All `vars/*vault*.yml` files MUST be encrypted with ansible-vault
-- Verify: `file vars/*vault*.yml` should show "Ansible Vault, version 1.1, encryption AES256"
+- All `group_vars/all/*vault*.yml` files MUST be encrypted with ansible-vault
+- Verify: `file group_vars/all/*vault*.yml` should show "Ansible Vault, version 1.1, encryption AES256"
 
 **Password file permissions:**
 
@@ -240,7 +242,7 @@ Before committing changes with secrets:
 
 ```bash
 # Verify vault files are encrypted
-file vars/*vault*.yml
+file group_vars/all/*vault*.yml
 
 # Check for accidental plaintext secrets
 grep -r "password\|token\|secret" . --include="*.yml" | grep -v vault | grep -v example

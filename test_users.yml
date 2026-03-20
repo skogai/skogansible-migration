@@ -1,12 +1,10 @@
 ---
 # Test playbook for users role - no vault files required
+# Variables are auto-loaded from group_vars/all/
 - name: Test users role
   hosts: localhost
   connection: local
   gather_facts: true
-
-  vars_files:
-    - ../vars/user.yml
 
   vars:
     # Override defaults for testing

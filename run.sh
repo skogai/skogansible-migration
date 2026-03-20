@@ -40,7 +40,7 @@ if [[ "$1" == *.yml ]]; then
 fi
 
 # Run playbook with remaining arguments
-ansible-playbook "./playbooks/$ANSIBLE_PLAYBOOK" -i .inventory \
+ansible-playbook "./$ANSIBLE_PLAYBOOK" -i inventory/hosts \
   --vault-password-file="$ANSIBLE_VAULT_PASSWORD_FILE" \
   --become-password-file="$ANSIBLE_BECOME_PASSWORD_FILE" \
   "$@"

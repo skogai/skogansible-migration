@@ -1,20 +1,9 @@
 ---
 # Workstation setup - full desktop/development environment
+# Variables are auto-loaded from group_vars/all/
 - name: Configure Arch Linux workstation
   hosts: all
   connection: local
-
-  vars_files:
-    - ../vars/main.yml
-    - ../vars/packages.yml
-    - ../vars/ssh.yml
-    - ../vars/ssh_vault.yml
-    - ../vars/user.yml
-    - ../vars/git.yml
-    - ../vars/chezmoi.yml
-    - ../vars/cloudflared.yml
-    - ../vars/cloudflared_vault.yml
-    - ../vars/filesystems.yml
 
   roles:
     - role: users

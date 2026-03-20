@@ -1,7 +1,7 @@
 #!/bin/bash
 # Check that all Ansible vault files are encrypted with AES256
 
-for file in vars/*vault*.yml; do
+for file in group_vars/all/*vault*.yml; do
     # Skip if no vault files exist
     [ ! -f "$file" ] && continue
 

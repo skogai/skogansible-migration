@@ -12,10 +12,11 @@ Ansible setup for managing Arch Linux system packages, AUR packages, SSH configu
 
 The repository follows standard Ansible structure:
 
-- **Core files:** ansible.cfg, playbook.yml, .inventory, .requirements.yml
+- **Core files:** ansible.cfg, requirements.yml, inventory/hosts
 - **Execution scripts:** bootstrap.sh (setup), run.sh (execution)
-- **Roles:** users/, packages/, ssh/, git/, chezmoi/, zsh/, cloudflared/ (each with tasks/, templates/, defaults/, meta/)
-- **Variables:** vars/ directory with role-specific configuration files
+- **Playbooks:** site.yml, default.yml, workstation.yml, bootstrap.yml, maintenance.yml (at project root)
+- **Roles:** roles/ directory — users/, packages/, ssh/, git/, chezmoi/, zsh/, cloudflared/ (each with tasks/, templates/, defaults/, meta/)
+- **Variables:** group_vars/all/ directory with role-specific configuration files (auto-loaded by Ansible)
 - **Documentation:** docs/ with primitives reference and historical repos
 - **Collections:** Installed Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
 
@@ -24,7 +25,7 @@ The repository follows standard Ansible structure:
 - **Become method:** `become: true` on individual tasks (not playbook level)
 - **Sudo password:** Set via `$ANSIBLE_BECOME_PASSWORD_FILE` exported by `skogcli` through `.envrc`
 - **Python interpreter:** Hardcoded venv path in `ansible.cfg`: `/home/skogix/.ansible/.venv/bin/python`
-- **Variable organization:** Role-specific vars files (packages.yml, ssh.yml, git.yml, chezmoi.yml, zsh.yml, user.yml)
+- **Variable organization:** Role-specific vars files in group_vars/all/ (packages.yml, ssh.yml, git.yml, chezmoi.yml, zsh.yml, users.yml) — auto-loaded by Ansible
 - **AUR support:** Dedicated `aur_builder` user for secure AUR package building
 - **Git automation:** Standardized, reusable task files for all common git operations
 - **Chezmoi integration:** Templates `.chezmoidata.yaml` for machine-specific dotfiles configuration
@@ -135,7 +136,7 @@ wt remove feature-name
 **SSH key deployment (requires vault password):**
 
 ```bash
-# Enable in vars/ssh.yml first:
+# Enable in group_vars/all/ssh.yml first:
 # ssh_deploy_from_vault: true
 
 ansible-playbook playbook.yml --tags ssh --ask-vault-pass
@@ -157,7 +158,7 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 
 **Features:**
 
-- ✅ User creation and management from vars/user.yml
+- ✅ User creation and management from group_vars/all/users.yml
 - ✅ Group management and user group membership
 - ✅ Foundation for future security and privilege configuration
 - ✅ AUR builder user setup with secure sudo config
@@ -189,18 +190,18 @@ ansible-playbook playbook.yml --tags ssh --ask-vault-pass
 
 ## Users Role Configuration
 
-The Users role manages system users and groups, ensuring users and groups defined in `vars/user.yml` are reflected on the system. It provides a foundation for future security and privilege management.
+The Users role manages system users and groups, ensuring users and groups defined in `group_vars/all/users.yml` are reflected on the system. It provides a foundation for future security and privilege management.
 
 **Quick Start (Default behavior):**
 
 - Creates system groups (e.g., `skogai`)
-- Creates/updates users from `vars/user.yml`
+- Creates/updates users from `group_vars/all/users.yml`
 - Sets correct group membership for users
 - Creates home directories if needed
 
 **To customize users and groups:**
 
-1. Edit `vars/user.yml` to add/remove users:
+1. Edit `group_vars/all/users.yml` to add/remove users:
 
    ```yaml
    users:
@@ -257,14 +258,14 @@ The Packages role manages system packages from official Arch repositories and AU
 
 - Updates pacman package database
 - Upgrades all installed packages
-- Installs packages from `vars/packages.yml`
+- Installs packages from `group_vars/all/packages.yml`
 - Creates dedicated aur_builder user for security
 - Installs yay AUR helper from source
 - Installs AUR packages securely
 
 **To customize package lists:**
 
-1. Edit `vars/packages.yml` to add/remove packages:
+1. Edit `group_vars/all/packages.yml` to add/remove packages:
 
    ```yaml
    packages:
@@ -319,7 +320,7 @@ The SSH role manages SSH keys, configuration, and related settings with dual-tie
 
 **Quick Start - Deploy Entire .ssh Directory (Recommended):**
 
-1. Enable full directory deployment in `vars/ssh.yml`:
+1. Enable full directory deployment in `group_vars/all/ssh.yml`:
 
    ```yaml
    ssh_deploy_full_directory: true
@@ -336,7 +337,7 @@ The SSH role manages SSH keys, configuration, and related settings with dual-tie
   - Cloudflare Access certificates and keys
   - `openrouter` API credentials
 
-- **From `vars/ssh_vault.yml`** (vault variables):
+- **From `group_vars/all/ssh_vault.yml`** (vault variables):
   - All 3 SSH key types: ED25519, RSA, ECDSA
   - Variable names: `ssh_private_key_ed25519`, `ssh_public_key_ed25519` (etc.)
 
@@ -347,7 +348,7 @@ The SSH role manages SSH keys, configuration, and related settings with dual-tie
 - Vault password files: `700` (executable - required by Ansible)
 - Directory: `700`
 
-**Other SSH features (configure in vars/ssh.yml):**
+**Other SSH features (configure in group_vars/all/ssh.yml):**
 
 - `ssh_generate_key: true` - Generate new SSH key pair
 - `ssh_deploy_config: true` - Deploy custom SSH config from template
@@ -376,9 +377,9 @@ chmod 700 ~/.ssh/ansible-vault-password
 
 ## Git Role Configuration
 
-The Git role provides standardized, reusable functions for all common git operations. All features are **configurable via vars/git.yml**.
+The Git role provides standardized, reusable functions for all common git operations. All features are **configurable via group_vars/all/git.yml**.
 
-**Quick Start (Enabled by default in vars/git.yml):**
+**Quick Start (Enabled by default in group_vars/all/git.yml):**
 
 - Git installation
 - Global .gitconfig with user name/email
@@ -388,7 +389,7 @@ The Git role provides standardized, reusable functions for all common git operat
 
 **To customize git configuration:**
 
-1. Edit `vars/git.yml` and set your user information:
+1. Edit `group_vars/all/git.yml` and set your user information:
 
    ```yaml
    git_user_name_override: "Your Name"
@@ -397,7 +398,7 @@ The Git role provides standardized, reusable functions for all common git operat
 
 2. Run: `./run.sh --tags git`
 
-**Available Git Features (configure in vars/git.yml):**
+**Available Git Features (configure in group_vars/all/git.yml):**
 
 - `git_install: true` - Install git package
 - `git_deploy_config: true` - Deploy complete .gitconfig from template
@@ -451,7 +452,7 @@ The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine
 
 **To customize machine profile:**
 
-1. Edit `vars/chezmoi.yml` and set machine-specific values:
+1. Edit `group_vars/all/chezmoi.yml` and set machine-specific values:
 
    ```yaml
    chezmoi_machine_type: laptop # workstation, laptop, wsl
@@ -462,7 +463,7 @@ The Chezmoi role manages dotfiles by templating `.chezmoidata.yaml` with machine
 
 2. Run: `./run.sh --tags chezmoi`
 
-**Available Chezmoi Features (configure in vars/chezmoi.yml):**
+**Available Chezmoi Features (configure in group_vars/all/chezmoi.yml):**
 
 - `chezmoi_ensure_installed: true` - Verify chezmoi installation
 - `chezmoi_init_source: true` - Check source directory exists
@@ -529,16 +530,16 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 2. Create and encrypt vault file:
 
    ```bash
-   cp vars/cloudflared_vault.yml.template vars/cloudflared_vault.yml
+   cp group_vars/all/cloudflared_vault.yml.template group_vars/all/cloudflared_vault.yml
    # Edit and add your token
-   nano vars/cloudflared_vault.yml
+   nano group_vars/all/cloudflared_vault.yml
    # Encrypt with ansible-vault
-   ansible-vault encrypt vars/cloudflared_vault.yml
+   ansible-vault encrypt group_vars/all/cloudflared_vault.yml
    ```
 
 3. Run: `./run.sh --tags cloudflared --ask-vault-pass`
 
-**Available Cloudflared Features (configure in vars/cloudflared.yml):**
+**Available Cloudflared Features (configure in group_vars/all/cloudflared.yml):**
 
 - `cloudflared_deploy_token: true` - Deploy token from vault
 - `cloudflared_deploy_service: true` - Deploy systemd service
@@ -574,74 +575,9 @@ The Cloudflared role manages Cloudflare Tunnel with secure token storage using a
 
 **See also:** `docs/CLOUDFLARED_SETUP.md` for comprehensive setup guide.
 
-<<<<<<< HEAD
-
-## ZSH Role Configuration
-
-The ZSH role deploys modular shell configuration using numbered directories and a recursive loader.
-
-**Quick Start (Default behavior):**
-
-- Deploys entire `zsh.d/` directory structure
-- Minimal configuration (PATH, history, options, completions)
-- Recursive loader handles `.zsh`, `.sh`, `.conf`, and `.env` files
-
-**To customize zsh configuration:**
-
-1. Add files to `roles/zsh/files/zsh.d/[module]/`:
-
-   ```bash
-   # Example: Add editor export
-   cat > roles/zsh/files/zsh.d/60-exports/editor.zsh << 'EOF'
-   export EDITOR='nvim'
-   export VISUAL='nvim'
-   EOF
-   ```
-
-2. Run: `./run.sh --tags zsh-config`
-
-**Available Modules:**
-
-- `00-path/` - PATH configuration (loaded first)
-- `10-settings/` - Shell options and history
-- `20-functions/` - Custom shell functions
-- `30-aliases/` - Command aliases
-- `40-completions/` - Completion system
-- `50-secrets/` - API keys (use `.env` files)
-- `60-exports/` - Environment exports
-- `90-skogai/` - SkogAI integration (loaded last)
-
-**File Type Handling:**
-
-- `.zsh`, `.sh`, `.conf` - Sourced normally
-- `.env` - Sourced with `set -o allexport` (auto-exports variables)
-
-**Granular tag support:**
-
-```bash
-./run.sh --tags zsh-config    # Deploy config only
-./run.sh --tags zsh-zshrc     # Deploy .zshrc only
-./run.sh --tags zsh           # Deploy everything
-```
-
-**Current Configuration:**
-
-The role currently deploys:
-
-- Loader with recursive loading and `.env` support
-- PATH setup for user binaries and toolchains
-- 50,000 command history with smart filtering
-- Shell options (auto-cd, directory stack, etc.)
-- Completion system initialization
-
-**See:** `roles/zsh/README.md` for complete documentation.
-
-||||||| parent of 55abd31 (Squash commits from master)
-=======
-
 ## Zsh Role Configuration
 
-The Zsh role deploys modular shell configuration with numbered load-order directories. All features are **configurable via vars/zsh.yml**.
+The Zsh role deploys modular shell configuration with numbered load-order directories. All features are **configurable via group_vars/all/zsh.yml**.
 
 **Quick Start (Default behavior):**
 
@@ -674,7 +610,7 @@ The Zsh role deploys modular shell configuration with numbered load-order direct
 - Sources `.zsh`, `.sh`, `.conf` files normally
 - Sources `.env` files with `allexport` (auto-exports all variables)
 
-**Available Zsh Features (configure in vars/zsh.yml):**
+**Available Zsh Features (configure in group_vars/all/zsh.yml):**
 
 - `zsh_install: true` - Install zsh package
 - `zsh_deploy_config: true` - Deploy zsh.d structure to ~/.config
@@ -698,8 +634,6 @@ The Zsh role deploys modular shell configuration with numbered load-order direct
 
 **See:** `roles/zsh/README.md` for complete documentation.
 
->>>>>>> 55abd31 (Squash commits from master)
->>>>>>>
 ## Reference
 
 ### Essential Reading

@@ -9,9 +9,7 @@ Complete file structure with descriptions for all files in the active ansible re
 ```
 SkogAI/skogansible/
 ├── ansible.cfg                          # Ansible configuration (interpreter, inventory, collections path)
-├── .inventory                           # Ansible inventory file (defines localhost target)
-├── playbook.yml                         # Main playbook orchestrating 4 roles
-├── .requirements.yml                    # Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
+├── requirements.yml                     # Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
 ├── bootstrap.sh                         # Bootstrap script (creates venv, installs Ansible + collections)
 ├── run.sh                               # Playbook execution wrapper script
 ├── .envrc                               # direnv configuration (loads environment from skogcli)
@@ -19,6 +17,32 @@ SkogAI/skogansible/
 ├── README.md                            # Project overview and quick start guide
 ├── CLAUDE.md                            # Complete project documentation (detailed usage, all features)
 ├── FILESTRUCTURE.md                     # This file - complete file structure reference
+│
+├── site.yml                             # Main playbook - all roles for complete system configuration
+├── default.yml                          # Default playbook - used by run.sh when no playbook specified
+├── workstation.yml                      # Workstation playbook - full desktop/development environment
+├── bootstrap.yml                        # Bootstrap playbook - minimal initial setup
+├── maintenance.yml                      # Maintenance playbook - updates and cleanup only
+├── test_users.yml                       # Test playbook for users role
+├── example_primitives.yml               # Example playbook demonstrating primitives usage
+│
+├── inventory/                           # Ansible inventory directory
+│   └── hosts                            # Inventory file (defines localhost target)
+│
+├── group_vars/                          # Auto-loaded variables by group (Ansible best practice)
+│   └── all/                             # Variables applied to all hosts
+│       ├── main.yml                     # Shared variables across roles
+│       ├── packages.yml                 # Package lists (61 official + 7 AUR packages)
+│       ├── ssh.yml                      # SSH role configuration (features, paths, permissions)
+│       ├── ssh_vault.yml                # Encrypted SSH keys (ansible-vault)
+│       ├── git.yml                      # Git configuration (user, aliases, repos, hooks)
+│       ├── chezmoi.yml                  # Chezmoi configuration (machine profile, agents)
+│       ├── cloudflared.yml              # Cloudflared configuration (deployment flags, extra args)
+│       ├── cloudflared_vault.yml        # Encrypted Cloudflare tunnel token (ansible-vault)
+│       ├── cloudflared_vault.yml.template # Template for creating vault file
+│       ├── zsh.yml                      # Zsh role configuration (deploy flags)
+│       ├── users.yml                    # User-specific variables (username, groups, shell)
+│       └── filesystems.yml              # Filesystem mount configuration
 │
 ├── .config/                             # Project-specific configuration
 │   └── wt.toml                          # Worktrunk hooks configuration (post-create, pre-merge, etc.)
@@ -128,18 +152,6 @@ SkogAI/skogansible/
 │       ├── vars/main.yml                # Role variables
 │       └── README.md                    # Complete Zsh role documentation
 │
-├── vars/                                # Variable files (role-specific configuration)
-│   ├── main.yml                         # Shared variables across roles
-│   ├── packages.yml                     # Package lists (61 official + 7 AUR packages)
-│   ├── ssh.yml                          # SSH role configuration (features, paths, permissions)
-│   ├── ssh_vault.yml                    # Encrypted SSH keys (ansible-vault)
-│   ├── git.yml                          # Git configuration (user, aliases, repos, hooks)
-│   ├── chezmoi.yml                      # Chezmoi configuration (machine profile, agents)
-│   ├── cloudflared.yml                  # Cloudflared configuration (deployment flags, extra args)
-│   ├── cloudflared_vault.yml            # Encrypted Cloudflare tunnel token (ansible-vault)
-│   ├── cloudflared_vault.yml.template   # Template for creating vault file
-│   ├── zsh.yml                          # Zsh role configuration (deploy flags)
-│   └── user.yml                         # User-specific variables (username, groups, shell)
 │
 ├── docs/                                # Documentation directory
 │   ├── README.md                        # Documentation index and navigation guide
@@ -189,8 +201,8 @@ SkogAI/skogansible/
 ### Core Configuration
 
 - **ansible.cfg** - Ansible configuration defining Python interpreter, inventory location, and collections path
-- **.inventory** - Defines localhost as the managed host for all playbook runs
-- **.requirements.yml** - Lists required Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
+- **inventory/hosts** - Defines localhost as the managed host for all playbook runs
+- **requirements.yml** - Lists required Ansible Galaxy collections (community.general, kewlfft.aur, ansible.posix)
 - **.envrc** - direnv configuration that loads environment variables from skogcli (sudo password file, paths)
 - **./tmp/ENV** - Output from bootstrap.sh which dumps the current environment variables (!`ansible-config dump --type all`)
 
@@ -201,7 +213,15 @@ SkogAI/skogansible/
 
 ### Playbooks
 
-- **playbook.yml** - Main playbook that orchestrates all 4 roles (packages, ssh, git, chezmoi) with proper variable loading
+All playbooks are at the project root (Ansible best practice). Variables are auto-loaded from `group_vars/all/`.
+
+- **site.yml** - Main playbook that orchestrates all roles for complete system configuration
+- **default.yml** - Default playbook used by `run.sh` when no playbook is specified
+- **workstation.yml** - Full desktop/development environment including cloudflared and filesystems
+- **bootstrap.yml** - Minimal initial setup for fresh Arch installations
+- **maintenance.yml** - System updates and cleanup only
+- **test_users.yml** - Test playbook for users role
+- **example_primitives.yml** - Demonstrates primitives usage patterns
 
 ### Documentation
 
@@ -258,8 +278,9 @@ Manages zsh shell configuration with modular zsh.d structure. Deploys numbered c
 
 ### Variables
 
-All role-specific configuration stored in `vars/` directory:
+All role-specific configuration stored in `group_vars/all/` directory (auto-loaded by Ansible for all hosts):
 
+- **main.yml** - Shared variables across all roles
 - **packages.yml** - Lists of official and AUR packages to install
 - **ssh.yml** - SSH role feature flags and configuration
 - **ssh_vault.yml** - Encrypted SSH keys (use ansible-vault to edit)
@@ -269,8 +290,8 @@ All role-specific configuration stored in `vars/` directory:
 - **cloudflared_vault.yml** - Encrypted Cloudflare tunnel token (use ansible-vault to edit)
 - **cloudflared_vault.yml.template** - Template for creating vault file
 - **zsh.yml** - Zsh role configuration (deploy config, default shell flags)
-- **user.yml** - User-specific variables (username, groups, shell)
-- **main.yml** - Shared variables across all roles
+- **users.yml** - User-specific variables (username, groups, shell)
+- **filesystems.yml** - Filesystem mount configuration
 
 ### Collections
 
@@ -302,7 +323,7 @@ The following directories are excluded from version control (see .gitignore):
 ## File Counts
 
 - **6 roles** - packages, ssh, git, chezmoi, cloudflared, zsh
-- **11 variable files** - Role-specific configuration
+- **12 variable files** - Role-specific configuration in group_vars/all/
 - **16+ task files** - Modular task definitions
 - **29 zsh config files** - Modular shell configuration in zsh.d/
 - **7+ templates** - Jinja2 templates for configs and hooks

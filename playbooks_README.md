@@ -86,7 +86,8 @@ Updates package cache and upgrades system without changing configuration.
 
 All playbooks follow the same pattern:
 
+- Located at project root (Ansible best practice)
 - Define target hosts (`all` for localhost)
-- Load required vars files from `../vars/`
+- Variables are auto-loaded from `group_vars/all/` (no manual `vars_files:` needed)
 - Apply roles with appropriate tags
 - Can override role variables for specific scenarios

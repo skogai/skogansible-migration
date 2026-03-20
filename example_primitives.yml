@@ -5,8 +5,8 @@
 # to accomplish common tasks without creating full roles.
 #
 # Usage:
-#   ansible-playbook playbooks/example_primitives.yml --check  # Dry-run
-#   ansible-playbook playbooks/example_primitives.yml          # Apply
+#   ansible-playbook example_primitives.yml --check  # Dry-run
+#   ansible-playbook example_primitives.yml          # Apply
 
 - name: Primitives Usage Example
   hosts: localhost
@@ -18,7 +18,7 @@
     # ============================================================================
 
     - name: "Example | Install development packages"
-      include_tasks: ../primitives/ensure_state/package.yml
+      include_tasks: primitives/ensure_state/package.yml
       vars:
         package_names:
           - git
@@ -33,7 +33,7 @@
     # ============================================================================
 
     - name: "Example | Ensure config directory exists"
-      include_tasks: ../primitives/ensure_state/directory.yml
+      include_tasks: primitives/ensure_state/directory.yml
       vars:
         directory_path: "{{ ansible_user_dir }}/.config/example"
         directory_mode: '0755'
@@ -44,7 +44,7 @@
     # ============================================================================
 
     - name: "Example | Add configuration line"
-      include_tasks: ../primitives/ensure_content/line_in_file.yml
+      include_tasks: primitives/ensure_content/line_in_file.yml
       vars:
         line_path: "{{ ansible_user_dir }}/.config/example/config.txt"
         line_content: "# Example configuration"
@@ -57,7 +57,7 @@
     # ============================================================================
 
     - name: "Example | Check if yay is installed"
-      include_tasks: ../primitives/query_state/path_exists.yml
+      include_tasks: primitives/query_state/path_exists.yml
       vars:
         query_path: /usr/bin/yay
         query_register: yay_check
@@ -73,7 +73,7 @@
     # ============================================================================
 
     - name: "Example | Clone example repository"
-      include_tasks: ../primitives/sync/git_repo.yml
+      include_tasks: primitives/sync/git_repo.yml
       vars:
         repo_url: https://github.com/github/gitignore.git
         repo_dest: "{{ ansible_user_dir }}/.local/share/gitignore-templates"
@@ -86,7 +86,7 @@
     # ============================================================================
 
     - name: "Example | Run echo command"
-      include_tasks: ../primitives/execute/command.yml
+      include_tasks: primitives/execute/command.yml
       vars:
         exec_command: "echo 'Primitives example completed'"
         exec_register: echo_result
@@ -105,7 +105,7 @@
     # This will create aur_builder user and install AUR packages
 
     # - name: "Example | Setup AUR and install packages"
-    #   include_tasks: ../primitives/compose/aur_setup.yml
+    #   include_tasks: primitives/compose/aur_setup.yml
     #   vars:
     #     aur_packages_to_install:
     #       - yay
@@ -116,14 +116,14 @@
     # ============================================================================
 
     - name: "Example | Create SSH directory"
-      include_tasks: ../primitives/ensure_state/directory.yml
+      include_tasks: primitives/ensure_state/directory.yml
       vars:
         directory_path: "{{ ansible_user_dir }}/.ssh"
         directory_mode: '0700'
       tags: [example, ssh]
 
     - name: "Example | Create SSH config file"
-      include_tasks: ../primitives/ensure_content/line_in_file.yml
+      include_tasks: primitives/ensure_content/line_in_file.yml
       vars:
         line_path: "{{ ansible_user_dir }}/.ssh/config"
         line_content: |

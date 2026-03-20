@@ -42,12 +42,25 @@ Automated Arch Linux system configuration using Ansible with comprehensive role-
 
 ```
 SkogAI/skogansible/
-├── playbooks/                # Ansible playbooks
-│   ├── default.yml           # Main playbook (7 roles)
-│   ├── workstation.yml       # Workstation setup
-│   └── ...                   # Additional playbooks
+├── site.yml                  # Main playbook (all roles)
+├── default.yml               # Default playbook (used by run.sh)
+├── workstation.yml           # Workstation setup
+├── bootstrap.yml             # Minimal initial setup
+├── maintenance.yml           # Updates and cleanup
 ├── bootstrap.sh              # Initial setup script
 ├── run.sh                    # Playbook execution wrapper
+├── inventory/
+│   └── hosts                 # Inventory (localhost)
+├── group_vars/
+│   └── all/                  # Auto-loaded variables (Ansible best practice)
+│       ├── main.yml          # Shared variables
+│       ├── users.yml         # User definitions
+│       ├── packages.yml      # Package lists
+│       ├── ssh.yml           # SSH settings
+│       ├── git.yml           # Git settings
+│       ├── chezmoi.yml       # Chezmoi settings
+│       ├── zsh.yml           # Zsh settings
+│       └── filesystems.yml   # Filesystem mount definitions
 ├── roles/
 │   ├── users/                # User and group management
 │   ├── packages/             # Package management (pacman + AUR)
@@ -56,14 +69,6 @@ SkogAI/skogansible/
 │   ├── chezmoi/              # Dotfiles management
 │   ├── zsh/                  # Zsh shell configuration
 │   └── filesystems/          # Filesystem mounts management
-├── vars/                     # Role-specific configuration
-│   ├── user.yml              # User definitions
-│   ├── packages.yml          # Package lists
-│   ├── ssh.yml               # SSH settings
-│   ├── git.yml               # Git settings
-│   ├── chezmoi.yml           # Chezmoi settings
-│   ├── zsh.yml               # Zsh settings
-│   └── filesystems.yml       # Filesystem mount definitions
 └── docs/                     # Reference documentation
     ├── README.md             # Documentation index
     ├── primitives/           # Core Ansible patterns
@@ -82,9 +87,9 @@ SkogAI/skogansible/
 
 ## Configuration
 
-All role-specific configuration is in `vars/` directory:
+All role-specific configuration is in `group_vars/all/` (auto-loaded by Ansible):
 
-- **user.yml** - Define users and groups with group membership
+- **users.yml** - Define users and groups with group membership
 - **packages.yml** - Customize package lists (official + AUR)
 - **ssh.yml** - Enable/disable SSH features (keys, config, known_hosts)
 - **git.yml** - Configure git settings (user, aliases, hooks, signing)

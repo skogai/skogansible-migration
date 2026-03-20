@@ -2,8 +2,8 @@ backup/todo
 /tmp/*
 
 # Unencrypted vault files (only commit .template or encrypted versions)
-vars/*_vault.yml
-!vars/*_vault.yml.template
+group_vars/all/*_vault.yml
+!group_vars/all/*_vault.yml.template
 
 # Semaphore application data (contains secrets and runtime data)
 .semaphore/data/
