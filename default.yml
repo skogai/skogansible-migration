@@ -1,7 +1,7 @@
 ---
-# Default playbook - runs ALL roles for complete system configuration
+# Default playbook - full workstation configuration (all roles)
 # Variables are auto-loaded from group_vars/all/
-- name: Configure Arch Linux system (complete)
+- name: Configure Arch Linux workstation
   hosts: all
   connection: local
 
@@ -24,5 +24,8 @@
     - role: zsh
       tags: [zsh, shell]
 
-    # - role: cloudflared
-    #   tags: [cloudflared, tunnel]
+    - role: cloudflared
+      tags: [cloudflared, tunnel, services]
+
+    - role: filesystems
+      tags: [filesystems, mounts]
