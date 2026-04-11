@@ -33,7 +33,7 @@ users_system_groups:
 # Security & Privileges
 # ==============================================================================
 
-# Configure sudo access for wheel group members
+# Configure sudo access for wheel group members (creates /etc/sudoers.d/10-wheel)
 users_configure_sudo: true
 
 # Validate sudoers file after changes (recommended)

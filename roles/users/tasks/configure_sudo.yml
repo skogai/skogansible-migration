@@ -1,0 +1,12 @@
+---
+# Configure sudo access for wheel group members
+
+- name: "Users | Configure sudo access for wheel group"
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/10-wheel
+    line: '%wheel ALL=(ALL:ALL) ALL'
+    create: true
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  tags: [users, users-sudo]

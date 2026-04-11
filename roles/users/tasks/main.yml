@@ -22,3 +22,14 @@
   tags:
     - users
     - users-ensure
+
+# ==============================================================================
+# Sudo Configuration
+# ==============================================================================
+
+- name: "Users | Configure sudo"
+  ansible.builtin.include_tasks: configure_sudo.yml
+  when: users_configure_sudo
+  tags:
+    - users
+    - users-sudo
