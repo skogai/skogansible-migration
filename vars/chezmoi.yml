@@ -91,11 +91,11 @@ chezmoi_gita_enabled: true
 
 # Enable/disable individual agents
 chezmoi_agents:
-  claude: true
-  letta: true
-  amy: true
-  goose: true
-  dot: true
+  claude: false
+  letta: false
+  amy: false
+  goose: false
+  dot: false
 
 # ==============================================================================
 # SKOGAI PATHS (OPTIONAL)
@@ -113,4 +113,4 @@ chezmoi_skogai_ansible: "{{ ansible_facts['user_dir'] }}/.ansible"
 # ==============================================================================
 
 # Debug mode
-chezmoi_debug: true
+chezmoi_debug: false

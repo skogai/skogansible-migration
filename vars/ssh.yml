@@ -52,7 +52,7 @@ ssh_custom_hosts:
 # ==============================================================================
 
 # Manage known_hosts file
-ssh_manage_known_hosts: true
+ssh_manage_known_hosts: false
 
 # Known hosts to add
 ssh_known_hosts:

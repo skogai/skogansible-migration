@@ -8,52 +8,52 @@ users:
     groups_base:
       - wheel # sudo access
       - skogai # SkogAI group for all system users
-  - name: aldervall
-    git_email: niclas@aldervall.se
-    git_name: aldervall
-    editor: nvim
-    groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group for all system users
-  - name: dot
-    git_email: dot@skogai.se
-    git_name: dot
-    editor: nvim
-    groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group for all system users
-  - name: amy
-    git_email: amy@skogai.se
-    git_name: amy
-    editor: nvim
-    groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group for all system users
-  - name: claude
-    git_email: claude@skogai.se
-    git_name: claude
-    editor: nvim
-    groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group for all system users
-  - name: letta
-    git_email: letta@skogai.se
-    git_name: letta
-    editor: nvim
-    groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group for all system users
-  - name: goose
-    git_email: goose@skogai.se
-    git_name: goose
-    editor: nvim
-    groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group for all system users
-  - name: skogai
-    git_email: skogai@skogai.se
-    git_name: skogai
-    editor: nvim
-    groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group
+  # - name: aldervall
+  #   git_email: niclas@aldervall.se
+  #   git_name: aldervall
+  #   editor: nvim
+  #   groups_base:
+  #     - wheel # sudo access
+  #     - skogai # SkogAI group for all system users
+  # - name: dot
+  #   git_email: dot@skogai.se
+  #   git_name: dot
+  #   editor: nvim
+  #   groups_base:
+  #     - wheel # sudo access
+  #     - skogai # SkogAI group for all system users
+  # - name: amy
+  #   git_email: amy@skogai.se
+  #   git_name: amy
+  #   editor: nvim
+  #   groups_base:
+  #     - wheel # sudo access
+  #     - skogai # SkogAI group for all system users
+  # - name: claude
+  #   git_email: claude@skogai.se
+  #   git_name: claude
+  #   editor: nvim
+  #   groups_base:
+  #     - wheel # sudo access
+  #     - skogai # SkogAI group for all system users
+  # - name: letta
+  #   git_email: letta@skogai.se
+  #   git_name: letta
+  #   editor: nvim
+  #   groups_base:
+  #     - wheel # sudo access
+  #     - skogai # SkogAI group for all system users
+  # - name: goose
+  #   git_email: goose@skogai.se
+  #   git_name: goose
+  #   editor: nvim
+  #   groups_base:
+  #     - wheel # sudo access
+  #     - skogai # SkogAI group for all system users
+  # - name: skogai
+  #   git_email: skogai@skogai.se
+  #   git_name: skogai
+  #   editor: nvim
+  #   groups_base:
+  #     - wheel # sudo access
+  #     - skogai # SkogAI group
