@@ -20,8 +20,8 @@
     - role: users
       tags: [users, security]
 
-    - role: packages
-      tags: [packages, install]
+#    - role: packages
+#      tags: [packages, install]
 
     - role: ssh
       tags: [ssh, config]
@@ -32,8 +32,8 @@
     - role: chezmoi
       tags: [chezmoi, dotfiles]
 
-    - role: cloudflared
-      tags: [cloudflared, tunnel, services]
+#    - role: cloudflared
+#      tags: [cloudflared, tunnel, services]
 
     - role: filesystems
       tags: [filesystems, mounts]

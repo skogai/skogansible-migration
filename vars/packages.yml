@@ -11,18 +11,17 @@ packages:
   - bat
   - bluez
   - bluez-utils
-  - byobu
   - cloudflared
   - direnv
   - dkms
   - dmenu
-  # - docker
-  # - docker-buildx
-  # - docker-compose
-  # - dotnet-host
-  # - dotnet-runtime
-  # - dotnet-sdk
-  # - dotnet-source-built-artifacts
+  - docker
+  - docker-buildx
+  - docker-compose
+  - dotnet-host
+  - dotnet-runtime
+  - dotnet-sdk
+  - dotnet-source-built-artifacts
   - dunst
   - feh
   - firefox
@@ -30,74 +29,72 @@ packages:
   - gammastep
   - git
   - github-cli
-  # - grub
+  - grub
   - gst-plugin-pipewire
   - htop
   - i3-wm
   - i3blocks
   - i3lock
   - i3status
-  # - intel-ucode
-  # - iwd
+  - intel-ucode
+  - iwd
   - kitty
   - lazydocker
   - lazygit
   - less
-  # - libnotify
-  # - libpulse
-  # - libva-nvidia-driver
-  # - lightdm
-  # - lightdm-gtk-greeter
-  # - linux
-  # - linux-firmware
-  # - linux-headers
+  - libnotify
+  - libpulse
+  - libva-nvidia-driver
+  - lightdm
+  - lightdm-gtk-greeter
+  - linux
+  - linux-firmware
+  - linux-headers
   - just
-  # - maim
-  # - mandoc
-  # - nano
+  - maim
+  - mandoc
+  - nano
   - ncspot
-  # - neovim-nvim-treesitter  # Not in official repos - use neovim plugin manager
-  # - network-manager-applet
-  # - networkmanager
-  # - nvidia-dkms
+  - network-manager-applet
+  - networkmanager
+  - accountsservice
   - nvm
-  # - ollama-cuda
-  # - pgbouncer
-  # - pgcli
+  - ollama-cuda
+  - pgbouncer
+  - pgcli
   - picom
   - pipewire
   - pipewire-alsa
   - pipewire-jack
   - pipewire-pulse
-  # - polkit-gnome
-  # - postgresql
-  # - postgrest
+  - polkit-gnome
+  - postgresql
+  - postgrest
   - python-uv
   - ripgrep
-  # - sheldon
-  # - smartmontools
+  - sheldon
+  - smartmontools
   # - steam  # Requires multilib repo enabled in /etc/pacman.conf
   - tree
   - unzip
   - uv
-  # - vim
+  - vim
   - wget
-  # - wireless_tools
+  - wireless_tools
   - wireplumber
   - xclip
-  # - xdg-utils
+  - xdg-utils
   - xdotool
-  # - xorg-server-xvfb
+  - xorg-server-xvfb
   - starship
-  # - xorg-xinit
-  # - xss-lock
-  # - xterm
+  - xorg-xinit
+  - xss-lock
+  - xterm
   - jq
   - fd
   - zip
-  - unzip
   - zoxide
-  # - zram-generator
+  - zram-generator
   - zsh
 
 # Packages to install from AUR (using yay)
@@ -105,13 +102,14 @@ aur_packages:
   # - claude-code
   # - codename-goose
   # - discord-electron-openasar
-  - docker-rootless-extras
-  - google-chrome
-  - mods
+  # - docker-rootless-extras
+  # - google-chrome
+  # - mods
   # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
-  - pwvucontrol
+  # - pwvucontrol
+  - nvidia-580xx-dkms
   - rcm
-  - diff-so-fancy
+  # - diff-so-fancy
   # - rustup  # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin
