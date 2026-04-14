@@ -9,6 +9,7 @@ export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"              # Rust
 export PATH="$GOPATH/bin:$PATH"                   # Go
 export PATH="$HOME/.local/share/pnpm:$PATH"       # Node/pnpm
+export PATH="$HOME/.bun/bin:$PATH"       # Bun
 
 # Custom tools
 export PATH="$HOME/.claude/bin:$PATH"             # Claude Code tools

@@ -39,7 +39,7 @@ users_system_groups:                  # System groups to create
 ### Security & Privileges
 
 ```yaml
-users_configure_sudo: false           # Configure sudo access (disabled by default)
+users_configure_sudo: true           # Configure sudo access (disabled by default)
 users_validate_sudoers: true          # Validate sudoers after changes
 ```
 
@@ -110,7 +110,7 @@ None
     - role: users
       vars:
         users_ensure_users: true
-        users_create_home: false
+        users_create_home: true
 ```
 
 ## Tags
