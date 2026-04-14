@@ -14,15 +14,15 @@ packages:
   # - byobu
   - cloudflared
   - direnv
-  - dkms
-  - dmenu
-  - docker
-  - docker-buildx
-  - docker-compose
-  - dotnet-host
-  - dotnet-runtime
-  - dotnet-sdk
-  - dotnet-source-built-artifacts
+  # - dkms
+  # - dmenu
+  # - docker
+  # - docker-buildx
+  # - docker-compose
+  # - dotnet-host
+  # - dotnet-runtime
+  # - dotnet-sdk
+  # - dotnet-source-built-artifacts
   - dunst
   - feh
   - firefox
@@ -97,6 +97,7 @@ packages:
   - zoxide
   - zram-generator
   - zsh
+  - ttf-firacode-nerd
 
 # Packages to install from AUR (using yay)
 aur_packages:
