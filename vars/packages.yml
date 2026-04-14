@@ -4,16 +4,16 @@ pacman_parallel_downloads: 5
 
 # Packages to install from official repos
 packages:
-  - ansible
-  - ansible-core
-  - base
-  - base-devel
-  - bat
-  - bluez
-  - bluez-utils
+  # - ansible
+  # - ansible-core
+  # - base
+  # - base-devel
+  # - bat
+  # - bluez
+  # - bluez-utils
   # - byobu
-  - cloudflared
-  - direnv
+  # - cloudflared
+  # - direnv
   # - dkms
   # - dmenu
   # - docker
@@ -23,79 +23,79 @@ packages:
   # - dotnet-runtime
   # - dotnet-sdk
   # - dotnet-source-built-artifacts
-  - dunst
-  - feh
-  - firefox
-  - fzf
-  - gammastep
-  - git
-  - github-cli
-  - grub
-  - gst-plugin-pipewire
-  - htop
-  - i3-wm
-  - i3blocks
-  - i3lock
-  - i3status
-  - intel-ucode
-  - iwd
-  - kitty
-  - lazydocker
-  - lazygit
-  - less
-  - libnotify
-  - libpulse
-  - libva-nvidia-driver
-  - lightdm
-  - lightdm-gtk-greeter
-  - linux
-  - linux-firmware
-  - linux-headers
-  - just
-  - maim
-  - mandoc
-  - nano
-  - ncspot
-  - network-manager-applet
-  - networkmanager
-  - accountsservice
-  - nvm
-  - ollama-cuda
-  - pgbouncer
-  - pgcli
-  - picom
-  - pipewire
-  - pipewire-alsa
-  - pipewire-jack
-  - pipewire-pulse
-  - polkit-gnome
-  - postgresql
-  - postgrest
-  - python-uv
-  - ripgrep
-  - sheldon
-  - smartmontools
+  # - dunst
+  # - feh
+  # - firefox
+  # - fzf
+  # - gammastep
+  # - git
+  # - github-cli
+  # - grub
+  # - gst-plugin-pipewire
+  # - htop
+  # - i3-wm
+  # - i3blocks
+  # - i3lock
+  # - i3status
+  # - intel-ucode
+  # - iwd
+  # - kitty
+  # - lazydocker
+  # - lazygit
+  # - less
+  # - libnotify
+  # - libpulse
+  # - libva-nvidia-driver
+  # - lightdm
+  # - lightdm-gtk-greeter
+  # - linux
+  # - linux-firmware
+  # - linux-headers
+  # - just
+  # - maim
+  # - mandoc
+  # - nano
+  # - ncspot
+  # - network-manager-applet
+  # - networkmanager
+  # - accountsservice
+  # - nvm
+  # - ollama-cuda
+  # - pgbouncer
+  # - pgcli
+  # - picom
+  # - pipewire
+  # - pipewire-alsa
+  # - pipewire-jack
+  # - pipewire-pulse
+  # - polkit-gnome
+  # - postgresql
+  # - postgrest
+  # - python-uv
+  # - ripgrep
+  # - sheldon
+  # - smartmontools
   # - steam  # Requires multilib repo enabled in /etc/pacman.conf
-  - tree
-  - unzip
-  - uv
-  - vim
-  - wget
-  - wireless_tools
-  - wireplumber
-  - xclip
-  - xdg-utils
-  - xdotool
-  - xorg-server-xvfb
-  - starship
-  - xorg-xinit
-  - xss-lock
-  - xterm
-  - jq
-  - fd
-  - zip
-  - zoxide
-  - zram-generator
+  # - tree
+  # - unzip
+  # - uv
+  # - vim
+  # - wget
+  # - wireless_tools
+  # - wireplumber
+  # - xclip
+  # - xdg-utils
+  # - xdotool
+  # - xorg-server-xvfb
+  # - starship
+  # - xorg-xinit
+  # - xss-lock
+  # - xterm
+  # - jq
+  # - fd
+  # - zip
+  # - zoxide
+  # - zram-generator
   - zsh
   - ttf-firacode-nerd
 
