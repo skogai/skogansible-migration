@@ -33,10 +33,5 @@ if command -v uv &>/dev/null; then
     alias uvv='uv venv'
 fi
 
-alias tm='task-master'
-alias taskmaster='task-master'
-alias hamster='task-master'
-alias ham='task-master'
-
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'

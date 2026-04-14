@@ -102,7 +102,7 @@ packages:
 # Packages to install from AUR (using yay)
 aur_packages:
   # - claude-code
-  - codename-goose
+  - codename-goose-bin
   # - discord-electron-openasar
   # - docker-rootless-extras
   # - google-chrome
