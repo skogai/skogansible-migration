@@ -16,7 +16,7 @@ chezmoi_init_source: true
 chezmoi_source_dir: "{{ ansible_facts['user_dir'] }}/.local/share/chezmoi"
 
 # Whether to deploy .chezmoidata.yaml configuration
-chezmoi_deploy_config: true
+chezmoi_deploy_config: false
 
 # Whether to apply chezmoi after configuration changes
 chezmoi_apply_on_change: true
