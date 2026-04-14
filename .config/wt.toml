@@ -125,5 +125,5 @@ direnv = "direnv allow"
 [pre-commit]
 syntax = "./run.sh --syntax-check"
 changes = "./run.sh --check"
-[post-create]
+[pre-start]
 direnv = "direnv allow"
