@@ -4,42 +4,42 @@ pacman_parallel_downloads: 5
 
 # Packages to install from official repos
 packages:
-  # - ansible
-  # - ansible-core
-  # - base
-  # - base-devel
-  # - bat
+  - ansible
+  - ansible-core
+  - base
+  - base-devel
+  - bat
   # - bluez
   # - bluez-utils
   # - byobu
-  # - cloudflared
-  # - direnv
+  - cloudflared
+  - direnv
   # - dkms
-  # - dmenu
+  - dmenu
   # - docker
   # - docker-buildx
   # - docker-compose
-  # - dotnet-host
-  # - dotnet-runtime
-  # - dotnet-sdk
-  # - dotnet-source-built-artifacts
-  # - dunst
-  # - feh
+  - dotnet-host
+  - dotnet-runtime
+  - dotnet-sdk
+  - dotnet-source-built-artifacts
+  - dunst
+  - feh
   # - firefox
-  # - fzf
+  - fzf
   # - gammastep
-  # - git
-  # - github-cli
+  - git
+  - github-cli
   # - grub
   # - gst-plugin-pipewire
   # - htop
-  # - i3-wm
-  # - i3blocks
-  # - i3lock
-  # - i3status
+  - i3-wm
+  - i3blocks
+  - i3lock
+  - i3status
   # - intel-ucode
   # - iwd
-  # - kitty
+  - kitty
   # - lazydocker
   # - lazygit
   # - less
@@ -55,8 +55,8 @@ packages:
   # - maim
   # - mandoc
   # - nano
-  # - ncspot
-  # - network-manager-applet
+  - ncspot
+  - network-manager-applet
   # - networkmanager
   # - accountsservice
   # - nvm
@@ -71,19 +71,19 @@ packages:
   # - polkit-gnome
   # - postgresql
   # - postgrest
-  # - python-uv
-  # - ripgrep
+  - python-uv
+  - ripgrep
   # - sheldon
   # - smartmontools
   # - steam  # Requires multilib repo enabled in /etc/pacman.conf
-  # - tree
+  - tree
   # - unzip
-  # - uv
+  - uv
   # - vim
   # - wget
   # - wireless_tools
   # - wireplumber
-  # - xclip
+  - xclip
   # - xdg-utils
   # - xdotool
   # - xorg-server-xvfb
@@ -91,8 +91,8 @@ packages:
   # - xorg-xinit
   # - xss-lock
   # - xterm
-  # - jq
-  # - fd
+  - jq
+  - fd
   # - zip
   # - zoxide
   # - zram-generator
@@ -102,12 +102,11 @@ packages:
 # Packages to install from AUR (using yay)
 aur_packages:
   # - claude-code
-  # - codename-goose
+  - codename-goose
   # - discord-electron-openasar
   # - docker-rootless-extras
   # - google-chrome
   # - mods
-  # - neovim-nightly-bin  # Conflicts with already installed neovim-nightly
   # - pwvucontrol
   - rcm
   # - diff-so-fancy
