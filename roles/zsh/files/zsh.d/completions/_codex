@@ -532,6 +532,65 @@ esac
     ;;
 esac
 ;;
+(marketplace)
+_arguments "${_arguments_options[@]}" : \
+'*-c+[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
+'*--config=[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
+'*--enable=[Enable a feature (repeatable). Equivalent to \`-c features.<name>=true\`]:FEATURE:_default' \
+'*--disable=[Disable a feature (repeatable). Equivalent to \`-c features.<name>=false\`]:FEATURE:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+":: :_codex__marketplace_commands" \
+"*::: :->marketplace" \
+&& ret=0
+
+    case $state in
+    (marketplace)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:codex-marketplace-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+'--ref=[Git ref to check out. Overrides any @ref or #ref suffix in SOURCE]:REF:_default' \
+'*--sparse=[Sparse-checkout path to use while cloning git sources. Repeat to include multiple paths]:PATH:_default' \
+'*-c+[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
+'*--config=[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
+'*--enable=[Enable a feature (repeatable). Equivalent to \`-c features.<name>=true\`]:FEATURE:_default' \
+'*--disable=[Disable a feature (repeatable). Equivalent to \`-c features.<name>=false\`]:FEATURE:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':source -- Marketplace source. Supports owner/repo\[@ref\], HTTP(S) Git URLs, SSH URLs, or local marketplace root directories:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_codex__marketplace__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:codex-marketplace-help-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
 (mcp-server)
 _arguments "${_arguments_options[@]}" : \
 '*-c+[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
@@ -547,6 +606,7 @@ _arguments "${_arguments_options[@]}" : \
 '--listen=[Transport endpoint URL. Supported values\: \`stdio\://\` (default), \`ws\://IP\:PORT\`, \`off\`]:URL:_default' \
 '--ws-auth=[Websocket auth mode for non-loopback listeners]:MODE:(capability-token signed-bearer-token)' \
 '--ws-token-file=[Absolute path to the capability-token file]:PATH:_files' \
+'--ws-token-sha256=[Hex-encoded SHA-256 digest of the capability token]:HEX:_default' \
 '--ws-shared-secret-file=[Absolute path to the shared secret file for signed JWT bearer tokens]:PATH:_files' \
 '--ws-issuer=[Expected issuer for signed JWT bearer tokens]:ISSUER:_default' \
 '--ws-audience=[Expected audience for signed JWT bearer tokens]:AUDIENCE:_default' \
@@ -675,6 +735,7 @@ _arguments "${_arguments_options[@]}" : \
         case $line[1] in
             (macos)
 _arguments "${_arguments_options[@]}" : \
+'*--allow-unix-socket=[Allow the sandboxed command to bind/connect AF_UNIX sockets rooted at this path. Relative paths are resolved against the current directory. Repeat to allow multiple paths]:ALLOW_UNIX_SOCKETS:_default' \
 '*-c+[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
 '*--config=[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
 '*--enable=[Enable a feature (repeatable). Equivalent to \`-c features.<name>=true\`]:FEATURE:_default' \
@@ -688,6 +749,7 @@ _arguments "${_arguments_options[@]}" : \
 ;;
 (seatbelt)
 _arguments "${_arguments_options[@]}" : \
+'*--allow-unix-socket=[Allow the sandboxed command to bind/connect AF_UNIX sockets rooted at this path. Relative paths are resolved against the current directory. Repeat to allow multiple paths]:ALLOW_UNIX_SOCKETS:_default' \
 '*-c+[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
 '*--config=[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
 '*--enable=[Enable a feature (repeatable). Equivalent to \`-c features.<name>=true\`]:FEATURE:_default' \
@@ -1233,6 +1295,16 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help (see more with '\''--help'\'')]' \
 && ret=0
 ;;
+(responses)
+_arguments "${_arguments_options[@]}" : \
+'*-c+[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
+'*--config=[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
+'*--enable=[Enable a feature (repeatable). Equivalent to \`-c features.<name>=true\`]:FEATURE:_default' \
+'*--disable=[Disable a feature (repeatable). Equivalent to \`-c features.<name>=false\`]:FEATURE:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
 (stdio-to-uds)
 _arguments "${_arguments_options[@]}" : \
 '*-c+[Override a configuration value that would otherwise be loaded from \`~/.codex/config.toml\`. Use a dotted path (\`foo.bar.baz\`) to override nested values. The \`value\` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal]:key=value:_default' \
@@ -1445,6 +1517,26 @@ _arguments "${_arguments_options[@]}" : \
     ;;
 esac
 ;;
+(marketplace)
+_arguments "${_arguments_options[@]}" : \
+":: :_codex__help__marketplace_commands" \
+"*::: :->marketplace" \
+&& ret=0
+
+    case $state in
+    (marketplace)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:codex-help-marketplace-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
 (mcp-server)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -1625,6 +1717,10 @@ esac
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(responses)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (stdio-to-uds)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -1683,6 +1779,7 @@ _codex_commands() {
 'login:Manage login' \
 'logout:Remove stored authentication credentials' \
 'mcp:Manage external MCP servers for Codex' \
+'marketplace:Manage plugin marketplaces for Codex' \
 'mcp-server:Start Codex as an MCP server (stdio)' \
 'app-server:\[experimental\] Run the app server or related tooling' \
 'completion:Generate shell completion scripts' \
@@ -1695,8 +1792,9 @@ _codex_commands() {
 'fork:Fork a previous interactive session (picker by default; use --last to fork the most recent)' \
 'cloud:\[EXPERIMENTAL\] Browse tasks from Codex Cloud and apply changes locally' \
 'responses-api-proxy:Internal\: run the responses API proxy' \
+'responses:Internal\: send one raw Responses API payload through Codex auth' \
 'stdio-to-uds:Internal\: relay stdio to a Unix domain socket' \
-'exec-server:\[EXPERIMENTAL\] Run the standalone exec-server binary' \
+'exec-server:\[EXPERIMENTAL\] Run the standalone exec-server service' \
 'features:Inspect feature flags' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
@@ -2081,6 +2179,7 @@ _codex__help_commands() {
 'login:Manage login' \
 'logout:Remove stored authentication credentials' \
 'mcp:Manage external MCP servers for Codex' \
+'marketplace:Manage plugin marketplaces for Codex' \
 'mcp-server:Start Codex as an MCP server (stdio)' \
 'app-server:\[experimental\] Run the app server or related tooling' \
 'completion:Generate shell completion scripts' \
@@ -2092,8 +2191,9 @@ _codex__help_commands() {
 'fork:Fork a previous interactive session (picker by default; use --last to fork the most recent)' \
 'cloud:\[EXPERIMENTAL\] Browse tasks from Codex Cloud and apply changes locally' \
 'responses-api-proxy:Internal\: run the responses API proxy' \
+'responses:Internal\: send one raw Responses API payload through Codex auth' \
 'stdio-to-uds:Internal\: relay stdio to a Unix domain socket' \
-'exec-server:\[EXPERIMENTAL\] Run the standalone exec-server binary' \
+'exec-server:\[EXPERIMENTAL\] Run the standalone exec-server service' \
 'features:Inspect feature flags' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
@@ -2286,6 +2386,18 @@ _codex__help__logout_commands() {
     local commands; commands=()
     _describe -t commands 'codex help logout commands' commands "$@"
 }
+(( $+functions[_codex__help__marketplace_commands] )) ||
+_codex__help__marketplace_commands() {
+    local commands; commands=(
+'add:Add a remote marketplace repository' \
+    )
+    _describe -t commands 'codex help marketplace commands' commands "$@"
+}
+(( $+functions[_codex__help__marketplace__add_commands] )) ||
+_codex__help__marketplace__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'codex help marketplace add commands' commands "$@"
+}
 (( $+functions[_codex__help__mcp_commands] )) ||
 _codex__help__mcp_commands() {
     local commands; commands=(
@@ -2332,6 +2444,11 @@ _codex__help__mcp__remove_commands() {
 _codex__help__mcp-server_commands() {
     local commands; commands=()
     _describe -t commands 'codex help mcp-server commands' commands "$@"
+}
+(( $+functions[_codex__help__responses_commands] )) ||
+_codex__help__responses_commands() {
+    local commands; commands=()
+    _describe -t commands 'codex help responses commands' commands "$@"
 }
 (( $+functions[_codex__help__responses-api-proxy_commands] )) ||
 _codex__help__responses-api-proxy_commands() {
@@ -2412,6 +2529,37 @@ _codex__login__status_commands() {
 _codex__logout_commands() {
     local commands; commands=()
     _describe -t commands 'codex logout commands' commands "$@"
+}
+(( $+functions[_codex__marketplace_commands] )) ||
+_codex__marketplace_commands() {
+    local commands; commands=(
+'add:Add a remote marketplace repository' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'codex marketplace commands' commands "$@"
+}
+(( $+functions[_codex__marketplace__add_commands] )) ||
+_codex__marketplace__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'codex marketplace add commands' commands "$@"
+}
+(( $+functions[_codex__marketplace__help_commands] )) ||
+_codex__marketplace__help_commands() {
+    local commands; commands=(
+'add:Add a remote marketplace repository' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'codex marketplace help commands' commands "$@"
+}
+(( $+functions[_codex__marketplace__help__add_commands] )) ||
+_codex__marketplace__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'codex marketplace help add commands' commands "$@"
+}
+(( $+functions[_codex__marketplace__help__help_commands] )) ||
+_codex__marketplace__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'codex marketplace help help commands' commands "$@"
 }
 (( $+functions[_codex__mcp_commands] )) ||
 _codex__mcp_commands() {
@@ -2508,6 +2656,11 @@ _codex__mcp__remove_commands() {
 _codex__mcp-server_commands() {
     local commands; commands=()
     _describe -t commands 'codex mcp-server commands' commands "$@"
+}
+(( $+functions[_codex__responses_commands] )) ||
+_codex__responses_commands() {
+    local commands; commands=()
+    _describe -t commands 'codex responses commands' commands "$@"
 }
 (( $+functions[_codex__responses-api-proxy_commands] )) ||
 _codex__responses-api-proxy_commands() {
