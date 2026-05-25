@@ -59,11 +59,11 @@ packages:
   - network-manager-applet
   # - networkmanager
   # - accountsservice
-  # - nvm
+  - nvm
   # - ollama-cuda
   # - pgbouncer
   # - pgcli
-  # - picom
+  - picom
   # - pipewire
   # - pipewire-alsa
   # - pipewire-jack

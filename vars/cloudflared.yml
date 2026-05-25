@@ -6,7 +6,7 @@
 # ==============================================================================
 
 # Tunnel name (human-readable name used in cloudflared commands)
-cloudflared_tunnel_name: "skogix"
+cloudflared_tunnel_name: "skogai"
 
 # Tunnel ID (UUID - used for credentials filename)
 cloudflared_tunnel_id: "ae7fd63a-935f-42b2-b1d0-a53cca0f2798"
