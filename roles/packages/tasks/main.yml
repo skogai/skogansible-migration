@@ -1,9 +1,4 @@
 ---
-# Ensure user groups are configured first
-- name: Configure user groups
-  ansible.builtin.include_tasks: user_groups.yml
-  tags: [user_groups]
-
 # Setup AUR user and helper
 - name: Setup AUR builder user
   ansible.builtin.include_tasks: aur_user.yml

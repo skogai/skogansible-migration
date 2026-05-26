@@ -12,7 +12,6 @@
         state: directory
         mode: "0700"
         owner: "{{ ansible_facts['user_id'] }}"
-        group: "{{ ansible_facts['user_id'] }}"
 
     - name: "SSH | Sync .ssh directory from files/"
       ansible.builtin.copy:
@@ -20,7 +19,6 @@
         dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/"
         mode: preserve
         owner: "{{ ansible_facts['user_id'] }}"
-        group: "{{ ansible_facts['user_id'] }}"
       no_log: true  # Don't log file contents
 
     - name: "SSH | Ensure correct permissions on private keys"
