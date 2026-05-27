@@ -7,8 +7,18 @@ users:
     editor: nvim
     state: present
     groups_base:
-      - wheel # sudo access
-      - skogai # SkogAI group for all system users
+      - skogix
+      - wheel
+      - skogai
+  - name: aur_builder
+    git_email: aur@skogai.se
+    git_name: aur
+    editor: nvim
+    state: absent
+    groups_base:
+      - aur_builder
+      - skogai
+      - wheel
   - name: aldervall
     git_email: niclas@aldervall.se
     git_name: aldervall

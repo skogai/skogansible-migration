@@ -29,8 +29,8 @@
     - role: git
       tags: [git, vcs]
 
-    # - role: chezmoi
-    #   tags: [chezmoi, dotfiles]
+    - role: chezmoi
+      tags: [chezmoi, dotfiles]
 
     - role: cloudflared
       tags: [cloudflared, tunnel, services]

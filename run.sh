@@ -2,6 +2,7 @@
 set -e
 
 # Source .envrc if direnv isn't loaded
+source .env
 if [ -z "$ANSIBLE_BECOME_PASSWORD_FILE" ]; then
   export ANSIBLE_BECOME_PASSWORD_FILE=/home/skogix/.ssh/ansible-become-password
   export ANSIBLE_VAULT_PASSWORD_FILE=/home/skogix/.ssh/ansible-vault-password

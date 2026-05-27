@@ -13,7 +13,7 @@ users_ensure_users: true
 users_create_home: true
 
 # Default shell for users (can be overridden per user)
-users_default_shell: "/bin/zsh"
+users_default_shell: "/usr/bin/bash"
 
 # ==============================================================================
 # Group Management
@@ -28,6 +28,9 @@ users_system_groups:
   - name: skogai
     gid: 1100
     system: false
+  - name: wheel
+    gid: 998
+    system: true
 
 # ==============================================================================
 # Security & Privileges

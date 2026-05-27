@@ -7,7 +7,6 @@
   ansible.builtin.user:
     name: aur_builder
     create_home: true
-    group: wheel
     comment: "AUR package builder"
     shell: /bin/bash
 

@@ -19,10 +19,10 @@ packages:
   # - docker
   # - docker-buildx
   # - docker-compose
-  - dotnet-host
-  - dotnet-runtime
-  - dotnet-sdk
-  - dotnet-source-built-artifacts
+  # - dotnet-host
+  # - dotnet-runtime
+  # - dotnet-sdk
+  # - dotnet-source-built-artifacts
   - dunst
   - feh
   # - firefox
@@ -79,30 +79,35 @@ packages:
   - tree
   # - unzip
   - uv
+  - vi
   # - vim
-  # - wget
+  - wget
   # - wireless_tools
   # - wireplumber
   - xclip
   # - xdg-utils
   # - xdotool
   # - xorg-server-xvfb
-  # - starship
+  - starship
   # - xorg-xinit
   # - xss-lock
   # - xterm
   - jq
   - fd
   # - zip
-  # - zoxide
+  - zoxide
   # - zram-generator
   - zsh
   - ttf-firacode-nerd
+  - neovim
+  - tmux
+  - pacman-contrib
+  - rustup
 
 # Packages to install from AUR (using yay)
 aur_packages:
   # - claude-code
-  - codename-goose-bin
+  # - codename-goose-bin
   # - discord-electron-openasar
   # - docker-rootless-extras
   # - google-chrome
@@ -116,3 +121,4 @@ aur_packages:
   # - supabase-bin
   # - vencord
   # - vesktop
+  - argc

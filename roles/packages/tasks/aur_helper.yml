@@ -16,24 +16,24 @@
   register: yay_stat
 
 - name: Clone yay repository from AUR
-  become_user: aur_builder
   ansible.builtin.git:
     repo: 'https://aur.archlinux.org/yay.git'
-    dest: '/home/aur_builder/yay'
+    dest: '/tmp/yay'
     update: true
     version: master
   when: not yay_stat.stat.exists
 
 - name: Build and install yay
   become_user: aur_builder
+  #become: false
   ansible.builtin.command:
     cmd: makepkg -si --noconfirm --noprogressbar
-    chdir: /home/aur_builder/yay
+    chdir: /tmp/yay
     creates: /usr/bin/yay
   when: not yay_stat.stat.exists
 
 - name: Clean up yay build directory
   ansible.builtin.file:
-    path: /home/aur_builder/yay
+    path: /tmp/yay
     state: absent
   when: not yay_stat.stat.exists
