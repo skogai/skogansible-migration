@@ -13,7 +13,7 @@ users_ensure_users: true
 users_create_home: true
 
 # Default shell for users (can be overridden per user)
-users_default_shell: "/usr/bin/bash"
+users_default_shell: "/usr/bin/zsh"
 
 # ==============================================================================
 # Group Management
