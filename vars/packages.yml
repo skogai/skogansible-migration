@@ -107,9 +107,9 @@ packages:
   - eza
   - keychain
   - luarocks
-  - openssh  # includes ssh-askpass
+  - openssh # includes ssh-askpass
+  - btop
 
-# Packages to install from AUR (using yay)
 aur_packages:
   # - claude-code
   # - codename-goose-bin
@@ -120,7 +120,7 @@ aur_packages:
   # - pwvucontrol
   - rcm
   - diff-so-fancy
-  - rustup  # Conflicts with system rust package
+  - rustup # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin
   # - supabase-bin

@@ -29,14 +29,14 @@
     - role: git
       tags: [git, vcs]
 
-    - role: chezmoi
-      tags: [chezmoi, dotfiles]
-
+    # - role: chezmoi
+    #   tags: [chezmoi, dotfiles]
+    #
     - role: zsh
       tags: [zsh, shell]
 
-    - role: cloudflared
-      tags: [cloudflared, tunnel]
-
-    - role: filesystems
-      tags: [filesystems, mounts]
+    # - role: cloudflared
+    #   tags: [cloudflared, tunnel]
+    #
+    # - role: filesystems
+    #   tags: [filesystems, mounts]
