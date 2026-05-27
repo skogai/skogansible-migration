@@ -202,7 +202,7 @@ Playbooks live in `playbooks/`. `run.sh` prepends `./playbooks/` automatically.
 **Active Roles:**
 
 - ✅ **users** - User and group management with security foundation
-- ✅ **packages** - Official Arch repository packages via pacman + AUR packages via yay
+- ✅ **packages** - Official Arch repository packages via pacman + AUR packages via paru
 - ✅ **ssh** - SSH directory setup, key deployment, config management, known_hosts
 - ✅ **git** - Comprehensive Git configuration and repository management
 - ✅ **chezmoi** - Dotfiles management via machine-specific configuration templating
@@ -278,7 +278,6 @@ The Packages role manages system packages from official Arch repositories and AU
      - htop
    aur_packages:
      - google-chrome
-     - yay
    ```
 
 2. Run: `./run.sh --tags packages`
@@ -288,8 +287,8 @@ The Packages role manages system packages from official Arch repositories and AU
 - `packages_update_cache: true` - Update package database (safe, default on)
 - `packages_upgrade_system: false` - Upgrade all packages (CAUTION: default off)
 - AUR builder user creation and configuration (dedicated `aur_builder` user)
-- Automatic yay installation from source
-- AUR package installation via yay
+- Automatic paru installation from source
+- AUR package installation via paru
 
 **Security Model:**
 
@@ -304,14 +303,14 @@ The Packages role manages system packages from official Arch repositories and AU
 ./run.sh --tags packages-install  # Only install official packages
 ./run.sh --tags aur               # AUR tasks (user + helper + packages)
 ./run.sh --tags aur-user          # Only setup aur_builder user
-./run.sh --tags aur-helper        # Only install yay helper
+./run.sh --tags aur-helper        # Only install paru helper
 ./run.sh --tags aur-packages      # Only install AUR packages
 ```
 
 **Task Execution Order:**
 
 1. **AUR User Setup** - Creates aur_builder user with secure sudo config
-2. **AUR Helper Installation** - Installs yay from AUR source
+2. **AUR Helper Installation** - Installs paru from AUR source
 3. **Official Packages** - Updates cache, installs packages
 4. **AUR Packages** - Installs AUR packages as aur_builder user
 

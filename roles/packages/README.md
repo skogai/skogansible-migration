@@ -5,9 +5,9 @@ Comprehensive package management role for Arch Linux systems using pacman and AU
 This role provides secure, idempotent package management including:
 
 - Official repository packages via pacman
-- AUR packages via yay helper
+- AUR packages via paru helper
 - Dedicated AUR builder user for security
-- Automatic yay installation from source
+- Automatic paru installation from source
 - Package database updates and system upgrades
 
 ## Role Variables
@@ -106,10 +106,10 @@ Creates a dedicated user for building AUR packages:
 
 ### 2. AUR Helper Installation (`aur_helper.yml`)
 
-Installs yay AUR helper via `kewlfft.aur.aur`:
+Installs paru AUR helper via `kewlfft.aur.aur`:
 
 - Ensures base-devel and git are installed
-- Installs yay using `kewlfft.aur.aur` with `use: makepkg` as `aur_builder`
+- Installs `paru-bin` (pre-built binary) using `kewlfft.aur.aur` with `use: makepkg` as `aur_builder`
 - Idempotency handled natively by the collection module
 
 ### 3. Official Package Installation (`main.yml`)
@@ -127,7 +127,7 @@ Installs packages from AUR:
 
 - Runs as `aur_builder` user (via become_user)
 - Uses kewlfft.aur collection
-- Installs packages with yay helper
+- Installs packages with paru helper
 - Only runs if `aur_packages` is defined and non-empty
 
 ## Tags
@@ -138,7 +138,7 @@ The role supports granular execution via tags:
 - `packages-install` - Official package installation only
 - `aur` - All AUR-related tasks (user, helper, packages)
 - `aur-user` - AUR builder user setup only
-- `aur-helper` - yay AUR helper installation only
+- `aur-helper` - paru AUR helper installation only
 - `aur-packages` - AUR package installation only
 - `pacman-config` - pacman.conf configuration only
 
@@ -148,10 +148,10 @@ The role supports granular execution via tags:
 # Install only official packages
 ./run.sh --tags packages-install
 
-# Setup AUR infrastructure only (user + yay)
+# Setup AUR infrastructure only (user + paru)
 ./run.sh --tags aur-user,aur-helper
 
-# Install AUR packages only (requires aur_builder and yay)
+# Install AUR packages only (requires aur_builder and paru)
 ./run.sh --tags aur-packages
 
 # Full package management
@@ -181,7 +181,6 @@ packages:
 
 # AUR packages
 aur_packages:
-  - yay
   - google-chrome
   - visual-studio-code-bin
   - spotify
@@ -219,9 +218,9 @@ This configuration:
 
 If the `aur_builder` user already exists from a previous installation, the role will skip user creation but verify sudo configuration.
 
-### Yay Already Installed
+### Paru Already Installed
 
-The role checks for yay existence before attempting installation. If yay is already present, the installation tasks are skipped.
+The role checks for paru existence before attempting installation. If paru is already present, the installation tasks are skipped.
 
 ### Permission Denied Errors
 
@@ -234,10 +233,10 @@ sudo -v       # Should succeed without errors
 
 ### AUR Package Installation Fails
 
-1. Verify yay is installed: `which yay`
+1. Verify paru is installed: `which paru`
 2. Verify aur_builder user exists: `id aur_builder`
 3. Check sudoers configuration: `sudo cat /etc/sudoers.d/11-install-aur_builder`
-4. Test manual AUR installation as aur_builder: `sudo -u aur_builder yay -S <package>`
+4. Test manual AUR installation as aur_builder: `sudo -u aur_builder paru -S <package>`
 
 ### Python Interpreter Issues
 
@@ -261,7 +260,7 @@ Test specific components:
 # Test AUR user setup
 ./run.sh --tags aur-user --check
 
-# Test yay installation
+# Test paru installation
 ./run.sh --tags aur-helper --check
 
 # Test AUR package installation
@@ -278,7 +277,7 @@ roles/packages/
 ├── tasks/
 │   ├── main.yml           # Main package installation and orchestration
 │   ├── aur_user.yml       # AUR builder user setup
-│   ├── aur_helper.yml     # yay installation from source
+│   ├── aur_helper.yml     # paru installation from source
 │   └── aur_packages.yml   # AUR package installation
 ├── defaults/main.yml      # Default variables
 ├── handlers/main.yml      # Handlers (currently empty)
