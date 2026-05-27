@@ -41,7 +41,7 @@ packages:
   # - iwd
   - kitty
   # - lazydocker
-  # - lazygit
+  - lazygit
   # - less
   # - libnotify
   # - libpulse
@@ -103,6 +103,11 @@ packages:
   - tmux
   - pacman-contrib
   - rustup
+  - atuin
+  - eza
+  - keychain
+  - luarocks
+  - openssh  # includes ssh-askpass
 
 # Packages to install from AUR (using yay)
 aur_packages:
@@ -110,7 +115,7 @@ aur_packages:
   # - codename-goose-bin
   # - discord-electron-openasar
   # - docker-rootless-extras
-  # - google-chrome
+  - google-chrome
   # - mods
   # - pwvucontrol
   - rcm
@@ -122,3 +127,5 @@ aur_packages:
   # - vencord
   # - vesktop
   - argc
+  - cod
+  - bun-bin
