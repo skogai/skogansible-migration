@@ -109,7 +109,7 @@ Creates a dedicated user for building AUR packages:
 Installs paru AUR helper via `kewlfft.aur.aur`:
 
 - Ensures base-devel and git are installed
-- Installs paru using `kewlfft.aur.aur` with `use: makepkg` as `aur_builder`
+- Installs `paru-bin` (pre-built binary) using `kewlfft.aur.aur` with `use: makepkg` as `aur_builder`
 - Idempotency handled natively by the collection module
 
 ### 3. Official Package Installation (`main.yml`)
