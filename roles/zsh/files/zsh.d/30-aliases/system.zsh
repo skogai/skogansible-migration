@@ -2,6 +2,7 @@
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias zshrc='nvim ~/.zshrc'
+alias zshenv='nvim ~/.zshenv'
 alias update='sudo pacman -Syu'
 alias rmpkg='sudo pacman -Rsn'
 alias cleanup='sudo pacman -Rsn $(pacman -Qtdq) 2>/dev/null || echo "No orphans"'

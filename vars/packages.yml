@@ -109,6 +109,10 @@ packages:
   - luarocks
   - openssh # includes ssh-askpass
   - btop
+  - lsof
+  - ast-grep
+  - procs
+  - bun
 
 aur_packages:
   # - claude-code
@@ -128,4 +132,4 @@ aur_packages:
   # - vesktop
   - argc
   - cod
-  - bun
+  - fabric-ai
