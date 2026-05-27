@@ -300,11 +300,12 @@ The Packages role manages system packages from official Arch repositories and AU
 **Granular tag support:**
 
 ```bash
-./run.sh --tags packages      # All package tasks
-./run.sh --tags install       # Only install packages
-./run.sh --tags aur           # AUR tasks (user + helper + packages)
-./run.sh --tags aur_user      # Only setup aur_builder user
-./run.sh --tags yay           # Only install yay helper
+./run.sh --tags packages          # All package tasks
+./run.sh --tags packages-install  # Only install official packages
+./run.sh --tags aur               # AUR tasks (user + helper + packages)
+./run.sh --tags aur-user          # Only setup aur_builder user
+./run.sh --tags aur-helper        # Only install yay helper
+./run.sh --tags aur-packages      # Only install AUR packages
 ```
 
 **Task Execution Order:**
