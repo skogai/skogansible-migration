@@ -1,40 +1,40 @@
 ---
-# Setup AUR user and helper
-- name: Setup AUR builder user
+- name: "Packages | Setup AUR builder user"
   ansible.builtin.include_tasks: aur_user.yml
-  tags: [aur, aur_user]
+  tags: [packages, aur, aur-user]
 
-- name: Install yay AUR helper
+- name: "Packages | Install yay AUR helper"
   ansible.builtin.include_tasks: aur_helper.yml
-  tags: [aur, yay]
+  tags: [packages, aur, aur-helper]
 
-# Then handle regular package management
-- name: Update pacman package database
+- name: "Packages | Update pacman package database"
   become: true
   community.general.pacman:
     update_cache: true
+  tags: [packages]
 
-- name: Configure pacman parallel downloads
+- name: "Packages | Configure pacman parallel downloads"
   become: true
   ansible.builtin.lineinfile:
     path: /etc/pacman.conf
     regexp: '^#?ParallelDownloads\s*='
     line: 'ParallelDownloads = {{ pacman_parallel_downloads }}'
     state: present
-  tags: [packages, pacman_config]
+  tags: [packages, pacman-config]
 
-- name: Upgrade all packages
+- name: "Packages | Upgrade all packages"
   become: true
   community.general.pacman:
     upgrade: true
+  tags: [packages]
 
-- name: Install packages from list
+- name: "Packages | Install packages from list"
   become: true
   community.general.pacman:
     name: "{{ packages }}"
     state: present
+  tags: [packages, packages-install]
 
-# Finally install AUR packages (requires yay to be installed)
-- name: Install AUR packages
+- name: "Packages | Install AUR packages"
   ansible.builtin.include_tasks: aur_packages.yml
-  tags: [aur, aur_packages]
+  tags: [packages, aur, aur-packages]

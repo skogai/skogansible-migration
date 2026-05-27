@@ -1,11 +1,10 @@
 ---
-# Install packages from AUR using yay
-# Requires: aur_builder user and yay to be installed first
-
-- name: Install AUR packages using yay
+- name: "Packages | Install AUR packages"
   become: true
+  become_user: aur_builder
   kewlfft.aur.aur:
     name: "{{ aur_packages }}"
     use: yay
     state: present
   when: aur_packages is defined and aur_packages | length > 0
+  tags: [packages, aur, aur-packages]

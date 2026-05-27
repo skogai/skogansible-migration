@@ -106,15 +106,11 @@ Creates a dedicated user for building AUR packages:
 
 ### 2. AUR Helper Installation (`aur_helper.yml`)
 
-Installs yay AUR helper from source:
+Installs yay AUR helper via `kewlfft.aur.aur`:
 
 - Ensures base-devel and git are installed
-- Checks if yay already exists
-- Clones yay repository from AUR
-- Builds and installs yay using makepkg
-- Cleans up build directory after installation
-
-**Idempotency:** Uses `creates` parameter and stat checks to skip installation if yay already exists.
+- Installs yay using `kewlfft.aur.aur` with `use: makepkg` as `aur_builder`
+- Idempotency handled natively by the collection module
 
 ### 3. Official Package Installation (`main.yml`)
 
@@ -139,25 +135,27 @@ Installs packages from AUR:
 The role supports granular execution via tags:
 
 - `packages` - All package-related tasks
-- `install` - Package installation tasks only
+- `packages-install` - Official package installation only
 - `aur` - All AUR-related tasks (user, helper, packages)
-- `aur_user` - AUR builder user setup only
-- `yay` - yay AUR helper installation only
+- `aur-user` - AUR builder user setup only
+- `aur-helper` - yay AUR helper installation only
+- `aur-packages` - AUR package installation only
+- `pacman-config` - pacman.conf configuration only
 
 ### Tag Usage Examples
 
 ```bash
 # Install only official packages
-ansible-playbook playbook.yml --tags install
+./run.sh --tags packages-install
 
-# Setup AUR infrastructure only
-ansible-playbook playbook.yml --tags aur_user,yay
+# Setup AUR infrastructure only (user + yay)
+./run.sh --tags aur-user,aur-helper
 
 # Install AUR packages only (requires aur_builder and yay)
-ansible-playbook playbook.yml --tags aur
+./run.sh --tags aur-packages
 
 # Full package management
-ansible-playbook playbook.yml --tags packages
+./run.sh --tags packages
 ```
 
 ## Variables File Example
@@ -261,13 +259,16 @@ Test specific components:
 
 ```bash
 # Test AUR user setup
-ansible-playbook playbook.yml --tags aur_user --check
+./run.sh --tags aur-user --check
 
 # Test yay installation
-ansible-playbook playbook.yml --tags yay --check
+./run.sh --tags aur-helper --check
 
-# Test package installation
-ansible-playbook playbook.yml --tags install --check
+# Test AUR package installation
+./run.sh --tags aur-packages --check
+
+# Test official package installation
+./run.sh --tags packages-install --check
 ```
 
 ## Role Structure
