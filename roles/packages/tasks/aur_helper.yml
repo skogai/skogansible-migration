@@ -8,11 +8,11 @@
     state: present
   tags: [packages, aur, aur-helper]
 
-- name: "Packages | Install yay AUR helper via kewlfft.aur"
+- name: "Packages | Install paru AUR helper via kewlfft.aur"
   become: true
   become_user: aur_builder
   kewlfft.aur.aur:
-    name: yay
+    name: paru
     use: makepkg
     state: present
   tags: [packages, aur, aur-helper]
