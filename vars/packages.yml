@@ -114,13 +114,13 @@ aur_packages:
   # - claude-code
   # - codename-goose-bin
   # - discord-electron-openasar
-  # - docker-rootless-extras
+  - docker-rootless-extras
   - google-chrome
-  # - mods
+  - mods
   # - pwvucontrol
   - rcm
-  # - diff-so-fancy
-  # - rustup  # Conflicts with system rust package
+  - diff-so-fancy
+  - rustup  # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin
   # - supabase-bin
@@ -128,4 +128,4 @@ aur_packages:
   # - vesktop
   - argc
   - cod
-  - bun-bin
+  - bun
