@@ -3,7 +3,7 @@
   ansible.builtin.include_tasks: aur_user.yml
   tags: [packages, aur, aur-user]
 
-- name: "Packages | Install AUR helper"
+- name: "Packages | Install paru AUR helper"
   ansible.builtin.include_tasks: aur_helper.yml
   tags: [packages, aur, aur-helper]
 

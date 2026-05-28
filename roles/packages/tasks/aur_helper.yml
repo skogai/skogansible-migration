@@ -8,34 +8,18 @@
     state: present
   tags: [packages, aur, aur-helper]
 
-- name: "Packages | Remove paru-bin if present"
-  become: true
-  community.general.pacman:
-    name: paru-bin
-    state: absent
+- name: "Packages | Check if paru is already installed"
+  ansible.builtin.stat:
+    path: /usr/bin/paru
+  register: paru_stat
   tags: [packages, aur, aur-helper]
 
-- name: "Packages | Ensure rustup is installed"
-  become: true
-  community.general.pacman:
-    name: rustup
-    state: present
-  tags: [packages, aur, aur-helper]
-
-- name: "Packages | Ensure stable rust toolchain for aur_builder"
-  become: true
-  become_user: aur_builder
-  ansible.builtin.command: rustup default stable
-  changed_when: false
-  tags: [packages, aur, aur-helper]
-
-- name: "Packages | Install paru AUR helper via kewlfft.aur"
+- name: "Packages | Install paru-bin AUR helper"
   become: true
   become_user: aur_builder
   kewlfft.aur.aur:
-    name: paru
+    name: paru-bin
     use: makepkg
     state: present
-  environment:
-    PATH: "/home/aur_builder/.cargo/bin:{{ ansible_env.PATH }}"
+  when: not paru_stat.stat.exists
   tags: [packages, aur, aur-helper]
