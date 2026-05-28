@@ -63,7 +63,7 @@ packages:
   # - ollama-cuda
   # - pgbouncer
   # - pgcli
-  - picom
+  # - picom
   # - pipewire
   # - pipewire-alsa
   # - pipewire-jack
@@ -84,7 +84,7 @@ packages:
   - wget
   # - wireless_tools
   # - wireplumber
-  - xclip
+  # - xclip
   # - xdg-utils
   # - xdotool
   # - xorg-server-xvfb
