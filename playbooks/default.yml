@@ -38,5 +38,5 @@
     # - role: cloudflared
     #   tags: [cloudflared, tunnel]
     #
-    # - role: filesystems
-    #   tags: [filesystems, mounts]
+    - role: filesystems
+      tags: [filesystems, mounts]

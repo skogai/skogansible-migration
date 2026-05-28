@@ -58,6 +58,8 @@ features:
 agents:
   claude:
     enabled: {{ chezmoi_agents.claude | default(true) | lower }}
+  codex:
+    enabled: {{ chezmoi_agents.codex | default(true) | lower }}
   letta:
     enabled: {{ chezmoi_agents.letta | default(true) | lower }}
   amy:

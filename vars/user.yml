@@ -59,6 +59,14 @@ users:
     groups_base:
       - wheel # sudo access
       - skogai # SkogAI group for all system users
+  - name: codex
+    git_email: codex@skogai.se
+    git_name: codex
+    editor: nvim
+    state: absent
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
   - name: goose
     git_email: goose@skogai.se
     git_name: goose

@@ -3,7 +3,7 @@
   ansible.builtin.include_tasks: aur_user.yml
   tags: [packages, aur, aur-user]
 
-- name: "Packages | Install yay AUR helper"
+- name: "Packages | Install AUR helper"
   ansible.builtin.include_tasks: aur_helper.yml
   tags: [packages, aur, aur-helper]
 
@@ -18,7 +18,7 @@
   ansible.builtin.lineinfile:
     path: /etc/pacman.conf
     regexp: '^#?ParallelDownloads\s*='
-    line: 'ParallelDownloads = {{ pacman_parallel_downloads }}'
+    line: "ParallelDownloads = {{ pacman_parallel_downloads }}"
     state: present
   tags: [packages, pacman-config]
 

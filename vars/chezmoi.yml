@@ -93,6 +93,7 @@ chezmoi_gita_enabled: true
 chezmoi_agents:
   claude: false
   letta: false
+  codex: false
   amy: false
   goose: false
   dot: false

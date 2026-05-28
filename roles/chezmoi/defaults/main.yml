@@ -107,6 +107,7 @@ chezmoi_gita_enabled: true
 # SkogAI agents
 chezmoi_agents:
   claude: true
+  codex: true
   letta: true
   amy: true
   goose: true

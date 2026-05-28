@@ -85,6 +85,7 @@ chezmoi_gita_enabled: true
 # Enable/disable individual agents
 chezmoi_agents:
   claude: true
+  codex: true
   letta: true
   amy: true
   goose: true
