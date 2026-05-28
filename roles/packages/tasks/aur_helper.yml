@@ -5,10 +5,13 @@
     name:
       - base-devel
       - git
+      - pyalpm
     state: present
   tags: [packages, aur, aur-helper]
 
 - name: "Packages | Install pikaur AUR helper"
+  become: true
+  become_user: aur_builder
   kewlfft.aur.aur:
     name: pikaur
     use: makepkg

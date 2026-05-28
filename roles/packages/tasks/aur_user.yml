@@ -27,13 +27,3 @@
     mode: '0644'
     validate: 'visudo -cf %s'
   tags: [packages, aur, aur-user]
-
-- name: "Packages | Allow wheel group to run pacman without a password"
-  become: true
-  ansible.builtin.lineinfile:
-    path: /etc/sudoers.d/10-pacman-wheel
-    line: '%wheel ALL=(ALL) NOPASSWD: /usr/bin/pacman'
-    create: true
-    mode: '0644'
-    validate: 'visudo -cf %s'
-  tags: [packages, aur, aur-user]
