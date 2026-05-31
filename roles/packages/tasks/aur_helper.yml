@@ -1,6 +1,7 @@
 ---
 - name: "Packages | Ensure base-devel and git are installed"
   become: true
+  become_user: aur_builder
   community.general.pacman:
     name:
       - base-devel

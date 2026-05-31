@@ -45,3 +45,4 @@ galaxy_cache
 galaxy_token
 collections/ansible_collections
 .aider*
+/roles/skogix

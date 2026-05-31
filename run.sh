@@ -29,6 +29,7 @@ check_password_file_permissions "$ANSIBLE_VAULT_PASSWORD_FILE"
 # Activate venv if not already active
 uv venv --seed --clear
 uv pip install ansible-core
+uv pip install pyalpm
 uv pip install ansible
 if [ -z "$VIRTUAL_ENV" ] && [ -d ".venv" ]; then
   source .venv/bin/activate
