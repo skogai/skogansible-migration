@@ -19,7 +19,7 @@
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     version: "{{ item.version | default('HEAD') }}"
-    update: "{{ item['update'] | default(true) }}"
+    update: "{{ item['update'] | default(false) }}"
     depth: "{{ item.depth | default(0) }}"
     accept_hostkey: "{{ item.accept_hostkey | default(true) }}"
     key_file: "{{ item.key_file | default(omit) }}"
@@ -43,6 +43,20 @@
     - git_clone_result is defined
     - git_clone_result.results is defined
     - item.changed
+  tags:
+    - git
+    - git-clone
+
+- name: "Git | Run post-install commands for changed repositories"
+  ansible.builtin.command:
+    cmd: "{{ item.item.post_install_command }}"
+    chdir: "{{ item.item.dest }}"
+  loop: "{{ git_clone_result.results }}"
+  when:
+    - git_clone_result is defined
+    - git_clone_result.results is defined
+    - item.changed
+    - item.item.post_install_command is defined
   tags:
     - git
     - git-clone

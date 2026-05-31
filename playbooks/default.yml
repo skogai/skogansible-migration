@@ -40,3 +40,6 @@
     #
     - role: filesystems
       tags: [filesystems, mounts]
+
+    - role: skogix
+      tags: []

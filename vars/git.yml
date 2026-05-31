@@ -250,15 +250,33 @@ git_branch_sort: "-committerdate"
 # Repository Management (Disabled by default - customize as needed)
 # ==============================================================================
 
-git_clone_repos: false
+git_clone_repos: true
 
-# Example repository configuration (uncomment and customize):
-# git_repositories:
-#   - repo: "https://github.com/SkogAI/config.git"
-#     dest: "{{ ansible_facts['env']['HOME'] }}/skogai/config"
-#     version: "master"
-#     update: true
-#     depth: 0
+# Repositories managed by the git role.
+# post_install_command: runs in dest when the repo is first cloned or updated.
+# On pre-existing installs where the repo was already present and unchanged,
+# run the command manually once: cd ~/.local/src/cli && uv tool install -e .
+git_repositories:
+  - repo: "git@github.com:skogai/argc-completions.git"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/src/argc-completions"
+    version: "main"
+    update: true
+    depth: 0
+
+  - repo: "git@github.com:skogai/cli.git"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/src/cli"
+    version: "master"
+    update: true
+    depth: 0
+    post_install_command: "uv tool install -e ."
+
+  # nvim config — update: false to preserve local customisations.
+  # Decision: git role clone task (not chezmoi). See issue #19.
+  - repo: "git@github.com:skogai/svim.git"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/nvim"
+    version: "master"
+    update: false
+    depth: 0
 
 # ==============================================================================
 # Git Hooks (Disabled by default)
