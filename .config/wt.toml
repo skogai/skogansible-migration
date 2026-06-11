@@ -122,8 +122,11 @@
 
 [pre-merge]
 direnv = "direnv allow"
-[pre-commit]
+
+[[pre-commit]]
 syntax = "./run.sh --syntax-check"
+
+[[pre-commit]]
 changes = "./run.sh --check"
 [pre-start]
 direnv = "direnv allow"

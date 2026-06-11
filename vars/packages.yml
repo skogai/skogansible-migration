@@ -4,6 +4,7 @@ pacman_parallel_downloads: 5
 
 # Packages to install from official repos
 packages:
+  - shellcheck
   - ansible
   - ansible-core
   - base
