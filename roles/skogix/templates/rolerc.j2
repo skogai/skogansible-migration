@@ -1,0 +1,16 @@
+# <role> Configuration File
+# Managed by Ansible - DO NOT EDIT MANUALLY
+# [@skogix:not currently implemented but worth keeping as a placeholder  for later]
+
+# Basic settings
+<role>_name = <example_value>
+<role>_enabled = {{ <role>_enable_<feature-y> | lower }}
+
+# Advanced settings
+{% if <role>_enable_<feature-x> %}
+<feature-x> = enabled
+{% endif %}
+
+# User-specific settings
+user = {{ ansible_user }}
+home = {{ ansible_facts['env']['HOME'] }}
