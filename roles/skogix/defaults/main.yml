@@ -1,0 +1,49 @@
+---
+# Template Role - Default Variables
+# Override these in your playbook, inventory, or vars/<role>.yml
+
+# ==============================================================================
+# Installation
+# ==============================================================================
+
+# Install the role
+<role>_install: true
+
+# Package name (varies by distribution)
+<role>_package_name: "<role>"
+
+# ==============================================================================
+# Configuration
+# ==============================================================================
+
+# Deploy configuration file from template
+<role>_deploy_config: false
+
+# Configuration file location
+<role>_config_file: "{{ ansible_facts['env']['HOME'] }}/.<role>rc"
+
+# Template to use for config
+<role>_config_template: "<role>rc.j2"
+
+# ==============================================================================
+# Feature Flags
+# ==============================================================================
+
+# Enable experimental <feature-x> (CAUTION: may break things)
+<role>_enable_<feature-x>: false
+
+# Enable <feature-y> (safe, recommended)
+<role>_enable_<feature-y>: true
+
+# ==============================================================================
+# Advanced Options
+# ==============================================================================
+
+# Example of commented data structure
+# <role>_items:
+#   - name: "item1"
+#     value: "value1"
+#     enabled: true
+#   - name: "item2"
+#     value: "value2"
+#     enabled: false

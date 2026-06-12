@@ -1,0 +1,11 @@
+---
+# <role> Role - <feature-x> Tasks
+# [@skogix:also not implemented right now but worth keeping in mind - the whole config-file-idea]
+
+- name: "<role> | Enable <feature-x>"
+  ansible.builtin.lineinfile:
+    path: "{{ <role>_config_file }}"
+    line: "<feature-x>_enabled=true"
+    create: true
+    mode: '0644'
+  tags: [<role>, <role>-<feature-x>]

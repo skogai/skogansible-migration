@@ -1,0 +1,17 @@
+---
+# <role> Role - Configuration Tasks
+
+- name: "<role> | Ensure config directory exists"
+  ansible.builtin.file:
+    path: "{{ <role>_config_file | dirname }}"
+    state: directory
+    mode: '0755'
+  tags: [<role>, <role>-config]
+
+- name: "<role> | Deploy configuration file"
+  ansible.builtin.template:
+    src: "{{ <role>_config_template }}"
+    dest: "{{ <role>_config_file }}"
+    mode: '0644'
+    backup: true
+  tags: [<role>, <role>-config]
