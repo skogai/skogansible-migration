@@ -57,6 +57,7 @@ ssh_manage_known_hosts: false
 # Known hosts to add
 ssh_known_hosts:
   - skogix.se
+  - skogai.se
 
 # ==============================================================================
 # Authorized Keys Management

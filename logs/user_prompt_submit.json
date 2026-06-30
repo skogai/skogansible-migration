@@ -1,0 +1,10 @@
+[
+  {
+    "session_id": "a909ba26-468b-494c-bfe9-8f412002d502",
+    "transcript_path": "/home/skogix/.claude/projects/-home-skogix--ansible/a909ba26-468b-494c-bfe9-8f412002d502.jsonl",
+    "cwd": "/home/skogix/.ansible",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "UserPromptSubmit",
+    "prompt": "can you check when this \"change\" happened / create at least the roles default template var?\n\n```\n\n[ERROR]: Task failed: Finalization of task args for 'ansible.builtin.template' failed: Error while resolving value for 'src': 'zsh_zshrc_template' is undefined\n\nTask failed.\nOrigin: /home/skogix/.ansible/roles/zsh/tasks/deploy_zshrc.yml:4:3\n\n2 # Deploy .zshrc file\n3\n4 - name: \"zsh | Deploy .zshrc from template\"\n    ^ column 3\n\n<<< caused by >>>\n\nFinalization of task args for 'ansible.builtin.template' failed.\nOrigin: /home/skogix/.ansible/roles/zsh/tasks/deploy_zshrc.yml:5:3\n\n3\n4 - name: \"zsh | Deploy .zshrc from template\"\n5   ansible.builtin.template:\n    ^ column 3\n\n<<< caused by >>>\n\nError while resolving value for 'src': 'zsh_zshrc_template' is undefined\nOrigin: /home/skogix/.ansible/roles/zsh/tasks/deploy_zshrc.yml:6:10\n\n4 - name: \"zsh | Deploy .zshrc from template\"\n5   ansible.builtin.template:\n6     src: \"{{ zsh_zshrc_template }}\"\n           ^ column 10\n\nfatal: [localhost]: FAILED! => {\"changed\": false, \"msg\": \"Task failed: Finalization of task args for 'ansible.builtin.template' failed: Error while resolving value for 'src': 'zsh_zshrc_template' is undefined\"}\n```"
+  }
+]

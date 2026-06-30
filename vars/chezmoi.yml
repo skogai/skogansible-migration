@@ -16,10 +16,10 @@ chezmoi_init_source: true
 chezmoi_source_dir: "{{ ansible_facts['user_dir'] }}/.local/share/chezmoi"
 
 # Whether to deploy .chezmoidata.yaml configuration
-chezmoi_deploy_config: false
+chezmoi_deploy_config: true
 
 # Whether to apply chezmoi after configuration changes
-chezmoi_apply_on_change: true
+chezmoi_apply_on_change: false
 
 # ==============================================================================
 # MACHINE PROFILE
@@ -57,7 +57,7 @@ chezmoi_gui: true # Auto-false for headless
 # ==============================================================================
 
 # Window manager: i3, sway, none
-chezmoi_wm: i3
+chezmoi_wm: sway
 
 # Laptop mode (battery management, etc.)
 chezmoi_laptop_mode: false
@@ -105,8 +105,8 @@ chezmoi_agents:
 # SkogAI directory paths
 # Comment out if not using SkogAI
 chezmoi_skogai_home: "{{ ansible_facts['user_dir'] }}/skogai"
-chezmoi_skogai_docs: "{{ ansible_facts['user_dir'] }}/skogai/docs"
-chezmoi_skogai_tools: "{{ ansible_facts['user_dir'] }}/skogai/tools"
+chezmoi_skogai_docs: "{{ ansible_facts['user_dir'] }}/docs"
+chezmoi_skogai_tools: "{{ ansible_facts['user_dir'] }}/tools"
 chezmoi_skogai_ansible: "{{ ansible_facts['user_dir'] }}/.ansible"
 
 # ==============================================================================

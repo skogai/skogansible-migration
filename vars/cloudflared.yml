@@ -29,7 +29,7 @@ cloudflared_origin_cert: "{{ cloudflared_origin_cert_content | default('') }}"
 cloudflared_generate_creds: true
 
 # Force regeneration (set to true to regenerate credentials file)
-cloudflared_force_regenerate_creds: false
+cloudflared_force_regenerate_creds: true
 
 # ==============================================================================
 # Service Configuration

@@ -1,0 +1,10 @@
+[
+  {
+    "session_id": "a909ba26-468b-494c-bfe9-8f412002d502",
+    "transcript_path": "/home/skogix/.claude/projects/-home-skogix--ansible/a909ba26-468b-494c-bfe9-8f412002d502.jsonl",
+    "cwd": "/home/skogix/.ansible",
+    "hook_event_name": "SessionStart",
+    "source": "startup",
+    "model": "claude-sonnet-4-6"
+  }
+]
