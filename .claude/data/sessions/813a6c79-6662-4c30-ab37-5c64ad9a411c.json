@@ -1,0 +1,8 @@
+{
+  "session_id": "813a6c79-6662-4c30-ab37-5c64ad9a411c",
+  "prompts": [
+    "scripts/test.sh",
+    "please SOT>P"
+  ],
+  "agent_name": "Helix"
+}

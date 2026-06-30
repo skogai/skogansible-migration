@@ -4,5 +4,7 @@
     name: "{{ aur_packages }}"
     use: pikaur
     state: present
+  become: true
+  become_user: aur_builder
   when: aur_packages is defined and aur_packages | length > 0
   tags: [packages, aur, aur-packages]

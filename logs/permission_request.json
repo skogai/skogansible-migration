@@ -1,0 +1,30 @@
+[
+  {
+    "session_id": "813a6c79-6662-4c30-ab37-5c64ad9a411c",
+    "transcript_path": "/home/skogix/.claude/projects/-home-skogix--ansible/813a6c79-6662-4c30-ab37-5c64ad9a411c.jsonl",
+    "cwd": "/home/skogix/.ansible",
+    "prompt_id": "e2a0aa4a-f648-4677-a99e-473bc32222d2",
+    "permission_mode": "acceptEdits",
+    "effort": {
+      "level": "medium"
+    },
+    "hook_event_name": "PermissionRequest",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "python -m unittest discover -s tests 2>&1"
+    },
+    "permission_suggestions": [
+      {
+        "type": "addRules",
+        "rules": [
+          {
+            "toolName": "Bash",
+            "ruleContent": "python -m unittest discover -s tests"
+          }
+        ],
+        "behavior": "allow",
+        "destination": "localSettings"
+      }
+    ]
+  }
+]

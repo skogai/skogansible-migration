@@ -6,5 +6,23 @@
     "permission_mode": "acceptEdits",
     "hook_event_name": "UserPromptSubmit",
     "prompt": "can you check when this \"change\" happened / create at least the roles default template var?\n\n```\n\n[ERROR]: Task failed: Finalization of task args for 'ansible.builtin.template' failed: Error while resolving value for 'src': 'zsh_zshrc_template' is undefined\n\nTask failed.\nOrigin: /home/skogix/.ansible/roles/zsh/tasks/deploy_zshrc.yml:4:3\n\n2 # Deploy .zshrc file\n3\n4 - name: \"zsh | Deploy .zshrc from template\"\n    ^ column 3\n\n<<< caused by >>>\n\nFinalization of task args for 'ansible.builtin.template' failed.\nOrigin: /home/skogix/.ansible/roles/zsh/tasks/deploy_zshrc.yml:5:3\n\n3\n4 - name: \"zsh | Deploy .zshrc from template\"\n5   ansible.builtin.template:\n    ^ column 3\n\n<<< caused by >>>\n\nError while resolving value for 'src': 'zsh_zshrc_template' is undefined\nOrigin: /home/skogix/.ansible/roles/zsh/tasks/deploy_zshrc.yml:6:10\n\n4 - name: \"zsh | Deploy .zshrc from template\"\n5   ansible.builtin.template:\n6     src: \"{{ zsh_zshrc_template }}\"\n           ^ column 10\n\nfatal: [localhost]: FAILED! => {\"changed\": false, \"msg\": \"Task failed: Finalization of task args for 'ansible.builtin.template' failed: Error while resolving value for 'src': 'zsh_zshrc_template' is undefined\"}\n```"
+  },
+  {
+    "session_id": "813a6c79-6662-4c30-ab37-5c64ad9a411c",
+    "transcript_path": "/home/skogix/.claude/projects/-home-skogix--ansible/813a6c79-6662-4c30-ab37-5c64ad9a411c.jsonl",
+    "cwd": "/home/skogix/.ansible",
+    "prompt_id": "730258e4-2b93-43ca-bd91-5d377a90ed89",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "UserPromptSubmit",
+    "prompt": "scripts/test.sh"
+  },
+  {
+    "session_id": "813a6c79-6662-4c30-ab37-5c64ad9a411c",
+    "transcript_path": "/home/skogix/.claude/projects/-home-skogix--ansible/813a6c79-6662-4c30-ab37-5c64ad9a411c.jsonl",
+    "cwd": "/home/skogix/.ansible",
+    "prompt_id": "e2a0aa4a-f648-4677-a99e-473bc32222d2",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "UserPromptSubmit",
+    "prompt": "please SOT>P"
   }
 ]

@@ -6,5 +6,13 @@
     "hook_event_name": "SessionStart",
     "source": "startup",
     "model": "claude-sonnet-4-6"
+  },
+  {
+    "session_id": "813a6c79-6662-4c30-ab37-5c64ad9a411c",
+    "transcript_path": "/home/skogix/.claude/projects/-home-skogix--ansible/813a6c79-6662-4c30-ab37-5c64ad9a411c.jsonl",
+    "cwd": "/home/skogix/.ansible",
+    "hook_event_name": "SessionStart",
+    "source": "startup",
+    "model": "claude-sonnet-4-6"
   }
 ]
