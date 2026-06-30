@@ -113,7 +113,7 @@ packages:
   - lsof
   - ast-grep
   - procs
-  - bun
+  # - bun
 
 aur_packages:
   # - claude-code
