@@ -23,11 +23,13 @@ zplug "plugins/direnv", from:oh-my-zsh
 zplug "plugins/virtualenv", from:oh-my-zsh
 zplug "plugins/pyenv", from:oh-my-zsh
 zplug "plugins/npm", from:oh-my-zsh
-zplug "plugins/nvm", from:oh-my-zsh
+# zplug "plugins/nvm", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/extract", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
 zplug "plugins/ansible", from:oh-my-zsh
+zplug "plugins/vim-interaction", from:oh-my-zsh
+zplug "plugins/zsh-interactive-cd", from:oh-my-zsh
 
 ! zplug check && zplug install
 zplug load

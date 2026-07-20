@@ -5,3 +5,6 @@
 
 # Add custom completions directory to fpath
 fpath=(~/.config/zsh.d/completions $fpath)
+fpath=(~/.zfunc $fpath)
+fpath=(~/.config/zsh/completions $fpath)
+fpath=(~/.oh-my-zsh/cache/completions $fpath)
