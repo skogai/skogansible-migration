@@ -1,0 +1,109 @@
+#compdef amq
+# amq shell completions for zsh
+# Usage: amq completion zsh > "${fpath[1]}/_amq" && compinit
+
+_amq() {
+    local -a commands
+    commands=(
+        'init:Initialize the queue root and agent mailboxes'
+        'send:Send a message'
+        'list:List inbox messages'
+        'read:Read a message by id'
+        'thread:View a thread'
+        'presence:Set or list presence'
+        'cleanup:Remove stale tmp files'
+        'watch:Wait for new messages (uses fsnotify)'
+        'drain:Drain new messages (read, move to cur, emit receipts)'
+        'monitor:Combined watch+drain for co-op mode'
+        'reply:Reply to a message (auto thread/refs)'
+        'dlq:Dead letter queue management'
+        'wake:Background waker (TIOCSTI injection, experimental)'
+        'upgrade:Upgrade amq to the latest release'
+        'env:Output shell commands to set environment variables'
+        'coop:Co-op mode setup (init, exec)'
+        'swarm:Claude Code Agent Teams integration (join, tasks, bridge)'
+        'integration:Optional interoperability adapters'
+        'receipts:Message delivery receipts'
+        'who:Show sessions and agents in current project'
+        'route:Explain canonical routing'
+        'doctor:Verify installation and configuration'
+        'shell-setup:Output shell aliases (amc/amx)'
+        'completion:Generate shell completions (bash, zsh, fish)'
+        'help:Show help for a command'
+    )
+
+    if (( CURRENT == 2 )); then
+        _describe 'command' commands
+        return
+    fi
+
+    case "${words[2]}" in
+        presence)
+            local -a subcmds
+            subcmds=(
+                'set:Update presence status'
+                'list:List presence data'
+            )
+            _describe 'subcommand' subcmds
+            ;;
+        dlq)
+            local -a subcmds
+            subcmds=(
+                'list:List dead-lettered messages'
+                'read:Read a DLQ message with failure info'
+                'retry:Retry a DLQ message (move back to inbox)'
+                'purge:Permanently remove DLQ messages'
+            )
+            _describe 'subcommand' subcmds
+            ;;
+        coop)
+            local -a subcmds
+            subcmds=(
+                'init:Initialize project for co-op mode'
+                'exec:Set up co-op mode and exec into an agent'
+            )
+            _describe 'subcommand' subcmds
+            ;;
+        swarm)
+            local -a subcmds
+            subcmds=(
+                'list:List discovered Agent Teams'
+                'join:Register an external agent in a team'
+                'leave:Deregister an agent from a team'
+                'tasks:List tasks from the shared task list'
+                'claim:Claim a task'
+                'complete:Mark a task as completed'
+                'fail:Mark a task as failed'
+                'block:Mark a task as blocked'
+                'bridge:Run bridge process (sync tasks -> AMQ notifications)'
+            )
+            _describe 'subcommand' subcmds
+            ;;
+        integration)
+            local -a subcmds
+            subcmds=(
+                'symphony:Lightweight Symphony hook adapter'
+                'kanban:Experimental Cline Kanban bridge'
+            )
+            _describe 'subcommand' subcmds
+            ;;
+        receipts)
+            local -a subcmds
+            subcmds=(
+                'list:List receipts (optionally filtered)'
+                'wait:Wait for a receipt to appear'
+            )
+            _describe 'subcommand' subcmds
+            ;;
+        route)
+            local -a subcmds
+            subcmds=(
+                'explain:Explain a send route as canonical JSON'
+            )
+            _describe 'subcommand' subcmds
+            ;;
+        *)
+            ;;
+    esac
+}
+_amq "$@"

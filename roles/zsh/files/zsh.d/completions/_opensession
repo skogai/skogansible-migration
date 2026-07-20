@@ -1,0 +1,1866 @@
+#compdef opensession
+
+autoload -U is-at-least
+
+_opensession() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" : \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+":: :_opensession_commands" \
+"*::: :->opensession" \
+&& ret=0
+    case $state in
+    (opensession)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-command-$line[1]:"
+        case $line[1] in
+            (register)
+_arguments "${_arguments_options[@]}" : \
+'--quiet[Print only URI]' \
+'--json[Print machine-readable JSON output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':file -- Canonical HAIL JSONL file path:_files' \
+&& ret=0
+;;
+(cat)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':uri -- Local source URI (`os\://src/local/<sha256>`):_default' \
+&& ret=0
+;;
+(inspect)
+_arguments "${_arguments_options[@]}" : \
+'--json[Machine-readable JSON output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':uri -- Source or artifact URI:_default' \
+&& ret=0
+;;
+(share)
+_arguments "${_arguments_options[@]}" : \
+'--remote=[Git remote name or URL (required for \`--git\`)]:REMOTE:_default' \
+'--ref=[Git ref to write into (default\: hidden branch ledger ref)]:GIT_REF:_default' \
+'--path=[Repo-relative target path in the ref]:PATH:_default' \
+'--web[Web share mode (default)]' \
+'--git[Git share mode]' \
+'--quick[Quick git share mode (auto-detect remote and push after first confirmation)]' \
+'--json[Machine-readable JSON output]' \
+'--copy[Copy primary output to clipboard]' \
+'--push[Perform network push immediately]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':uri -- Source URI (`os\://src/...`):_default' \
+&& ret=0
+;;
+(view)
+_arguments "${_arguments_options[@]}" : \
+'--repo=[Repository path override]:REPO:_files' \
+'--no-open[Do not open a browser window]' \
+'--json[Print machine-readable output]' \
+'--no-fetch[Skip remote fetch when resolving URL targets]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'::target -- Review target\: source URI, local *.jsonl file, PR/MR URL, or commit/ref/range:_default' \
+&& ret=0
+;;
+(review)
+_arguments "${_arguments_options[@]}" : \
+'--view=[Review view mode (\`auto\` resolves to web)]:VIEW:(auto web)' \
+'--repo=[Repository root path (defaults to current repository)]:REPO:_files' \
+'--no-fetch[Skip network fetch and use already-fetched refs]' \
+'--json[Print review bundle stats as JSON]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':pr_link -- GitHub PR URL (`https\://github.com/<owner>/<repo>/pull/<number>`):_default' \
+&& ret=0
+;;
+(handoff)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__handoff_commands" \
+"*::: :->handoff" \
+&& ret=0
+
+    case $state in
+    (handoff)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-handoff-command-$line[1]:"
+        case $line[1] in
+            (build)
+_arguments "${_arguments_options[@]}" : \
+'--last=[Use latest N sessions from local index]:LAST:_default' \
+'*--from=[Build from existing local source URI(s)]:URI:_default' \
+'--pin=[Pin alias to move after build]:PIN:_default' \
+'--validate[Validate generated summaries and fail on error-level findings]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::inputs -- Input session files:_files' \
+&& ret=0
+;;
+(artifacts)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__handoff__subcmd__artifacts_commands" \
+"*::: :->artifacts" \
+&& ret=0
+
+    case $state in
+    (artifacts)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-handoff-artifacts-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(get)
+_arguments "${_arguments_options[@]}" : \
+'--format=[]:FORMAT:(canonical raw)' \
+'--encode=[]:ENCODE:(jsonl json)' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id_or_uri:_default' \
+&& ret=0
+;;
+(verify)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':id_or_uri:_default' \
+&& ret=0
+;;
+(pin)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':alias:_default' \
+':id_or_uri:_default' \
+&& ret=0
+;;
+(unpin)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':alias:_default' \
+&& ret=0
+;;
+(rm)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':id_or_uri:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-handoff-artifacts-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(get)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(verify)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(pin)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(unpin)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(rm)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__handoff__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-handoff-help-command-$line[1]:"
+        case $line[1] in
+            (build)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(artifacts)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts_commands" \
+"*::: :->artifacts" \
+&& ret=0
+
+    case $state in
+    (artifacts)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-handoff-help-artifacts-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(get)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(verify)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(pin)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(unpin)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(rm)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(parse)
+_arguments "${_arguments_options[@]}" : \
+'--profile=[Parser profile id (\`hail\`, \`codex\`, \`claude-code\`, \`gemini\`, ...)]:PROFILE:_default' \
+'--out=[Optional output file path (default stdout)]:OUT:_files' \
+'--preview[Print parser/warning preview to stderr]' \
+'--validate[Validate parsed HAIL before output]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':file -- Input file path:_files' \
+&& ret=0
+;;
+(summary)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__summary_commands" \
+"*::: :->summary" \
+&& ret=0
+
+    case $state in
+    (summary)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-summary-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':session_id -- Session id:_default' \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+'--file=[Session source file (raw or HAIL JSONL)]:FILE:_files' \
+'--repo=[Repository root for git-based summary generation]:REPO:_files' \
+'--commit=[Commit SHA to summarize]:COMMIT:_default' \
+'--working-tree[Summarize current working tree diff]' \
+'--no-store[Skip local DB persistence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__summary__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-summary-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" : \
+'--base-url=[Override default web base URL]:BASE_URL:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(runtime)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__config__subcmd__runtime_commands" \
+"*::: :->runtime" \
+&& ret=0
+
+    case $state in
+    (runtime)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-runtime-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'--session-default-view=[Global default session view (\`full\` or \`compressed\`)]:SESSION_DEFAULT_VIEW:(full compressed)' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__config__subcmd__runtime__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-runtime-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(summary)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__config__subcmd__summary_commands" \
+"*::: :->summary" \
+&& ret=0
+
+    case $state in
+    (summary)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-summary-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(detect)
+_arguments "${_arguments_options[@]}" : \
+'--apply[Apply detected provider settings into runtime config]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'--provider=[]:PROVIDER:(disabled ollama codex_exec claude_cli)' \
+'--endpoint=[]:ENDPOINT:_default' \
+'--model=[]:MODEL:_default' \
+'--source-mode=[]:SOURCE_MODE:(session-only session-or-git-changes)' \
+'--response-style=[]:RESPONSE_STYLE:(compact standard detailed)' \
+'--output-shape=[]:OUTPUT_SHAPE:(layered file-list security-first)' \
+'--prompt-template=[]:PROMPT_TEMPLATE:_default' \
+'--trigger-mode=[]:TRIGGER_MODE:(manual on-session-save)' \
+'--storage-backend=[]:STORAGE_BACKEND:(hidden-ref local-db none)' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__config__subcmd__summary__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-summary-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(detect)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__config__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-help-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(runtime)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__config__subcmd__help__subcmd__runtime_commands" \
+"*::: :->runtime" \
+&& ret=0
+
+    case $state in
+    (runtime)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-help-runtime-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(summary)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__config__subcmd__help__subcmd__summary_commands" \
+"*::: :->summary" \
+&& ret=0
+
+    case $state in
+    (summary)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-config-help-summary-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(detect)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(cleanup)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__cleanup_commands" \
+"*::: :->cleanup" \
+&& ret=0
+
+    case $state in
+    (cleanup)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-cleanup-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" : \
+'--provider=[Cleanup provider mode]:PROVIDER:(auto github gitlab generic)' \
+'--remote=[Git remote name or URL]:REMOTE:_default' \
+'--hidden-ttl-days=[Hidden ref TTL in days]:HIDDEN_TTL_DAYS:_default' \
+'--artifact-ttl-days=[Artifact branch TTL in days]:ARTIFACT_TTL_DAYS:_default' \
+'--yes[Skip confirmation prompt]' \
+'--json[JSON output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+'--json[JSON output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+'--apply[Apply deletion operations]' \
+'--json[JSON output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__cleanup__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-cleanup-help-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(setup)
+_arguments "${_arguments_options[@]}" : \
+'--fanout-mode=[Set fanout mode before applying setup changes]:FANOUT_MODE:(hidden_ref git_notes)' \
+'--open-target=[Set default review opener (\`app\` or \`web\`) for this repository]:OPEN_TARGET:(app web)' \
+'--profile=[Choose setup profile (\`local\` = CLI-local-first, \`app\` = desktop-linked defaults)]:PROFILE:(local app)' \
+'--print-ledger-ref=[Print hidden ledger ref for a branch name (internal use for hooks)]:PRINT_LEDGER_REF:_default' \
+'--sync-branch-session=[Ingest the latest local session for this branch into the hidden ledger (internal use)]:SYNC_BRANCH_SESSION:_default' \
+'--sync-branch-commit=[Commit SHA hint used to improve commit mapping when syncing branch sessions (internal use)]:SYNC_BRANCH_COMMIT:_default' \
+'--check[Show setup status only]' \
+'--yes[Apply setup changes without interactive confirmation]' \
+'--print-fanout-mode[Print configured fanout mode (\`hidden_ref\` | \`git_notes\`) for this repo]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(doctor)
+_arguments "${_arguments_options[@]}" : \
+'--fanout-mode=[Set fanout mode before applying fixes]:FANOUT_MODE:(hidden_ref git_notes)' \
+'--open-target=[Set default review opener (\`app\` or \`web\`) before applying fixes]:OPEN_TARGET:(app web)' \
+'--profile=[Choose setup profile (\`local\` = CLI-local-first, \`app\` = desktop-linked defaults)]:PROFILE:(local app)' \
+'--fix[Apply recommended setup fixes (hooks/shims/fanout defaults)]' \
+'--yes[Apply setup changes without interactive confirmation]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(docs)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_opensession__subcmd__docs_commands" \
+"*::: :->docs" \
+&& ret=0
+
+    case $state in
+    (docs)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-docs-command-$line[1]:"
+        case $line[1] in
+            (completion)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':shell -- Target shell:(bash elvish fish powershell zsh)' \
+&& ret=0
+;;
+(quickstart)
+_arguments "${_arguments_options[@]}" : \
+'--profile=[Parser profile used for first parse]:PROFILE:_default' \
+'--setup-profile=[Setup profile used for doctor/setup defaults]:SETUP_PROFILE:(local app)' \
+'--input=[Raw input path for parse]:INPUT:_files' \
+'--out=[Canonical output path for parse]:OUT:_files' \
+'--remote=[Git remote name used for initial share]:REMOTE:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__docs__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-docs-help-command-$line[1]:"
+        case $line[1] in
+            (completion)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(quickstart)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-command-$line[1]:"
+        case $line[1] in
+            (register)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(cat)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(inspect)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(share)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(view)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(review)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(handoff)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__handoff_commands" \
+"*::: :->handoff" \
+&& ret=0
+
+    case $state in
+    (handoff)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-handoff-command-$line[1]:"
+        case $line[1] in
+            (build)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(artifacts)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts_commands" \
+"*::: :->artifacts" \
+&& ret=0
+
+    case $state in
+    (artifacts)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-handoff-artifacts-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(get)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(verify)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(pin)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(unpin)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(rm)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(parse)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(summary)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__summary_commands" \
+"*::: :->summary" \
+&& ret=0
+
+    case $state in
+    (summary)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-summary-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-config-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(runtime)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__config__subcmd__runtime_commands" \
+"*::: :->runtime" \
+&& ret=0
+
+    case $state in
+    (runtime)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-config-runtime-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(summary)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__config__subcmd__summary_commands" \
+"*::: :->summary" \
+&& ret=0
+
+    case $state in
+    (summary)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-config-summary-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(detect)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(cleanup)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__cleanup_commands" \
+"*::: :->cleanup" \
+&& ret=0
+
+    case $state in
+    (cleanup)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-cleanup-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(setup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(doctor)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(docs)
+_arguments "${_arguments_options[@]}" : \
+":: :_opensession__subcmd__help__subcmd__docs_commands" \
+"*::: :->docs" \
+&& ret=0
+
+    case $state in
+    (docs)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:opensession-help-docs-command-$line[1]:"
+        case $line[1] in
+            (completion)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(quickstart)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_opensession_commands] )) ||
+_opensession_commands() {
+    local commands; commands=(
+'register:Register canonical HAIL JSONL into local object store' \
+'cat:Print canonical JSONL for a local source URI' \
+'inspect:Inspect summary metadata for source/artifact URIs' \
+'share:Resolve sharing outputs from a source URI' \
+'view:Open a review-centric web view from URI/file/URL/commit targets' \
+'review:Review a GitHub PR using local hidden refs and grouped commit sessions' \
+'handoff:Build and manage immutable handoff artifacts' \
+'parse:Parse agent-native logs into canonical HAIL JSONL' \
+'summary:Generate/show local semantic summaries' \
+'config:Manage explicit repo config (\`.opensession/config.toml\`)' \
+'cleanup:Configure and run hidden-ref cleanup automation' \
+'setup:Install/update OpenSession git hooks and diagnostics' \
+'doctor:Diagnose and optionally fix local OpenSession setup' \
+'docs:Generate shell completion scripts' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cat_commands] )) ||
+_opensession__subcmd__cat_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cat commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup_commands] )) ||
+_opensession__subcmd__cleanup_commands() {
+    local commands; commands=(
+'init:Initialize cleanup automation files for this repository' \
+'status:Show cleanup setup status and janitor preview' \
+'run:Run janitor (dry-run by default)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession cleanup commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__help_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__help_commands() {
+    local commands; commands=(
+'init:Initialize cleanup automation files for this repository' \
+'status:Show cleanup setup status and janitor preview' \
+'run:Run janitor (dry-run by default)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession cleanup help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cleanup help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__help__subcmd__init_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__help__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cleanup help init commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__help__subcmd__run_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__help__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cleanup help run commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__help__subcmd__status_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__help__subcmd__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cleanup help status commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__init_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cleanup init commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__run_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cleanup run commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__cleanup__subcmd__status_commands] )) ||
+_opensession__subcmd__cleanup__subcmd__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession cleanup status commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config_commands] )) ||
+_opensession__subcmd__config_commands() {
+    local commands; commands=(
+'init:Initialize \`.opensession/config.toml\` in the current repo (or cwd)' \
+'show:Show effective \`.opensession/config.toml\`' \
+'runtime:Show/update runtime \`opensession.toml\`' \
+'summary:Show/update summary settings in runtime \`opensession.toml\`' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession config commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help_commands] )) ||
+_opensession__subcmd__config__subcmd__help_commands() {
+    local commands; commands=(
+'init:Initialize \`.opensession/config.toml\` in the current repo (or cwd)' \
+'show:Show effective \`.opensession/config.toml\`' \
+'runtime:Show/update runtime \`opensession.toml\`' \
+'summary:Show/update summary settings in runtime \`opensession.toml\`' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession config help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__init_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help init commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__runtime_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__runtime_commands() {
+    local commands; commands=(
+'show:Show runtime config' \
+'set:Update runtime defaults' \
+    )
+    _describe -t commands 'opensession config help runtime commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__runtime__subcmd__set_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__runtime__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help runtime set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__runtime__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__runtime__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help runtime show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__summary_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__summary_commands() {
+    local commands; commands=(
+'show:Show runtime summary settings' \
+'detect:Detect available local summary provider' \
+'set:Update runtime summary settings' \
+    )
+    _describe -t commands 'opensession config help summary commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__summary__subcmd__detect_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__summary__subcmd__detect_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help summary detect commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__summary__subcmd__set_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__summary__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help summary set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__help__subcmd__summary__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__help__subcmd__summary__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config help summary show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__init_commands] )) ||
+_opensession__subcmd__config__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config init commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__runtime_commands] )) ||
+_opensession__subcmd__config__subcmd__runtime_commands() {
+    local commands; commands=(
+'show:Show runtime config' \
+'set:Update runtime defaults' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession config runtime commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__runtime__subcmd__help_commands] )) ||
+_opensession__subcmd__config__subcmd__runtime__subcmd__help_commands() {
+    local commands; commands=(
+'show:Show runtime config' \
+'set:Update runtime defaults' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession config runtime help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__runtime__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__config__subcmd__runtime__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config runtime help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__runtime__subcmd__help__subcmd__set_commands] )) ||
+_opensession__subcmd__config__subcmd__runtime__subcmd__help__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config runtime help set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__runtime__subcmd__help__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__runtime__subcmd__help__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config runtime help show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__runtime__subcmd__set_commands] )) ||
+_opensession__subcmd__config__subcmd__runtime__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config runtime set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__runtime__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__runtime__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config runtime show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary_commands] )) ||
+_opensession__subcmd__config__subcmd__summary_commands() {
+    local commands; commands=(
+'show:Show runtime summary settings' \
+'detect:Detect available local summary provider' \
+'set:Update runtime summary settings' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession config summary commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__detect_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__detect_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config summary detect commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__help_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__help_commands() {
+    local commands; commands=(
+'show:Show runtime summary settings' \
+'detect:Detect available local summary provider' \
+'set:Update runtime summary settings' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession config summary help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__detect_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__detect_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config summary help detect commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config summary help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__set_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config summary help set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__help__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config summary help show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__set_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config summary set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__config__subcmd__summary__subcmd__show_commands] )) ||
+_opensession__subcmd__config__subcmd__summary__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession config summary show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__docs_commands] )) ||
+_opensession__subcmd__docs_commands() {
+    local commands; commands=(
+'completion:Generate shell completions' \
+'quickstart:Print a 5-minute first-user flow' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession docs commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__docs__subcmd__completion_commands] )) ||
+_opensession__subcmd__docs__subcmd__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession docs completion commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__docs__subcmd__help_commands] )) ||
+_opensession__subcmd__docs__subcmd__help_commands() {
+    local commands; commands=(
+'completion:Generate shell completions' \
+'quickstart:Print a 5-minute first-user flow' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession docs help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__docs__subcmd__help__subcmd__completion_commands] )) ||
+_opensession__subcmd__docs__subcmd__help__subcmd__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession docs help completion commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__docs__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__docs__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession docs help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__docs__subcmd__help__subcmd__quickstart_commands] )) ||
+_opensession__subcmd__docs__subcmd__help__subcmd__quickstart_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession docs help quickstart commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__docs__subcmd__quickstart_commands] )) ||
+_opensession__subcmd__docs__subcmd__quickstart_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession docs quickstart commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__doctor_commands] )) ||
+_opensession__subcmd__doctor_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession doctor commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff_commands] )) ||
+_opensession__subcmd__handoff_commands() {
+    local commands; commands=(
+'build:Build a new immutable handoff artifact' \
+'artifacts:Inspect and manage handoff artifacts' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession handoff commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts_commands() {
+    local commands; commands=(
+'list:' \
+'get:' \
+'verify:' \
+'pin:' \
+'unpin:' \
+'rm:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession handoff artifacts commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__get_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts get commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help_commands() {
+    local commands; commands=(
+'list:' \
+'get:' \
+'verify:' \
+'pin:' \
+'unpin:' \
+'rm:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession handoff artifacts help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__get_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts help get commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__list_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts help list commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__pin_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__pin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts help pin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__rm_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__rm_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts help rm commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__unpin_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__unpin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts help unpin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__verify_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__help__subcmd__verify_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts help verify commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__list_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts list commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__pin_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__pin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts pin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__rm_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__rm_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts rm commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__unpin_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__unpin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts unpin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__artifacts__subcmd__verify_commands] )) ||
+_opensession__subcmd__handoff__subcmd__artifacts__subcmd__verify_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff artifacts verify commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__build_commands] )) ||
+_opensession__subcmd__handoff__subcmd__build_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff build commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help_commands() {
+    local commands; commands=(
+'build:Build a new immutable handoff artifact' \
+'artifacts:Inspect and manage handoff artifacts' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession handoff help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts_commands() {
+    local commands; commands=(
+'list:' \
+'get:' \
+'verify:' \
+'pin:' \
+'unpin:' \
+'rm:' \
+    )
+    _describe -t commands 'opensession handoff help artifacts commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__get_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help artifacts get commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__list_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help artifacts list commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__pin_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__pin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help artifacts pin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__rm_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__rm_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help artifacts rm commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__unpin_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__unpin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help artifacts unpin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__verify_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__artifacts__subcmd__verify_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help artifacts verify commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__build_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__build_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help build commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__handoff__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__handoff__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession handoff help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help_commands] )) ||
+_opensession__subcmd__help_commands() {
+    local commands; commands=(
+'register:Register canonical HAIL JSONL into local object store' \
+'cat:Print canonical JSONL for a local source URI' \
+'inspect:Inspect summary metadata for source/artifact URIs' \
+'share:Resolve sharing outputs from a source URI' \
+'view:Open a review-centric web view from URI/file/URL/commit targets' \
+'review:Review a GitHub PR using local hidden refs and grouped commit sessions' \
+'handoff:Build and manage immutable handoff artifacts' \
+'parse:Parse agent-native logs into canonical HAIL JSONL' \
+'summary:Generate/show local semantic summaries' \
+'config:Manage explicit repo config (\`.opensession/config.toml\`)' \
+'cleanup:Configure and run hidden-ref cleanup automation' \
+'setup:Install/update OpenSession git hooks and diagnostics' \
+'doctor:Diagnose and optionally fix local OpenSession setup' \
+'docs:Generate shell completion scripts' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__cat_commands] )) ||
+_opensession__subcmd__help__subcmd__cat_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help cat commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__cleanup_commands] )) ||
+_opensession__subcmd__help__subcmd__cleanup_commands() {
+    local commands; commands=(
+'init:Initialize cleanup automation files for this repository' \
+'status:Show cleanup setup status and janitor preview' \
+'run:Run janitor (dry-run by default)' \
+    )
+    _describe -t commands 'opensession help cleanup commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__cleanup__subcmd__init_commands] )) ||
+_opensession__subcmd__help__subcmd__cleanup__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help cleanup init commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__cleanup__subcmd__run_commands] )) ||
+_opensession__subcmd__help__subcmd__cleanup__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help cleanup run commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__cleanup__subcmd__status_commands] )) ||
+_opensession__subcmd__help__subcmd__cleanup__subcmd__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help cleanup status commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config_commands] )) ||
+_opensession__subcmd__help__subcmd__config_commands() {
+    local commands; commands=(
+'init:Initialize \`.opensession/config.toml\` in the current repo (or cwd)' \
+'show:Show effective \`.opensession/config.toml\`' \
+'runtime:Show/update runtime \`opensession.toml\`' \
+'summary:Show/update summary settings in runtime \`opensession.toml\`' \
+    )
+    _describe -t commands 'opensession help config commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__init_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help config init commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__runtime_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__runtime_commands() {
+    local commands; commands=(
+'show:Show runtime config' \
+'set:Update runtime defaults' \
+    )
+    _describe -t commands 'opensession help config runtime commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__runtime__subcmd__set_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__runtime__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help config runtime set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__runtime__subcmd__show_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__runtime__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help config runtime show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__show_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help config show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__summary_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__summary_commands() {
+    local commands; commands=(
+'show:Show runtime summary settings' \
+'detect:Detect available local summary provider' \
+'set:Update runtime summary settings' \
+    )
+    _describe -t commands 'opensession help config summary commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__summary__subcmd__detect_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__summary__subcmd__detect_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help config summary detect commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__summary__subcmd__set_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__summary__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help config summary set commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__config__subcmd__summary__subcmd__show_commands] )) ||
+_opensession__subcmd__help__subcmd__config__subcmd__summary__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help config summary show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__docs_commands] )) ||
+_opensession__subcmd__help__subcmd__docs_commands() {
+    local commands; commands=(
+'completion:Generate shell completions' \
+'quickstart:Print a 5-minute first-user flow' \
+    )
+    _describe -t commands 'opensession help docs commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__docs__subcmd__completion_commands] )) ||
+_opensession__subcmd__help__subcmd__docs__subcmd__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help docs completion commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__docs__subcmd__quickstart_commands] )) ||
+_opensession__subcmd__help__subcmd__docs__subcmd__quickstart_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help docs quickstart commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__doctor_commands] )) ||
+_opensession__subcmd__help__subcmd__doctor_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help doctor commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff_commands() {
+    local commands; commands=(
+'build:Build a new immutable handoff artifact' \
+'artifacts:Inspect and manage handoff artifacts' \
+    )
+    _describe -t commands 'opensession help handoff commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts_commands() {
+    local commands; commands=(
+'list:' \
+'get:' \
+'verify:' \
+'pin:' \
+'unpin:' \
+'rm:' \
+    )
+    _describe -t commands 'opensession help handoff artifacts commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__get_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help handoff artifacts get commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__list_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help handoff artifacts list commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__pin_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__pin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help handoff artifacts pin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__rm_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__rm_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help handoff artifacts rm commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__unpin_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__unpin_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help handoff artifacts unpin commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__verify_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__artifacts__subcmd__verify_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help handoff artifacts verify commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__handoff__subcmd__build_commands] )) ||
+_opensession__subcmd__help__subcmd__handoff__subcmd__build_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help handoff build commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__inspect_commands] )) ||
+_opensession__subcmd__help__subcmd__inspect_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help inspect commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__parse_commands] )) ||
+_opensession__subcmd__help__subcmd__parse_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help parse commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__register_commands] )) ||
+_opensession__subcmd__help__subcmd__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help register commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__review_commands] )) ||
+_opensession__subcmd__help__subcmd__review_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help review commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__setup_commands] )) ||
+_opensession__subcmd__help__subcmd__setup_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help setup commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__share_commands] )) ||
+_opensession__subcmd__help__subcmd__share_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help share commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__summary_commands] )) ||
+_opensession__subcmd__help__subcmd__summary_commands() {
+    local commands; commands=(
+'show:Show previously generated local semantic summary by session id' \
+'run:Generate semantic summary from a session file or git target' \
+    )
+    _describe -t commands 'opensession help summary commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__summary__subcmd__run_commands] )) ||
+_opensession__subcmd__help__subcmd__summary__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help summary run commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__summary__subcmd__show_commands] )) ||
+_opensession__subcmd__help__subcmd__summary__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help summary show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__help__subcmd__view_commands] )) ||
+_opensession__subcmd__help__subcmd__view_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession help view commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__inspect_commands] )) ||
+_opensession__subcmd__inspect_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession inspect commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__parse_commands] )) ||
+_opensession__subcmd__parse_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession parse commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__register_commands] )) ||
+_opensession__subcmd__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession register commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__review_commands] )) ||
+_opensession__subcmd__review_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession review commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__setup_commands] )) ||
+_opensession__subcmd__setup_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession setup commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__share_commands] )) ||
+_opensession__subcmd__share_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession share commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__summary_commands] )) ||
+_opensession__subcmd__summary_commands() {
+    local commands; commands=(
+'show:Show previously generated local semantic summary by session id' \
+'run:Generate semantic summary from a session file or git target' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession summary commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__summary__subcmd__help_commands] )) ||
+_opensession__subcmd__summary__subcmd__help_commands() {
+    local commands; commands=(
+'show:Show previously generated local semantic summary by session id' \
+'run:Generate semantic summary from a session file or git target' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'opensession summary help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__summary__subcmd__help__subcmd__help_commands] )) ||
+_opensession__subcmd__summary__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession summary help help commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__summary__subcmd__help__subcmd__run_commands] )) ||
+_opensession__subcmd__summary__subcmd__help__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession summary help run commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__summary__subcmd__help__subcmd__show_commands] )) ||
+_opensession__subcmd__summary__subcmd__help__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession summary help show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__summary__subcmd__run_commands] )) ||
+_opensession__subcmd__summary__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession summary run commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__summary__subcmd__show_commands] )) ||
+_opensession__subcmd__summary__subcmd__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession summary show commands' commands "$@"
+}
+(( $+functions[_opensession__subcmd__view_commands] )) ||
+_opensession__subcmd__view_commands() {
+    local commands; commands=()
+    _describe -t commands 'opensession view commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_opensession" ]; then
+    _opensession "$@"
+else
+    compdef _opensession opensession
+fi

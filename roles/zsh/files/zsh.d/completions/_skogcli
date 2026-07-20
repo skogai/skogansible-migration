@@ -1,0 +1,7 @@
+#compdef skogcli
+
+_skogcli_completion() {
+  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _SKOGCLI_COMPLETE=complete_zsh skogcli)
+}
+
+compdef _skogcli_completion skogcli

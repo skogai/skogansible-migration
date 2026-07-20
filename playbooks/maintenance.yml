@@ -9,6 +9,7 @@
     - ../vars/main.yml
     - ../vars/user.yml
     - ../vars/packages.yml
+    - ../vars/zsh.yml
 
   roles:
     - role: packages
@@ -17,3 +18,5 @@
         # Maintenance-specific overrides
         packages_update_cache: true
         packages_upgrade_system: true
+    - role: zsh
+      tags: [zsh, shell]

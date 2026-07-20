@@ -1,0 +1,7 @@
+#compdef gitlord
+
+_gitlord_completion() {
+  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _GITLORD_COMPLETE=complete_zsh gitlord)
+}
+
+compdef _gitlord_completion gitlord
