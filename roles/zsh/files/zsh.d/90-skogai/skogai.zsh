@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 # Zsh Abbreviations
 # Using aliases since zsh doesn't have abbreviations like fish
-# export SKOGAI="/home/skogix/skogai"
-# export SKOGAI_CONFIG_DIR="/home/skogix/skogai/config"
+export SKOGAI="/home/skogix/skogai"
+export SKOGAI_CONFIG_DIR="/home/skogix/skogai/config"
 #
 #
 # if [[ -o interactive ]]; then
@@ -139,10 +139,10 @@
 # alias cdi='zi'  # zoxide interactive
 #
 # # Common operations
-# alias ..='cd ..'
-# alias ...='cd ../..'
-# alias ....='cd ../../..'
-# alias mkdir='mkdir -p'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias mkdir='mkdir -p'
 #
 # # System
 # alias reload='source ~/.zshrc'
@@ -162,28 +162,28 @@
 # alias drmi='docker rmi'
 #
 # # Network
-# alias ip='curl -s ifconfig.me'
-# alias localip='ipconfig getifaddr en0'
-# alias ports='netstat -tulanp'
+alias ip='curl -s ifconfig.me'
+alias localip='ipconfig getifaddr en0'
+alias ports='netstat -tulanp'
 #
 # # Loop through all files in the ~/.config/fabric/patterns directory
-# for pattern_file in $HOME/.config/fabric/patterns/*; do
-#     # Get the base name of the file (i.e., remove the directory path)
-#     pattern_name=$(basename "$pattern_file")
-#
-#     # Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
-#     alias_command="alias $pattern_name='fabric-ai --pattern $pattern_name'"
-#
-#     # Evaluate the alias command to add it to the current shell
-#     eval "$alias_command"
-# done
-#
-# yt() {
-#     local video_link="$1"
-#     fabric-ai -y "$video_link" --transcript --dry-run
-# }
-#
-# autoload -Uz compinit
-# if ! type _compinit &>/dev/null; then
-#   compinit
-# fi
+for pattern_file in $HOME/.config/fabric/patterns/*; do
+    # Get the base name of the file (i.e., remove the directory path)
+    pattern_name=$(basename "$pattern_file")
+
+    # Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
+    alias_command="alias $pattern_name='fabric-ai --pattern $pattern_name'"
+
+    # Evaluate the alias command to add it to the current shell
+    eval "$alias_command"
+done
+
+yt() {
+    local video_link="$1"
+    fabric-ai -y "$video_link" --transcript --dry-run
+}
+
+autoload -Uz compinit
+if ! type _compinit &>/dev/null; then
+  compinit
+fi

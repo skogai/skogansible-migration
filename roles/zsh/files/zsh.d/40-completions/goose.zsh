@@ -1,7 +1,7 @@
 #!/usre/bin/env bash
-export GOOSE_SESSION_ID="20251231_4"
-alias @goose='/home/skogix/.local/bin/goose term run'
-alias @g='/home/skogix/.local/bin/goose term run'
+export GOOSE_SESSION_ID="$GOOSE_SESSION_ID"
+alias @goose='/bin/goose term run'
+alias @g='/bin/goose term run'
 
 goose_preexec() {{
     [[ "$1" =~ ^goose\ term ]] && return

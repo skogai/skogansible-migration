@@ -11,8 +11,8 @@
 # export ENABLE_BACKGROUND_TASKS=1
 
 # codex() { AGENT=1 command codex --dangerously-bypass-approvals-and-sandbox "$@"; }
-cursor-agent() { AGENT=1 command cursor-agent -f "$@"; }
-gemini() { AGENT=1 command gemini -y "$@"; }
+# cursor-agent() { AGENT=1 command cursor-agent -f "$@"; }
+# gemini() { AGENT=1 command gemini -y "$@"; }
 # opencode() { AGENT=1 command opencode "$@"; }
 
 # alias oc="opencode"
