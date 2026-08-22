@@ -41,14 +41,14 @@ packages:
   # - intel-ucode
   # - iwd
   - kitty
-  # - lazydocker
+  - lazydocker
   - lazygit
-  # - less
+  - less
   # - libnotify
   # - libpulse
   # - libva-nvidia-driver
-  # - lightdm
-  # - lightdm-gtk-greeter
+  - lightdm
+  - lightdm-gtk-greeter
   # - linux
   # - linux-firmware
   # - linux-headers
@@ -60,7 +60,7 @@ packages:
   - network-manager-applet
   # - networkmanager
   # - accountsservice
-  - nvm
+  # - nvm
   # - ollama-cuda
   # - pgbouncer
   # - pgcli
@@ -72,8 +72,8 @@ packages:
   # - polkit-gnome
   # - postgresql
   # - postgrest
-  - python-uv
-  - ripgrep
+  # - python-uv
+  # - ripgrep
   # - sheldon
   # - smartmontools
   # - steam  # Requires multilib repo enabled in /etc/pacman.conf

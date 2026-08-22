@@ -26,7 +26,7 @@ chezmoi_apply_on_change: false
 # ==============================================================================
 
 # Machine type: workstation, laptop, wsl
-chezmoi_machine_type: workstation
+chezmoi_machine_type: laptop
 
 # Hostname (defaults to inventory hostname)
 chezmoi_hostname: "{{ inventory_hostname }}"
@@ -57,10 +57,10 @@ chezmoi_gui: true # Auto-false for headless
 # ==============================================================================
 
 # Window manager: i3, sway, none
-chezmoi_wm: sway
+chezmoi_wm: i3
 
 # Laptop mode (battery management, etc.)
-chezmoi_laptop_mode: false
+chezmoi_laptop_mode: true
 
 # Terminal emulator
 chezmoi_terminal: kitty
@@ -91,12 +91,12 @@ chezmoi_gita_enabled: true
 
 # Enable/disable individual agents
 chezmoi_agents:
-  claude: false
-  letta: false
-  codex: false
-  amy: false
-  goose: false
-  dot: false
+  claude: true
+  letta: true
+  codex: true
+  amy: true
+  goose: true
+  dot: true
 
 # ==============================================================================
 # SKOGAI PATHS (OPTIONAL)
@@ -114,4 +114,4 @@ chezmoi_skogai_ansible: "{{ ansible_facts['user_dir'] }}/.ansible"
 # ==============================================================================
 
 # Debug mode
-chezmoi_debug: false
+chezmoi_debug: true

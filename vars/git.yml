@@ -259,7 +259,7 @@ git_clone_repos: true
 git_repositories:
   - repo: "git@github.com:skogai/argc-completions.git"
     dest: "{{ ansible_facts['env']['HOME'] }}/.local/src/argc-completions"
-    version: "main"
+    version: "master"
     update: true
     depth: 0
 
@@ -323,23 +323,24 @@ git_tag_sort: "-version:refname"
 # Repository-Specific Configuration (Disabled by default)
 # ==============================================================================
 
-git_deploy_repo_configs: false
+git_deploy_repo_configs: true
 
 # Example repo-specific config (uncomment and customize):
-# git_repo_configs:
-#   - path: "{{ ansible_facts['env']['HOME'] }}/work/project"
-#     config:
-#       user.email: "work@company.com"
-#       user.name: "Work Name"
-#       core.sshCommand: "ssh -i ~/.ssh/work_key"
+git_repo_configs:
+  - path: "{{ ansible_facts['env']['HOME'] }}/claude"
+    config:
+      user.email: "claude@skogai.se"
+      user.name: "claude"
+      core.sshCommand: "ssh -i ~/.ssh/id_claude"
 
 # ==============================================================================
 # Git Maintenance (Disabled by default)
 # ==============================================================================
 
-git_run_maintenance: false
+git_run_maintenance: true
 git_maintenance_schedule: "daily"
 
-# git_maintenance_repos:
-#   - "{{ ansible_facts['env']['HOME'] }}/projects/repo1"
-#   - "{{ ansible_facts['env']['HOME'] }}/projects/repo2"
+git_maintenance_repos:
+  - "{{ ansible_facts['env']['HOME'] }}/skogai"
+  - "{{ ansible_facts['env']['HOME'] }}/dash-skogai"
+  - "{{ ansible_facts['env']['HOME'] }}/dot-skogai"
