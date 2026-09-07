@@ -46,3 +46,4 @@ galaxy_token
 collections/ansible_collections
 .aider*
 /roles/skogix
+/tests/__pycache__
