@@ -5,16 +5,16 @@ pacman_parallel_downloads: 5
 # Packages to install from official repos
 packages:
   - shellcheck
-  - ansible
-  - ansible-core
+  # - ansible
+  # - ansible-core
   - base
   - base-devel
   - bat
   # - bluez
   # - bluez-utils
   # - byobu
-  - cloudflared
-  - direnv
+  # - cloudflared
+  # - direnv
   # - dkms
   - dmenu
   # - docker
@@ -89,7 +89,7 @@ packages:
   # - xdg-utils
   # - xdotool
   # - xorg-server-xvfb
-  - starship
+  # - starship
   # - xorg-xinit
   # - xss-lock
   # - xterm
@@ -119,9 +119,9 @@ aur_packages:
   # - claude-code
   # - codename-goose-bin
   # - discord-electron-openasar
-  - docker-rootless-extras
-  - google-chrome
-  - mods
+  # - docker-rootless-extras
+  # - google-chrome
+  # - mods
   # - pwvucontrol
   - rcm
   - diff-so-fancy
@@ -131,6 +131,6 @@ aur_packages:
   # - supabase-bin
   # - vencord
   # - vesktop
-  - argc
-  - cod
-  - fabric-ai
+  # - argc
+  # - cod
+  # - fabric-ai

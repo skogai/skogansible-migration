@@ -2,7 +2,7 @@
 - name: "Packages | Install AUR packages"
   kewlfft.aur.aur:
     name: "{{ aur_packages }}"
-    use: pikaur
+    use: yay
     state: present
   become: true
   become_user: aur_builder
