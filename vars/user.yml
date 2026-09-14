@@ -14,14 +14,21 @@ users:
     git_email: aur@skogai.se
     git_name: aur
     editor: nvim
-    state: absent
+    state: present
     groups_base:
-      - aur_builder
       - skogai
       - wheel
   - name: aldervall
     git_email: niclas@aldervall.se
     git_name: aldervall
+    editor: nvim
+    state: present
+    groups_base:
+      - wheel # sudo access
+      - skogai # SkogAI group for all system users
+  - name: ztrider
+    git_email: ztrider@skogai.se
+    git_name: ztrider
     editor: nvim
     state: present
     groups_base:
@@ -47,7 +54,7 @@ users:
     git_email: claude@skogai.se
     git_name: claude
     editor: nvim
-    state: absent
+    state: present
     groups_base:
       - wheel # sudo access
       - skogai # SkogAI group for all system users

@@ -57,7 +57,7 @@ chezmoi_gui: true # Auto-false for headless
 # ==============================================================================
 
 # Window manager: i3, sway, none
-chezmoi_wm: sway
+chezmoi_wm: i3
 
 # Laptop mode (battery management, etc.)
 chezmoi_laptop_mode: false

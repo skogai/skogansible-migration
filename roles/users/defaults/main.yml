@@ -27,7 +27,7 @@ users_ensure_groups: true
 users_system_groups:
   - name: skogai
     gid: 1100
-    system: false
+    system: true
   - name: wheel
     gid: 998
     system: true

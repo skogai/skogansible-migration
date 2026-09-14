@@ -4,6 +4,7 @@ pacman_parallel_downloads: 5
 
 # Packages to install from official repos
 packages:
+  - pyalpm
   - shellcheck
   - ansible
   - ansible-core
@@ -60,7 +61,7 @@ packages:
   - network-manager-applet
   # - networkmanager
   # - accountsservice
-  - nvm
+  # - nvm
   # - ollama-cuda
   # - pgbouncer
   # - pgcli
@@ -125,12 +126,11 @@ aur_packages:
   # - pwvucontrol
   - rcm
   - diff-so-fancy
-  - rustup # Conflicts with system rust package
+  # - rustup # Conflicts with system rust package
   # - spotify
   # - stripe-cli-bin
   # - supabase-bin
   # - vencord
   # - vesktop
-  - argc
   - cod
   - fabric-ai
