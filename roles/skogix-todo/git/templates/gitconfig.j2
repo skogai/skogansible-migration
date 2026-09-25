@@ -1,0 +1,7 @@
+[core]
+  excludesfile = {{ ansible_facts['user_dir'] }}/.gitignore
+[user]
+  name = {{ ansible_facts['user_gecos'] }}
+  email = {{ git_email_address }}
+[include]
+	path = {{ git_config_dir }}
